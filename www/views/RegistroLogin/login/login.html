@@ -1,0 +1,38 @@
+<!--<ion-view hide-back-button="true" hide-nav-bar="true">-->
+<ion-view view-title="Login">
+  <ion-content class="padding">
+  <div class="list text-center padding">
+        <img class="resizePeq" src="img/desafio.jpg">
+      </div>
+    <div ng-if="verLogout">      
+      <form novalidate name="loginForm" ng-submit="loginForm.$valid && login(user)">
+        <div class="list">
+          <label class="item item-input">
+            <span class="input-label">Email:</span>
+            <input name="email" type="email" ng-model="user.email" placeholder="Email" ng-minlength="5" ng-maxlength="30" required>
+          </label>
+          <label class="item item-input">
+            <span class="input-label">Password:</span>
+            <input name="password" type="password" ng-model="user.password" placeholder="Password" ng-minlength="4" ng-maxlength="30" required>
+          </label>
+          <input type="submit" class="button button-block button-positive" value="Login" ng-disabled="loginForm.$invalid">
+          <p class="text-center">
+            <a href="#/forgotPassword" class="button button-clear button-dark">Forgot Password</a>
+            <!-- href="#/app/register" class="button button-clear button-dark">Register</a> -->
+            <a  ng-click="loginRegister()" class="button button-clear button-dark">Register</a>
+          </p>
+        </div>
+      </form>
+    </div>
+
+    <div ng-if="!verLogout">
+        <button ng-click="logout()" class="button button-assertive button-block"><i class="icon padding medium ion-log-out clear"></i>Salir</button>
+    </div>
+    <!--
+    <button ng-click="loginAsGuest()" class="button button-dark button-block"><i class="icon padding medium ion-person clear"></i>Login as Guest</button>
+    <button ng-click="loginWithFacebook()" class="button button-positive button-block"><i class="icon padding medium ion-social-facebook clear"></i>Login with Facebook</button>
+    <button ng-click="loginWithGoogle()" class="button button-assertive button-block"><i class="icon padding medium ion-social-google clear"></i>Login with Google</button>
+    <button ng-click="loginWithTwitter()" class="button button-calm button-block"><i class="icon padding medium ion-social-twitter clear"></i>Login with Twitter</button>
+    -->
+  </ion-content>
+</ion-view>

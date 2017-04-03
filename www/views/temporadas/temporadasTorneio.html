@@ -1,0 +1,93 @@
+<ion-view view-title="Torneio" ng-init="cargarDatos()">
+	<ion-nav-buttons side="secondary">
+      <button class="button" ng-click="sairTorneio()" ng-if="sairTorneioVar">Sair</button>
+      <button class="button button-balanced icon-left icon ion-ios-game-controller-b-outline" 
+      		ng-if="!sairTorneioVar && torneio.configuracao.estatus == 'Aberto'" ng-click="entrarTorneio()">Entrar</button>
+  </ion-nav-buttons>
+
+  	<ion-tabs class="tabs-positive tabs-icon-top">
+           <ion-tab title="Ranking" icon-on="ion-ios-list" icon-off="ion-ios-list-outline">
+           <ion-content>
+		    <div>
+		    	<div >
+		    	 <div class="row borderGris bgazure">    
+			      <div class="col col-20"><strong>Jogos</strong></div>
+			      <div class="col col-20"><strong>Max.</strong></div>
+			      <div class="col col-20"><strong>Temp.</strong></div>
+			      <div class="col col-20 verde"><strong>Estatus</strong></div>    
+			    </div>
+			    <div class="row">
+
+			      <div class="col col-20 padding"><strong>{{torneio.configuracao.jogos}}</strong></div>
+			      <div class="col col-20 padding"><strong>{{torneio.configuracao.maxParticipantes}}</strong></div>
+			      <div class="col col-20 padding"><strong>{{torneio.configuracao.temporada}}</strong></div>
+			      <div class="col col-20 padding verde"><strong>{{torneio.configuracao.estatus}}</strong></div>    
+			    </div> 
+			    <div class="row">
+			    	<div class="col col-50">Inicio: {{torneio.configuracao.dataInicio | date:'dd/MM/yyyy'}} </div>
+			    	<div class="col col-50">Fin: {{torneio.configuracao.dataFim | date:'dd/MM/yyyy'}}</div>
+			    </div>
+			    </div> 
+			    <div class="row borderGris bgazure">		
+					<div class="col col-10">#</div>
+					<div class="col col-40">Gamertag</div>
+					<div class="col col-10">J</div>
+					<div class="col col-10">V</div>
+					<div class="col col-20">{{'PONTOS' | translate}}</div>
+					<div class="col col-10"></div>			
+				</div>
+				<div class="borderGris bgazure">
+				<div class="row" ng-repeat="(key, value) in resultado | orderBy:'pontos':true">				
+					<div class="col col-10" ng-class="{bgverde:$index==0,bgazul:$index==1, bgbisque:$index==2, bgazure:$index>=3}">{{$index + 1}}</div>
+					<div class="col col-40" ng-class="{bgverde:$index==0,bgazul:$index==1, bgbisque:$index==2, bgazure:$index>=3}">{{value.gamertag}}</div>
+					<div class="col col-10" ng-class="{bgverde:$index==0,bgazul:$index==1, bgbisque:$index==2, bgazure:$index>=3}">{{value.jogados}}</div>
+					<div class="col col-10" ng-class="{bgverde:$index==0,bgazul:$index==1, bgbisque:$index==2, bgazure:$index>=3}">{{value.vitoria}}</div>
+					<div class="col col-20" ng-class="{bgverde:$index==0,bgazul:$index==1, bgbisque:$index==2, bgazure:$index>=3}">{{value.pontos}}</div>
+					<div class="col col-10" ng-class="{bgverde:$index==0,bgazul:$index==1, bgbisque:$index==2, bgazure:$index>=3}" ng-if="value.jogados > 0 && gamertag != value.gamertag"><a class="button button-small button-balanced" href="#/app/teporadas/{{value.gamertag}}|{{value.keyUserTorneio}}"> <i class="icon ion-ios-redo"></i></a></div>
+				</div>
+				
+				</div>
+			</div>
+  
+	  		</ion-content>
+	  	</ion-tab>
+
+	   	<ion-tab title="Meus Jogos" icon-on="ion-ios-football" icon-off="ion-ios-football-outline">
+	      <ion-content has-header="true" padding="false">
+	        	<br />
+		      	<br />
+	      	<div ng-if="sairTorneioVar">
+	      		<br />
+		      	<br />		   
+	      		<h4 align="center">Você não está inscrito neste torneio.</h4>
+	      	</div>
+	  			
+			    <ion-list>
+			      <a class="item item-icon-left item-icon-right" ng-repeat="jogo in jogosLista | orderBy:'jogo*1':true" type="item-text-wrap" href="#/app/temporadasTorneioJogo/{{jogo.jogo}}" ng-if="!jogo.bloqueado && jogo.jogo<51">
+			            <i class="icon ion-ios-game-controller-a"></i>
+			            <strong>{{'JOGO' | translate}} {{jogo.jogo}}</strong>
+			            <in ng-class="(jogo.estado=='Terminado') ? 'verde' : 'vermelho'">{{jogo.estado}}</in>
+			            <span class="item-note">
+			               <p class="right" ng-if="jogo.estado=='Terminado'">{{'PONTOS' | translate}}: <strong>{{jogo.pontos}}</strong></p>
+			            </span>
+			            <i class="icon ion-chevron-right icon-accessory"></i>
+			      </a>
+			    </ion-list>			
+	      </ion-content>
+	   	</ion-tab>
+	   	  
+   </ion-tabs>
+   <!--
+   <div class="fixed-outside" ng-if="verBtnInscricao">
+	      <div class="row">
+	            <div class="col">
+	                <button class="button button-balanced icon-left icon ion-ios-game-controller-b-outline" ng-click="entrarTorneio()">Entrar</button>
+	            </div>            
+	        </div>
+	    </div>
+
+	-->
+
+  
+   
+</ion-view>

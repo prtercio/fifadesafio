@@ -1,0 +1,14 @@
+<!-- <ion-view hide-back-button="true" hide-nav-bar="true" can-swipe-back="false"> -->
+<ion-view view-title="Inicio">
+  <ion-content class="padding">
+    <div class="list text-center padding">
+      <img class="logo" src="img/logo.png">
+      <h2><span class="bold">Welcome Mate!</span></h2>
+      <h3 class="line-height-160">We're so glad to have you with us! <b>{{email}}</b>.</h3>
+      <h3 class="line-height-160">You are logged in through <b>{{provider}}</b>.</h3>
+    </div>
+  </ion-content>
+  <div class="bar bar-footer bar-positive" ng-click="logout()">
+    <h1 class="title">Logout</h1>
+  </div>
+</ion-view>
