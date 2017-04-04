@@ -25,7 +25,7 @@
 		    </div>
 		 </div>
 		 -->
-		 <div class="padding">
+		 <div class="padding" ng-if="loggedIn">
 		 	<button class="button button-positive button-block icon ion-ios-football" ng-click="recuperarJogo()" ng-disabled="btnDisabled"> Recuperar resultado</button>
 		 </div>
 	 <h4 ng-if="status">{{semFifa}}</h4>

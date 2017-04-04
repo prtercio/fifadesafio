@@ -65,7 +65,9 @@ angular.module('App', [
   });
 })
 
-.config(function($stateProvider, $urlRouterProvider) {
+.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
+  $ionicConfigProvider.platform.android.navBar.alignTitle('center');
+    $ionicConfigProvider.platform.android.tabs.position("bottom");
   $stateProvider
     .state('app', {
     url: '/app',

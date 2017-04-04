@@ -5,8 +5,10 @@
 
   temporadas.controller('CtrlTemporadas', [
     '$scope',
+    'Utils',
     function(
-      $scope
+      $scope,
+      Utils
   ){
       var idioma = window.localStorage.getItem('lang');
       if(idioma == "es"){
@@ -14,11 +16,12 @@
       } else {
         $scope.idioma = 0;
       }
-
+      Utils.show();
     var ref = firebase.database().ref('desafio/desafios/temporadas/oficial');
     ref.once("value").then(function(snapshot) {
        $scope.$apply(function(){
         $scope.temporadas = snapshot.val();
+        Utils.hide();
        });
     }); 
 

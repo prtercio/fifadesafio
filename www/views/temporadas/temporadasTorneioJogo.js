@@ -23,6 +23,23 @@
       } else {
         $scope.idioma = 0;
       }
+
+      if(firebase.auth().currentUser) {
+          $scope.loggedIn = true;
+          console.log("logado");
+      } else {
+          $scope.loggedIn = false;
+           var alertPopup = $ionicPopup.alert({
+              title: 'Opps!',
+              template: 'Para enviar este resultado vc deve está logado.'
+            });
+
+            alertPopup.then(function(res) {
+                if(res){
+
+                }
+            });
+      }
      
 
      var usuarios = [];

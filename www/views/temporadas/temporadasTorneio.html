@@ -56,7 +56,12 @@
 	      <ion-content has-header="true" padding="false">
 	        	<br />
 		      	<br />
-	      	<div ng-if="sairTorneioVar">
+	      	<div ng-if="sairTorneioVar && !loggedIn">
+	      		<br />
+		      	<br />		   
+	      		<h4 align="center">Você não está inscrito neste torneio.</h4>
+	      	</div>
+	      	<div ng-if="!loggedIn">
 	      		<br />
 		      	<br />		   
 	      		<h4 align="center">Você não está inscrito neste torneio.</h4>

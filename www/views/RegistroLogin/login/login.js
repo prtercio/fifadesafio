@@ -74,7 +74,7 @@ angular.module('App').controller('CtrlLogin', function($scope, $state, $localSto
   };
 
   $scope.loginWithGoogle = function() {
-    Utils.show();
+       
     //Login with Google token using the googleWebClientId from app.js
     $cordovaOauth.google(Social.googleWebClientId, ["https://www.googleapis.com/auth/userinfo.email"]).then(function(response) {
       var credential = firebase.auth.GoogleAuthProvider.credential(response.id_token,
@@ -123,7 +123,7 @@ angular.module('App').controller('CtrlLogin', function($scope, $state, $localSto
               //Account already exists, proceed to home.
               Utils.hide();
               $localStorage.keyUser = account.key;
-              firebase.database().ref('desafio/users/' + account.key).on('value', function(response) {
+               firebase.database().ref('desafio/users/' + account.key).on('value', function(response) {
                 var account = response.val();
                 $localStorage.account = account;
               });

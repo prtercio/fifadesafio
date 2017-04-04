@@ -20,6 +20,14 @@
       $window,
       $ionicLoading
   ){
+
+    	if(firebase.auth().currentUser) {
+	        $scope.loggedIn = true;
+	        console.log("logado");
+	      } else {
+	        $scope.loggedIn = false;       
+	        
+	      }
     	
     	// ---------------------------------------------------------------------------------- 50 jogos
     	var jogos50 = {
@@ -119,13 +127,18 @@
 		    "jogo8":{"estado":"Próximo","jogo":8,"pontos":0, "bloqueado":true},
 		    "jogo9":{"estado":"Próximo","jogo":9,"pontos":0, "bloqueado":true},
 		    "jogo10":{"estado":"Próximo","jogo":10,"pontos":0, "bloqueado":true}
-		}  
+		}  	
 		var jsondJogos;
     	
     	var totalJogos = 0;
     	var keyUser = $localStorage.keyUser;
     	$scope.verBtnInscricao = true;
-    	var gamertag = $localStorage.gamertag;
+    	var gamertag;
+    	if($scope.loggedIn){
+	    	gamertag = $localStorage.account.gamertag;
+	    } else {
+	    	gamertag = "Guest";
+	    }
     	$scope.gamertag = gamertag;
     	$scope.sairTorneioVar = false;
     	$scope.keyUserInscritoTorneio = "";
@@ -166,19 +179,23 @@
 				       }
 				       $scope.resultado = ranking;
 				       verInscrito();
-				       for(var i = 0; i < ranking.length; i++){
-				       	if(ranking[i].gamertag == gamertag){				       		
-				      		$scope.keyUserInscritoTorneio = ranking[i].keyUserTorneio;
-				      		console.log($scope.keyUserInscritoTorneio);
-				       		$scope.sairTorneioVar = true;
-				       		console.log($scope.sairTorneioVar);
-				       		cargarJogos();
-				       	} else {
-				       		$scope.sairTorneioVar = false;
-				       		console.log($scope.sairTorneioVar);
-				       	}
-				       	break;
-				       }
+				       if($scope.loggedIn){
+					       for(var i = 0; i < ranking.length; i++){
+
+					       	if(ranking[i].gamertag == gamertag){
+					       		$scope.sairTorneioVar = true;				       		
+					      		$scope.keyUserInscritoTorneio = ranking[i].keyUserTorneio;
+					      		console.log($scope.keyUserInscritoTorneio);
+					       		
+					       		console.log("encontrou "+$scope.sairTorneioVar);
+					       		cargarJogos();
+					       	} else {
+					       		$scope.sairTorneioVar = false;
+					       		console.log($scope.sairTorneioVar);
+					       	}
+					       	break;
+					       }
+					   }
 			       });
 			       $ionicLoading.hide();
 			   	}else{
@@ -218,25 +235,38 @@
 
 	    $scope.entrarTorneio = function(){
 	    	console.log("entrar torneio");
-	    	recuperar (totalJogos);
+	    	if($scope.loggedIn){
+		    	recuperar (totalJogos);
 
-		    console.log(keyUser, gamertag, jsondJogos);
-		  
-		    firebase.database().ref().child('desafio/desafios/temporadas/oficial/'+idTorneio+'/inscritos/').push({
-		    	key:keyUser,
-		    	gamertag:gamertag,
-  				jogos:jsondJogos,
-  				vitoria:0,
-  				pontos:0,
-  				jogados:0,
-  				derrota:0,
-  				empate:0
-            }).then(function(response) {
-              	console.log("response: "+response);
-              	$scope.verBtnInscricao = true;
-              	$scope.cargarDatos();
-              	
-            });         
+			    console.log(keyUser, gamertag, jsondJogos);
+			  
+			    firebase.database().ref().child('desafio/desafios/temporadas/oficial/'+idTorneio+'/inscritos/').push({
+			    	key:keyUser,
+			    	gamertag:gamertag,
+	  				jogos:jsondJogos,
+	  				vitoria:0,
+	  				pontos:0,
+	  				jogados:0,
+	  				derrota:0,
+	  				empate:0
+	            }).then(function(response) {
+	              	console.log("response: "+response);
+	              	$scope.verBtnInscricao = true;
+	              	$scope.cargarDatos();
+	              	
+	            }); 
+            } else {
+            	var alertPopup = $ionicPopup.alert({
+				title: 'Opps!',
+				template: 'Para entrar neste desafio vc deve está logado.'
+			});
+
+			alertPopup.then(function(res) {
+			    if(res){
+			    	console.log("fechado");
+			    }
+			});
+            }        
 			
 	    }  // function
 
