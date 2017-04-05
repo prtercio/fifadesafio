@@ -49,12 +49,35 @@
   console.log("jogo "+$scope.jogo);
 
 
-  var resultado = [];
+  var resultadoJogos = [];
 
-   var refjogos = firebase.database().ref('desafio/desafios/temporadas/oficial/'+idTorneio+'/inscritos/'+keyUsuario+'/jogos').orderByChild('jogo');
+   var refjogos = firebase.database().ref('desafio/desafios/temporadas/oficial/'+idTorneio+'/inscritos/'+keyUsuario).orderByChild('jogo');
     refjogos.once("value").then(function(snapshot) {
       $scope.$apply(function(){
+        $scope.comJogos = snapshot.val();
+        $scope.jogados = $scope.comJogos.jogados;
+        $scope.derrota = $scope.comJogos.derrota;
+        $scope.empate = $scope.comJogos.emapte;
+        $scope.pontos = $scope.comJogos.pontos;
+        $scope.vitoria = $scope.comJogos.vitoria;
+
+
+        var comJogos = []; 
+        comJogos.push($scope.comJogos.jogos);
+
+        for(var key in comJogos[0]){
+          resultadoJogos.push({
+            "jogo":comJogos[0][key].jogo, 
+            "bloqueado":comJogos[0][key].bloqueado, 
+            "estado":comJogos[0][key].estado, 
+            "pontos":comJogos[0][key].pontos
+          });
+        }
+        $scope.jogos = resultadoJogos;  
+
+        //usando forEach tem que buscar 2 vezes n BD
           //$scope.jogos = snapshot.val();
+          /*
           snapshot.forEach(function(minisnapshot) {
                
                resultado.push({
@@ -65,10 +88,12 @@
               })
           });
         });
-        $scope.jogos = resultado;  
+        */
     });  
+  });  
 
-    
+
+    /*
      var refResumo = firebase.database().ref('desafio/desafios/temporadas/oficial/'+idTorneio+'/inscritos/'+keyUsuario);
     refResumo.once("value").then(function(snapshot) {
       $scope.$apply(function(){
@@ -78,9 +103,9 @@
           $scope.empate = $scope.resumo.empate;
           $scope.derrota = $scope.resumo.derrota;
           $scope.pontos = $scope.resumo.pontos;
-        });     
-    });  
-
+        });   
+        */  
+  
 
 
   }]); //ctrl

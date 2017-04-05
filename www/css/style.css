@@ -238,3 +238,5 @@ img.custom-thumbnail {
 .fixed-tabela{
    position: absolute;
 }
+
+.fixed {position:fixed;}

@@ -68,9 +68,27 @@
 	  	</ion-tab>
 
 	   	<ion-tab title="Meus Jogos" icon-on="ion-ios-football" icon-off="ion-ios-football-outline">
+		   
 	      <ion-content has-header="true" padding="false">
 	        	<br />
 		      	<br />
+		      	<div>
+			         <div class="row borderGris bgazure">    
+				      <div class="col col-20"><strong>Jogos</strong></div>
+				      <div class="col col-20"><strong>Vitória</strong></div>
+				      <div class="col col-20"><strong>Empate</strong></div>
+				      <div class="col col-20"><strong>Derrota</strong></div>
+				      <div class="col col-20 verde"><strong>Pontos</strong></div>    
+				    </div>
+
+				    <div class="row">    
+				      <div class="col col-20 padding"><strong>{{jogados}}</strong></div>
+				      <div class="col col-20 padding"><strong>{{vitoria}}</strong></div>
+				      <div class="col col-20 padding"><strong>{{empate}}</strong></div>
+				      <div class="col col-20 padding"><strong>{{derrota}}</strong></div>
+				      <div class="col col-20 padding verde"><strong>{{pontos}}</strong></div>    
+				    </div>  
+			      </div>
 	      	<div ng-if="sairTorneioVar && !loggedIn">
 	      		<br />
 		      	<br />		   
@@ -80,8 +98,7 @@
 	      		<br />
 		      	<br />		   
 	      		<h4 align="center">Você não está inscrito neste torneio.</h4>
-	      	</div>
-	  			
+	      	</div> 			
 			    <ion-list>
 			      <a class="item item-icon-left item-icon-right" ng-repeat="jogo in jogosLista | orderBy:'jogo*1':true" type="item-text-wrap" href="#/app/temporadasTorneioJogo/{{jogo.jogo}}" ng-if="!jogo.bloqueado && jogo.jogo<51">
 			            <i class="icon ion-ios-game-controller-a"></i>

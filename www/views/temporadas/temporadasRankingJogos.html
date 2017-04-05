@@ -1,5 +1,6 @@
 <ion-view view-title="{{jogoNome}}">
   <ion-content>
+  <div class="fixed">
     <div class="row borderGris bgazure">    
       <div class="col col-20"><strong>Jogos</strong></div>
       <div class="col col-20"><strong>Vitória</strong></div>
@@ -9,12 +10,13 @@
     </div>
 
     <div class="row">    
-      <div class="col col-20 padding"><strong>{{jogosQuantidade}}</strong></div>
+      <div class="col col-20 padding"><strong>{{jogados}}</strong></div>
       <div class="col col-20 padding"><strong>{{vitoria}}</strong></div>
       <div class="col col-20 padding"><strong>{{empate}}</strong></div>
       <div class="col col-20 padding"><strong>{{derrota}}</strong></div>
       <div class="col col-20 padding verde"><strong>{{pontos}}</strong></div>    
     </div>  
+    </div>
     <hr>
      <ion-list>
        <a class="item item-icon-left item-icon-right" ng-repeat="jogo in jogos | orderBy:'jogo*1':true" type="item-text-wrap" href="#/app/temporadasRankingJogosDetalhe/{{jogo.jogo}}|{{keyUsuario}}" ng-if="jogo.estado == 'Terminado'">                                
