@@ -55,7 +55,7 @@
      var gamerSeleccionado;
      var conquistaSelecionadas = [];
 
-    var listauser = firebase.database().ref('fifadare/users');
+    var listauser = firebase.database().ref('fifadesafio/users');
       listauser.orderByChild('pontos').once("value").then(function(snapshot) {
         $scope.$apply(function(){
             snapshot.forEach(function(minisnapshot) {
@@ -170,15 +170,15 @@
                           richPresence  = resp.data.devices[0].titles[1].activity.richPresence;
                           if(richPresence == "FIFA 17 Seasons (In Menus)"){
                             var alertPopup = $ionicPopup.alert({
-                           title: 'Opps!',
-                           template: "<p align='center'><strong>Status:</strong> Menú.</p>"
-                         });
+                               title: 'Opps!',
+                               template: "<p align='center'><strong>Status:</strong> Menú.</p>"
+                             });
 
-                         alertPopup.then(function(res) {
-                           console.log('cerrar');
-                            richPresence = false;
-                            $scope.status = false;
-                         });
+                             alertPopup.then(function(res) {
+                               console.log('cerrar');
+                                richPresence = false;
+                                $scope.status = false;
+                             });
                           } else {
                             $scope.status = true;
                             $scope.semFifa = "Status: "+richPresence; 

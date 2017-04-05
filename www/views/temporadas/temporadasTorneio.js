@@ -11,6 +11,7 @@
     '$ionicPopup',
     '$window',
     '$ionicLoading',
+    'dataService',
     function(
       $scope,
       idTorneio,
@@ -18,7 +19,8 @@
       $state,
       $ionicPopup,
       $window,
-      $ionicLoading
+      $ionicLoading,
+      dataService
   ){
 
     	if(firebase.auth().currentUser) {
@@ -144,31 +146,33 @@
     	$scope.keyUserInscritoTorneio = "";
     	var keyUserInscritoTorneio;
 
-    	console.log(keyUser, gamertag);
     	var ranking = [];
     	var ref = firebase.database().ref('desafio/desafios/temporadas/oficial/'+idTorneio);
+
+    	$scope.keyTorneio = idTorneio;
+
+    	//armazenar idTorneio
+    	dataService.set(idTorneio);
 
     	$scope.cargarDatos = function(){
     		$ionicLoading.show({
 		      template: 'Loading...',
 		      duration: 3000
 		    }).then(function(){
-		       console.log("The loading indicator is now displayed");
+		       console.log("The loading");
 		    });
 		    ref.once("value").then(function(snapshot) {
 		    	if(snapshot.val() != null){
-		    		console.log("Hay Datos!");
 			       $scope.$apply(function(){
-			       	console.log("Atualizando tela...");
 			        $scope.torneio = snapshot.val();
 			       	//console.log(snapshot.val().inscritos);
 				       totalJogos = snapshot.val().configuracao.jogos;
 				       var inscritos = snapshot.val().inscritos;
 				       for(var key in inscritos){
 				       	keyUserInscritoTorneio=key;
-				       	 ranking.push({
+				       	  ranking.push({
 			                "keyUserTorneio":key, 
-			                "gamertag":inscritos[key].gamertag,
+			                "gamertag": inscritos[key].gamertag,
 			                "keyUser": inscritos[key].key,
 			                "vitoria": inscritos[key].vitoria,
 			                "pontos": inscritos[key].pontos,	
@@ -178,37 +182,31 @@
 			              })
 				       }
 				       $scope.resultado = ranking;
-				       verInscrito();
+				       verInscrito(ranking);
 				       if($scope.loggedIn){
 					       for(var i = 0; i < ranking.length; i++){
-
 					       	if(ranking[i].gamertag == gamertag){
 					       		$scope.sairTorneioVar = true;				       		
 					      		$scope.keyUserInscritoTorneio = ranking[i].keyUserTorneio;
-					      		console.log($scope.keyUserInscritoTorneio);
-					       		
-					       		console.log("encontrou "+$scope.sairTorneioVar);
 					       		cargarJogos();
+					       		break;
 					       	} else {
 					       		$scope.sairTorneioVar = false;
-					       		console.log($scope.sairTorneioVar);
 					       	}
-					       	break;
+					       	
 					       }
 					   }
 			       });
 			       $ionicLoading.hide();
 			   	}else{
 			   		$scope.nohay = "Ainda nao há inscritos neste torneio. Voce pode ser o primeiro!"
-			   		console.log("no hay");
 			   		$ionicLoading.hide();
 			   	}
 		    });
 		}
 
 	    //verificar se está inscrito
-	    function verInscrito (){
-	    	console.log("vendo inscritos");
+	    function verInscrito (ranking){
 		    for(var i = 0; i < ranking.length; i++){
 		    	 if(ranking[i].keyUser === keyUser){
 				    $scope.verBtnInscricao = false;
@@ -234,7 +232,6 @@
 		}
 
 	    $scope.entrarTorneio = function(){
-	    	console.log("entrar torneio");
 	    	if($scope.loggedIn){
 		    	recuperar (totalJogos);
 
@@ -252,21 +249,20 @@
 	            }).then(function(response) {
 	              	console.log("response: "+response);
 	              	$scope.verBtnInscricao = true;
-	              	$scope.cargarDatos();
-	              	
+	              	$scope.cargarDatos();	              	
 	            }); 
             } else {
             	var alertPopup = $ionicPopup.alert({
-				title: 'Opps!',
-				template: 'Para entrar neste desafio vc deve está logado.'
-			});
+					title: 'Opps!',
+					template: 'Para entrar neste desafio vc deve está logado.'
+				});
 
-			alertPopup.then(function(res) {
-			    if(res){
-			    	console.log("fechado");
-			    }
-			});
-            }        
+				alertPopup.then(function(res) {
+				    if(res){
+				    	console.log("fechado");
+				    }
+				});
+	        }        
 			
 	    }  // function
 

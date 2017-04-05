@@ -1,0 +1,31 @@
+<ion-view view-title="{{jogoNome}}">
+  <ion-content>
+    <div class="row borderGris bgazure">    
+      <div class="col col-20"><strong>Jogos</strong></div>
+      <div class="col col-20"><strong>Vitória</strong></div>
+      <div class="col col-20"><strong>Empate</strong></div>
+      <div class="col col-20"><strong>Derrota</strong></div>
+      <div class="col col-20 verde"><strong>Pontos</strong></div>    
+    </div>
+
+    <div class="row">    
+      <div class="col col-20 padding"><strong>{{jogosQuantidade}}</strong></div>
+      <div class="col col-20 padding"><strong>{{vitoria}}</strong></div>
+      <div class="col col-20 padding"><strong>{{empate}}</strong></div>
+      <div class="col col-20 padding"><strong>{{derrota}}</strong></div>
+      <div class="col col-20 padding verde"><strong>{{pontos}}</strong></div>    
+    </div>  
+    <hr>
+     <ion-list>
+       <a class="item item-icon-left item-icon-right" ng-repeat="jogo in jogos | orderBy:'jogo*1':true" type="item-text-wrap" href="#/app/temporadasRankingJogosDetalhe/{{jogo.jogo}}|{{keyUsuario}}" ng-if="jogo.estado == 'Terminado'">                                
+            <i class="icon ion-ios-game-controller-a"></i>
+            <strong>Jogo {{jogo.jogo}}</strong>
+            <in ng-class="(jogo.estado=='Terminado') ? 'verde' : 'vermelho'">{{jogo.estado}}</in>
+            <span class="item-note">
+               <p class="right" ng-if="jogo.estado=='Terminado'">Pontos: <strong>{{jogo.pontos}}</strong></p>
+            </span>
+            <i class="icon ion-chevron-right icon-accessory"></i>
+      </a>
+     </ion-list>
+  </ion-content>
+</ion-view>

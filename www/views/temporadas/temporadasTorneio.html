@@ -1,41 +1,57 @@
-<ion-view view-title="Torneio" ng-init="cargarDatos()">
+<ion-view view-title="{{'DESAFIO' | translate}}" ng-init="cargarDatos()">
 	<ion-nav-buttons side="secondary">
-      <button class="button" ng-click="sairTorneio()" ng-if="sairTorneioVar">Sair</button>
+      <button 
+      	class="button" 
+      	ng-click="sairTorneio()" 
+      	ng-if="sairTorneioVar">{{'SAIR' | translate}}</button>
       <button class="button button-balanced icon-left icon ion-ios-game-controller-b-outline" 
-      		ng-if="!sairTorneioVar && torneio.configuracao.estatus == 'Aberto'" ng-click="entrarTorneio()">Entrar</button>
+      		ng-if="!sairTorneioVar && torneio.configuracao.estatus == 'Aberto' && torneio.configuracao.inscritos != torneio.configuracao.maxParticipantes" ng-click="entrarTorneio()">Entrar</button>
   </ion-nav-buttons>
 
   	<ion-tabs class="tabs-positive tabs-icon-top">
            <ion-tab title="Ranking" icon-on="ion-ios-list" icon-off="ion-ios-list-outline">
            <ion-content>
-		    <div>
-		    	<div >
-		    	 <div class="row borderGris bgazure">    
-			      <div class="col col-20"><strong>Jogos</strong></div>
-			      <div class="col col-20"><strong>Max.</strong></div>
-			      <div class="col col-20"><strong>Temp.</strong></div>
-			      <div class="col col-20 verde"><strong>Estatus</strong></div>    
-			    </div>
-			    <div class="row">
+           <br />
+           <br />
+             <li class="item item-toggle">
+		          {{'DETALHEDESAFIO' | translate}}
+		      <label class="toggle toggle-positive">
+		        <input type="checkbox" ng-model="checked" aria-label="Toggle ngHide">
+		            <div class="track">
+		                <div class="handle"></div>
+		            </div>
+		      </label>
+		    </li>
 
-			      <div class="col col-20 padding"><strong>{{torneio.configuracao.jogos}}</strong></div>
-			      <div class="col col-20 padding"><strong>{{torneio.configuracao.maxParticipantes}}</strong></div>
-			      <div class="col col-20 padding"><strong>{{torneio.configuracao.temporada}}</strong></div>
-			      <div class="col col-20 padding verde"><strong>{{torneio.configuracao.estatus}}</strong></div>    
+		    <div ng-show="checked">
+		    	<div >
+			    	<div class="row borderGris bgazure">    
+				      <div class="col col-15"><strong>Jogos</strong></div>
+				      <div class="col col-30"><strong>Max.Jogadores</strong></div>
+				      <div class="col col-30"><strong>Temp.Inicial</strong></div>
+				      <div class="col col-25 verde"><strong>Estatus</strong></div>    
+				    </div>
+				    <div class="row">
+				      <div class="col col-15 padding"><strong>{{torneio.configuracao.jogos}}</strong></div>
+				      <div class="col col-30 padding"><strong>{{torneio.configuracao.maxParticipantes}}</strong></div>
+				      <div class="col col-30 padding"><strong>{{torneio.configuracao.temporada}}</strong></div>
+				      <div class="col col-25 padding verde"><strong>{{torneio.configuracao.estatus}}</strong></div>    
+				    </div> 
+				    <div class="row">
+				    	<div class="col col-50">Inicio: {{torneio.configuracao.dataInicio | date:'dd/MM/yyyy'}} </div>
+				    	<div class="col col-50">Fin: {{torneio.configuracao.dataFim | date:'dd/MM/yyyy'}}</div>
+				    </div>
 			    </div> 
-			    <div class="row">
-			    	<div class="col col-50">Inicio: {{torneio.configuracao.dataInicio | date:'dd/MM/yyyy'}} </div>
-			    	<div class="col col-50">Fin: {{torneio.configuracao.dataFim | date:'dd/MM/yyyy'}}</div>
 			    </div>
-			    </div> 
 			    <div class="row borderGris bgazure">		
 					<div class="col col-10">#</div>
 					<div class="col col-40">Gamertag</div>
 					<div class="col col-10">J</div>
 					<div class="col col-10">V</div>
 					<div class="col col-20">{{'PONTOS' | translate}}</div>
-					<div class="col col-10"></div>			
+					<div class="col col-10"></div>				
 				</div>
+				<div>
 				<div class="borderGris bgazure">
 				<div class="row" ng-repeat="(key, value) in resultado | orderBy:'pontos':true">				
 					<div class="col col-10" ng-class="{bgverde:$index==0,bgazul:$index==1, bgbisque:$index==2, bgazure:$index>=3}">{{$index + 1}}</div>
@@ -43,9 +59,8 @@
 					<div class="col col-10" ng-class="{bgverde:$index==0,bgazul:$index==1, bgbisque:$index==2, bgazure:$index>=3}">{{value.jogados}}</div>
 					<div class="col col-10" ng-class="{bgverde:$index==0,bgazul:$index==1, bgbisque:$index==2, bgazure:$index>=3}">{{value.vitoria}}</div>
 					<div class="col col-20" ng-class="{bgverde:$index==0,bgazul:$index==1, bgbisque:$index==2, bgazure:$index>=3}">{{value.pontos}}</div>
-					<div class="col col-10" ng-class="{bgverde:$index==0,bgazul:$index==1, bgbisque:$index==2, bgazure:$index>=3}" ng-if="value.jogados > 0 && gamertag != value.gamertag"><a class="button button-small button-balanced" href="#/app/teporadas/{{value.gamertag}}|{{value.keyUserTorneio}}"> <i class="icon ion-ios-redo"></i></a></div>
-				</div>
-				
+					<div class="col col-10" ng-class="{bgverde:$index==0,bgazul:$index==1, bgbisque:$index==2, bgazure:$index>=3}" ng-if="value.jogados > 0 && gamertag != value.gamertag"><a class="button button-small button-balanced" href="#/app/temporadasRankingJogos/{{value.gamertag}}|{{value.keyUserTorneio}}"> <i class="icon ion-ios-redo"></i></a></div>
+				</div>				
 				</div>
 			</div>
   
@@ -90,9 +105,5 @@
 	            </div>            
 	        </div>
 	    </div>
-
-	-->
-
-  
-   
+	-->  
 </ion-view>

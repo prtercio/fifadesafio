@@ -1,0 +1,30 @@
+
+<ion-view view-title="{{'DETALHEJOGO' | translate}}" >
+
+  <ion-content class="padding">
+<!--
+  <div class="list card" ng-repeat="img in imagenes">
+      <div class="item item-image">
+        <img src="{{img.imagem1}}">
+      </div> 
+      <div class="item item-image">
+        <img src="{{img.imagem2}}">
+      </div>        
+    </div>
+-->
+  <h5 class="center" >Conquistas: </h5>
+
+  <div ng-if="detalheJogo.estado == 'Terminado'">
+    <ion-item class="item">
+      <h2 class="center verde">{{'PONTOS' | translate}}: {{detalheJogo.pontos}}</h2>
+    </ion-item>
+    <h5 class="center">{{'DETALHECONQUISTAS' | translate}}</h5>
+    <ion-list>
+      <ion-item ng-repeat="detalhe in detalheJogo.conquistas track by $index" class="verde">
+        <p>{{detalhe}}</p>
+      </ion-item>
+    </ion-list>
+
+  </div>
+</ion-content>
+</ion-view>

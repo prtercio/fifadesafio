@@ -44,7 +44,11 @@ trans.factory('asyncLoader', function ($q, $timeout) {
         TOTALDEPONTOS:"Total de Puntos de las Conquistas seleccionadas:",
         JOGOENVIADO: "Este juego fue enviado.",
         DETALHECONQUISTAS:"Detalle de las conquistas:",
-        DETALHEJOGO:"Detalle del Juego"
+        DETALHEJOGO:"Detalle del Juego",
+        SAIR: "Salir",
+        DESAFIO: "Desafío",
+        DETALHEDESAFIO: "Detalles del desafío",
+        MEUSJOGOS:"Mis Juegos"
       };
     } if (options.key === 'pt') {
       translations = {
@@ -72,7 +76,11 @@ trans.factory('asyncLoader', function ($q, $timeout) {
         TOTALDEPONTOS:"Total de Pontos das Conquistas selecionadas:",
         JOGOENVIADO:"Este jogo já foi enviado.",
         DETALHECONQUISTAS:"Detalhe das conquistas:",
-        DETALHEJOGO:"Detalhe do Jogo"
+        DETALHEJOGO:"Detalhe do Jogo",
+        SAIR: "Sair",
+        DESAFIO: "Desafio",
+        DETALHEDESAFIO: "Detalhes do desafio",
+        MEUSJOGOS:"Meus Jogos"
 
       };
     }

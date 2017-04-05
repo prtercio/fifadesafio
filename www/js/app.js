@@ -9,6 +9,8 @@ angular.module('App', [
   'App.CtrlTemporadas',
   'App.CtrlTempTorneio', 
   'App.CtrlTempTorneioJogo', 
+  'App.CtrlTemporadasRankingJogos',
+  'App.CtrlTemporadasRankingJogosDetalhe',
   'App.CtrlCopas',
   'App.dataServices', 
   'ngStorage', 
@@ -117,6 +119,34 @@ angular.module('App', [
     },
     resolve:{
       idJogo: function($stateParams){
+        return $stateParams.jogoId;
+      }
+    }
+  })
+  .state('app.temporadasRankingJogos', {
+    url: '/temporadasRankingJogos/:jogoId',
+    views: {
+      'menuContent': {
+        templateUrl: 'views/temporadas/temporadasRankingJogos.html',
+        controller: 'CtrlTemporadasRankingJogos as idJogos'
+      }
+    },
+    resolve:{
+      idJogos: function($stateParams){
+        return $stateParams.jogoId;
+      }
+    }
+  })
+  .state('app.temporadasRankingJogosDetalhe', {
+    url: '/temporadasRankingJogosDetalhe/:jogoId',
+    views: {
+      'menuContent': {
+        templateUrl: 'views/temporadas/temporadasRankingJogosDetalhe.html',
+        controller: 'CtrlTemporadasRankingJogosDetalhe as idJogoDetalhe'
+      }
+    },
+    resolve:{
+      idJogoDetalhe: function($stateParams){
         return $stateParams.jogoId;
       }
     }
