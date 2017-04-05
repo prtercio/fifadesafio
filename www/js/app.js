@@ -6,6 +6,7 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('App', [
   'ionic',
+  'App.CtrlInicio',
   'App.CtrlTemporadas',
   'App.CtrlTempTorneio', 
   'App.CtrlTempTorneioJogo', 
@@ -81,7 +82,8 @@ angular.module('App', [
     url: '/inicio',
     views: {
       'menuContent': {
-        templateUrl: 'views/inicio.html'
+        templateUrl: 'views/inicio/inicio.html',
+        controller: 'CtrlInicio'
       }
     }
   })
