@@ -19,6 +19,11 @@
 
     	// ------------------------------------------------------------------------------- RECUPERAR REGRAS CONQUISTAS
 
+    	if($localStorage.email == "benbaodan@outlook.com"){
+    		$scope.admin = true;
+    	} else {
+    		$scope.admin = false;
+    	}
     	var data = new Date();
     	var dia = data.getDate();
     	var mes = data.getMonth()+1;

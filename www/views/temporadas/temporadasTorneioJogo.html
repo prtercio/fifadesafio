@@ -64,7 +64,7 @@
       </div>
       <div class="card" ng-if="timeCasa">
         <div class="padding" >
-          <h4>{{'SELECCIONETIME' | translate}}:</h4>
+          <h5 align="center">{{'SELECCIONETIME' | translate}}:</h5>
           <ion-list>
             <ion-radio ng-model="choice" ng-value="'A'" ng-change='jogoSelecionado(choice)'>{{'MANDANTE' | translate}}: <strong>{{casa}}</strong></ion-radio>
             <ion-radio ng-model="choice" ng-value="'B'" ng-change='jogoSelecionado(choice)'>{{'VISITANTE' | translate}}: <strong>{{fora}}</strong></ion-radio>
@@ -72,7 +72,7 @@
         </div>
       </div>
       <div class="card" ng-if="verPlacarFinal">
-        <div align="center" ng-class="{'verde':placarFinal=='Vitoria','laranja':placarFinal=='Empate','vermelho':placarFinal=='Derrota'}"><h3>{{placarFinal}}</h3></div>        
+        <div align="center" ng-class="{'verde':placarFinal=='Vitória','laranja':placarFinal=='Empate','vermelho':placarFinal=='Derrota'}"><h3>{{placarFinal}}</h3></div>        
         <h3 align="center">{{totalPontos}} {{'PONTOS' | translate}}</h3>
       </div>
       </div>

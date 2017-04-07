@@ -37,6 +37,8 @@
       $scope.conquistas = JSON.parse(localStorage.getItem('conquistas')) || '[]';
 
       var arrayConquistas = [];
+      var arrayConquistasDerrota = [];
+      var arrayConquistasEmpate = [];
 
       var id = idJogo.substring(0, idJogo.indexOf("|"));
       var keyUsuario = idJogo.substring(idJogo.indexOf("|") + 1);
@@ -71,23 +73,88 @@
      $scope.verPlacarFinal = false;
      console.log($localStorage.account.idXbox);
 
+
+     function definirResultado(resultado){
+      if($scope.idioma == "pt"){
+        if(resultado == "Vitoria"){
+          $scope.placarFinal = "Vitória";
+        } else if(resultado == "Derrota"){
+          $scope.placarFinal = "Derrota";
+        } else {
+          $scope.placarFinal = "Empate";
+        }
+      } else if($scope.idioma == "es"){
+        if(resultado == "Vitoria"){
+          $scope.placarFinal = "Victoria";
+        } else if(resultado == "Derrota"){
+          $scope.placarFinal = "Derrota";
+        } else {
+          $scope.placarFinal = "Empate";
+        }
+      } else {
+        if(resultado == "Vitoria"){
+          $scope.placarFinal = "Victory";
+        } else if(resultado == "Derrota"){
+          $scope.placarFinal = "Defeat";
+        } else {
+          $scope.placarFinal = "Draw";
+        }
+      }
+     }
+
       console.log("conq "+conquistas);
       //Vitória armazenando as conquistas e os pontos dentro de arrayConquistas
       for(var key in conquistas){
+        //-------------------------------------------------------------------------- PORTUGUES
         if($scope.idioma == "pt"){
+          //vitoria
           var vit = conquistas[key].vitoria.pt;
           for(var c in vit){
             arrayConquistas.push([vit[c].titulo, vit[c].pontos]); 
           }
+          //derrota
+          var der = conquistas[key].derrota.pt;
+          for(var d in der){
+            arrayConquistasDerrota.push([der[d].titulo, der[d].pontos]); 
+          }
+          
+          //empate
+          var emp = conquistas[key].empate.pt;
+          for(var e in emp){
+            arrayConquistasEmpate.push([emp[e].titulo, emp[e].pontos]); 
+          }
+         
+        //-------------------------------------------------------------------------- ESPAÑOL
         } else if($scope.idioma == "es"){
           var vit = conquistas[key].vitoria.es;    
           for(var c in vit){
             arrayConquistas.push([vit[c].titulo, vit[c].pontos]);  
           }
+          //derrota
+          var der = conquistas[key].derrota.es;
+          for(var d in der){
+            arrayConquistasDerrota.push([der[d].titulo, der[d].pontos]); 
+          }
+          //empate
+          var emp = conquistas[key].empate.es;
+          for(var e in emp){
+            arrayConquistasEmpate.push([emp[e].titulo, emp[e].pontos]); 
+          }
+        //-------------------------------------------------------------------------- INGLES
         } else {
           var vit = conquistas[key].vitoria.en;
           for(var c in vit){
             arrayConquistas.push([vit[c].titulo, vit[c].pontos]);   
+          }
+          //derrota
+          var der = conquistas[key].derrota.en;
+          for(var d in der){
+            arrayConquistasDerrota.push([der[d].titulo, der[d].pontos]); 
+          }
+          //empate
+          var emp = conquistas[key].empate.en;
+          for(var e in emp){
+            arrayConquistasEmpate.push([emp[e].titulo, emp[e].pontos]); 
           }
         }
       }
@@ -168,14 +235,18 @@
       // ----------------------------------------------------------------------------------------------------- JOGO Local
       if(ganhador == 'A'){
         if(resultado1 > resultado2 ){
-          $scope.placarFinal = "Vitoria";  
-          listarConquistaVitoria(resultado1, resultado2);     
+          var resultadoFinal = "Vitoria";  
+          listarConquistaVitoria(resultado1, resultado2); 
+          definirResultado(resultadoFinal);    
 
         } else if(resultado1 < resultado2){
-          $scope.placarFinal = "Derrota";
-          itemList.push(["Derrota", 0]);
+          var resultadoFinal = "Derrota";
+          listaConquistasDerrota(resultado1, resultado2);
+          definirResultado(resultadoFinal); 
         } else {
-          $scope.placarFinal = "Empate";
+          var resultadoFinal = "Empate";
+          listaConquistasEmpate(resultado1, resultado2);
+          definirResultado(resultadoFinal); 
         } 
 
       // -----------------------------------------------------------------------------------------------------  Jogo Visitante 
@@ -184,15 +255,19 @@
       else if(ganhador == 'B'){
          if(resultado1 < resultado2){
           console.log("Vc ganhou o jogo. "+$scope.placar);
-          $scope.placarFinal = "Vitoria"
-          listarConquistaVitoria(resultado2, resultado1);     
+          var resultadoFinal = "Vitoria"
+          listarConquistaVitoria(resultado2, resultado1); 
+          definirResultado(resultadoFinal);     
         } else if(resultado1 > resultado2){
           console.log("Vc perdeu o jogo. "+$scope.placar);
-          $scope.placarFinal = "Derrota";
-          itemList.push(["Derrota", 0]);
+          var resultadoFinal = "Derrota";
+          listaConquistasDerrota(resultado2, resultado1);
+          definirResultado(resultadoFinal);           
         } else {
           console.log("Vc empatou o jogo. "+$scope.placar);
-          $scope.placarFinal = "Empate";
+          var resultadoFinal = "Empate";
+          listaConquistasEmpate(resultado2, resultado1);
+          definirResultado(resultadoFinal); 
         }  
       } else {
         ganhador = false;
@@ -268,6 +343,46 @@
 
             }            
           }     
+     }
+
+     function listaConquistasEmpate(res1, res2){
+      console.log("Empate "+res1, res2);
+        if(res1 == 1){
+          itemList.push([arrayConquistasEmpate[0][0], arrayConquistasEmpate[0][1]]);
+          totalPontos = totalPontos + arrayConquistasEmpate[0][1];
+        } else if(res1 == 2){
+          itemList.push([arrayConquistasEmpate[0][0], arrayConquistasEmpate[0][1]]);
+          totalPontos = totalPontos + arrayConquistasEmpate[0][1];
+        } else if(res1 == 3){
+          itemList.push([arrayConquistasEmpate[1][0], arrayConquistasEmpate[1][1]]);
+          totalPontos = totalPontos + arrayConquistasEmpate[1][1];
+        } else if(res1 == 4){
+          itemList.push([arrayConquistasEmpate[2][0], arrayConquistasEmpate[2][1]]);
+          totalPontos = totalPontos + arrayConquistasEmpate[2][1];
+        } else {
+          itemList.push([arrayConquistasEmpate[3][0], arrayConquistasEmpate[3][1]]);
+          totalPontos = totalPontos + arrayConquistasEmpate[3][1];
+        }
+     }
+
+     function listaConquistasDerrota (res1, res2){
+      var diferencaDerrota = res2 - res1;
+      console.log("DIF ",diferencaDerrota);
+        if(diferencaDerrota == 1){
+          if(res1 == 2){
+            console.log("DIF 2 ",arrayConquistasDerrota[0][0], arrayConquistasDerrota[0][1]);
+             itemList.push([arrayConquistasDerrota[0][0], arrayConquistasDerrota[0][1]]);
+             totalPontos = totalPontos + arrayConquistasDerrota[0][1];
+          } else if(res1 == 3){
+            itemList.push([arrayConquistasDerrota[1][0], arrayConquistasDerrota[1][1]]);
+             totalPontos = totalPontos + arrayConquistasDerrota[1][1];
+          } else {
+            itemList.push([arrayConquistasDerrota[2][0], arrayConquistasDerrota[2][1]]);
+             totalPontos = totalPontos + arrayConquistasDerrota[2][1];
+          }
+        } else{
+          itemList.push(["Derrota", 0]);
+        }
      }
 
 

@@ -24,8 +24,7 @@
     var letras = [];
     $scope.buscarUltimaLetra = function(){	
   	var refLetra = firebase.database().ref('desafio/configuracaogeral/conquistas/conquistasTemporadas/vitoria/pt');
-	    refLetra.once("value").then(function(snapshot) {
-	        
+	    refLetra.once("value").then(function(snapshot) {	        
 	        snapshot.forEach(function(minisnapshot) {
 	        	letras.push(minisnapshot.val().letra)
 	        });
@@ -36,13 +35,15 @@
 
 
     	$scope.enviarConquista = function(conquista){
+        var status = conquista.status;
     		var idioma = conquista.idioma;
     		var pontos = conquista.pontos;
     		var letra = conquista.letra;
     		var titulo = conquista.titulo;
     		var descricao = conquista.descricao;
 
-    		  firebase.database().ref('desafio/configuracaogeral/conquistas/conquistasTemporadas/vitoria/'+idioma).push({
+
+    		  firebase.database().ref('desafio/configuracaogeral/conquistas/conquistasTemporadas/'+status+'/'+idioma).push({
                 descricao: descricao,
                 letra: letra,
                 pontos: pontos,

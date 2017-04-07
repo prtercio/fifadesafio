@@ -4,6 +4,10 @@
 		<form name="myForm" novalidate>
 			<div class="list">
 				<label class="item item-input">
+					<span class="input-label">Status</span>
+					<input type="text" name="status" ng-model="conquista.status" ng-minlength="1" required>
+				</label>
+				<label class="item item-input">
 					<span class="input-label">Letra</span>
 					<input type="text" name="letra" ng-model="conquista.letra" ng-minlength="1" required>
 				</label>
