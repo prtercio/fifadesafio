@@ -21,6 +21,7 @@ trans.factory('asyncLoader', function ($q, $timeout) {
     if (options.key === 'es') {
       translations = {
         LENGUAJE_ID: 1,
+        CONQUISTAS:"Logros",
         LENGUAJE: "Español",
         SENHA: "Contraseña",
         INISESSAO:"Iniciar sesión",
@@ -36,6 +37,7 @@ trans.factory('asyncLoader', function ($q, $timeout) {
         CONFIGURACAO: "Configuración",
         DESENVOLVIDOPOR: "Desarrollado por",
         SELECIONARIDIOMA:"Seleccionar el Idioma",
+        IDIOMA:"Idioma",
         VITORIA: "Victoria",
         ADICIONEASFOTOS: "Agregue aqui la(s) foto(s):",
         SELECIONECONQUISTAS: "Seleccione una o más conquistas:",
@@ -48,11 +50,18 @@ trans.factory('asyncLoader', function ($q, $timeout) {
         SAIR: "Salir",
         DESAFIO: "Desafío",
         DETALHEDESAFIO: "Detalles del desafío",
-        MEUSJOGOS:"Mis Juegos"
+        MEUSJOGOS:"Mis Juegos",
+        TEMPORADAS:"Temporadas",
+        DESCRICAO:"Descripción",
+        RECUPERARRESULTADO:'Recuperar resultado',
+        SELECCIONETIME:"Seleccione su equipo",
+        MANDANTE:"Local",
+        VISITANTE:"Visitante"
       };
     } if (options.key === 'pt') {
       translations = {
         LENGUAJE_ID: 2,
+        CONQUISTAS:"Conquistas",
         LENGUAJE: "Portugues",
         SENHA: "Senha",
         INISESSAO:"Iniciar sessão",
@@ -68,6 +77,7 @@ trans.factory('asyncLoader', function ($q, $timeout) {
         CONFIGURACAO: "Configuração",
         DESENVOLVIDOPOR: "Desenvolvido por",
         SELECIONARIDIOMA:"Selecione o Idioma",
+        IDIOMA:"Idioma",
         VITORIA: "Vitória",
         ADICIONEASFOTOS: "Adicione aqui a(s) foto(s):",
         SELECIONECONQUISTAS: "Selecione uma o mais conquistas:",
@@ -80,7 +90,13 @@ trans.factory('asyncLoader', function ($q, $timeout) {
         SAIR: "Sair",
         DESAFIO: "Desafio",
         DETALHEDESAFIO: "Detalhes do desafio",
-        MEUSJOGOS:"Meus Jogos"
+        MEUSJOGOS:"Meus Jogos",
+        TEMPORADAS:"Temporadas",
+        DESCRICAO:"Descrição",
+        RECUPERARRESULTADO:'Recuperar resultado',
+        SELECCIONETIME:"Selecione seu time",
+        MANDANTE:"Mandante",
+        VISITANTE:"Visitante"
 
       };
     }

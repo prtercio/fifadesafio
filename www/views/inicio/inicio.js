@@ -8,13 +8,49 @@
     '$localStorage', 
     '$ionicPopup',
     '$window',
+    '$ionicPopover',
     function(
       $scope,
       $localStorage,
       $ionicPopup,
-      $window    
+      $window,
+      $ionicPopover    
   ){
-     
+
+    	// ------------------------------------------------------------------------------- RECUPERAR REGRAS CONQUISTAS
+
+    	var data = new Date();
+    	var dia = data.getDate();
+    	var mes = data.getMonth()+1;
+    	var ano = data.getFullYear();
+    	var dataHoje = dia+"/"+mes+"/"+ano;
+    	var fechaRefreshConquista;
+
+    	if(localStorage.getItem("fechaAtualizacao")){
+    		if(localStorage.getItem("fechaAtualizacao") == dataHoje){
+    			console.log("Já está atualizada");
+    		} else {
+    			atualizarConquistas();
+    			localStorage.setItem("fechaAtualizacao", dataHoje);
+    		}
+    	} else {
+    		atualizarConquistas ();
+    		localStorage.setItem("fechaAtualizacao", dataHoje);
+    	}
+
+    	function atualizarConquistas (){
+    		var refConquistas = firebase.database().ref('desafio/configuracaogeral/conquistas');
+		      refConquistas.once("value").then(function(snapshot) {
+		        var conquistas = [];
+		          console.log(snapshot.val());  
+		          localStorage.setItem('conquistas',JSON.stringify(snapshot.val()));
+		          console.log( localStorage.getItem('conquistas'));
+
+		      });
+    	}
+    	
+     	//
+    	// ------------------------------------------------------------------------------- SELECIONAR IDIOMA
     	$scope.showPopup = function() {
 		    if(window.localStorage.getItem("lang")){
 		      console.log("Idioma selecionado.")
@@ -24,9 +60,8 @@
 		    	title: 'Language',
 		    	scope: $scope,
 		    	buttons: [
-		    	{ text: 'Portugues', onTap: function(e) { return 'pt'; } },
-		    	{ text: 'Español', onTap: function(e) { return 'es'; } }
-
+			    	{ text: 'Portugues', onTap: function(e) { return 'pt'; } },
+			    	{ text: 'Español', onTap: function(e) { return 'es'; } }
 		    	]
 		    }).then(function(res) {
 		    	console.log('Tapped!', res);
@@ -44,6 +79,20 @@
 		    });
 		  }
 		}
+
+		// ---------------------------------------------------------------------------------------------- MENU FLOTANTE
+
+		//abrir menuFlotante
+	      $ionicPopover.fromTemplateUrl('templates/popover.html', {
+	          scope: $scope,
+	      }).then(function(popover) {
+	          $scope.popover = popover;
+	      });
+
+	      $scope.cerrarMenu = function(){
+	         $scope.popover.hide();
+	      };
+
 
   }]); //ctrl
 })();

@@ -1,5 +1,40 @@
 <ion-view view-title="Inicio" ng-init="showPopup()">
+  <ion-nav-buttons side="secondary">      
+        <a class="button button-icon icon ion-help-circled" ng-click="popover.show($event)"></a>
+  </ion-nav-buttons>
   <ion-content>
     <h1>Inicio</h1>
+    <script id="templates/popover.html" type="text/ng-template">
+    <ion-popover-view style="height: 330px;">
+      <ion-content>
+        <ion-list>
+         <ion-item class="item item-icon-left verde" ng-href="#/tab/regras" ng-click="cerrarMenu()">
+            <i class="icon ion-clipboard"></i>{{'REGRAS' | translate}}
+          </ion-item>          
+          <ion-item class="item item-icon-left verde" ng-href="#/app/conquistas" ng-click="cerrarMenu()">
+            <i class="icon ion-ribbon-a"></i>{{'CONQUISTAS' | translate}}
+          </ion-item>
+          <ion-item class="item item-icon-left verde" ng-href="#/app/configuracao" ng-click="cerrarMenu()">
+            <i class="icon ion-gear-b"></i>{{'CONFIGURACAO' | translate}}
+          </ion-item>
+           <ion-item class="item item-icon-left verde" ng-href="#/app/administracao" ng-click="cerrarMenu()">
+            <i class="icon ion-gear-b"></i>Administracao
+          </ion-item>
+          <div class="padding">
+          <div><strong>Participante:</strong></div>
+          <ul>
+          <li> <i class="icon ion-ios-game-controller-b"></i><span class="iconCustom">{{gamertag}}</span></li>
+          <li> <i class="icon ion-email"></i><span class="iconCustom">{{email}}</span></li>
+          </ul>
+          <hr>
+            <span><strong>Desafio Fifa 17</strong><span class="gris fontepequena">v:2.0.1</span></span><hr>
+            {{'DESENVOLVIDOPOR' | translate}}
+            <p><strong>Tércio Santos</strong></p>
+
+          </div>          
+        </ion-list>
+      </ion-content>
+    </ion-popover-view>
+  </script>
   </ion-content>
 </ion-view>

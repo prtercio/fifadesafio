@@ -7,6 +7,9 @@
 angular.module('App', [
   'ionic',
   'App.CtrlInicio',
+  'App.CtrlConquistas',
+  'App.CtrlConfiguracao',
+  'App.CtrlAdministracao',
   'App.CtrlTemporadas',
   'App.CtrlTempTorneio', 
   'App.CtrlTempTorneioJogo', 
@@ -87,6 +90,34 @@ angular.module('App', [
       }
     }
   })
+
+  .state('app.conquistas', {
+    url: '/conquistas',
+    views: {
+      'menuContent': {
+        templateUrl: 'views/inicio/conquistas.html',
+        controller: 'CtrlConquistas'
+      }
+    }
+  })
+   .state('app.configuracao', {
+    url: '/configuracao',
+    views: {
+      'menuContent': {
+        templateUrl: 'views/inicio/configuracao.html',
+        controller: 'CtrlConfiguracao'
+      }
+    }
+  })
+   .state('app.administracao',{
+    url:'/administracao',
+    views:{
+      'menuContent':{
+        templateUrl: 'views/admin/administracao.html',
+        controller:'CtrlAdministracao'
+      }
+    }
+   })
 
   .state('app.temporadas', {
       url: '/temporadas',

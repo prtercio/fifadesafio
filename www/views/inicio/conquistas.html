@@ -1,0 +1,73 @@
+<ion-view view-title="{{'CONQUISTAS' | translate}}"> 
+  <ion-content>
+    <li class="item item-toggle">
+              {{'TEMPORADAS' | translate}}
+          <label class="toggle toggle-positive">
+            <input type="checkbox" ng-model="checkedTemporadas" aria-label="Toggle ngHide">
+                <div class="track">
+                    <div class="handle"></div>
+                </div>
+          </label>
+    </li>
+    <div class="list" ng-show="checkedTemporadas">    
+      <div class="item item-text-wrap" ng-repeat="(key, value) in conquistas.conquistasTemporadas.vitoria.en track by $index" ng-if="idioma == 'en'">
+        <span class="item-note">
+          <p class="right">{{'PONTOS' | translate}}: <strong>{{value.pontos}}</strong></p>
+        </span>
+        <h2 class="verde">{{value.titulo}}</h2>
+        <p><strong>{{'DESCRICAO' | translate}}</strong>: {{value.descricao}}</p>
+      </div>
+       <div class="item item-text-wrap" ng-repeat="(key, value) in conquistas.conquistasTemporadas.vitoria.es track by $index" ng-if="idioma == 'es'">
+       <span class="item-note">
+          <p class="right">{{'PONTOS' | translate}}: <strong>{{value.pontos}}</strong></p>
+        </span>
+        <h2 class="verde">{{value.titulo}}</h2>
+        <p><strong>{{'DESCRICAO' | translate}}</strong>: {{value.descricao}}</p>
+        
+      </div>
+       <div class="item item-text-wrap" ng-repeat="(key, value) in conquistas.conquistasTemporadas.vitoria.pt track by $index" ng-if="idioma == 'pt'">
+        <span class="item-note">
+          <p class="right">{{'PONTOS' | translate}}: <strong>{{value.pontos}}</strong></p>
+        </span>
+        <h2 class="verde">{{value.titulo}}</h2>
+        <p><strong>{{'DESCRICAO' | translate}}</strong>: {{value.descricao}}</p>
+      </div>
+    </div>
+
+    <!-- Copa -->
+    <li class="item item-toggle">
+              {{'COPA' | translate}}
+          <label class="toggle toggle-positive">
+            <input type="checkbox" ng-model="checkedCopa" aria-label="Toggle ngHide">
+                <div class="track">
+                    <div class="handle"></div>
+                </div>
+          </label>
+    </li>
+    <div class="list" ng-show="checkedCopa">    
+      <div class="item" ng-repeat="(key, value) in conquistas.conquistasTemporadas.en track by $index" ng-if="idioma == 'en'">
+        <span class="item-note">
+          <p class="right">{{'PONTOS' | translate}}: <strong>{{value.pontos}}</strong></p>
+        </span>
+        <h2 class="verde">{{value.titulo}}</h2>
+        <p><strong>{{'DESCRICAO' | translate}}</strong>: {{value.descricao}}</p>
+      </div>
+       <div class="item" ng-repeat="(key, value) in conquistas.conquistasTemporadas.es track by $index" ng-if="idioma == 'es'">
+        <span class="item-note">
+          <p class="right">{{'PONTOS' | translate}}: <strong>{{value.pontos}}</strong></p>
+        </span>
+        <h2 class="verde">{{value.titulo}}</h2>
+        <p><strong>{{'DESCRICAO' | translate}}</strong>: {{value.descricao}}</p>
+      </div>
+       <div class="item" ng-repeat="(key, value) in conquistas.conquistasTemporadas.pt track by $index" ng-if="idioma == 'pt'">
+        <span class="item-note">
+          <p class="right">{{'PONTOS' | translate}}: <strong>{{value.pontos}}</strong></p>
+        </span>
+        <h2 class="verde">{{value.titulo}}</h2>
+        <p><strong>{{'DESCRICAO' | translate}}</strong>: {{value.descricao}}</p>
+      </div>
+    </div>
+   
+
+  </ion-content>
+</ion-view>

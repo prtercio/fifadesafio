@@ -154,6 +154,7 @@
 
     	//armazenar idTorneio
     	dataService.set(idTorneio);
+    	console.log(dataService.get());
 
     	$scope.cargarDatos = function(){
     		$ionicLoading.show({

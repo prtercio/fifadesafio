@@ -100,7 +100,7 @@
 	      		<h4 align="center">Você não está inscrito neste torneio.</h4>
 	      	</div> 			
 			    <ion-list>
-			      <a class="item item-icon-left item-icon-right" ng-repeat="jogo in jogosLista | orderBy:'jogo*1':true" type="item-text-wrap" href="#/app/temporadasTorneioJogo/{{jogo.jogo}}" ng-if="!jogo.bloqueado && jogo.jogo<51">
+			      <a class="item item-icon-left item-icon-right" ng-repeat="jogo in jogosLista | orderBy:'jogo*1':true" type="item-text-wrap" href="#/app/temporadasTorneioJogo/{{jogo.jogo}}|{{keyUserInscritoTorneio}}" ng-if="!jogo.bloqueado && jogo.jogo<51">
 			            <i class="icon ion-ios-game-controller-a"></i>
 			            <strong>{{'JOGO' | translate}} {{jogo.jogo}}</strong>
 			            <in ng-class="(jogo.estado=='Terminado') ? 'verde' : 'vermelho'">{{jogo.estado}}</in>

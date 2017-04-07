@@ -1,0 +1,52 @@
+<ion-view view-title="{{'DETALHEJOGO' | translate}}" ng-init="buscarUltimaLetra()">
+	<ion-content class="padding">
+
+		<form name="myForm" novalidate>
+			<div class="list">
+				<label class="item item-input">
+					<span class="input-label">Letra</span>
+					<input type="text" name="letra" ng-model="conquista.letra" ng-minlength="1" required>
+				</label>
+				<label class="item item-input">
+					<span class="input-label">Idioma</span>
+					<input type="text" name="idioma" ng-model="conquista.idioma" ng-minlength="1" required>
+				</label>
+				<label class="item item-input">
+					<span class="input-label">Pontos</span>
+					<input type="number" name="pontos" ng-model="conquista.pontos" ng-minlength="1" required>
+				</label>
+				<hr>
+				<label class="item item-input">
+					<span class="input-label">Titulo</span>
+					<input type="text" name="titulo"  ng-model="conquista.titulo" ng-minlength="1" required>
+				</label>
+				
+					<span class="input-label">Descricao</span>
+					<textarea  ng-model="conquista.descricao" ng-Required="true" name="descricao"></textarea>
+				<!--
+				<hr>
+				<label class="item item-input">
+					<span class="input-label">Titulo-ES</span>
+					<input type="text" name="tituloPt"  ng-model="conquista.tituloEs" ng-minlength="1" required>
+				</label>
+				
+					<span class="input-label">Descricao</span>
+					<textarea  ng-model="conquista.descricaoEs" ng-Required="true" name="descricaoEs"></textarea>
+				
+				<hr>
+				<label class="item item-input">
+					<span class="input-label">Titulo-EN</span>
+					<input type="text" name="tituloPn"  ng-model="conquista.tituloEn" ng-minlength="1" required>
+				</label>
+				
+					<span class="input-label">Descricao</span>
+					<textarea  ng-model="conquista.descricaoEn" ng-Required="true" name="descricaoEn"></textarea>
+				-->
+				</div>        
+			<div class="padding">
+				<button type="button" class="button button-block button-positive" ng-click="enviarConquista(conquista)">Enviar</button>
+			</div>
+		</form>
+		<h5>Obs.: {{ultimaLetra}}</h5>
+	</ion-content>
+</ion-view>
