@@ -76,7 +76,16 @@
         <h3 align="center">{{totalPontos}} {{'PONTOS' | translate}}</h3>
       </div>
       </div>
-      <ion-list>
+      <li class="item item-toggle" ng-show="timeCasa">
+        Detalhe das Conquistas
+        <label class="toggle toggle-positive">
+          <input type="checkbox" ng-model="checkedConq" aria-label="Toggle ngHide">
+          <div class="track">
+            <div class="handle"></div>
+          </div>
+        </label>
+      </li>
+      <ion-list ng-show="checkedConq">
         <ion-item ng-repeat="shop in items" class="item item-icon-left item-verde"  >
           <i class="icon ion-checkmark verde"></i>
           <h2 class="verde">{{shop[0]}}.  {{'PONTOS' | translate}}: {{shop[1]}}</h2>
@@ -85,6 +94,9 @@
           </ion-option-button>
         </ion-item>  
       </ion-list>
+      <div>
+        <button class="button button-block button-balanced" ng-click="enviarResultado()">Enviar</button>
+      </div>
     </div>
 
     <div ng-if="estado == 'Terminado'">

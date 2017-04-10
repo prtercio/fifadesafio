@@ -16,6 +16,8 @@
     '$ionicLoading',
     '$http',
     '$ionicPopup',
+    '$rootScope',
+    '$ionicHistory',
     function(
       $scope,
       Utils,
@@ -28,7 +30,9 @@
       dataService,
       $ionicLoading,
       $http,
-      $ionicPopup
+      $ionicPopup,
+      $rootScope,
+      $ionicHistory
   ){
 
       // si foi enviado:
@@ -45,6 +49,8 @@
       //console.log(id, keyUsuario);
       var idJogo = id;
       var itemList=[];
+
+      console.log(" id: "+id);
 
       $scope.verPontos = false;
       $scope.chat = "jogo"+idJogo; 
@@ -72,6 +78,75 @@
 
      $scope.verPlacarFinal = false;
      console.log($localStorage.account.idXbox);
+
+     var resultUltimo = 0;
+     var resultPenultimo = 0;
+     var resultAntepenultimo = 0;
+
+     var statusUltimo = 0;
+     var statusPenultimo = 0;
+     var statusAntepenultimo = 0;
+
+     var placarUltimo = 0;
+     var placarPenultimo = 0;
+     var placarAntepenultimo = 0;
+
+     var sequenciaVitoria = 0;
+     var invencibilidade = 0;
+
+     var jogados = 0;
+
+     var anteriorVitoria = 0;
+     var anteriorDerrota = 0;
+     var anteriorEmpate = 0;
+     var seVitoria = 0;
+     var seDerrota = 0;
+     var seEmpate = 0;
+
+     var antGolsPro = 0;
+     var antGolsContra = 0;
+     var golsPro = 0;
+     var golsContra = 0;
+
+     var antPontos = 0;
+     var pontoAtual = 0;
+
+     // RECUPERAR TRES ÚLITMOS JOGOS
+      var refJ = firebase.database().ref('desafio/desafios/temporadas/oficial/'+idTorneio+'/inscritos/'+keyUsuario);
+      refJ.once("value").then(function(snapshot) {        
+        $scope.infoJogo = snapshot.val();
+        if($scope.infoJogo.jogados != 0){
+          resultUltimo= $scope.infoJogo.placarUltimo;
+          statusUltimo =  resultUltimo.substring(0, resultUltimo.indexOf("|"));  
+          placarUltimo = resultUltimo.substring(resultUltimo.indexOf("|")+1);         
+
+          if($scope.infoJogo.placarPenultimo != 0){
+            resultPenultimo = $scope.infoJogo.placarPenultimo;
+            statusPenultimo =  resultPenultimo.substring(0, resultPenultimo.indexOf("|"));  
+            placarPenultimo = resultPenultimo.substring(resultPenultimo.indexOf("|")+1);
+          }
+
+          if($scope.infoJogo.placarAntepenultimo != 0){
+            resultAntepenultimo= $scope.infoJogo.placarAntepenultimo;
+            statusPenultimo =  resultAntepenultimo.substring(0, resultAntepenultimo.indexOf("|"));  
+            placarAntepenultimo = resultAntepenultimo.substring(resultAntepenultimo.indexOf("|")+1);
+          }
+
+          $scope.jogados =  $scope.infoJogo.jogados; 
+          jogados = $scope.jogados;
+          sequenciaVitoria = $scope.infoJogo.sequenciaVitoria;
+          invencibilidade = $scope.infoJogo.invencibilidade;
+          anteriorVitoria = $scope.infoJogo.vitoria;
+          anteriorDerrota = $scope.infoJogo.derrota;
+          anteriorEmpate = $scope.infoJogo.empate;
+          
+          antGolsPro = $scope.infoJogo.golsPro;
+          antGolsContra = $scope.infoJogo.golsContra;
+
+          antPontos = $scope.infoJogo.pontos;
+        }
+      });
+
 
 
      function definirResultado(resultado){
@@ -234,17 +309,24 @@
      
       // ----------------------------------------------------------------------------------------------------- JOGO Local
       if(ganhador == 'A'){
+          golsPro = Number(antGolsPro) + Number(resultado1);
+          golsContra = Number(antGolsContra) + Number(resultado2);
         if(resultado1 > resultado2 ){
-          var resultadoFinal = "Vitoria";  
+          var resultadoFinal = "Vitoria"; 
+          seVitoria = 1; 
           listarConquistaVitoria(resultado1, resultado2); 
-          definirResultado(resultadoFinal);    
+          definirResultado(resultadoFinal);
+  
+          console.log(golsPro, golsContra);
 
         } else if(resultado1 < resultado2){
           var resultadoFinal = "Derrota";
+          seDerrota = 1; 
           listaConquistasDerrota(resultado1, resultado2);
-          definirResultado(resultadoFinal); 
+          definirResultado(resultadoFinal);           
         } else {
           var resultadoFinal = "Empate";
+          seEmpate = 1; 
           listaConquistasEmpate(resultado1, resultado2);
           definirResultado(resultadoFinal); 
         } 
@@ -253,21 +335,26 @@
       } 
 
       else if(ganhador == 'B'){
+          golsPro = Number(antGolsPro) + Number(resultado2);
+          golsContra = Number(antGolsContra) + Number(resultado1);  
          if(resultado1 < resultado2){
-          console.log("Vc ganhou o jogo. "+$scope.placar);
           var resultadoFinal = "Vitoria"
+          seVitoria = 1; 
           listarConquistaVitoria(resultado2, resultado1); 
-          definirResultado(resultadoFinal);     
-        } else if(resultado1 > resultado2){
-          console.log("Vc perdeu o jogo. "+$scope.placar);
-          var resultadoFinal = "Derrota";
-          listaConquistasDerrota(resultado2, resultado1);
-          definirResultado(resultadoFinal);           
-        } else {
-          console.log("Vc empatou o jogo. "+$scope.placar);
-          var resultadoFinal = "Empate";
-          listaConquistasEmpate(resultado2, resultado1);
           definirResultado(resultadoFinal); 
+  
+        } else if(resultado1 > resultado2){
+          var resultadoFinal = "Derrota";
+          seDerrota = 1; 
+          listaConquistasDerrota(resultado2, resultado1);
+          definirResultado(resultadoFinal);
+          
+        } else {
+          var resultadoFinal = "Empate";
+          seEmpate = 1; 
+          listaConquistasEmpate(resultado2, resultado1);
+          definirResultado(resultadoFinal);
+ 
         }  
       } else {
         ganhador = false;
@@ -282,16 +369,24 @@
         console.log("Conquistas: ", arrayConquistas);
         //vitoria
         var subtrairResultado = res1 - res2;
+
+        var formatVitoria = 0;
+      
+        formatVitoria = res1+"-"+res2;
+       
         //if(juego == 'A'){
           //--Vitória
           itemList.push([arrayConquistas[0][0], arrayConquistas[0][1]]);
           totalPontos = totalPontos + arrayConquistas[0][1];
+
+
           // si o oponente nao fez gol
           if(res2 == 0){
-            //--Vitoria sem sofrer gols
-            itemList.push([arrayConquistas[1][0], arrayConquistas[1][1]]);
-            totalPontos = totalPontos + arrayConquistas[2][1];
-            if(res1 == 2){
+            //--Vitoria sem sofrer gols            
+            if(res1 == 1){
+              itemList.push([arrayConquistas[1][0], arrayConquistas[1][1]]);
+              totalPontos = totalPontos + arrayConquistas[2][1];
+            } else if(res1 == 2){
               //--Vitoria 2 a 0
               itemList.push([arrayConquistas[2][0], arrayConquistas[2][1]]);
               totalPontos = totalPontos + arrayConquistas[3][1];
@@ -342,7 +437,87 @@
             } else {
 
             }            
-          }     
+          } 
+
+          // Doble, triple, cuáduple vitoria
+          if(statusUltimo != 0){
+            console.log("doble statusUltimo ");
+            var somarIguais = 0;
+            if(statusUltimo == "v" ){
+              console.log("doble statusUltimo V ");
+               if(placarUltimo == formatVitoria){
+                 console.log("doble placar ",formatVitoria, placarUltimo);
+                  somarIguais = 1;
+               }
+               if(placarUltimo == formatVitoria && placarPenultimo == formatVitoria){
+                somarIguais = 2;
+                console.log("triple placar ",formatVitoria, placarUltimo, placarPenultimo);
+               }
+               if(placarUltimo == formatVitoria && placarPenultimo == formatVitoria && placarAntepenultimo == formatVitoria){  
+                somarIguais = 3;
+                console.log("cuadruplo placar ",formatVitoria, placarUltimo, placarPenultimo, placarAntepenultimo);
+               }
+                switch(somarIguais){
+                  case 1:
+                    itemList.push([arrayConquistas[13][0], arrayConquistas[13][1]]);
+                    totalPontos = totalPontos + arrayConquistas[13][1];
+                    break;
+                  case 2:
+                    itemList.push([arrayConquistas[14][0], arrayConquistas[14][1]]);
+                    totalPontos = totalPontos + arrayConquistas[14][1];
+                    break;
+                  case 3:
+                    itemList.push([arrayConquistas[15][0], arrayConquistas[15][1]]);
+                    totalPontos = totalPontos + arrayConquistas[15][1];
+                     break;
+                  default:
+                  console.log("nao há repetidos");
+                }
+            }
+          }
+
+          // Sequencia de vitoria
+          if(sequenciaVitoria > 1){
+            var sequencia = sequenciaVitoria + 1;
+            if(sequencia == 3){
+              itemList.push([arrayConquistas[16][0], arrayConquistas[16][1]]);
+              totalPontos = totalPontos + arrayConquistas[16][1];
+            } else if(sequencia == 4){
+              itemList.push([arrayConquistas[17][0], arrayConquistas[17][1]]);
+              totalPontos = totalPontos + arrayConquistas[17][1];
+            } else if(sequencia == 5){
+              itemList.push([arrayConquistas[18][0], arrayConquistas[18][1]]);
+              totalPontos = totalPontos + arrayConquistas[18][1];
+            } else if(sequencia == 6){
+              itemList.push([arrayConquistas[19][0], arrayConquistas[19][1]]);
+              totalPontos = totalPontos + arrayConquistas[19][1];
+            } else {
+              itemList.push([arrayConquistas[20][0], arrayConquistas[20][1]]);
+              totalPontos = totalPontos + arrayConquistas[20][1];
+            }
+          }
+
+          //Invencibilidad
+          if(invencibilidade > 1){
+            var sequencia = invencibilidade + 1;
+            if(sequencia == 3){
+              itemList.push([arrayConquistas[21][0], arrayConquistas[21][1]]);
+              totalPontos = totalPontos + arrayConquistas[21][1];
+            } else if(sequencia == 4){
+              itemList.push([arrayConquistas[22][0], arrayConquistas[22][1]]);
+              totalPontos = totalPontos + arrayConquistas[22][1];
+            } else if(sequencia == 5){
+              itemList.push([arrayConquistas[23][0], arrayConquistas[23][1]]);
+              totalPontos = totalPontos + arrayConquistas[24][1];
+            } else if(sequencia == 6){
+              itemList.push([arrayConquistas[24][0], arrayConquistas[24][1]]);
+              totalPontos = totalPontos + arrayConquistas[24][1];
+            } else{
+              itemList.push([arrayConquistas[25][0], arrayConquistas[25][1]]);
+              totalPontos = totalPontos + arrayConquistas[25][1];
+            }
+          }
+
      }
 
      function listaConquistasEmpate(res1, res2){
@@ -582,14 +757,152 @@
 
     } // function
 
-   
+
+    // Enviar resposta
+    $scope.enviarResultado = function (){
+      Utils.message(Popup.loading_a, Popup.loading);
+      var zerarSequenciaVitoria;
+      var zerarInvencibilidade;
+      var novoResultado;
+      if(seVitoria == 0){
+        zerarSequenciaVitoria = 0;
+      } else {
+        zerarSequenciaVitoria = sequenciaVitoria +1;
+        if(resultado1 > resultado2){
+          novoResultado = "v|"+resultado1+"-"+resultado2;
+        } else {
+          novoResultado = "v|"+resultado2+"-"+resultado1;
+        }
+      }
+
+      if(seDerrota == 1){
+        zerarInvencibilidade = 0;
+        if(resultado1 > resultado2){
+          novoResultado = "d|"+resultado1+"-"+resultado2;
+        } else {
+          novoResultado = "d|"+resultado2+"-"+resultado1;
+        }
+      } else {
+        zerarInvencibilidade = invencibilidade + 1;
+      }
+
+      if(seEmpate == 1){
+        if(resultado1 > resultado2){
+          novoResultado = "e|"+resultado1+"-"+resultado2;
+        } else {
+          novoResultado = "e|"+resultado2+"-"+resultado1;
+        }
+      }
+
+      var conquistasEnviar = [];
+        for(var i =0; i < itemList.length; i++){
+          //console.log(itemList[i][0]+":"+itemList[i][1]);
+          conquistasEnviar.push(itemList[i][0]+":"+itemList[i][1]);
+        }
+
+      console.log(resultPenultimo, "ultimos :"+resultUltimo, 
+        "novoResultado: ",novoResultado,
+        "penultimo: "+resultUltimo, 
+        "antepenultimo: "+resultPenultimo,  
+        "resultado 1 "+resultado1, 
+        "resultado 2 "+resultado2, 
+        "jogados: ",jogados+1, 
+        "vitoria: ",anteriorVitoria+seVitoria, 
+        "Derrota: ",anteriorDerrota+seDerrota,
+        "empate: ",anteriorEmpate+seEmpate,
+        "invencibilidade ",zerarInvencibilidade, 
+        "sequenciaVitoria ", zerarSequenciaVitoria,
+        "itemList ", itemList);
+
+      console.log("iniciando update resumo");
+      firebase.database().ref().child('desafio/desafios/temporadas/oficial/'+idTorneio+'/inscritos/'+keyUsuario).update({
+            vitoria:anteriorVitoria+seVitoria,
+            pontos:antPontos + totalPontos,
+            jogados:jogados+1,
+            derrota:anteriorDerrota+seDerrota,
+            empate:anteriorEmpate+seEmpate,
+            sequenciaVitoria:zerarSequenciaVitoria,
+            invencibilidade:zerarInvencibilidade,
+            placarUltimo:novoResultado,
+            placarPenultimo:resultUltimo,
+            placarAntepenultimo:resultPenultimo,
+            golsPro:golsPro,
+            golsContra:golsContra
+        }).then(function(response) {
+          Utils.message(Popup.loading_b, Popup.loading);
+            console.log("response1: "+response); 
+            console.log("iniciando update jogo");
+            firebase.database().ref().child('desafio/desafios/temporadas/oficial/'+idTorneio+'/inscritos/'+keyUsuario+'/jogos/'+$scope.chat).update({                  
+              estado:"Terminado",
+              pontos:totalPontos,
+              conquistas:conquistasEnviar,
+              placar:novoResultado
+            }).then(function(response) {
+              Utils.message(Popup.loading_a, Popup.loading);
+              console.log("response2: "+response);
+              console.log("iniciando update siguiente jogo");
+              var somaJogo = Number(id) + 1;
+              var siguienteJogo = "jogo" + somaJogo;
+              firebase.database().ref().child('desafio/desafios/temporadas/oficial/'+idTorneio+'/inscritos/'+keyUsuario+'/jogos/'+siguienteJogo).update({                  
+                bloqueado:false
+              }).then(function(response) {
+
+                console.log("response3: "+response);
+                console.log("final update siguiente jogo");    
+                var backCount = 1;                                
+                $rootScope.$ionicGoBack = function(backCount) {
+                    $ionicHistory.goBack(backCount);
+                };
+                Utils.message(Popup.loading_b, Popup.loading).then(function() {
+                    $rootScope.$ionicGoBack();
+                  })
+                
+              });
+            });
+        }); 
+    }  
 
   }]); //ctrl
 })();
 
 /*
+Divisao
+Permanencia
+Titulo
+
+Divisao 10
+subir 9
+Titulo 12
+---------------------------------
+Divisao 9
+permanencia 6
+subir 10
+Titulo 13
+---------------------------------
+Divisao 8
+permanencia 8 pts
+subir 12 pts
+Titulo 15 pts
+---------------------------------
+Divisao 7
+permanencia
+subir
+Titulo
+---------------------------------
 6 Divisao
-16 pontos subir / 19 pontos campeao
+permanencia 10
+pontos subir /6 
+ pontos campeao 19
+---------------------------------
+Divisao 5
+Permanencia 10 
+subir 16
+Titulo 19
+---------------------------------
+Divisao 4
+Permanencia 10
+subir 16
+Titulo 19
 
 
 

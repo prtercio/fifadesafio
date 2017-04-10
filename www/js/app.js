@@ -16,7 +16,8 @@ angular.module('App', [
   'App.CtrlTemporadasRankingJogos',
   'App.CtrlTemporadasRankingJogosDetalhe',
   'App.CtrlCopas',
-  'App.dataServices', 
+  'App.dataServices',
+  'App.FiltroStatus', 
   'ngStorage', 
   'ngCordovaOauth', 
   'App.translations'])
@@ -34,6 +35,9 @@ angular.module('App', [
     delay: 3000, //How long the popup message should show before disappearing (in milliseconds -> 3000 = 3 seconds).
     successIcon: "ion-happy-outline",
     errorIcon: "ion-sad-outline",
+    loading_a:"ion-ios-more-outline",
+    loading_b: "ion-ios-more",
+    loading: "Loading",
     accountCreateSuccess: "Congratulations! Your account has been created. Logging you in.",
     emailAlreadyExists: "Sorry, but an account with that email address already exists. Please register with a different email and try again.",
     accountAlreadyExists: "Sorry, but an account with the same credential already exists. Please check your account and try again.",

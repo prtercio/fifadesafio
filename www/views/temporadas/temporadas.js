@@ -13,17 +13,44 @@
       var idioma = window.localStorage.getItem('lang');
       if(idioma == "es"){
         $scope.idioma = 1;        
-      } else {
+      } else if(idioma == "pt"){
         $scope.idioma = 0;
+      } else {
+        $scope.idioma = 2;
       }
-      Utils.show();
-    var ref = firebase.database().ref('desafio/desafios/temporadas/oficial');
-    ref.once("value").then(function(snapshot) {
-       $scope.$apply(function(){
-        $scope.temporadas = snapshot.val();
-        Utils.hide();
-       });
-    }); 
 
+      var temp = "";
+      Utils.show();
+      var ref = firebase.database().ref('desafio/desafios/temporadas/oficial');
+      ref.once("value").then(function(snapshot) {
+         $scope.$apply(function(){
+          $scope.temporadas = snapshot.val();
+          snapshot.forEach(function(minisnapshot) {
+            temp = minisnapshot.val().configuracao.estatus;
+            console.log(temp);
+          });
+          if(temp == "Aberto"){
+            if($scope.idioma == 0){
+             $scope.status = "Aberto";
+            } else if($scope.idioma == 1){
+            $scope.status = "Abierto";
+            } else {
+            $scope.status = "Open";          
+            }
+          } else {
+            if(tempa == 0){
+             $scope.status = "Fechado";
+            } else if($scope.idioma == 1){
+            $scope.status = "Cerrado";
+            } else {
+            $scope.status = "Closed";          
+            }
+          }
+          Utils.hide();
+         });
+      }); 
+
+      
+      
   }]); //ctrl
 })();

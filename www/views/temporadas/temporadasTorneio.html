@@ -1,11 +1,11 @@
-<ion-view view-title="{{'DESAFIO' | translate}}" ng-init="cargarDatos()">
+<ion-view view-title="{{'DESAFIO' | translate}}" ng-init="cargarDatos()" cache-view="false">
 	<ion-nav-buttons side="secondary">
       <button 
       	class="button" 
       	ng-click="sairTorneio()" 
       	ng-if="sairTorneioVar">{{'SAIR' | translate}}</button>
       <button class="button button-balanced icon-left icon ion-ios-game-controller-b-outline" 
-      		ng-if="!sairTorneioVar && torneio.configuracao.estatus == 'Aberto' && torneio.configuracao.inscritos != torneio.configuracao.maxParticipantes" ng-click="entrarTorneio()">Entrar</button>
+      		ng-if="!sairTorneioVar && torneio.configuracao.estatus == 'Aberto' && torneio.configuracao.inscritos != torneio.configuracao.maxParticipantes" ng-click="entrarTorneio()">{{'ENTRAR' | translate}}</button>
   </ion-nav-buttons>
 
   	<ion-tabs class="tabs-positive tabs-icon-top">
@@ -26,10 +26,10 @@
 		    <div ng-show="checked">
 		    	<div >
 			    	<div class="row borderGris bgazure">    
-				      <div class="col col-15"><strong>Jogos</strong></div>
-				      <div class="col col-30"><strong>Max.Jogadores</strong></div>
-				      <div class="col col-30"><strong>Temp.Inicial</strong></div>
-				      <div class="col col-25 verde"><strong>Estatus</strong></div>    
+				      <div class="col col-15"><strong>{{'JOGOS' | translate}}</strong></div>
+				      <div class="col col-30"><strong>{{'MAXPARTICIPANTES' | translate}}</strong></div>
+				      <div class="col col-30"><strong>{{'TEMPINICIAL' | translate}}</strong></div>
+				      <div class="col col-25 verde"><strong>Status</strong></div>    
 				    </div>
 				    <div class="row">
 				      <div class="col col-15 padding"><strong>{{torneio.configuracao.jogos}}</strong></div>
@@ -38,8 +38,8 @@
 				      <div class="col col-25 padding verde"><strong>{{torneio.configuracao.estatus}}</strong></div>    
 				    </div> 
 				    <div class="row">
-				    	<div class="col col-50">Inicio: {{torneio.configuracao.dataInicio | date:'dd/MM/yyyy'}} </div>
-				    	<div class="col col-50">Fin: {{torneio.configuracao.dataFim | date:'dd/MM/yyyy'}}</div>
+				    	<div class="col col-50">{{'INICIO' | translate}}: {{torneio.configuracao.dataInicio | date:'dd/MM/yyyy'}} </div>
+				    	<div class="col col-50">{{'FIM' | translate}}: {{torneio.configuracao.dataFim | date:'dd/MM/yyyy'}}</div>
 				    </div>
 			    </div> 
 			    </div>
@@ -67,18 +67,18 @@
 	  		</ion-content>
 	  	</ion-tab>
 
-	   	<ion-tab title="Meus Jogos" icon-on="ion-ios-football" icon-off="ion-ios-football-outline">
+	   	<ion-tab title="{{'MEUSJOGOS' | translate}}" icon-on="ion-ios-football" icon-off="ion-ios-football-outline">
 		   
 	      <ion-content has-header="true" padding="false">
 	        	<br />
 		      	<br />
 		      	<div>
 			         <div class="row borderGris bgazure">    
-				      <div class="col col-20"><strong>Jogos</strong></div>
-				      <div class="col col-20"><strong>Vitória</strong></div>
-				      <div class="col col-20"><strong>Empate</strong></div>
-				      <div class="col col-20"><strong>Derrota</strong></div>
-				      <div class="col col-20 verde"><strong>Pontos</strong></div>    
+				      <div class="col col-20"><strong>{{'JOGOS' | translate}}</strong></div>
+				      <div class="col col-20"><strong>{{'VITORIA' | translate}}</strong></div>
+				      <div class="col col-20"><strong>{{'EMPATE' | translate}}</strong></div>
+				      <div class="col col-20"><strong>{{'DERROTA' | translate}}</strong></div>
+				      <div class="col col-20 verde"><strong>{{'PONTOS' | translate}}</strong></div>    
 				    </div>
 
 				    <div class="row">    
@@ -92,18 +92,21 @@
 	      	<div ng-if="sairTorneioVar && !loggedIn">
 	      		<br />
 		      	<br />		   
-	      		<h4 align="center">Você não está inscrito neste torneio.</h4>
+	      		<h4 align="center">{{'NOINSCRITOTORNEIO' | translate}}</h4>
 	      	</div>
 	      	<div ng-if="!loggedIn">
 	      		<br />
 		      	<br />		   
-	      		<h4 align="center">Você não está inscrito neste torneio.</h4>
+	      		<h4 align="center">{{'NOINSCRITOTORNEIO' | translate}}</h4>
 	      	</div> 			
 			    <ion-list>
 			      <a class="item item-icon-left item-icon-right" ng-repeat="jogo in jogosLista | orderBy:'jogo*1':true" type="item-text-wrap" href="#/app/temporadasTorneioJogo/{{jogo.jogo}}|{{keyUserInscritoTorneio}}" ng-if="!jogo.bloqueado && jogo.jogo<51">
 			            <i class="icon ion-ios-game-controller-a"></i>
 			            <strong>{{'JOGO' | translate}} {{jogo.jogo}}</strong>
-			            <in ng-class="(jogo.estado=='Terminado') ? 'verde' : 'vermelho'">{{jogo.estado}}</in>
+			            <in 
+			            	ng-class="{verde : jogo.status=='v', vermelho : jogo.status=='d', laranja : jogo.status=='e', gris2: jogo.estado=='Próximo'}">
+			            {{jogo.status | filtroStatus}}{{jogo.placar}}
+			            </in>			            
 			            <span class="item-note">
 			               <p class="right" ng-if="jogo.estado=='Terminado'">{{'PONTOS' | translate}}: <strong>{{jogo.pontos}}</strong></p>
 			            </span>

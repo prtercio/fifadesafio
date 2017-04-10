@@ -23,6 +23,7 @@
       dataService
   ){
 
+    	
     	if(firebase.auth().currentUser) {
 	        $scope.loggedIn = true;
 	        console.log("logado");
@@ -247,7 +248,14 @@
 	  				pontos:0,
 	  				jogados:0,
 	  				derrota:0,
-	  				empate:0
+	  				empate:0,
+	  				sequenciaVitoria:0,
+	  				invencibilidade:0,
+	  				placarUltimo:0,
+	  				placarPenultimo:0,
+	  				placarAntepenultimo:0,
+	  				golsPro:0,
+	  				golsContra:0
 	            }).then(function(response) {
 	              	console.log("response: "+response);
 	              	$scope.verBtnInscricao = true;
@@ -291,7 +299,7 @@
 
 					   var alertPopup = $ionicPopup.alert({
 					     title: 'Ok',
-					     template: 'Eliminado.'
+					     template: 'Deleted.'
 					   });
 
 					   alertPopup.then(function(res) {
@@ -322,10 +330,9 @@
 			    		$scope.comJogos = snapshot.val();
 			    		$scope.jogados = $scope.comJogos.jogados;
 			    		$scope.derrota = $scope.comJogos.derrota;
-			    		$scope.empate = $scope.comJogos.emapte;
+			    		$scope.empate = $scope.comJogos.empate;
 			    		$scope.pontos = $scope.comJogos.pontos;
 			    		$scope.vitoria = $scope.comJogos.vitoria;
-
 
 			    		var comJogos = []; 
 			    		comJogos.push($scope.comJogos.jogos);
@@ -335,7 +342,9 @@
 				                "jogo":comJogos[0][key].jogo, 
 				                "bloqueado":comJogos[0][key].bloqueado, 
 				                "estado":comJogos[0][key].estado, 
-				                "pontos":comJogos[0][key].pontos
+				                "pontos":comJogos[0][key].pontos,
+				                "placar":comJogos[0][key].placar,
+				                "status":comJogos[0][key].status
 				            });
 			    		}
 			    		
