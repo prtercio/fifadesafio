@@ -3,6 +3,7 @@ var trans = angular.module('App.translations', ['pascalprecht.translate']);
 trans.config(['$translateProvider', function ($translateProvider, $translate) {
   //$translateProvider.preferredLanguage(window.localStorage.getItem("lang"));
   $translateProvider.useLoader('asyncLoader');
+
   $translateProvider.useSanitizeValueStrategy('escaped');
 
   $translateProvider.preferredLanguage(window.localStorage.getItem("lang"));
@@ -68,7 +69,13 @@ trans.factory('asyncLoader', function ($q, $timeout) {
         RECUPERARRESULTADO:'Recuperar resultado',
         SELECCIONETIME:"Seleccione su equipo",
         MANDANTE:"Local",
-        VISITANTE:"Visitante"
+        VISITANTE:"Visitante",
+        RESULTADOONLINE:"Resultado Online",
+        RESULTADOMANUAL:"Resultado Manual",
+        ADICIONARCONQUISTAS:"Agregar Conquistas",
+        DETALHECONQUISTAS:"Detalle de las Conquistas",
+        X:"VS",
+        ENVIAR:"Enviar"
       };
     } if (options.key === 'pt') {
       translations = {
@@ -85,7 +92,7 @@ trans.factory('asyncLoader', function ($q, $timeout) {
         ANTESREGISTRO:"Antes de se registrar, verifique seu Gamertag...",
         GAMERTAGOK: "Gamertag OK. Pode se registrar!",
         VOLTAR:"Volver",
-        PONTOS: "Pontos",
+        PONTOS:"Pontos",
         JOGOS:"Jogos",
         JOGO:"Jogo",
         REGRAS: "Regras",
@@ -121,7 +128,12 @@ trans.factory('asyncLoader', function ($q, $timeout) {
         SELECCIONETIME:"Selecione seu time",
         MANDANTE:"Mandante",
         VISITANTE:"Visitante",
-
+        RESULTADOONLINE:"Resultado Online",
+        RESULTADOMANUAL:"Resultado Manual",
+        ADICIONARCONQUISTAS:"Adicionar Conquistas",
+        DETALHECONQUISTAS:"Detalhe das Conquistas",
+        X:"X",
+        ENVIAR:"Enviar"
       };
     }
     if (options.key === 'en') {

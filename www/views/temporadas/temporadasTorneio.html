@@ -105,7 +105,7 @@
 			            <strong>{{'JOGO' | translate}} {{jogo.jogo}}</strong>
 			            <in 
 			            	ng-class="{verde : jogo.status=='v', vermelho : jogo.status=='d', laranja : jogo.status=='e', gris2: jogo.estado=='Próximo'}">
-			            {{jogo.status | filtroStatus}}{{jogo.placar}}
+			            {{jogo.status | filtroStatus}} : {{jogo.placar}}
 			            </in>			            
 			            <span class="item-note">
 			               <p class="right" ng-if="jogo.estado=='Terminado'">{{'PONTOS' | translate}}: <strong>{{jogo.pontos}}</strong></p>

@@ -9,12 +9,14 @@
     '$ionicPopup',
     '$window',
     '$ionicPopover',
+    'Utils',
     function(
       $scope,
       $localStorage,
       $ionicPopup,
       $window,
-      $ionicPopover    
+      $ionicPopover,
+      Utils   
   ){
 
     	// ------------------------------------------------------------------------------- RECUPERAR REGRAS CONQUISTAS
@@ -24,6 +26,7 @@
     	} else {
     		$scope.admin = false;
     	}
+
     	var data = new Date();
     	var dia = data.getDate();
     	var mes = data.getMonth()+1;
@@ -44,13 +47,11 @@
     	}
 
     	function atualizarConquistas (){
+        Utils.show();
     		var refConquistas = firebase.database().ref('desafio/configuracaogeral/conquistas');
 		      refConquistas.once("value").then(function(snapshot) {
-		        var conquistas = [];
-		          console.log(snapshot.val());  
-		          localStorage.setItem('conquistas',JSON.stringify(snapshot.val()));
-		          console.log( localStorage.getItem('conquistas'));
-
+		          localStorage.setItem('conquistas',JSON.stringify(snapshot.val()));	
+              Utils.hide();
 		      });
     	}
     	

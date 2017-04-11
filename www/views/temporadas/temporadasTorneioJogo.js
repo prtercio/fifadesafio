@@ -111,6 +111,10 @@
      var antPontos = 0;
      var pontoAtual = 0;
 
+     // variaveis para longitud do resultado
+     var lentLocal = 0;
+     var lenVisitante = 0;
+
      // RECUPERAR TRES ÚLITMOS JOGOS
       var refJ = firebase.database().ref('desafio/desafios/temporadas/oficial/'+idTorneio+'/inscritos/'+keyUsuario);
       refJ.once("value").then(function(snapshot) {        
@@ -150,6 +154,7 @@
 
 
      function definirResultado(resultado){
+      /*
       if($scope.idioma == "pt"){
         if(resultado == "Vitoria"){
           $scope.placarFinal = "Vitória";
@@ -175,6 +180,7 @@
           $scope.placarFinal = "Draw";
         }
       }
+      */
      }
 
       console.log("conq "+conquistas);
@@ -283,9 +289,29 @@
     */
 
     $scope.submit = function(resultado){
-      console.log(resultado);
-      $scope.recuperarJogo(resultado.local, resultado.visitante);
-      $scope.verPlacarFinal = false;
+        var r1 = String(resultado.local);
+        var r2 = String(resultado.visitante);
+        var splitRes1 = r1.split("");
+        var splitRes2 = r2.split("");
+
+        console.log("aplit ", splitRes1.length, "2 ", splitRes2.length);
+        if(splitRes1.length == 2){
+          lentLocal = 2;
+        } else {
+          lentLocal == 1;
+        }
+
+        if(splitRes2.length == 2){
+          lenVisitante = 2;
+        } else {
+          lenVisitante == 1;
+        }
+        $scope.recuperarJogo(resultado.local, resultado.visitante);
+        $scope.verPlacarFinal = false;     
+    }
+
+    $scope.identificarPlacar = function(dato){
+      console.log(dato);
     }
    
 
@@ -299,7 +325,6 @@
      }
 
      $scope.jogoSelecionado = function(valor){
-      console.log("Resutaldo "+valor);
       $scope.verBtn = false;
       ganhador = valor;
       itemList = [];
@@ -313,19 +338,22 @@
           golsContra = Number(antGolsContra) + Number(resultado2);
         if(resultado1 > resultado2 ){
           var resultadoFinal = "Vitoria"; 
+          $scope.placarFinal = "v";
           seVitoria = 1; 
           listarConquistaVitoria(resultado1, resultado2); 
-          definirResultado(resultadoFinal);
-  
+          definirResultado(resultadoFinal);  
           console.log(golsPro, golsContra);
-
+          placarInverso(resultado1, resultado2, "v");
         } else if(resultado1 < resultado2){
           var resultadoFinal = "Derrota";
+          $scope.placarFinal = "d";
           seDerrota = 1; 
           listaConquistasDerrota(resultado1, resultado2);
-          definirResultado(resultadoFinal);           
+          definirResultado(resultadoFinal);  
+          placarInverso(resultado1, resultado2, "d");         
         } else {
           var resultadoFinal = "Empate";
+          $scope.placarFinal = "e";
           seEmpate = 1; 
           listaConquistasEmpate(resultado1, resultado2);
           definirResultado(resultadoFinal); 
@@ -338,19 +366,22 @@
           golsPro = Number(antGolsPro) + Number(resultado2);
           golsContra = Number(antGolsContra) + Number(resultado1);  
          if(resultado1 < resultado2){
-          var resultadoFinal = "Vitoria"
+          var resultadoFinal = "Vitoria";
+          $scope.placarFinal = "v";
           seVitoria = 1; 
           listarConquistaVitoria(resultado2, resultado1); 
           definirResultado(resultadoFinal); 
-  
+          placarInverso(resultado2, resultado1, "v");
         } else if(resultado1 > resultado2){
           var resultadoFinal = "Derrota";
+          $scope.placarFinal = "d";
           seDerrota = 1; 
           listaConquistasDerrota(resultado2, resultado1);
           definirResultado(resultadoFinal);
-          
+          placarInverso(resultado2, resultado1, "d");
         } else {
           var resultadoFinal = "Empate";
+          $scope.placarFinal = "e";
           seEmpate = 1; 
           listaConquistasEmpate(resultado2, resultado1);
           definirResultado(resultadoFinal);
@@ -364,9 +395,9 @@
       $scope.totalPontos = totalPontos;
       $scope.verPlacarFinal = true;
      }
+    
 
      function listarConquistaVitoria(res1, res2){
-        console.log("Conquistas: ", arrayConquistas);
         //vitoria
         var subtrairResultado = res1 - res2;
 
@@ -441,22 +472,25 @@
 
           // Doble, triple, cuáduple vitoria
           if(statusUltimo != 0){
-            console.log("doble statusUltimo ");
             var somarIguais = 0;
             if(statusUltimo == "v" ){
-              console.log("doble statusUltimo V ");
                if(placarUltimo == formatVitoria){
-                 console.log("doble placar ",formatVitoria, placarUltimo);
                   somarIguais = 1;
                }
-               if(placarUltimo == formatVitoria && placarPenultimo == formatVitoria){
-                somarIguais = 2;
-                console.log("triple placar ",formatVitoria, placarUltimo, placarPenultimo);
+
+               if(statusPenultimo == "v"){
+                 if(placarUltimo == formatVitoria && placarPenultimo == formatVitoria){
+                  somarIguais = 2;
+                 }
+
+                if(statusAntepenultimo == "v"){
+                 if(placarUltimo == formatVitoria && placarPenultimo == formatVitoria && placarAntepenultimo == formatVitoria){  
+                  somarIguais = 3;
+                  }
                }
-               if(placarUltimo == formatVitoria && placarPenultimo == formatVitoria && placarAntepenultimo == formatVitoria){  
-                somarIguais = 3;
-                console.log("cuadruplo placar ",formatVitoria, placarUltimo, placarPenultimo, placarAntepenultimo);
-               }
+              }
+              
+
                 switch(somarIguais){
                   case 1:
                     itemList.push([arrayConquistas[13][0], arrayConquistas[13][1]]);
@@ -522,7 +556,7 @@
 
      function listaConquistasEmpate(res1, res2){
       console.log("Empate "+res1, res2);
-        if(res1 == 1){
+        if(res1 == 1 || res1 == 0){
           itemList.push([arrayConquistasEmpate[0][0], arrayConquistasEmpate[0][1]]);
           totalPontos = totalPontos + arrayConquistasEmpate[0][1];
         } else if(res1 == 2){
@@ -542,10 +576,8 @@
 
      function listaConquistasDerrota (res1, res2){
       var diferencaDerrota = res2 - res1;
-      console.log("DIF ",diferencaDerrota);
         if(diferencaDerrota == 1){
           if(res1 == 2){
-            console.log("DIF 2 ",arrayConquistasDerrota[0][0], arrayConquistasDerrota[0][1]);
              itemList.push([arrayConquistasDerrota[0][0], arrayConquistasDerrota[0][1]]);
              totalPontos = totalPontos + arrayConquistasDerrota[0][1];
           } else if(res1 == 3){
@@ -557,6 +589,77 @@
           }
         } else{
           itemList.push(["Derrota", 0]);
+        }
+     }
+
+      // ponto placar inverso Vitória ou derrota
+     function placarInverso (res1, res2, reslActual){
+        var placaArray = placarUltimo.split("");
+        console.log("leng arrayUltimo ", placaArray.length);
+        if(placaArray.length == 3){
+          for(var i = 0; i< placaArray.length; i++){
+
+              if(statusUltimo == "d" && reslActual == "v"){
+                if(placaArray[0] == res1 && placaArray[2] == res2){
+                  itemList.push([arrayConquistas[26][0], arrayConquistas[26][1]]);
+                  totalPontos = totalPontos + arrayConquistas[26][1];
+                  break; 
+                }
+              } 
+              if(statusUltimo == "v" && reslActual == "d"){  
+                  if(placaArray[0] == res2 && placaArray[2] == res1){
+                  itemList.push([arrayConquistasDerrota[3][0], arrayConquistasDerrota[3][1]]);
+                  totalPontos = totalPontos + arrayConquistasDerrota[3][1];
+                  break; 
+                }
+              } 
+          }
+        } else if(placaArray == 4){
+           for(var i = 0; i< placaArray.length; i++){
+              if(statusUltimo == "d" && reslActual == "v"){
+                var valor = parseInt(placaArray[0]+placaArray[1]);
+                console.log("inverso V4", valor, res1);
+                if(valor == res1 && placaArray[3]== res2){
+                  itemList.push([arrayConquistas[26][0], arrayConquistas[26][1]]);
+                  totalPontos = totalPontos + arrayConquistas[26][1];
+                  break; 
+                }
+              }
+
+              if(statusUltimo == "v" && reslActual == "d"){
+                var valor = parseInt(placaArray[0]+placaArray[1]);
+                console.log("inverso D4 ", valor, res1);
+                if(valor == res1 && placaArray[3]== res2){
+                  itemList.push([arrayConquistasDerrota[3][0], arrayConquistasDerrota[3][1]]);
+                  totalPontos = totalPontos + arrayConquistasDerrota[3][1];
+                  break; 
+                }
+              }
+           }
+        } else {
+          for(var i = 0; i< placaArray.length; i++){
+              if(statusUltimo == "d" && reslActual == "v"){
+                var valor1 = parseInt(placaArray[0]+placaArray[1]);
+                var valor2 = parseInt(placaArray[3]+placaArray[4]);
+                console.log("inverso V5", valor1, res1,  "   ", valor2, res2);
+                if(valor1 == res1 && valor2 == res2){
+                  itemList.push([arrayConquistas[26][0], arrayConquistas[26][1]]);
+                  totalPontos = totalPontos + arrayConquistas[26][1];
+                  break; 
+                }
+              }
+
+              if(statusUltimo == "v" && reslActual == "d"){
+                var valor1 = parseInt(placaArray[0]+placaArray[1]);
+                var valor2 = parseInt(placaArray[3]+placaArray[4]);
+                console.log("inverso D5 ", valor1, res1,  "   ", valor2, res2);
+                if(valor1 == res2 && valor2 == res1){
+                   itemList.push([arrayConquistasDerrota[3][0], arrayConquistasDerrota[3][1]]);
+                  totalPontos = totalPontos + arrayConquistasDerrota[3][1];
+                  break; 
+                }
+              }
+           }
         }
      }
 
@@ -595,7 +698,6 @@
                     $scope.respuesta = resp.data;
                    console.log("RichPresence: "+richPresence, $scope.respuesta);  
                    var totalOnline = resp.data.devices[0].titles.length;
-                   console.log(" Total online "+totalOnline)         ;
                   if(resp.data.state === "Online"){
                     $ionicLoading.hide();
                     if(resp.data.devices[0].titles.length == 1){
@@ -674,48 +776,127 @@
                          $scope.status = false;
                        
                        //console.log("Resp2: "+resp.data.devices[0].titles[0].activity.richPresence);               
-                       
+                       //if(lentLocal == 1 && lenVisitante == 1){}
                        // Original var resultado = richPresence;
-                       var resultado = "Jugando FIFA 17 FUT Draft Online "+res1+"-"+res2+" FUT - FUT, 2.\u00ba t."
+                       var resultado = "Jugando FIFA 17 FUT Draft Online "+res1+"-"+res2+" FUT - FUT, 2.\u00ba t.";
+
+
                        var separador = ","; // un espacio en blanco
                        var limite    = 1;
                        //var resposta = resultado.split(separador);
                        //console.log(resposta[27], resposta[29]) ;
+                        var ini;
+                       var fin;
+                       var r1DosNumeros;
+                       var r2DosNumeros;
+                       console.log(lentLocal, lenVisitante, "ññññññ", lentLocal, lenVisitante);
+                      if(lentLocal < 2 && lenVisitante <2){
+                        r1DosNumeros  = false;
+                        r2DosNumeros  = false;
+                         ini = parseInt(resultado.indexOf("-"))-1;
+                         fin = parseInt(resultado.indexOf("-"))+1;
+                      } else if(lentLocal == 2 && lenVisitante < 2){
+                        r1DosNumeros  = true;
+                        r2DosNumeros  = false;
+                         ini = parseInt(resultado.indexOf("-"))-2;
+                         fin = parseInt(resultado.indexOf("-"))+1;
+                      } else if(lentLocal < 2 && lenVisitante == 2){
+                         r1DosNumeros  = false;
+                         r2DosNumeros  = true;
+                         ini = parseInt(resultado.indexOf("-"))-1;
+                         fin = parseInt(resultado.indexOf("-"))+1;
+                      } else if(lentLocal == 2 && lenVisitante == 2){                         
+                         r1DosNumeros  = true;
+                         r2DosNumeros  = true;
+                         ini = parseInt(resultado.indexOf("-"))-2;
+                         fin = parseInt(resultado.indexOf("-"))+1;
+                      }
+
                        
-                       var ini = parseInt(resultado.indexOf("-"))-1;
-                       var fin = parseInt(resultado.indexOf("-"))+1;
+                      
                        var parcial = resultado.substr(ini, fin);
                        var final = parcial.split(separador);
+                        console.log("final", final);
 
                        var corta = parcial.indexOf(" ");
                        var placar = parcial.substr(0,corta);
                        var arrayResultado = placar.split("");
-                       console.log(parseInt(arrayResultado[0]) + parseInt(arrayResultado[2]));
-                       console.log("------");
                        var recortarTime = String(final.slice(0, -1));
                        var sep = "";
                        var array = "";
                        array = recortarTime.split(sep);
-                       console.log("--"+ array); 
-
-                       if(array[6] == undefined){
-                          time1 = array[4]+array[5]
-                       } else {
-                          time1 = array[4]+array[5]+array[6];
-                       }
-
-                        if(array[12] == undefined){
-                          time2 = array[10]+array[11];
-                        } else {
-                          time2 = array[10]+array[11]+array[12];
-                        }
-                         
-                         resultado1 = array[0];
-                         
+                       console.log(array);
+                     
+                      // recuperar nome do time1 e time2 e resultados, si os resultado1 é de 1 dígito
+                      if(r1DosNumeros == false && r2DosNumeros == false){
+                         if(array[6] == undefined){
+                            time1 = array[4]+array[5]
+                         } else {
+                            time1 = array[4]+array[5]+array[6];
+                         }                       
+                
+                         if(array[12] == undefined){
+                            time2 = array[10]+array[11];
+                          } else {
+                            time2 = array[10]+array[11]+array[12];
+                          }
+                          //resultados
+                          resultado1 = array[0]
                          resultado2 = array[2];
-                       if(resultado1 != undefined){
+                      }
 
-                       $scope.placar = time1+" "+resultado1+" X "+resultado2+" "+time2;
+                      // recuperar nome do time1 e time2 e resultados,dependendo si o resultado1 é de 1 ou 2 dígitos e o 2 é de 1 dígitos
+                      if(r1DosNumeros  == true && r2DosNumeros == false){
+                          if(array[7] == undefined){
+                            time1 = array[5]+array[6]
+                         } else {
+                            time1 = array[5]+array[6]+array[7];
+                         }                        
+                         if(array[13] == undefined){
+                            time2 = array[11]+array[12];
+                          } else {
+                            time2 = array[11]+array[12]+array[13];
+                          }
+                          //resultados
+                          resultado1 = array[0]+array[1];
+                         resultado2 = array[3];
+                      }
+
+                      // recuperar nome do time1 e time2 e resultados,dependendo si o resultado2 é de 1 ou 2 dígitos e o 1 é de 1 dígitos
+                      if(r1DosNumeros == false && r2DosNumeros == true){
+                        if(array[7] == undefined){
+                            time1 = array[5]+array[6]
+                         } else {
+                            time1 = array[5]+array[6]+array[7];
+                         }
+                          if(array[13] == undefined){
+                            time2 = array[11]+array[12];
+                          } else {
+                            time2 = array[11]+array[12]+array[13];
+                          }
+                          resultado1 = array[0];
+                          resultado2 = array[2]+array[3];
+                      }
+
+                      // recuperar nome do time1 e time2 e resultados,si os resultados sao de 2 dígitos
+                      if(r1DosNumeros == true && r2DosNumeros == true){
+                        if(array[8] == undefined){
+                            time1 = array[7]+array[6]
+                         } else {
+                            time1 = array[6]+array[7]+array[8];
+                         }
+                          if(array[14] == undefined){
+                            time2 = array[12]+array[13];
+                          } else {
+                            time2 = array[12]+array[13]+array[14];
+                          }
+                          resultado1 = array[0]+array[1];
+                          resultado2 = array[3]+array[4];
+                      }                                         
+                         
+                         
+                      if(resultado1 != undefined){
+                         $scope.placar = time1+" "+resultado1+" X "+resultado2+" "+time2;
                          $scope.casa = time1+" "+resultado1;
                          $scope.fora = time2+" "+resultado2;
                          $scope.timeCasa = time1;
@@ -728,9 +909,7 @@
                         }
 
                       }
-                    }
-
-                 
+                    }                 
 
                   } else {
                     console.log("Off");
@@ -760,26 +939,35 @@
 
     // Enviar resposta
     $scope.enviarResultado = function (){
+
       Utils.message(Popup.loading_a, Popup.loading);
       var zerarSequenciaVitoria;
       var zerarInvencibilidade;
       var novoResultado;
+      var placarEnviar;
+      var statusEnviar;
       if(seVitoria == 0){
         zerarSequenciaVitoria = 0;
       } else {
+        statusEnviar = "v";
         zerarSequenciaVitoria = sequenciaVitoria +1;
         if(resultado1 > resultado2){
+          placarEnviar = resultado1+"-"+resultado2;
           novoResultado = "v|"+resultado1+"-"+resultado2;
         } else {
+          placarEnviar = resultado2+"-"+resultado1;
           novoResultado = "v|"+resultado2+"-"+resultado1;
         }
       }
 
       if(seDerrota == 1){
+        statusEnviar = "d";
         zerarInvencibilidade = 0;
         if(resultado1 > resultado2){
+          placarEnviar = resultado1+"-"+resultado2;
           novoResultado = "d|"+resultado1+"-"+resultado2;
         } else {
+          placarEnviar = resultado2+"-"+resultado1;
           novoResultado = "d|"+resultado2+"-"+resultado1;
         }
       } else {
@@ -787,9 +975,12 @@
       }
 
       if(seEmpate == 1){
+        statusEnviar = "e";
         if(resultado1 > resultado2){
+          placarEnviar = resultado1+"-"+resultado2;
           novoResultado = "e|"+resultado1+"-"+resultado2;
         } else {
+          placarEnviar = resultado2+"-"+resultado1;
           novoResultado = "e|"+resultado2+"-"+resultado1;
         }
       }
@@ -836,7 +1027,8 @@
               estado:"Terminado",
               pontos:totalPontos,
               conquistas:conquistasEnviar,
-              placar:novoResultado
+              placar:placarEnviar,
+              status:statusEnviar
             }).then(function(response) {
               Utils.message(Popup.loading_a, Popup.loading);
               console.log("response2: "+response);

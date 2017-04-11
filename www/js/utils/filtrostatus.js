@@ -25,32 +25,33 @@
 
         if(status == "v"){
           if(idioma == "es"){
-            resul = "Victoria: ";
+            resul = "Victoria";
           } else if(idioma == "pt"){
-            resul = "Vitória: ";
+            resul = "Vitória";
           } else {
-            resul = "Win-";
+            resul = "Win";
           }
         } else if(status == "d"){
           if(idioma == "es"){
-            resul = "Derrota: ";
+            resul = "Derrota";
           } else if(idioma == "pt"){
-            resul = "Derrota: ";
+            resul = "Derrota";
           } else {
-            resul = "Defead: ";
+            resul = "Defead";
           }
         } else {
           if(idioma == "es"){
-            resul = "Empate: ";
+            resul = "Empate";
           } else if(idioma == "pt"){
-            resul = "Empate: ";
+            resul = "Empate";
           } else {
-            resul = "Draw: ";       }
+            resul = "Draw";       }
         }
       }     
     
       return resul;
     };
   });
+ 
 
 })();

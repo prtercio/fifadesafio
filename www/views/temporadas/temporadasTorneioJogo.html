@@ -1,118 +1,127 @@
 <ion-view view-title="{{'JOGO' | translate}} {{jogo}}" cache-view="false">
   <ion-content>
     <div ng-if="estado != 'Terminado'">
-      <li class="item item-toggle">
-        Resultado Online
+      <li class="item item-toggle" ng-show="!checkedPlacar">
+        {{'RESULTADOONLINE' | translate}}
         <label class="toggle toggle-positive">
-          <input type="checkbox" ng-model="checkedRecuperar" aria-label="Toggle ngHide">
+          <input type="checkbox" ng-model="checkedRecuperar" aria-label="Toggle ngHide" >
           <div class="track">
             <div class="handle"></div>
           </div>
         </label>
       </li>
-      <li class="item item-toggle">
-        Introduzir Resultado
+      <li class="item item-toggle" ng-show="!checkedRecuperar">
+        {{'RESULTADOMANUAL' | translate}}
         <label class="toggle toggle-positive">
-          <input type="checkbox" ng-model="checkedPlacar" aria-label="Toggle ngHide">
+          <input type="checkbox" ng-model="checkedPlacar" aria-label="Toggle ngHide" ng-changed="identificarPlacar(checkedPlacar)">
           <div class="track">
             <div class="handle"></div>
           </div>
         </label>
       </li>
       <form name="myForm" novalidate ng-show="checkedPlacar">
-        <div class="list">
-          <label class="item item-input">
-            <span class="input-label">Local</span>
+        <div class="row" align="center">
+          <div class="col col-20 padSuperior">
+            <span>{{'MANDANTE' | translate}}</span> 
+          </div>
+          <div class="col col-25">
             <input type="number" name="local" ng-model="resultado.local" ng-minlength="1" required>
-          </label>
-          <label class="item item-input">
-            <span class="input-label">Visitante</span>
-            <input type="number" name="visitante" ng-model="resultado.visitante" ng-minlength="1" required>
-          </label>
-        </div>        
-        <div class="padding">
-          <button type="button" class="button button-block button-positive" ng-click="submit(resultado)">Calcular Conquistas</button>
+          </div>
+          <div class="col col-10 padSuperior">{{'X' | translate}}</div>
+          <div class="col col-25">
+           <input type="number" name="visitante" ng-model="resultado.visitante" ng-minlength="1" required>
+         </div>
+         <div class="col col-20 padSuperior">
+          <span> {{'VISITANTE' | translate}}</span> 
         </div>
-      </form>
+      </div>        
+      <div class="padding">
+        <button type="button" class="button button-block button-positive" ng-disabled="!resultado" ng-click="submit(resultado)">{{'ADICIONARCONQUISTAS' | translate}}</button>
+      </div>
+    </form>
 
 
-      <!-- RECUPERAR RESULTADO -->
-      <div class="padding" ng-if="loggedIn" ng-show="checkedRecuperar">
-        <button class="button button-positive button-block icon ion-ios-football" ng-click="recuperarJogo()" ng-disabled="btnDisabled"> {{'RECUPERARRESULTADO' | translate}}</button>
-      </div>
-      
-      <h4 ng-if="status">{{semFifa}}</h4>
-
-      <div class="card" ng-if="timeCasa" >
-        <div class="row">
-          <div class="col-20" align="center">
-            <img src="img/times/{{timeCasa}}.png"/>
-          </div>
-          <div class="col-20" align="center">
-            <h1>{{resCasa}}</h1>
-          </div>
-          <div class="col-20" align="center">
-            <h1 class="gris2">X</h1>
-          </div>
-          <div class="col-20" align="center">
-            <h1>{{resVisitante}}</h1>
-          </div>
-          <div class="col-20"  align="center">
-            <img src="img/times/{{timeVisitante}}.png"/>
-          </div>
-        </div>
-      </div>
-      <div class="card" ng-if="timeCasa">
-        <div class="padding" >
-          <h5 align="center">{{'SELECCIONETIME' | translate}}:</h5>
-          <ion-list>
-            <ion-radio ng-model="choice" ng-value="'A'" ng-change='jogoSelecionado(choice)'>{{'MANDANTE' | translate}}: <strong>{{casa}}</strong></ion-radio>
-            <ion-radio ng-model="choice" ng-value="'B'" ng-change='jogoSelecionado(choice)'>{{'VISITANTE' | translate}}: <strong>{{fora}}</strong></ion-radio>
-          </ion-list>          
-        </div>
-      </div>
-      <div class="card" ng-if="verPlacarFinal">
-        <div align="center" ng-class="{'verde':placarFinal=='Vitória','laranja':placarFinal=='Empate','vermelho':placarFinal=='Derrota'}"><h3>{{placarFinal}}</h3></div>        
-        <h3 align="center">{{totalPontos}} {{'PONTOS' | translate}}</h3>
-      </div>
-      </div>
-      <li class="item item-toggle" ng-show="timeCasa">
-        Detalhe das Conquistas
-        <label class="toggle toggle-positive">
-          <input type="checkbox" ng-model="checkedConq" aria-label="Toggle ngHide">
-          <div class="track">
-            <div class="handle"></div>
-          </div>
-        </label>
-      </li>
-      <ion-list ng-show="checkedConq">
-        <ion-item ng-repeat="shop in items" class="item item-icon-left item-verde"  >
-          <i class="icon ion-checkmark verde"></i>
-          <h2 class="verde">{{shop[0]}}.  {{'PONTOS' | translate}}: {{shop[1]}}</h2>
-          <ion-option-button class="button-assertive" ng-click="removeLista(shop)">
-            Delete
-          </ion-option-button>
-        </ion-item>  
-      </ion-list>
-      <div>
-        <button class="button button-block button-balanced" ng-click="enviarResultado()">Enviar</button>
-      </div>
+    <!-- RECUPERAR RESULTADO -->
+    <div class="padding" ng-if="loggedIn" ng-show="checkedRecuperar">
+      <button class="button button-positive button-block icon ion-ios-football" ng-click="recuperarJogo()" ng-disabled="btnDisabled"> {{'RECUPERARRESULTADO' | translate}}</button>
     </div>
 
-    <div ng-if="estado == 'Terminado'">
-     <h5 class="center" >{{'CONQUISTAS' | translate}}: </h5>
+    <h4 ng-if="status">{{semFifa}}</h4>
 
-     <div ng-if="detalheJogo.estado == 'Terminado'">
-      <ion-item class="item">
-        <h2 class="center verde">{{'PONTOS' | translate}}: {{detalheJogo.pontos}}</h2>
-      </ion-item>
-      <h5 class="center">{{'DETALHECONQUISTAS' | translate}}</h5>
-      <ion-list>
-        <ion-item ng-repeat="detalhe in detalheJogo.conquistas track by $index" class="verde">
-          <p>{{detalhe}}</p>
-        </ion-item>
-      </ion-list>
+    <div class="card" ng-if="timeCasa" >
+      <div class="row">
+        <div class="col-20" align="center">
+          <img src="img/times/{{timeCasa}}.png"/>
+        </div>
+        <div class="col-20" align="center">
+          <h1>{{resCasa}}</h1>
+        </div>
+        <div class="col-20" align="center">
+          <h1 class="gris2">X</h1>
+        </div>
+        <div class="col-20" align="center">
+          <h1>{{resVisitante}}</h1>
+        </div>
+        <div class="col-20"  align="center">
+          <img src="img/times/{{timeVisitante}}.png"/>
+        </div>
+      </div>
     </div>
-  </div>    
+    <div class="card" ng-if="timeCasa">
+      <div class="padding" >
+        <h4 align="center" class="vermelho">{{'SELECCIONETIME' | translate}}:</h4>
+        <ion-list>
+          <ion-radio ng-model="choice" ng-value="'A'" ng-change='jogoSelecionado(choice)'>{{'MANDANTE' | translate}}: <strong>{{casa}}</strong></ion-radio>
+          <ion-radio ng-model="choice" ng-value="'B'" ng-change='jogoSelecionado(choice)'>{{'VISITANTE' | translate}}: <strong>{{fora}}</strong></ion-radio>
+        </ion-list>          
+      </div>
+    </div>
+    <div ng-show="verPlacarFinal">
+      <div 
+        align="center" 
+        ng-class="{verde : placarFinal=='v', vermelho : placarFinal=='d', laranja : placarFinal=='e'}">
+      <h3>{{placarFinal | filtroStatus}}</h3>
+    </div>        
+    <h3 align="center">{{totalPontos}} {{'PONTOS' | translate}}</h3>
+  </div>
+</div>
+<li class="item item-toggle" ng-show="timeCasa">
+  {{'DETALHECONQUISTAS' | translate}}
+  <label class="toggle toggle-positive">
+    <input type="checkbox" ng-model="checkedConq" aria-label="Toggle ngHide">
+    <div class="track">
+      <div class="handle"></div>
+    </div>
+  </label>
+</li>
+<ion-list ng-show="checkedConq">
+  <ion-item ng-repeat="shop in items" class="item item-icon-left item-verde"  >
+    <i class="icon ion-checkmark verde"></i>
+    <h2 class="verde">{{shop[0]}}.  {{'PONTOS' | translate}}: {{shop[1]}}</h2>
+    <ion-option-button class="button-assertive" ng-click="removeLista(shop)">
+      Delete
+    </ion-option-button>
+  </ion-item>  
+</ion-list>
+<div ng-show="timeCasa" class="padding">
+  <button class="button button-block button-balanced" ng-click="enviarResultado()">{{'ENVIAR' | translate}}</button>
+</div>
+</div>
+
+<div ng-if="estado == 'Terminado'">
+ <h5 class="center" >{{'CONQUISTAS' | translate}}: </h5>
+
+ <div ng-if="detalheJogo.estado == 'Terminado'">
+  <ion-item class="item">
+    <h2 class="center verde">{{'PONTOS' | translate}}: {{detalheJogo.pontos}}</h2>
+  </ion-item>
+  <h5 class="center">{{'DETALHECONQUISTAS' | translate}}</h5>
+  <ion-list>
+    <ion-item ng-repeat="detalhe in detalheJogo.conquistas track by $index" class="verde">
+      <p>{{detalhe}}</p>
+    </ion-item>
+  </ion-list>
+</div>
+</div>    
 </ion-content>
 </ion-view>
