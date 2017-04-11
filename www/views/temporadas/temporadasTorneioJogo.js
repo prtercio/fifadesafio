@@ -33,7 +33,7 @@
       $ionicPopup,
       $rootScope,
       $ionicHistory
-  ){
+      ){
 
       // si foi enviado:
       $scope.idioma = localStorage.getItem("lang");
@@ -61,102 +61,104 @@
 
       var conquistas = $scope.conquistas;
       var totalPontos = 0;    
-     
+      
 
-     var usuarios = [];
-     var idUsuario;
-     var ganhador;
-     var time1;
-     var time2;
-     var resultado1;
-     var resultado2;
-     $scope.btnDisabled = false;
-     $scope.verBtn = true;
-     $scope.placar = "";
-     var gamerSeleccionado;
-     var conquistaSelecionadas = [];
+      var usuarios = [];
+      var idUsuario;
+      var ganhador;
+      var time1;
+      var time2;
+      var resultado1;
+      var resultado2;
+      $scope.btnDisabled = false;
+      $scope.verBtn = true;
+      $scope.placar = "";
+      var gamerSeleccionado;
+      var conquistaSelecionadas = [];
 
-     $scope.verPlacarFinal = false;
-     console.log($localStorage.account.idXbox);
+      $scope.verPlacarFinal = false;
+      console.log($localStorage.account.idXbox);
 
-     var resultUltimo = "";
-     var resultPenultimo = "";
-     var resultAntepenultimo = "";
+      var resultUltimo = "";
+      var resultPenultimo = "";
+      var resultAntepenultimo = "";
 
-     var statusUltimo = "";
-     var statusPenultimo = "";
-     var statusAntepenultimo = "";
+      var statusUltimo = "";
+      var statusPenultimo = "";
+      var statusAntepenultimo = "";
 
-     var placarUltimo = "";
-     var placarPenultimo = "";
-     var placarAntepenultimo = "";
+      var placarUltimo = "";
+      var placarPenultimo = "";
+      var placarAntepenultimo = "";
 
-     var sequenciaVitoria = 0;
-     var invencibilidade = 0;
+      var sequenciaVitoria = 0;
+      var invencibilidade = 0;
 
-     var jogados = 0;
+      var jogados = 0;
 
-     var anteriorVitoria = 0;
-     var anteriorDerrota = 0;
-     var anteriorEmpate = 0;
-     var seVitoria = 0;
-     var seDerrota = 0;
-     var seEmpate = 0;
+      var anteriorVitoria = 0;
+      var anteriorDerrota = 0;
+      var anteriorEmpate = 0;
+      var seVitoria = 0;
+      var seDerrota = 0;
+      var seEmpate = 0;
 
-     var antGolsPro = 0;
-     var antGolsContra = 0;
-     var golsPro = 0;
-     var golsContra = 0;
+      var antGolsPro = 0;
+      var antGolsContra = 0;
+      var golsPro = 0;
+      var golsContra = 0;
 
-     var antPontos = 0;
-     var pontoAtual = 0;
+      var antPontos = 0;
+      var pontoAtual = 0;
 
      // variaveis para longitud do resultado
      var lentLocal = 0;
      var lenVisitante = 0;
 
+     var onlineManual = "Online";
+
      // RECUPERAR TRES ÚLITMOS JOGOS
-      var refJ = firebase.database().ref('desafio/desafios/temporadas/oficial/'+idTorneio+'/inscritos/'+keyUsuario);
-      refJ.once("value").then(function(snapshot) {        
-        $scope.infoJogo = snapshot.val();
-        if($scope.infoJogo.jogados != 0){
-          resultUltimo = String($scope.infoJogo.placarUltimo);
-          console.log(resultUltimo);
-          statusUltimo = resultUltimo.substring(0, resultUltimo.indexOf("|"));  
-          console.log(statusUltimo);
-          placarUltimo = resultUltimo.substring(resultUltimo.indexOf("|")+1);
-          console.log(" abc ", placarUltimo);
+     var refJ = firebase.database().ref('desafio/desafios/temporadas/oficial/'+idTorneio+'/inscritos/'+keyUsuario);
+     refJ.once("value").then(function(snapshot) {        
+      $scope.infoJogo = snapshot.val();
+      if($scope.infoJogo.jogados != 0){
+        resultUltimo = String($scope.infoJogo.placarUltimo);
+        console.log(resultUltimo);
+        statusUltimo = resultUltimo.substring(0, resultUltimo.indexOf("|"));  
+        console.log(statusUltimo);
+        placarUltimo = resultUltimo.substring(resultUltimo.indexOf("|")+1);
+        console.log(" abc ", placarUltimo);
 
 
-          if($scope.infoJogo.placarPenultimo != 0){
-            resultPenultimo = String($scope.infoJogo.placarPenultimo);
-            statusPenultimo =  resultPenultimo.substring(0, resultPenultimo.indexOf("|"));  
-            placarPenultimo = resultPenultimo.substring(resultPenultimo.indexOf("|")+1);
-          }
-
-          if($scope.infoJogo.placarAntepenultimo != 0){            
-            resultAntepenultimo = String($scope.infoJogo.placarAntepenultimo);
-            statusAntepenultimo = resultAntepenultimo.substring(resultAntepenultimo.indexOf("|"));  
-            placarAntepenultimo = resultAntepenultimo.substring(resultAntepenultimo.indexOf("|")+1);
-          }
-
-          $scope.jogados =  $scope.infoJogo.jogados; 
-          jogados = $scope.jogados;
-          sequenciaVitoria = Number($scope.infoJogo.sequenciaVitoria);
-          invencibilidade = Number($scope.infoJogo.invencibilidade);
-          anteriorVitoria = $scope.infoJogo.vitoria;
-          anteriorDerrota = $scope.infoJogo.derrota;
-          anteriorEmpate = $scope.infoJogo.empate;
-          
-          antGolsPro = $scope.infoJogo.golsPro;
-          antGolsContra = $scope.infoJogo.golsContra;
-
-          antPontos = $scope.infoJogo.pontos;
+        if($scope.infoJogo.placarPenultimo != 0){
+          resultPenultimo = String($scope.infoJogo.placarPenultimo);
+          statusPenultimo =  resultPenultimo.substring(0, resultPenultimo.indexOf("|"));  
+          placarPenultimo = resultPenultimo.substring(resultPenultimo.indexOf("|")+1);
         }
-      });
+
+        if($scope.infoJogo.placarAntepenultimo != 0){            
+          resultAntepenultimo = String($scope.infoJogo.placarAntepenultimo);
+          statusAntepenultimo = resultAntepenultimo.substring(resultAntepenultimo.indexOf("|"));  
+          placarAntepenultimo = resultAntepenultimo.substring(resultAntepenultimo.indexOf("|")+1);
+        }
+
+        $scope.jogados =  $scope.infoJogo.jogados; 
+        jogados = $scope.jogados;
+        sequenciaVitoria = Number($scope.infoJogo.sequenciaVitoria);
+        invencibilidade = Number($scope.infoJogo.invencibilidade);
+        anteriorVitoria = $scope.infoJogo.vitoria;
+        anteriorDerrota = $scope.infoJogo.derrota;
+        anteriorEmpate = $scope.infoJogo.empate;
+        
+        antGolsPro = Number($scope.infoJogo.golsPro);
+        antGolsContra = Number($scope.infoJogo.golsContra);
+
+        antPontos = $scope.infoJogo.pontos;
+      }
+    });
 
 
-      console.log("conq "+conquistas);
+     console.log("conq "+conquistas);
       //Vitória armazenando as conquistas e os pontos dentro de arrayConquistas
       for(var key in conquistas){
         //-------------------------------------------------------------------------- PORTUGUES
@@ -177,13 +179,13 @@
           for(var e in emp){
             arrayConquistasEmpate.push([emp[e].titulo, emp[e].pontos]); 
           }
-         
+          
         //-------------------------------------------------------------------------- ESPAÑOL
-        } else if($scope.idioma == "es"){
-          var vit = conquistas[key].vitoria.es;    
-          for(var c in vit){
-            arrayConquistas.push([vit[c].titulo, vit[c].pontos]);  
-          }
+      } else if($scope.idioma == "es"){
+        var vit = conquistas[key].vitoria.es;    
+        for(var c in vit){
+          arrayConquistas.push([vit[c].titulo, vit[c].pontos]);  
+        }
           //derrota
           var der = conquistas[key].derrota.es;
           for(var d in der){
@@ -195,11 +197,11 @@
             arrayConquistasEmpate.push([emp[e].titulo, emp[e].pontos]); 
           }
         //-------------------------------------------------------------------------- INGLES
-        } else {
-          var vit = conquistas[key].vitoria.en;
-          for(var c in vit){
-            arrayConquistas.push([vit[c].titulo, vit[c].pontos]);   
-          }
+      } else {
+        var vit = conquistas[key].vitoria.en;
+        for(var c in vit){
+          arrayConquistas.push([vit[c].titulo, vit[c].pontos]);   
+        }
           //derrota
           var der = conquistas[key].derrota.en;
           for(var d in der){
@@ -212,33 +214,33 @@
           }
         }
       }
-    
+      
       var refjogos = firebase.database().ref('desafio/desafios/temporadas/oficial/'+idTorneio+'/inscritos/'+keyUsuario+'/jogos/'+$scope.chat);
       refjogos.once("value").then(function(snapshot) {
         
         $scope.estadoJogo = snapshot.val();
         $scope.estado = $scope.estadoJogo.estado;
-          $scope.detalheJogo = snapshot.val();  
+        $scope.detalheJogo = snapshot.val();  
 
       });
 
       // si nao foi enviado
       
       if(firebase.auth().currentUser) {
-          $scope.loggedIn = true;
-          console.log("logado");
+        $scope.loggedIn = true;
+        console.log("logado");
       } else {
-          $scope.loggedIn = false;
-           var alertPopup = $ionicPopup.alert({
-              title: 'Opps!',
-              template: 'Para enviar este resultado vc deve está logado.'
-            });
+        $scope.loggedIn = false;
+        var alertPopup = $ionicPopup.alert({
+          title: 'Opps!',
+          template: 'Para enviar este resultado vc deve está logado.'
+        });
 
-            alertPopup.then(function(res) {
-                if(res){
+        alertPopup.then(function(res) {
+          if(res){
 
-                }
-            });
+          }
+        });
       }
 
      /*
@@ -262,53 +264,55 @@
     */
 
     $scope.submit = function(resultado){
-        var r1 = String(resultado.local);
-        var r2 = String(resultado.visitante);
-        var splitRes1 = r1.split("");
-        var splitRes2 = r2.split("");
+      var r1 = String(resultado.local);
+      var r2 = String(resultado.visitante);
+      var splitRes1 = r1.split("");
+      var splitRes2 = r2.split("");
 
-        console.log("aplit ", splitRes1.length, "2 ", splitRes2.length);
-        if(splitRes1.length == 2){
-          lentLocal = 2;
-        } else {
-          lentLocal == 1;
-        }
+      console.log("aplit ", splitRes1.length, "2 ", splitRes2.length);
+      if(splitRes1.length == 2){
+        lentLocal = 2;
+      } else {
+        lentLocal == 1;
+      }
 
-        if(splitRes2.length == 2){
-          lenVisitante = 2;
-        } else {
-          lenVisitante == 1;
-        }
-        $scope.recuperarJogo(resultado.local, resultado.visitante);
-        $scope.verPlacarFinal = false;     
+      if(splitRes2.length == 2){
+        lenVisitante = 2;
+      } else {
+        lenVisitante == 1;
+      }
+      onlineManual = "Manual";
+      $scope.recuperarJogo(resultado.local, resultado.visitante);
+      $scope.verPlacarFinal = false; 
+      
     }
 
     $scope.identificarPlacar = function(dato){
       console.log(dato);
     }
-   
+    
 
     $scope.blisterPackTemplates = usuarios;
 
-     $scope.changedValue=function(item){
+    $scope.changedValue=function(item){
       console.log(item.idXbox);
       idUsuario = item.idXbox;
       gamerSeleccionado = item.gamertag;
       $scope.btnDisabled = false;
-     }
+    }
 
-     $scope.jogoSelecionado = function(valor){
+    $scope.jogoSelecionado = function(valor){
       $scope.verBtn = false;
       ganhador = valor;
       itemList = [];
       totalPontos = 0;
       $scope.totalPontos = totalPontos;
 
-     
+      
       // ----------------------------------------------------------------------------------------------------- JOGO Local
       if(ganhador == 'A'){
-          golsPro = Number(antGolsPro) + Number(resultado1);
-          golsContra = Number(antGolsContra) + Number(resultado2);
+        golsPro = Number(antGolsPro) + Number(resultado1);
+        golsContra = Number(antGolsContra) + Number(resultado2);
         if(resultado1 > resultado2 ){
           var resultadoFinal = "Vitoria"; 
           $scope.placarFinal = "v";
@@ -322,61 +326,61 @@
           $scope.placarFinal = "d";
           seDerrota = 1; 
           listaConquistasDerrota(resultado1, resultado2);
- 
+          
           placarInverso(resultado1, resultado2, "d");         
         } else {
           var resultadoFinal = "Empate";
           $scope.placarFinal = "e";
           seEmpate = 1; 
           listaConquistasEmpate(resultado1, resultado2);
-      
+          
         } 
 
       // -----------------------------------------------------------------------------------------------------  Jogo Visitante 
-      } 
+    } 
 
-      else if(ganhador == 'B'){
-          golsPro = Number(antGolsPro) + Number(resultado2);
-          golsContra = Number(antGolsContra) + Number(resultado1);  
-         if(resultado1 < resultado2){
-          var resultadoFinal = "Vitoria";
-          $scope.placarFinal = "v";
-          seVitoria = 1; 
-          listarConquistaVitoria(resultado2, resultado1); 
+    else if(ganhador == 'B'){
+      golsPro = Number(antGolsPro) + Number(resultado2);
+      golsContra = Number(antGolsContra) + Number(resultado1);  
+      if(resultado1 < resultado2){
+        var resultadoFinal = "Vitoria";
+        $scope.placarFinal = "v";
+        seVitoria = 1; 
+        listarConquistaVitoria(resultado2, resultado1); 
 
-          placarInverso(resultado2, resultado1, "v");
-        } else if(resultado1 > resultado2){
-          var resultadoFinal = "Derrota";
-          $scope.placarFinal = "d";
-          seDerrota = 1; 
-          listaConquistasDerrota(resultado2, resultado1);    
-          placarInverso(resultado2, resultado1, "d");
-        } else {
-          var resultadoFinal = "Empate";
-          $scope.placarFinal = "e";
-          seEmpate = 1; 
-          listaConquistasEmpate(resultado2, resultado1);
-    
- 
-        }  
+        placarInverso(resultado2, resultado1, "v");
+      } else if(resultado1 > resultado2){
+        var resultadoFinal = "Derrota";
+        $scope.placarFinal = "d";
+        seDerrota = 1; 
+        listaConquistasDerrota(resultado2, resultado1);    
+        placarInverso(resultado2, resultado1, "d");
       } else {
-        ganhador = false;
-      }    
-      
-      $scope.items = itemList;
-      $scope.totalPontos = totalPontos;
-      $scope.verPlacarFinal = true;
-     }
+        var resultadoFinal = "Empate";
+        $scope.placarFinal = "e";
+        seEmpate = 1; 
+        listaConquistasEmpate(resultado2, resultado1);
+        
+        
+      }  
+    } else {
+      ganhador = false;
+    }    
     
+    $scope.items = itemList;
+    $scope.totalPontos = totalPontos;
+    $scope.verPlacarFinal = true;
+  }
+  
 
-     function listarConquistaVitoria(res1, res2){
+  function listarConquistaVitoria(res1, res2){
         //vitoria
         var subtrairResultado = res1 - res2;
 
         var formatVitoria = 0;
-      
+        
         formatVitoria = res1+"-"+res2;
-       
+        
         //if(juego == 'A'){
           //--Vitória
           itemList.push([arrayConquistas[0][0], arrayConquistas[0][1]]);
@@ -432,55 +436,55 @@
             } else if (subtrairResultado > 6 || subtrairResultado == 6){
               console.log(" subtrairResultado: "+subtrairResultado);
               if(res1 != 7){
-                 console.log(" subtrairResultado2: "+subtrairResultado);
-                itemList.push([arrayConquistas[12][0], arrayConquistas[12][1]]);
-                totalPontos = totalPontos + arrayConquistas[12][1];
-                console.log("Pontos 12 ", arrayConquistas[12][0], arrayConquistas[12][1]);
-              }     
-            } else {
+               console.log(" subtrairResultado2: "+subtrairResultado);
+               itemList.push([arrayConquistas[12][0], arrayConquistas[12][1]]);
+               totalPontos = totalPontos + arrayConquistas[12][1];
+               console.log("Pontos 12 ", arrayConquistas[12][0], arrayConquistas[12][1]);
+             }     
+           } else {
 
-            }            
-          } 
+           }            
+         } 
 
           // Doble, triple, cuáduple vitoria
           if(statusUltimo != 0){
             var somarIguais = 0;
             if(statusUltimo == "v" ){
-               if(placarUltimo == formatVitoria){
-                  somarIguais = 1;
-               }
+             if(placarUltimo == formatVitoria){
+              somarIguais = 1;
+            }
 
-               if(statusPenultimo == "v"){
-                 if(placarUltimo == formatVitoria && placarPenultimo == formatVitoria){
-                  somarIguais = 2;
-                 }
+            if(statusPenultimo == "v"){
+             if(placarUltimo == formatVitoria && placarPenultimo == formatVitoria){
+              somarIguais = 2;
+            }
 
-                if(statusAntepenultimo == "v"){
-                 if(placarUltimo == formatVitoria && placarPenultimo == formatVitoria && placarAntepenultimo == formatVitoria){  
-                  somarIguais = 3;
-                  }
-               }
-              }
-              
-
-                switch(somarIguais){
-                  case 1:
-                    itemList.push([arrayConquistas[13][0], arrayConquistas[13][1]]);
-                    totalPontos = totalPontos + arrayConquistas[13][1];
-                    break;
-                  case 2:
-                    itemList.push([arrayConquistas[14][0], arrayConquistas[14][1]]);
-                    totalPontos = totalPontos + arrayConquistas[14][1];
-                    break;
-                  case 3:
-                    itemList.push([arrayConquistas[15][0], arrayConquistas[15][1]]);
-                    totalPontos = totalPontos + arrayConquistas[15][1];
-                     break;
-                  default:
-                  console.log("nao há repetidos");
-                }
+            if(statusAntepenultimo == "v"){
+             if(placarUltimo == formatVitoria && placarPenultimo == formatVitoria && placarAntepenultimo == formatVitoria){  
+              somarIguais = 3;
             }
           }
+        }
+        
+
+        switch(somarIguais){
+          case 1:
+          itemList.push([arrayConquistas[13][0], arrayConquistas[13][1]]);
+          totalPontos = totalPontos + arrayConquistas[13][1];
+          break;
+          case 2:
+          itemList.push([arrayConquistas[14][0], arrayConquistas[14][1]]);
+          totalPontos = totalPontos + arrayConquistas[14][1];
+          break;
+          case 3:
+          itemList.push([arrayConquistas[15][0], arrayConquistas[15][1]]);
+          totalPontos = totalPontos + arrayConquistas[15][1];
+          break;
+          default:
+          console.log("nao há repetidos");
+        }
+      }
+    }
 
           // Sequencia de vitoria
           if(sequenciaVitoria > 1){
@@ -524,116 +528,116 @@
             }
           }
 
-     }
-
-     function listaConquistasEmpate(res1, res2){
-      console.log("Empate "+res1, res2);
-        if(res1 == 1 || res1 == 0){
-          itemList.push([arrayConquistasEmpate[0][0], arrayConquistasEmpate[0][1]]);
-          totalPontos = totalPontos + arrayConquistasEmpate[0][1];
-        } else if(res1 == 2){
-          itemList.push([arrayConquistasEmpate[0][0], arrayConquistasEmpate[0][1]]);
-          totalPontos = totalPontos + arrayConquistasEmpate[0][1];
-        } else if(res1 == 3){
-          itemList.push([arrayConquistasEmpate[1][0], arrayConquistasEmpate[1][1]]);
-          totalPontos = totalPontos + arrayConquistasEmpate[1][1];
-        } else if(res1 == 4){
-          itemList.push([arrayConquistasEmpate[2][0], arrayConquistasEmpate[2][1]]);
-          totalPontos = totalPontos + arrayConquistasEmpate[2][1];
-        } else {
-          itemList.push([arrayConquistasEmpate[3][0], arrayConquistasEmpate[3][1]]);
-          totalPontos = totalPontos + arrayConquistasEmpate[3][1];
         }
-     }
 
-     function listaConquistasDerrota (res1, res2){
-      var diferencaDerrota = res2 - res1;
-        if(diferencaDerrota > 1){
-          if(res1 == 2){
+        function listaConquistasEmpate(res1, res2){
+          console.log("Empate "+res1, res2);
+          if(res1 == 1 || res1 == 0){
+            itemList.push([arrayConquistasEmpate[0][0], arrayConquistasEmpate[0][1]]);
+            totalPontos = totalPontos + arrayConquistasEmpate[0][1];
+          } else if(res1 == 2){
+            itemList.push([arrayConquistasEmpate[0][0], arrayConquistasEmpate[0][1]]);
+            totalPontos = totalPontos + arrayConquistasEmpate[0][1];
+          } else if(res1 == 3){
+            itemList.push([arrayConquistasEmpate[1][0], arrayConquistasEmpate[1][1]]);
+            totalPontos = totalPontos + arrayConquistasEmpate[1][1];
+          } else if(res1 == 4){
+            itemList.push([arrayConquistasEmpate[2][0], arrayConquistasEmpate[2][1]]);
+            totalPontos = totalPontos + arrayConquistasEmpate[2][1];
+          } else {
+            itemList.push([arrayConquistasEmpate[3][0], arrayConquistasEmpate[3][1]]);
+            totalPontos = totalPontos + arrayConquistasEmpate[3][1];
+          }
+        }
+
+        function listaConquistasDerrota (res1, res2){
+          var diferencaDerrota = res2 - res1;
+          if(diferencaDerrota > 1){
+            if(res1 == 2){
              itemList.push([arrayConquistasDerrota[0][0], arrayConquistasDerrota[0][1]]);
              totalPontos = totalPontos + arrayConquistasDerrota[0][1];
-          } else if(res1 == 3){
+           } else if(res1 == 3){
             itemList.push([arrayConquistasDerrota[1][0], arrayConquistasDerrota[1][1]]);
-             totalPontos = totalPontos + arrayConquistasDerrota[1][1];
+            totalPontos = totalPontos + arrayConquistasDerrota[1][1];
           } else {
             itemList.push([arrayConquistasDerrota[2][0], arrayConquistasDerrota[2][1]]);
-             totalPontos = totalPontos + arrayConquistasDerrota[2][1];
+            totalPontos = totalPontos + arrayConquistasDerrota[2][1];
           }
         } else{
           itemList.push(["Derrota", 0]);
         }
-     }
+      }
 
       // ponto placar inverso Vitória ou derrota
-     function placarInverso (res1, res2, reslActual){
+      function placarInverso (res1, res2, reslActual){
         var placaArray = placarUltimo.split("");
         console.log("leng arrayUltimo ", placaArray.length);
         if(placaArray.length == 3){
           for(var i = 0; i< placaArray.length; i++){
 
-              if(statusUltimo == "d" && reslActual == "v"){
-                if(placaArray[0] == res1 && placaArray[2] == res2){
-                  itemList.push([arrayConquistas[26][0], arrayConquistas[26][1]]);
-                  totalPontos = totalPontos + arrayConquistas[26][1];
-                  break; 
-                }
-              } 
-              if(statusUltimo == "v" && reslActual == "d"){  
-                  if(placaArray[0] == res2 && placaArray[2] == res1){
-                  itemList.push([arrayConquistasDerrota[3][0], arrayConquistasDerrota[3][1]]);
-                  totalPontos = totalPontos + arrayConquistasDerrota[3][1];
-                  break; 
-                }
-              } 
+            if(statusUltimo == "d" && reslActual == "v"){
+              if(placaArray[0] == res1 && placaArray[2] == res2){
+                itemList.push([arrayConquistas[26][0], arrayConquistas[26][1]]);
+                totalPontos = totalPontos + arrayConquistas[26][1];
+                break; 
+              }
+            } 
+            if(statusUltimo == "v" && reslActual == "d"){  
+              if(placaArray[0] == res2 && placaArray[2] == res1){
+                itemList.push([arrayConquistasDerrota[3][0], arrayConquistasDerrota[3][1]]);
+                totalPontos = totalPontos + arrayConquistasDerrota[3][1];
+                break; 
+              }
+            } 
           }
         } else if(placaArray == 4){
-           for(var i = 0; i< placaArray.length; i++){
-              if(statusUltimo == "d" && reslActual == "v"){
-                var valor = parseInt(placaArray[0]+placaArray[1]);
-                console.log("inverso V4", valor, res1);
-                if(valor == res1 && placaArray[3]== res2){
-                  itemList.push([arrayConquistas[26][0], arrayConquistas[26][1]]);
-                  totalPontos = totalPontos + arrayConquistas[26][1];
-                  break; 
-                }
-              }
+         for(var i = 0; i< placaArray.length; i++){
+          if(statusUltimo == "d" && reslActual == "v"){
+            var valor = parseInt(placaArray[0]+placaArray[1]);
+            console.log("inverso V4", valor, res1);
+            if(valor == res1 && placaArray[3]== res2){
+              itemList.push([arrayConquistas[26][0], arrayConquistas[26][1]]);
+              totalPontos = totalPontos + arrayConquistas[26][1];
+              break; 
+            }
+          }
 
-              if(statusUltimo == "v" && reslActual == "d"){
-                var valor = parseInt(placaArray[0]+placaArray[1]);
-                console.log("inverso D4 ", valor, res1);
-                if(valor == res1 && placaArray[3]== res2){
-                  itemList.push([arrayConquistasDerrota[3][0], arrayConquistasDerrota[3][1]]);
-                  totalPontos = totalPontos + arrayConquistasDerrota[3][1];
-                  break; 
-                }
-              }
-           }
-        } else {
-          for(var i = 0; i< placaArray.length; i++){
-              if(statusUltimo == "d" && reslActual == "v"){
-                var valor1 = parseInt(placaArray[0]+placaArray[1]);
-                var valor2 = parseInt(placaArray[3]+placaArray[4]);
-                console.log("inverso V5", valor1, res1,  "   ", valor2, res2);
-                if(valor1 == res1 && valor2 == res2){
-                  itemList.push([arrayConquistas[26][0], arrayConquistas[26][1]]);
-                  totalPontos = totalPontos + arrayConquistas[26][1];
-                  break; 
-                }
-              }
-
-              if(statusUltimo == "v" && reslActual == "d"){
-                var valor1 = parseInt(placaArray[0]+placaArray[1]);
-                var valor2 = parseInt(placaArray[3]+placaArray[4]);
-                console.log("inverso D5 ", valor1, res1,  "   ", valor2, res2);
-                if(valor1 == res2 && valor2 == res1){
-                   itemList.push([arrayConquistasDerrota[3][0], arrayConquistasDerrota[3][1]]);
-                  totalPontos = totalPontos + arrayConquistasDerrota[3][1];
-                  break; 
-                }
-              }
-           }
+          if(statusUltimo == "v" && reslActual == "d"){
+            var valor = parseInt(placaArray[0]+placaArray[1]);
+            console.log("inverso D4 ", valor, res1);
+            if(valor == res1 && placaArray[3]== res2){
+              itemList.push([arrayConquistasDerrota[3][0], arrayConquistasDerrota[3][1]]);
+              totalPontos = totalPontos + arrayConquistasDerrota[3][1];
+              break; 
+            }
+          }
         }
+      } else {
+        for(var i = 0; i< placaArray.length; i++){
+          if(statusUltimo == "d" && reslActual == "v"){
+            var valor1 = parseInt(placaArray[0]+placaArray[1]);
+            var valor2 = parseInt(placaArray[3]+placaArray[4]);
+            console.log("inverso V5", valor1, res1,  "   ", valor2, res2);
+            if(valor1 == res1 && valor2 == res2){
+              itemList.push([arrayConquistas[26][0], arrayConquistas[26][1]]);
+              totalPontos = totalPontos + arrayConquistas[26][1];
+              break; 
+            }
+          }
+
+          if(statusUltimo == "v" && reslActual == "d"){
+            var valor1 = parseInt(placaArray[0]+placaArray[1]);
+            var valor2 = parseInt(placaArray[3]+placaArray[4]);
+            console.log("inverso D5 ", valor1, res1,  "   ", valor2, res2);
+            if(valor1 == res2 && valor2 == res1){
+             itemList.push([arrayConquistasDerrota[3][0], arrayConquistasDerrota[3][1]]);
+             totalPontos = totalPontos + arrayConquistasDerrota[3][1];
+             break; 
+           }
+         }
+       }
      }
+   }
 
 
 
@@ -645,60 +649,62 @@
       $scope.lista = false;
 
       $ionicLoading.show().then(function(){
-                //console.log("Loading Jogos");
-             });
+      });
       $scope.placar = "";
       $scope.semFifa = "";
       $scope.respuesta = "";
       var richPresence = false;
-    
 
+      var resultadoFifa = "";
+      $scope.placar = "";
+      console.log("OnlineManue ", onlineManual);
+      if(onlineManual === "Online"){
         $http({
           //url: 'https://xboxapi.com/v2/'+idUsuario+'/presence',
           //url: 'https://xboxapi.com/v2/2535419577962363/presence', //Menino
           url:urlLocal,
            //url: 'https://xboxapi.com/v2/2533274961032793/presence', fah cesar 
            //url: 'https://xboxapi.com/v2/2533275001163369/presence',
-          method: 'GET',
-          headers: {
-                      'Access-Control-Allow-Origin': '*',                
+           method: 'GET',
+           headers: {
+            'Access-Control-Allow-Origin': '*',                
                       'X-AUTH': '5056c2081205740a2d765ebe3ff5807dd4178a87', //Benbaodan
                       'Accept-Language':'en-US',
                       'Content-Type':'application/json'
                     }
-          }).then(function(resp) { 
+                  }).then(function(resp) { 
                     $scope.respuesta = resp.data;
-                   console.log("RichPresence: "+richPresence, $scope.respuesta);  
-                   var totalOnline = resp.data.devices[0].titles.length;
-                  if(resp.data.state === "Online"){
-                    $ionicLoading.hide();
-                    if(resp.data.devices[0].titles.length == 1){
+                    console.log("RichPresence: "+richPresence, $scope.respuesta);  
+                    var totalOnline = resp.data.devices[0].titles.length;
+                    if(resp.data.state === "Online"){
+                      $ionicLoading.hide();
+                      if(resp.data.devices[0].titles.length == 1){
                         $scope.semFifa = "Please goto Fifa 1.";
                         richPresence = false;                 
-                    } else if(resp.data.devices[0].titles.length == 2){
-                      console.log("Title length 2 "+resp.data.devices[0].titles.length);
-                       if(resp.data.devices[0].titles[1].id === 69094388){   
+                      } else if(resp.data.devices[0].titles.length == 2){
+                        console.log("Title length 2 "+resp.data.devices[0].titles.length);
+                        if(resp.data.devices[0].titles[1].id === 69094388){   
 
                           richPresence  = resp.data.devices[0].titles[1].activity.richPresence;
                           console.log("5 "+richPresence);
                           if(richPresence == "FIFA 17 Seasons (In Menus)"){
                             var alertPopup = $ionicPopup.alert({
-                               title: 'Opps!',
-                               template: "<p align='center'><strong>Status:</strong> Menú.</p>"
-                             });
+                             title: 'Opps!',
+                             template: "<p align='center'><strong>Status:</strong> Menú.</p>"
+                           });
 
-                             alertPopup.then(function(res) {
-                               console.log('cerrar');
-                                richPresence = false;
-                                $scope.status = false;
-                             });
+                            alertPopup.then(function(res) {
+                             console.log('cerrar');
+                             richPresence = false;
+                             $scope.status = false;
+                           });
                           } else {
                             $scope.status = true;
                             $scope.semFifa = "Status: "+richPresence; 
                           }                                 
-                      } else {
+                        } else {
                          $scope.semFifa = "Status: "+richPresence; 
-               
+                         
                          $ionicLoading.hide();
                          var alertPopup = $ionicPopup.alert({
                            title: 'Opps!',
@@ -707,204 +713,222 @@
 
                          alertPopup.then(function(res) {
                            console.log('cerrar');
-                            richPresence = false;
-                            $scope.status = false;
+                           richPresence = false;
+                           $scope.status = false;
                          });
-                      }
-                    } else{
+                       }
+                     } else{
                       if(resp.data.devices[0].titles[1].id === 69094388){ 
-                      console.log("Title length 3 "+resp.data.devices[0].titles.length);               
-                          richPresence  = resp.data.devices[0].titles[1].activity.richPresence;
-                          $scope.status = true;
-                          $scope.semFifa = "Status: "+richPresence; 
+                        console.log("Title length 3 "+resp.data.devices[0].titles.length);               
+                        richPresence  = resp.data.devices[0].titles[1].activity.richPresence;
+                        $scope.status = true;
+                        $scope.semFifa = "Status: "+richPresence; 
 
                       } else {
                         $scope.timeCasa = false;
-                         $scope.semFifa = "Status: "+richPresence;
+                        $scope.semFifa = "Status: "+richPresence;
                         richPresence = false;
                         console.log("Please goto Fifa 2.");
                         var alertPopup = $ionicPopup.alert({
-                           title: 'Opps!',
-                           template: "<p align='center'><strong>"+gamerSeleccionado+"</strong> no está no Fifa! 2</p>"
-                         });
+                         title: 'Opps!',
+                         template: "<p align='center'><strong>"+gamerSeleccionado+"</strong> no está no Fifa! 2</p>"
+                       });
 
-                         alertPopup.then(function(res) {
-                           console.log('cerrar');
-                            richPresence = false;
-                            $scope.status = false;
-                         });
+                        alertPopup.then(function(res) {
+                         console.log('cerrar');
+                         richPresence = false;
+                         $scope.status = false;
+                       });
                       }
                     } 
                     
 
                     if(richPresence != false){
                      var fifaMenu = 'FIFA 17 Temporadas (en los menús)';
-                       if(fifaMenu === richPresence){
-                          $scope.placar = "No se mostrará el resultado";
-                          $scope.status = true;
-                       } else {
-                         var idFifa = 69094388;
-                         $scope.lista = true;
-                         $scope.status = false;
-                       
+                     if(fifaMenu === richPresence){
+                      $scope.placar = "No se mostrará el resultado";
+                      $scope.status = true;
+                    } else {
+                     var idFifa = 69094388;
+                     $scope.lista = true;
+                     $scope.status = false;
+                     
                        //console.log("Resp2: "+resp.data.devices[0].titles[0].activity.richPresence);               
                        //if(lentLocal == 1 && lenVisitante == 1){}
-                       // Original var resultado = richPresence;
-                       var resultado = "Jugando FIFA 17 FUT Draft Online "+res1+"-"+res2+" FUT - FUT, 2.\u00ba t.";
+                       resultadoFifa = richPresence;
+                       console.log("richPresence "+richPresence);
+                       //resultadoFifa = resp.data.devices[0].titles[0].activity.richPresence;
+                       atribuirValores(resultadoFifa);
 
+                     }
+                   }                 
 
-                       var separador = ","; // un espacio en blanco
-                       var limite    = 1;
+                 } else {
+                  console.log("Off");
+                  $ionicLoading.hide();
+                  var alertPopup = $ionicPopup.alert({
+                   title: 'Opps!',
+                   template: "<p align='center'><strong>"+gamerSeleccionado+"</strong> está offline!</p>"
+                 });
+
+                  alertPopup.then(function(res) {
+                   console.log('cerrar');
+                 });
+                }
+
+                
+
+              });
+
+/*, function(err) {
+                 console.log("Error2 "+err.data);
+                 $scope.error = err.data;
+                 $ionicLoading.hide();
+               }); */
+
+             } else {
+              $ionicLoading.hide();
+              var resultadoFifa2 = "Jugando FIFA 17 FUT Draft Online "+res1+"-"+res2+" FUT - FUT, 2.\u00ba t.";
+              var idFifa = 69094388;
+              $scope.lista = true;
+              $scope.status = true;
+              atribuirValores(resultadoFifa2);
+              
+            }
+
+            function atribuirValores (resultadoRecuperado){
+
+                    var separador = ","; // un espacio en blanco
+                    var limite    = 1;
                        //var resposta = resultado.split(separador);
                        //console.log(resposta[27], resposta[29]) ;
-                        var ini;
+                       var ini;
                        var fin;
                        var r1DosNumeros;
                        var r2DosNumeros;
                        console.log(lentLocal, lenVisitante, "ññññññ", lentLocal, lenVisitante);
-                      if(lentLocal < 2 && lenVisitante <2){
+                       if(lentLocal < 2 && lenVisitante <2){
                         r1DosNumeros  = false;
                         r2DosNumeros  = false;
-                         ini = parseInt(resultado.indexOf("-"))-1;
-                         fin = parseInt(resultado.indexOf("-"))+1;
+                        ini = parseInt(resultadoRecuperado.indexOf("-"))-1;
+                        fin = parseInt(resultadoRecuperado.indexOf("-"))+1;
                       } else if(lentLocal == 2 && lenVisitante < 2){
                         r1DosNumeros  = true;
                         r2DosNumeros  = false;
-                         ini = parseInt(resultado.indexOf("-"))-2;
-                         fin = parseInt(resultado.indexOf("-"))+1;
+                        ini = parseInt(resultadoRecuperado.indexOf("-"))-2;
+                        fin = parseInt(resultadoRecuperado.indexOf("-"))+1;
                       } else if(lentLocal < 2 && lenVisitante == 2){
-                         r1DosNumeros  = false;
-                         r2DosNumeros  = true;
-                         ini = parseInt(resultado.indexOf("-"))-1;
-                         fin = parseInt(resultado.indexOf("-"))+1;
-                      } else if(lentLocal == 2 && lenVisitante == 2){                         
-                         r1DosNumeros  = true;
-                         r2DosNumeros  = true;
-                         ini = parseInt(resultado.indexOf("-"))-2;
-                         fin = parseInt(resultado.indexOf("-"))+1;
-                      }
+                       r1DosNumeros  = false;
+                       r2DosNumeros  = true;
+                       ini = parseInt(resultadoRecuperado.indexOf("-"))-1;
+                       fin = parseInt(resultadoRecuperado.indexOf("-"))+1;
+                     } else if(lentLocal == 2 && lenVisitante == 2){                         
+                       r1DosNumeros  = true;
+                       r2DosNumeros  = true;
+                       ini = parseInt(resultadoFifa.indexOf("-"))-2;
+                       fin = parseInt(resultadoFifa.indexOf("-"))+1;
+                     }
 
-                       
-                      
-                       var parcial = resultado.substr(ini, fin);
-                       var final = parcial.split(separador);
-                        console.log("final", final);
+                     
+                     
+                     var parcial = resultadoRecuperado.substr(ini, fin);
+                     var final = parcial.split(separador);
+                     console.log("final", final);
 
-                       var corta = parcial.indexOf(" ");
-                       var placar = parcial.substr(0,corta);
-                       var arrayResultado = placar.split("");
-                       var recortarTime = String(final.slice(0, -1));
-                       var sep = "";
-                       var array = "";
-                       array = recortarTime.split(sep);
-                       console.log(array);
+                     var corta = parcial.indexOf(" ");
+                     var placar = parcial.substr(0,corta);
+                     var arrayResultado = placar.split("");
+                     var recortarTime = String(final.slice(0, -1));
+                     var sep = "";
+                     var array = "";
+                     array = recortarTime.split(sep);
+                     console.log(array);
                      
                       // recuperar nome do time1 e time2 e resultados, si os resultado1 é de 1 dígito
                       if(r1DosNumeros == false && r2DosNumeros == false){
-                         if(array[6] == undefined){
-                            time1 = array[4]+array[5]
-                         } else {
-                            time1 = array[4]+array[5]+array[6];
-                         }                       
-                
-                         if(array[12] == undefined){
-                            time2 = array[10]+array[11];
-                          } else {
-                            time2 = array[10]+array[11]+array[12];
-                          }
+                       if(array[6] == undefined){
+                        time1 = array[4]+array[5]
+                      } else {
+                        time1 = array[4]+array[5]+array[6];
+                      }                       
+                      
+                      if(array[12] == undefined){
+                        time2 = array[10]+array[11];
+                      } else {
+                        time2 = array[10]+array[11]+array[12];
+                      }
                           //resultados
                           resultado1 = array[0]
-                         resultado2 = array[2];
-                      }
+                          resultado2 = array[2];
+                        }
 
                       // recuperar nome do time1 e time2 e resultados,dependendo si o resultado1 é de 1 ou 2 dígitos e o 2 é de 1 dígitos
                       if(r1DosNumeros  == true && r2DosNumeros == false){
-                          if(array[7] == undefined){
-                            time1 = array[5]+array[6]
-                         } else {
-                            time1 = array[5]+array[6]+array[7];
-                         }                        
-                         if(array[13] == undefined){
-                            time2 = array[11]+array[12];
-                          } else {
-                            time2 = array[11]+array[12]+array[13];
-                          }
+                        if(array[7] == undefined){
+                          time1 = array[5]+array[6]
+                        } else {
+                          time1 = array[5]+array[6]+array[7];
+                        }                        
+                        if(array[13] == undefined){
+                          time2 = array[11]+array[12];
+                        } else {
+                          time2 = array[11]+array[12]+array[13];
+                        }
                           //resultados
                           resultado1 = array[0]+array[1];
-                         resultado2 = array[3];
-                      }
+                          resultado2 = array[3];
+                        }
 
                       // recuperar nome do time1 e time2 e resultados,dependendo si o resultado2 é de 1 ou 2 dígitos e o 1 é de 1 dígitos
                       if(r1DosNumeros == false && r2DosNumeros == true){
                         if(array[7] == undefined){
-                            time1 = array[5]+array[6]
-                         } else {
-                            time1 = array[5]+array[6]+array[7];
-                         }
-                          if(array[13] == undefined){
-                            time2 = array[11]+array[12];
-                          } else {
-                            time2 = array[11]+array[12]+array[13];
-                          }
-                          resultado1 = array[0];
-                          resultado2 = array[2]+array[3];
+                          time1 = array[5]+array[6]
+                        } else {
+                          time1 = array[5]+array[6]+array[7];
+                        }
+                        if(array[13] == undefined){
+                          time2 = array[11]+array[12];
+                        } else {
+                          time2 = array[11]+array[12]+array[13];
+                        }
+                        resultado1 = array[0];
+                        resultado2 = array[2]+array[3];
                       }
 
                       // recuperar nome do time1 e time2 e resultados,si os resultados sao de 2 dígitos
                       if(r1DosNumeros == true && r2DosNumeros == true){
                         if(array[8] == undefined){
-                            time1 = array[7]+array[6]
-                         } else {
-                            time1 = array[6]+array[7]+array[8];
-                         }
-                          if(array[14] == undefined){
-                            time2 = array[12]+array[13];
-                          } else {
-                            time2 = array[12]+array[13]+array[14];
-                          }
-                          resultado1 = array[0]+array[1];
-                          resultado2 = array[3]+array[4];
-                      }                                         
-                         
-                         
-                      if(resultado1 != undefined){
-                         $scope.placar = time1+" "+resultado1+" X "+resultado2+" "+time2;
-                         $scope.casa = time1+" "+resultado1;
-                         $scope.fora = time2+" "+resultado2;
-                         $scope.timeCasa = time1;
-                         $scope.timeVisitante = time2;
-                         $scope.resCasa = resultado1;
-                         $scope.resVisitante = resultado2;
-                         console.log("Placar "+$scope.placar);
+                          time1 = array[7]+array[6]
                         } else {
-                           $scope.placar = "Vc está no Menú";
+                          time1 = array[6]+array[7]+array[8];
                         }
+                        if(array[14] == undefined){
+                          time2 = array[12]+array[13];
+                        } else {
+                          time2 = array[12]+array[13]+array[14];
+                        }
+                        resultado1 = array[0]+array[1];
+                        resultado2 = array[3]+array[4];
+                      }                                         
+                      
+                      
+                      if(resultado1 != undefined){
+                       $scope.placar = time1+" "+resultado1+" X "+resultado2+" "+time2;
+                       $scope.casa = time1+" "+resultado1;
+                       $scope.fora = time2+" "+resultado2;
+                       $scope.timeCasa = time1;
+                       $scope.timeVisitante = time2;
+                       $scope.resCasa = resultado1;
+                       $scope.resVisitante = resultado2;
+                       console.log("Placar "+$scope.placar);
+                     } else {
+                       $scope.placar = "Vc está no Menú";
+                     }
 
-                      }
-                    }                 
+                   }
 
-                  } else {
-                    console.log("Off");
-                      $ionicLoading.hide();
-                       var alertPopup = $ionicPopup.alert({
-                       title: 'Opps!',
-                       template: "<p align='center'><strong>"+gamerSeleccionado+"</strong> está offline!</p>"
-                     });
 
-                     alertPopup.then(function(res) {
-                       console.log('cerrar');
-                     });
-                  }
-
-            
-
-        }, function(err) {
-                 console.log("Error2 "+err.data);
-                 $scope.error = err.data;
-                 $ionicLoading.hide();
-        });
-
-       
+                   
 
     } // function
 
@@ -958,73 +982,73 @@
       }
 
       var conquistasEnviar = [];
-        for(var i =0; i < itemList.length; i++){
+      for(var i =0; i < itemList.length; i++){
           //console.log(itemList[i][0]+":"+itemList[i][1]);
           conquistasEnviar.push(itemList[i][0]+":"+itemList[i][1]);
         }
 
-      console.log(resultPenultimo, "ultimos :"+resultUltimo, 
-        "novoResultado: ",novoResultado,
-        "penultimo: "+resultUltimo, 
-        "antepenultimo: "+resultPenultimo,  
-        "resultado 1 "+resultado1, 
-        "resultado 2 "+resultado2, 
-        "jogados: ",jogados+1, 
-        "vitoria: ",anteriorVitoria+seVitoria, 
-        "Derrota: ",anteriorDerrota+seDerrota,
-        "empate: ",anteriorEmpate+seEmpate,
-        "invencibilidade ",zerarInvencibilidade, 
-        "sequenciaVitoria ", zerarSequenciaVitoria,
-        "itemList ", itemList);
+        console.log(resultPenultimo, "ultimos :"+resultUltimo, 
+          "novoResultado: ",novoResultado,
+          "penultimo: "+resultUltimo, 
+          "antepenultimo: "+resultPenultimo,  
+          "resultado 1 "+resultado1, 
+          "resultado 2 "+resultado2, 
+          "jogados: ",jogados+1, 
+          "vitoria: ",anteriorVitoria+seVitoria, 
+          "Derrota: ",anteriorDerrota+seDerrota,
+          "empate: ",anteriorEmpate+seEmpate,
+          "invencibilidade ",zerarInvencibilidade, 
+          "sequenciaVitoria ", zerarSequenciaVitoria,
+          "itemList ", itemList);
 
-      console.log("iniciando update resumo");
-      firebase.database().ref().child('desafio/desafios/temporadas/oficial/'+idTorneio+'/inscritos/'+keyUsuario).update({
-            vitoria:anteriorVitoria+seVitoria,
-            pontos:antPontos + totalPontos,
-            jogados:jogados+1,
-            derrota:anteriorDerrota+seDerrota,
-            empate:anteriorEmpate+seEmpate,
-            sequenciaVitoria:zerarSequenciaVitoria,
-            invencibilidade:zerarInvencibilidade,
-            placarUltimo:novoResultado,
-            placarPenultimo:resultUltimo,
-            placarAntepenultimo:resultPenultimo,
-            golsPro:golsPro,
-            golsContra:golsContra
+        console.log("iniciando update resumo");
+        firebase.database().ref().child('desafio/desafios/temporadas/oficial/'+idTorneio+'/inscritos/'+keyUsuario).update({
+          vitoria:anteriorVitoria+seVitoria,
+          pontos:antPontos + totalPontos,
+          jogados:jogados+1,
+          derrota:anteriorDerrota+seDerrota,
+          empate:anteriorEmpate+seEmpate,
+          sequenciaVitoria:zerarSequenciaVitoria,
+          invencibilidade:zerarInvencibilidade,
+          placarUltimo:novoResultado,
+          placarPenultimo:resultUltimo,
+          placarAntepenultimo:resultPenultimo,
+          golsPro:golsPro,
+          golsContra:golsContra
         }).then(function(response) {
           Utils.message(Popup.loading_b, Popup.loading);
-            console.log("response1: "+response); 
-            console.log("iniciando update jogo");
-            firebase.database().ref().child('desafio/desafios/temporadas/oficial/'+idTorneio+'/inscritos/'+keyUsuario+'/jogos/'+$scope.chat).update({                  
-              estado:"Terminado",
-              pontos:totalPontos,
-              conquistas:conquistasEnviar,
-              placar:placarEnviar,
-              status:statusEnviar
+          console.log("response1: "+response); 
+          console.log("iniciando update jogo");
+          firebase.database().ref().child('desafio/desafios/temporadas/oficial/'+idTorneio+'/inscritos/'+keyUsuario+'/jogos/'+$scope.chat).update({                  
+            estado:"Terminado",
+            pontos:totalPontos,
+            conquistas:conquistasEnviar,
+            placar:placarEnviar,
+            status:statusEnviar
+          }).then(function(response) {
+            Utils.message(Popup.loading_a, Popup.loading);
+            console.log("response2: "+response);
+            console.log("iniciando update siguiente jogo");
+            var somaJogo = Number(id) + 1;
+            var siguienteJogo = "jogo" + somaJogo;
+            firebase.database().ref().child('desafio/desafios/temporadas/oficial/'+idTorneio+'/inscritos/'+keyUsuario+'/jogos/'+siguienteJogo).update({                  
+              bloqueado:false
             }).then(function(response) {
-              Utils.message(Popup.loading_a, Popup.loading);
-              console.log("response2: "+response);
-              console.log("iniciando update siguiente jogo");
-              var somaJogo = Number(id) + 1;
-              var siguienteJogo = "jogo" + somaJogo;
-              firebase.database().ref().child('desafio/desafios/temporadas/oficial/'+idTorneio+'/inscritos/'+keyUsuario+'/jogos/'+siguienteJogo).update({                  
-                bloqueado:false
-              }).then(function(response) {
 
-                console.log("response3: "+response);
-                console.log("final update siguiente jogo");    
-                var backCount = 1;                                
-                $rootScope.$ionicGoBack = function(backCount) {
-                    $ionicHistory.goBack(backCount);
-                };
-                Utils.message(Popup.loading_b, Popup.loading).then(function() {
-                    $rootScope.$ionicGoBack();
-                  })
-                
-              });
+              console.log("response3: "+response);
+              console.log("final update siguiente jogo");    
+              var backCount = 1;                                
+              $rootScope.$ionicGoBack = function(backCount) {
+                $ionicHistory.goBack(backCount);
+              };
+              Utils.message(Popup.loading_b, Popup.loading).then(function() {
+                $rootScope.$ionicGoBack();
+              })
+              
             });
+          });
         }); 
-    }  
+      }  
 
   }]); //ctrl
 })();
