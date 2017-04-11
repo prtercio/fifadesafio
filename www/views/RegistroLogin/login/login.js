@@ -395,7 +395,7 @@ angular.module('App').controller('CtrlLogin', function($scope, $state, $localSto
                 provider: 'Firebase',
                 idXbox: idXbox,
                 imagenGt: imagenGt,
-                tipo:plus
+                tipo:"plus"
               }).then(function(response) {
                 //Account created successfully, logging user in automatically after a short delay.
                 Utils.message(Popup.successIcon, Popup.accountCreateSuccess)
