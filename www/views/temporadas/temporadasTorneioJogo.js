@@ -125,7 +125,7 @@
           statusUltimo = resultUltimo.substring(0, resultUltimo.indexOf("|"));  
           console.log(statusUltimo);
           placarUltimo = resultUltimo.substring(resultUltimo.indexOf("|")+1);
-          console.log(placarUltimo);
+          console.log(" abc ", placarUltimo);
 
 
           if($scope.infoJogo.placarPenultimo != 0){
@@ -155,37 +155,6 @@
         }
       });
 
-
-
-     function definirResultado(resultado){
-      /*
-      if($scope.idioma == "pt"){
-        if(resultado == "Vitoria"){
-          $scope.placarFinal = "Vitória";
-        } else if(resultado == "Derrota"){
-          $scope.placarFinal = "Derrota";
-        } else {
-          $scope.placarFinal = "Empate";
-        }
-      } else if($scope.idioma == "es"){
-        if(resultado == "Vitoria"){
-          $scope.placarFinal = "Victoria";
-        } else if(resultado == "Derrota"){
-          $scope.placarFinal = "Derrota";
-        } else {
-          $scope.placarFinal = "Empate";
-        }
-      } else {
-        if(resultado == "Vitoria"){
-          $scope.placarFinal = "Victory";
-        } else if(resultado == "Derrota"){
-          $scope.placarFinal = "Defeat";
-        } else {
-          $scope.placarFinal = "Draw";
-        }
-      }
-      */
-     }
 
       console.log("conq "+conquistas);
       //Vitória armazenando as conquistas e os pontos dentro de arrayConquistas
@@ -345,7 +314,7 @@
           $scope.placarFinal = "v";
           seVitoria = 1; 
           listarConquistaVitoria(resultado1, resultado2); 
-          definirResultado(resultadoFinal);  
+
           console.log(golsPro, golsContra);
           placarInverso(resultado1, resultado2, "v");
         } else if(resultado1 < resultado2){
@@ -353,14 +322,14 @@
           $scope.placarFinal = "d";
           seDerrota = 1; 
           listaConquistasDerrota(resultado1, resultado2);
-          definirResultado(resultadoFinal);  
+ 
           placarInverso(resultado1, resultado2, "d");         
         } else {
           var resultadoFinal = "Empate";
           $scope.placarFinal = "e";
           seEmpate = 1; 
           listaConquistasEmpate(resultado1, resultado2);
-          definirResultado(resultadoFinal); 
+      
         } 
 
       // -----------------------------------------------------------------------------------------------------  Jogo Visitante 
@@ -374,21 +343,21 @@
           $scope.placarFinal = "v";
           seVitoria = 1; 
           listarConquistaVitoria(resultado2, resultado1); 
-          definirResultado(resultadoFinal); 
+
           placarInverso(resultado2, resultado1, "v");
         } else if(resultado1 > resultado2){
           var resultadoFinal = "Derrota";
           $scope.placarFinal = "d";
           seDerrota = 1; 
           listaConquistasDerrota(resultado2, resultado1);
-          definirResultado(resultadoFinal);
+    
           placarInverso(resultado2, resultado1, "d");
         } else {
           var resultadoFinal = "Empate";
           $scope.placarFinal = "e";
           seEmpate = 1; 
           listaConquistasEmpate(resultado2, resultado1);
-          definirResultado(resultadoFinal);
+    
  
         }  
       } else {
@@ -954,7 +923,7 @@
         zerarSequenciaVitoria = 0;
       } else {
         statusEnviar = "v";
-        zerarSequenciaVitoria = sequenciaVitoria +1;
+        zerarSequenciaVitoria = parseInt(sequenciaVitoria) + 1;
         if(resultado1 > resultado2){
           placarEnviar = resultado1+"-"+resultado2;
           novoResultado = "v|"+resultado1+"-"+resultado2;
