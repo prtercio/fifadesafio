@@ -158,6 +158,7 @@
     	console.log(dataService.get());
 
     	$scope.cargarDatos = function(){
+    		ranking =[];
     		$ionicLoading.show({
 		      template: 'Loading...',
 		      duration: 3000
