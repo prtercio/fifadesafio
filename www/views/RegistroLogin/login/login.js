@@ -346,7 +346,7 @@ angular.module('App').controller('CtrlLogin', function($scope, $state, $localSto
                     gamertag = respuesta.data.Gamertag;
                     imagenGt = respuesta.data.GameDisplayPicRaw;
                     gamerscore = respuesta.data.Gamerscore;
-                     $scope.msg = "Este é o seu Gamertag?";
+                    $scope.msg = "Este é o seu Gamertag?";
                     $scope.gamertag = gamertag;
                     $scope.imagenGt = imagenGt;  
                   }, function(err) { 
@@ -394,7 +394,8 @@ angular.module('App').controller('CtrlLogin', function($scope, $state, $localSto
                 dateCreated: Date(),
                 provider: 'Firebase',
                 idXbox: idXbox,
-                imagenGt: imagenGt
+                imagenGt: imagenGt,
+                tipo:plus
               }).then(function(response) {
                 //Account created successfully, logging user in automatically after a short delay.
                 Utils.message(Popup.successIcon, Popup.accountCreateSuccess)

@@ -79,17 +79,17 @@
      $scope.verPlacarFinal = false;
      console.log($localStorage.account.idXbox);
 
-     var resultUltimo = 0;
-     var resultPenultimo = 0;
-     var resultAntepenultimo = 0;
+     var resultUltimo = "";
+     var resultPenultimo = "";
+     var resultAntepenultimo = "";
 
-     var statusUltimo = 0;
-     var statusPenultimo = 0;
-     var statusAntepenultimo = 0;
+     var statusUltimo = "";
+     var statusPenultimo = "";
+     var statusAntepenultimo = "";
 
-     var placarUltimo = 0;
-     var placarPenultimo = 0;
-     var placarAntepenultimo = 0;
+     var placarUltimo = "";
+     var placarPenultimo = "";
+     var placarAntepenultimo = "";
 
      var sequenciaVitoria = 0;
      var invencibilidade = 0;
@@ -120,19 +120,23 @@
       refJ.once("value").then(function(snapshot) {        
         $scope.infoJogo = snapshot.val();
         if($scope.infoJogo.jogados != 0){
-          resultUltimo= $scope.infoJogo.placarUltimo;
-          statusUltimo =  resultUltimo.substring(0, resultUltimo.indexOf("|"));  
-          placarUltimo = resultUltimo.substring(resultUltimo.indexOf("|")+1);         
+          resultUltimo = String($scope.infoJogo.placarUltimo);
+          console.log(resultUltimo);
+          statusUltimo = resultUltimo.substring(0, resultUltimo.indexOf("|"));  
+          console.log(statusUltimo);
+          placarUltimo = resultUltimo.substring(resultUltimo.indexOf("|")+1);
+          console.log(placarUltimo);
+
 
           if($scope.infoJogo.placarPenultimo != 0){
-            resultPenultimo = $scope.infoJogo.placarPenultimo;
+            resultPenultimo = String($scope.infoJogo.placarPenultimo);
             statusPenultimo =  resultPenultimo.substring(0, resultPenultimo.indexOf("|"));  
             placarPenultimo = resultPenultimo.substring(resultPenultimo.indexOf("|")+1);
           }
 
-          if($scope.infoJogo.placarAntepenultimo != 0){
-            resultAntepenultimo= $scope.infoJogo.placarAntepenultimo;
-            statusPenultimo =  resultAntepenultimo.substring(0, resultAntepenultimo.indexOf("|"));  
+          if($scope.infoJogo.placarAntepenultimo != 0){            
+            resultAntepenultimo = String($scope.infoJogo.placarAntepenultimo);
+            statusAntepenultimo = resultAntepenultimo.substring(resultAntepenultimo.indexOf("|"));  
             placarAntepenultimo = resultAntepenultimo.substring(resultAntepenultimo.indexOf("|")+1);
           }
 
