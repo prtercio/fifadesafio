@@ -142,8 +142,8 @@
 
           $scope.jogados =  $scope.infoJogo.jogados; 
           jogados = $scope.jogados;
-          sequenciaVitoria = $scope.infoJogo.sequenciaVitoria;
-          invencibilidade = $scope.infoJogo.invencibilidade;
+          sequenciaVitoria = Number($scope.infoJogo.sequenciaVitoria);
+          invencibilidade = Number($scope.infoJogo.invencibilidade);
           anteriorVitoria = $scope.infoJogo.vitoria;
           anteriorDerrota = $scope.infoJogo.derrota;
           anteriorEmpate = $scope.infoJogo.empate;
@@ -349,8 +349,7 @@
           var resultadoFinal = "Derrota";
           $scope.placarFinal = "d";
           seDerrota = 1; 
-          listaConquistasDerrota(resultado2, resultado1);
-    
+          listaConquistasDerrota(resultado2, resultado1);    
           placarInverso(resultado2, resultado1, "d");
         } else {
           var resultadoFinal = "Empate";
@@ -549,7 +548,7 @@
 
      function listaConquistasDerrota (res1, res2){
       var diferencaDerrota = res2 - res1;
-        if(diferencaDerrota == 1){
+        if(diferencaDerrota > 1){
           if(res1 == 2){
              itemList.push([arrayConquistasDerrota[0][0], arrayConquistasDerrota[0][1]]);
              totalPontos = totalPontos + arrayConquistasDerrota[0][1];
@@ -914,8 +913,8 @@
     $scope.enviarResultado = function (){
 
       Utils.message(Popup.loading_a, Popup.loading);
-      var zerarSequenciaVitoria;
-      var zerarInvencibilidade;
+      var zerarSequenciaVitoria = 0;
+      var zerarInvencibilidade = 0;
       var novoResultado;
       var placarEnviar;
       var statusEnviar;
@@ -944,7 +943,7 @@
           novoResultado = "d|"+resultado2+"-"+resultado1;
         }
       } else {
-        zerarInvencibilidade = invencibilidade + 1;
+        zerarInvencibilidade = parseInt(invencibilidade) + 1;
       }
 
       if(seEmpate == 1){
