@@ -70,7 +70,9 @@
             "jogo":comJogos[0][key].jogo, 
             "bloqueado":comJogos[0][key].bloqueado, 
             "estado":comJogos[0][key].estado, 
-            "pontos":comJogos[0][key].pontos
+            "pontos":comJogos[0][key].pontos,
+            "placar":comJogos[0][key].placar,
+            "status":comJogos[0][key].status
           });
         }
         $scope.jogos = resultadoJogos;  

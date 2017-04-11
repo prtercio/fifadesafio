@@ -48,7 +48,9 @@
     
     var refjogos = firebase.database().ref('desafio/desafios/temporadas/oficial/'+idTorneio+'/inscritos/'+keyUsuario+'/jogos/'+$scope.chat);
     refjogos.once("value").then(function(snapshot) {
-      $scope.detalheJogo = snapshot.val();  
+      $scope.$apply(function(){
+        $scope.detalheJogo = snapshot.val(); 
+      }); 
     });
 
   }]); //ctrl

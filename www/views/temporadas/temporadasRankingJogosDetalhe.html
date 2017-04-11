@@ -12,7 +12,11 @@
       </div>        
     </div>
 -->
-  <h5 class="center" >Conquistas: </h5>
+  <div class="padding bgverde" align="center">
+    <h1>{{detalheJogo.status | filtroStatus}}</h1>
+    <h3>{{detalheJogo.placar}}</h3>
+  </div>
+  <h5 class="center" >{{'CONQUISTAS' | translate }} </h5>
 
   <div ng-if="detalheJogo.estado == 'Terminado'">
     <ion-item class="item">

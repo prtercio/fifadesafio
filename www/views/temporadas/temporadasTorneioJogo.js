@@ -220,7 +220,9 @@
         
         $scope.estadoJogo = snapshot.val();
         $scope.estado = $scope.estadoJogo.estado;
-        $scope.detalheJogo = snapshot.val();  
+         $scope.$apply(function(){
+          $scope.detalheJogo = snapshot.val();  
+         });
 
       });
 
@@ -1073,9 +1075,9 @@ subir 12 pts
 Titulo 15 pts
 ---------------------------------
 Divisao 7
-permanencia
-subir
-Titulo
+permanencia 8
+subir 14
+Titulo 17
 ---------------------------------
 6 Divisao
 permanencia 10
@@ -1091,7 +1093,20 @@ Divisao 4
 Permanencia 10
 subir 16
 Titulo 19
-
-
+---------------------------------
+Divisao 3
+Permanencia 
+subir 
+Titulo 
+---------------------------------
+Divisao 2
+Permanencia 
+subir 
+Titulo
+---------------------------------
+Divisao 1
+Permanencia 
+subir 
+Titulo
 
 */
