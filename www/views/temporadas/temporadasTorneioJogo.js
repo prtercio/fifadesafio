@@ -554,7 +554,9 @@
 
         function listaConquistasDerrota (res1, res2){
           var diferencaDerrota = res2 - res1;
-          if(diferencaDerrota > 1){
+          var pontosGols = Number(res1) * 25;
+
+          if(diferencaDerrota == 1){
             if(res1 == 2){
              itemList.push([arrayConquistasDerrota[0][0], arrayConquistasDerrota[0][1]]);
              totalPontos = totalPontos + arrayConquistasDerrota[0][1];
@@ -568,6 +570,10 @@
         } else{
           itemList.push(["Derrota", 0]);
         }
+        if(res1 > 0){
+          itemList.push([arrayConquistasDerrota[4][0], arrayConquistasDerrota[4][1]]);
+          totalPontos = totalPontos + pontosGols;
+        }
       }
 
       // ponto placar inverso Vitória ou derrota
@@ -576,7 +582,6 @@
         console.log("leng arrayUltimo ", placaArray.length);
         if(placaArray.length == 3){
           for(var i = 0; i< placaArray.length; i++){
-
             if(statusUltimo == "d" && reslActual == "v"){
               if(placaArray[0] == res1 && placaArray[2] == res2){
                 itemList.push([arrayConquistas[26][0], arrayConquistas[26][1]]);
