@@ -144,6 +144,7 @@
 	    	gamertag = "Guest";
 	    }
     	$scope.gamertag = gamertag;
+    	console.log("------ "+gamertag);
     	$scope.sairTorneioVar = false;
     	$scope.keyUserInscritoTorneio = "";
     	var keyUserInscritoTorneio;
@@ -173,7 +174,7 @@
 				       totalJogos = snapshot.val().configuracao.jogos;
 				       var inscritos = snapshot.val().inscritos;
 				       for(var key in inscritos){
-				       	keyUserInscritoTorneio=key;
+				       	//keyUserInscritoTorneio=key;
 				       	  ranking.push({
 			                "keyUserTorneio":key, 
 			                "gamertag": inscritos[key].gamertag,
@@ -192,6 +193,8 @@
 					       	if(ranking[i].gamertag == gamertag){
 					       		$scope.sairTorneioVar = true;				       		
 					      		$scope.keyUserInscritoTorneio = ranking[i].keyUserTorneio;
+					      		keyUserInscritoTorneio = $scope.keyUserInscritoTorneio;
+					      		console.log("aqui "+ranking[i].gamertag, keyUserInscritoTorneio);
 					       		cargarJogos();
 					       		break;
 					       	} else {
@@ -324,6 +327,7 @@
 	    /// Jogos
 	    var resultadoJogos = [];
 	    function cargarJogos(){
+	    	console.log("---" +keyUserInscritoTorneio);
 		    var refJogos = firebase.database().ref('desafio/desafios/temporadas/oficial/'+idTorneio+'/inscritos/'+keyUserInscritoTorneio);
 		    refJogos.once('value').then(function(snapshot) {
 		    	if(snapshot.val() != null){

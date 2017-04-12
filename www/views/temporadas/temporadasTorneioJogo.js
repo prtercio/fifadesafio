@@ -203,17 +203,17 @@
           arrayConquistas.push([vit[c].titulo, vit[c].pontos]);   
         }
           //derrota
-          var der = conquistas[key].derrota.en;
-          for(var d in der){
-            arrayConquistasDerrota.push([der[d].titulo, der[d].pontos]); 
-          }
+        var der = conquistas[key].derrota.en;
+        for(var d in der){
+          arrayConquistasDerrota.push([der[d].titulo, der[d].pontos]); 
+        }
           //empate
-          var emp = conquistas[key].empate.en;
-          for(var e in emp){
-            arrayConquistasEmpate.push([emp[e].titulo, emp[e].pontos]); 
-          }
+        var emp = conquistas[key].empate.en;
+        for(var e in emp){
+          arrayConquistasEmpate.push([emp[e].titulo, emp[e].pontos]); 
         }
       }
+    }
       
       var refjogos = firebase.database().ref('desafio/desafios/temporadas/oficial/'+idTorneio+'/inscritos/'+keyUsuario+'/jogos/'+$scope.chat);
       refjogos.once("value").then(function(snapshot) {
@@ -1051,6 +1051,15 @@
           });
         }); 
       }  
+
+
+      //----------------------------------------------------------------------------------------------- DADOS TEMPORDADAS
+      function calculosTempordas (divisao){
+        if(divisao == 0){
+          var jogosTemp = 0;
+        }
+      }
+
 
   }]); //ctrl
 })();
