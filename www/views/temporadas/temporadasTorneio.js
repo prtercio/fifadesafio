@@ -154,9 +154,9 @@
 
     	$scope.keyTorneio = idTorneio;
 
-    	//armazenar idTorneio
-    	dataService.set(idTorneio);
-    	console.log(dataService.get());
+    	var temporadaInicial = 0;
+
+    
 
     	$scope.cargarDatos = function(){
     		ranking =[];
@@ -172,6 +172,7 @@
 			        $scope.torneio = snapshot.val();
 			       	//console.log(snapshot.val().inscritos);
 				       totalJogos = snapshot.val().configuracao.jogos;
+				       temporadaInicial = snapshot.val().configuracao.temporada;
 				       var inscritos = snapshot.val().inscritos;
 				       for(var key in inscritos){
 				       	//keyUserInscritoTorneio=key;
@@ -204,6 +205,11 @@
 					       }
 					   }
 			       });
+			       var arrayDatos = {idTorneio, temporadaInicial};
+					console.log(arrayDatos);
+						//armazenar idTorneio
+			    	dataService.set(arrayDatos);
+			    	console.log("---- "+ dataService.get().idTorneio);
 			       $ionicLoading.hide();
 			   	}else{
 			   		$scope.nohay = "Ainda nao há inscritos neste torneio. Voce pode ser o primeiro!"
@@ -211,6 +217,8 @@
 			   	}
 		    });
 		}
+
+		
 
 	    //verificar se está inscrito
 	    function verInscrito (ranking){

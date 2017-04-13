@@ -17,7 +17,8 @@ angular.module('App', [
   'App.CtrlTemporadasRankingJogosDetalhe',
   'App.CtrlCopas',
   'App.dataServices',
-  'App.FiltroStatus', 
+  'App.FiltroStatus',
+  'App.FiltroAbertoFechado', 
   'ngStorage', 
   'ngCordovaOauth', 
   'App.translations'])

@@ -44,10 +44,9 @@
   $scope.jogo = "jogo"+id; 
   $scope.jogoNome = id;
   $scope.keyUsuario = keyUsuario;
-  var idTorneio = dataService.get();
-  console.log("key: "+keyUsuario, idTorneio);
-  console.log("jogo "+$scope.jogo);
-
+  var idTorneio = String(dataService.get().idTorneio);
+  console.log("id Torneio "+idTorneio);
+  var temporadaInicial = String(dataService.get().temporadaInicial);
 
   var resultadoJogos = [];
 

@@ -9,7 +9,7 @@
 	    <h2>{{value.nome}}</h2>
 	    <!-- <p>Inicio: {{value.configuracao.dataInicio | date:'dd/MM/yyyy'}}</p>
 	    <p>Fin: {{value.configuracao.dataFim | date:'dd/MM/yyyy'}}</p> -->
-	    <p>Status: {{status}}</p>
+	    <p>Status: {{status | filtroAbertoFechado}}</p>
 	    <p ng-repeat="lang in value.premio.descricao track by $index" ng-if="$index == idioma">Premio: {{lang.nome}}</p>
 	  </ion-item>
 	</ion-list>

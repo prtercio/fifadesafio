@@ -9,7 +9,8 @@
                 </div>
           </label>
     </li>
-    <div class="list" ng-show="checkedTemporadas">    
+    <div class="list" ng-show="checkedTemporadas">
+    <h3 align="center" class="padding verde">{{'VITORIA' | translate}}</h3>    
       <div class="item item-text-wrap" ng-repeat="(key, value) in conquistas.conquistasTemporadas.vitoria.en track by $index" ng-if="idioma == 'en'">
         <span class="item-note">
           <p class="right">{{'PONTOS' | translate}}: <strong>{{value.pontos}}</strong></p>
@@ -32,8 +33,60 @@
         <h2 class="verde">{{value.titulo}}</h2>
         <p><strong>{{'DESCRICAO' | translate}}</strong>: {{value.descricao}}</p>
       </div>
+      <h3 align="center" class="padding laranja">{{'EMPATE' | translate}}</h3>  
+      <div class="item item-text-wrap" ng-repeat="(key, value) in conquistas.conquistasTemporadas.empate.en track by $index" ng-if="idioma == 'en'">
+        <span class="item-note">
+          <p class="right">{{'PONTOS' | translate}}: <strong>{{value.pontos}}</strong></p>
+        </span>
+        <h2 class="laranja">{{value.titulo}}</h2>
+        <p><strong>{{'DESCRICAO' | translate}}</strong>: {{value.descricao}}</p>
+      </div>
+       <div class="item item-text-wrap" ng-repeat="(key, value) in conquistas.conquistasTemporadas.empate.es track by $index" ng-if="idioma == 'es'">
+       <span class="item-note">
+          <p class="right">{{'PONTOS' | translate}}: <strong>{{value.pontos}}</strong></p>
+        </span>
+        <h2 class="laranja">{{value.titulo}}</h2>
+        <p><strong>{{'DESCRICAO' | translate}}</strong>: {{value.descricao}}</p>
+        
+      </div>
+       <div class="item item-text-wrap" ng-repeat="(key, value) in conquistas.conquistasTemporadas.empate.pt track by $index" ng-if="idioma == 'pt'">
+        <span class="item-note">
+          <p class="right">{{'PONTOS' | translate}}: <strong>{{value.pontos}}</strong></p>
+        </span>
+        <h2 class="laranja">{{value.titulo}}</h2>
+        <p><strong>{{'DESCRICAO' | translate}}</strong>: {{value.descricao}}</p>
+      </div>
+
+      <h3 align="center" class="padding vermelho">{{'DERROTA' | translate}}</h3>  
+
+        <div class="item item-text-wrap" ng-repeat="(key, value) in conquistas.conquistasTemporadas.derrota.en track by $index" ng-if="idioma == 'en'">
+        <span class="item-note">
+          <p class="right">{{'PONTOS' | translate}}: <strong>{{value.pontos}}</strong></p>
+        </span>
+        <h2 class="vermelho">{{value.titulo}}</h2>
+        <p><strong>{{'DESCRICAO' | translate}}</strong>: {{value.descricao}}</p>
+      </div>
+       <div class="item item-text-wrap" ng-repeat="(key, value) in conquistas.conquistasTemporadas.derrota.es track by $index" ng-if="idioma == 'es'">
+       <span class="item-note">
+          <p class="right">{{'PONTOS' | translate}}: <strong>{{value.pontos}}</strong></p>
+        </span>
+        <h2 class="vermelho">{{value.titulo}}</h2>
+        <p><strong>{{'DESCRICAO' | translate}}</strong>: {{value.descricao}}</p>
+        
+      </div>
+       <div class="item item-text-wrap" ng-repeat="(key, value) in conquistas.conquistasTemporadas.derrota.pt track by $index" ng-if="idioma == 'pt'">
+        <span class="item-note">
+          <p class="right">{{'PONTOS' | translate}}: <strong>{{value.pontos}}</strong></p>
+        </span>
+        <h2 class="vermelho">{{value.titulo}}</h2>
+        <p><strong>{{'DESCRICAO' | translate}}</strong>: {{value.descricao}}</p>
+      </div>
+
+
     </div>
 
+
+  
     <!-- Copa -->
     <li class="item item-toggle">
               {{'COPA' | translate}}

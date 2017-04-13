@@ -11,6 +11,7 @@
       Utils
   ){
       var idioma = window.localStorage.getItem('lang');
+      /*
       if(idioma == "es"){
         $scope.idioma = 1;        
       } else if(idioma == "pt"){
@@ -18,17 +19,22 @@
       } else {
         $scope.idioma = 2;
       }
+      */
+      var temporada = "";
 
       var temp = "";
       Utils.show();
+
       var ref = firebase.database().ref('desafio/desafios/temporadas/oficial');
       ref.once("value").then(function(snapshot) {
          $scope.$apply(function(){
           $scope.temporadas = snapshot.val();
           snapshot.forEach(function(minisnapshot) {
-            temp = minisnapshot.val().configuracao.estatus;
-            console.log(temp);
+            $scope.status = minisnapshot.val().configuracao.estatus; 
+            var temporada = minisnapshot.val().configuracao.temporada;
+            console.log(temporada);
           });
+          /*
           if(temp == "Aberto"){
             if($scope.idioma == 0){
              $scope.status = "Aberto";
@@ -46,6 +52,7 @@
             $scope.status = "Closed";          
             }
           }
+          */
           Utils.hide();
          });
       }); 
