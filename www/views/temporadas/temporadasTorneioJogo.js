@@ -1027,7 +1027,6 @@
 
     // Enviar resposta
     $scope.enviarResultado = function (){
-
       Utils.message(Popup.loading_a, Popup.loading);
       var zerarSequenciaVitoria = 0;
       var zerarInvencibilidade = 0;

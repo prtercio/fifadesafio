@@ -273,12 +273,22 @@
 	              	$scope.verBtnInscricao = true;
 	              	$scope.cargarDatos();	              	
 	            }); 
+
+	            var alertPopup = $ionicPopup.alert({
+					title: 'É isso ai!',
+					template: '<div align="center">Você está participando deste desafio!</div>'
+				});
+				alertPopup.then(function(res) {
+				    if(res){
+				    	console.log("fechado");
+				    }
+				});
+
             } else {
             	var alertPopup = $ionicPopup.alert({
 					title: 'Opps!',
 					template: 'Para entrar neste desafio vc deve está logado.'
 				});
-
 				alertPopup.then(function(res) {
 				    if(res){
 				    	console.log("fechado");
