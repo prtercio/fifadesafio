@@ -267,7 +267,11 @@
 	  				placarPenultimo:0,
 	  				placarAntepenultimo:0,
 	  				golsPro:0,
-	  				golsContra:0
+	  				golsContra:0,
+	  				temporadaAtual:temporadaInicial,
+	  				temporadaAtualVitoria:0,
+	  				temporadaAtualEmpate:0,
+	  				temporadaAtualDerrota:0
 	            }).then(function(response) {
 	              	console.log("response: "+response);
 	              	$scope.verBtnInscricao = true;

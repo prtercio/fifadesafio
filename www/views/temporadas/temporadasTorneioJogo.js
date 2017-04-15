@@ -374,8 +374,7 @@
             novaTemporadaAtualDerrota = temporadaAtualDerrota+1;
             novaTemporadaAtualEmpate = temporadaAtualEmpate;
           }         
-        } else {
-          
+        } else {          
           novosPontosEmpate = 1;
           calcularStatusTemporada(temporadaAtual);
           var resultadoFinal = "Empate";
@@ -469,13 +468,11 @@
 
         var formatVitoria = 0;
         
-        formatVitoria = res1+"-"+res2;
-        
+        formatVitoria = res1+"-"+res2;        
         //if(juego == 'A'){
           //--Vitória
-          itemList.push([arrayConquistas[0][0], arrayConquistas[0][1]]);
-          totalPontos = totalPontos + arrayConquistas[0][1];
-
+        itemList.push([arrayConquistas[0][0], arrayConquistas[0][1]]);
+        totalPontos = totalPontos + arrayConquistas[0][1];
 
           // si o oponente nao fez gol
           if(res2 == 0){
@@ -526,23 +523,23 @@
             } else if (subtrairResultado > 6 || subtrairResultado == 6){
               console.log(" subtrairResultado: "+subtrairResultado);
               if(res1 != 7){
-               console.log(" subtrairResultado2: "+subtrairResultado);
-               itemList.push([arrayConquistas[12][0], arrayConquistas[12][1]]);
-               totalPontos = totalPontos + arrayConquistas[12][1];
-               console.log("Pontos 12 ", arrayConquistas[12][0], arrayConquistas[12][1]);
-             }     
+                 console.log(" subtrairResultado2: "+subtrairResultado);
+                 itemList.push([arrayConquistas[12][0], arrayConquistas[12][1]]);
+                 totalPontos = totalPontos + arrayConquistas[12][1];
+                 console.log("Pontos 12 ", arrayConquistas[12][0], arrayConquistas[12][1]);
+              }     
            } else {
 
            }            
          } 
 
           // Doble, triple, cuáduple vitoria
-          if(statusUltimo != 0){
+          if(statusUltimo != 0){     
             var somarIguais = 0;
             if(statusUltimo == "v" ){
              if(placarUltimo == formatVitoria){
               somarIguais = 1;
-            }
+             }
 
             if(statusPenultimo == "v"){
              if(placarUltimo == formatVitoria && placarPenultimo == formatVitoria){
@@ -552,29 +549,29 @@
             if(statusAntepenultimo == "v"){
              if(placarUltimo == formatVitoria && placarPenultimo == formatVitoria && placarAntepenultimo == formatVitoria){  
               somarIguais = 3;
+              }
+            }
+          }
+        
+
+            switch(somarIguais){
+              case 1:
+              itemList.push([arrayConquistas[13][0], arrayConquistas[13][1]]);
+              totalPontos = totalPontos + arrayConquistas[13][1];
+              break;
+              case 2:
+              itemList.push([arrayConquistas[14][0], arrayConquistas[14][1]]);
+              totalPontos = totalPontos + arrayConquistas[14][1];
+              break;
+              case 3:
+              itemList.push([arrayConquistas[15][0], arrayConquistas[15][1]]);
+              totalPontos = totalPontos + arrayConquistas[15][1];
+              break;
+              default:
+              console.log("nao há repetidos");
             }
           }
         }
-        
-
-        switch(somarIguais){
-          case 1:
-          itemList.push([arrayConquistas[13][0], arrayConquistas[13][1]]);
-          totalPontos = totalPontos + arrayConquistas[13][1];
-          break;
-          case 2:
-          itemList.push([arrayConquistas[14][0], arrayConquistas[14][1]]);
-          totalPontos = totalPontos + arrayConquistas[14][1];
-          break;
-          case 3:
-          itemList.push([arrayConquistas[15][0], arrayConquistas[15][1]]);
-          totalPontos = totalPontos + arrayConquistas[15][1];
-          break;
-          default:
-          console.log("nao há repetidos");
-        }
-      }
-    }
 
           // Sequencia de vitoria
           if(sequenciaVitoria > 1){
@@ -895,15 +892,15 @@
 
             function atribuirValores (resultadoRecuperado){
 
-                    var separador = ","; // un espacio en blanco
-                    var limite    = 1;
+                       var separador = ","; // un espacio en blanco
+                       var limite    = 1;
                        //var resposta = resultado.split(separador);
                        //console.log(resposta[27], resposta[29]) ;
                        var ini;
                        var fin;
                        var r1DosNumeros;
                        var r2DosNumeros;
-                       console.log(lentLocal, lenVisitante, "ññññññ", lentLocal, lenVisitante);
+                       //console.log(lentLocal, lenVisitante, "ññññññ", lentLocal, lenVisitante);
                        if(lentLocal < 2 && lenVisitante <2){
                         r1DosNumeros  = false;
                         r2DosNumeros  = false;
@@ -937,7 +934,6 @@
                      var sep = "";
                      var array = "";
                      array = recortarTime.split(sep);
-                     console.log(array);
                      
                       // recuperar nome do time1 e time2 e resultados, si os resultado1 é de 1 dígito
                       if(r1DosNumeros == false && r2DosNumeros == false){
@@ -953,9 +949,9 @@
                         time2 = array[10]+array[11]+array[12];
                       }
                           //resultados
-                          resultado1 = array[0]
-                          resultado2 = array[2];
-                        }
+                        resultado1 = array[0]
+                        resultado2 = array[2];
+                      }
 
                       // recuperar nome do time1 e time2 e resultados,dependendo si o resultado1 é de 1 ou 2 dígitos e o 2 é de 1 dígitos
                       if(r1DosNumeros  == true && r2DosNumeros == false){
@@ -1004,9 +1000,7 @@
                         }
                         resultado1 = array[0]+array[1];
                         resultado2 = array[3]+array[4];
-                      }                                         
-                      
-                      
+                      }  
                       if(resultado1 != undefined){
                        $scope.placar = time1+" "+resultado1+" X "+resultado2+" "+time2;
                        $scope.casa = time1+" "+resultado1;
@@ -1015,7 +1009,6 @@
                        $scope.timeVisitante = time2;
                        $scope.resCasa = resultado1;
                        $scope.resVisitante = resultado2;
-                       console.log("Placar "+$scope.placar);
                      } else {
                        $scope.placar = "Vc está no Menú";
                      }
