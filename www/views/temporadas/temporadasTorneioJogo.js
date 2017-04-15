@@ -172,6 +172,8 @@
         temporadaAtualDerrota = $scope.infoJogo.temporadaAtualDerrota;
 
         temporadaNova = temporadaAtual;
+
+        console.log("TEMPACTUAL---- "+temporadaNova);
       }
     });
 
