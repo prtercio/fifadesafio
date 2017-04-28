@@ -23,11 +23,11 @@ angular.module('App', [
   'ngCordovaOauth', 
   'App.translations'])
 
-.constant('Social', {
-    facebookAppId: "1025234637591184",
-    googleWebClientId: "86899339460-kqrko1uuhu9a532l9f0jdhf9tgnp8b00.apps.googleusercontent.com",
-    twitterKey: "aJWByCgPhUgYZJMojyFeH2h8F",
-    twitterSecret: "XxqKHi6Bq3MHWESBLm0an5ndLxPYQ2uzLtIDy6f9vgKKc9kemI"
+  .constant('Social', {
+      facebookAppId: "1025234637591184",
+      googleWebClientId: "86899339460-kqrko1uuhu9a532l9f0jdhf9tgnp8b00.apps.googleusercontent.com",
+      twitterKey: "aJWByCgPhUgYZJMojyFeH2h8F",
+      twitterSecret: "XxqKHi6Bq3MHWESBLm0an5ndLxPYQ2uzLtIDy6f9vgKKc9kemI"
   })
   //Constants for the Popup messages
   //For the icons, refer to http://ionicons.com for all icons.

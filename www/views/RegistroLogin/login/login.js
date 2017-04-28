@@ -126,8 +126,10 @@ angular.module('App').controller('CtrlLogin', function($scope, $state, $localSto
                firebase.database().ref('desafio/users/' + account.key).on('value', function(response) {
                 var account = response.val();
                 $localStorage.account = account;
+                
               });
-              window.localStorage.setItem('nuevoSocial', 0);
+
+              $state.go('tab.dash');
               $scope.verLogout = false;
             });
           } 

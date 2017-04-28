@@ -32,7 +32,7 @@
 
   var id = idJogoDetalhe.substring(0, idJogoDetalhe.indexOf("|"));
   var keyUsuario = idJogoDetalhe.substring(idJogoDetalhe.indexOf("|") + 1);
-  //console.log(id, keyUsuario);
+  console.log(id, keyUsuario);
   var idJogo = id;
 
   var itemList=[];
@@ -45,13 +45,14 @@
   $scope.chat = "jogo"+idJogo; 
   $scope.jogoNome = "Jogo "+idJogo;
   var idTorneio = dataService.get();
-    
-    var refjogos = firebase.database().ref('desafio/desafios/temporadas/oficial/'+idTorneio+'/inscritos/'+keyUsuario+'/jogos/'+$scope.chat);
+   
+    var refjogos = firebase.database().ref('desafio/desafios/temporadas/oficial/'+idTorneio.idTorneio+'/inscritos/'+keyUsuario+'/jogos/'+$scope.chat);
     refjogos.once("value").then(function(snapshot) {
       $scope.$apply(function(){
         $scope.detalheJogo = snapshot.val(); 
       }); 
     });
+   
 
   }]); //ctrl
 })();

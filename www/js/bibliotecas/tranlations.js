@@ -75,7 +75,9 @@ trans.factory('asyncLoader', function ($q, $timeout) {
         ADICIONARCONQUISTAS:"Agregar Conquistas",
         DETALHECONQUISTAS:"Detalle de las Conquistas",
         X:"VS",
-        ENVIAR:"Enviar"
+        ENVIAR:"Enviar",
+        TEMPORADAATUAL:"Temporada actual",
+        REINICIAR: "Reiniciar"
       };
     } if (options.key === 'pt') {
       translations = {
@@ -133,7 +135,9 @@ trans.factory('asyncLoader', function ($q, $timeout) {
         ADICIONARCONQUISTAS:"Adicionar Conquistas",
         DETALHECONQUISTAS:"Detalhe das Conquistas",
         X:"X",
-        ENVIAR:"Enviar"
+        ENVIAR:"Enviar",
+        TEMPORADAATUAL:"Temporada atual",
+        REINICIAR: "Reiniciar"
       };
     }
     if (options.key === 'en') {

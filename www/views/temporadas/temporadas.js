@@ -30,7 +30,8 @@
          $scope.$apply(function(){
           $scope.temporadas = snapshot.val();
           snapshot.forEach(function(minisnapshot) {
-            $scope.status = minisnapshot.val().configuracao.estatus; 
+            $scope.status = minisnapshot.val().configuracao.estatus;
+            $scope.temporadaInicial = minisnapshot.val().configuracao.temporada; 
             var temporada = minisnapshot.val().configuracao.temporada;
             console.log(temporada);
           });

@@ -144,7 +144,7 @@
 	    	gamertag = "Guest";
 	    }
     	$scope.gamertag = gamertag;
-    	console.log("------ "+gamertag);
+    	//console.log("------ "+gamertag);
     	$scope.sairTorneioVar = false;
     	$scope.keyUserInscritoTorneio = "";
     	var keyUserInscritoTorneio;
@@ -156,6 +156,7 @@
 
     	var temporadaInicial = 0;
 
+
     
 
     	$scope.cargarDatos = function(){
@@ -164,7 +165,7 @@
 		      template: 'Loading...',
 		      duration: 3000
 		    }).then(function(){
-		       console.log("The loading");
+		       console.log("Cargando...");
 		    });
 		    ref.once("value").then(function(snapshot) {
 		    	if(snapshot.val() != null){
@@ -172,7 +173,7 @@
 			        $scope.torneio = snapshot.val();
 			       	//console.log(snapshot.val().inscritos);
 				       totalJogos = snapshot.val().configuracao.jogos;
-				       temporadaInicial = snapshot.val().configuracao.temporada;
+				       temporadaInicial = snapshot.val().configuracao.temporada;				       
 				       var inscritos = snapshot.val().inscritos;
 				       for(var key in inscritos){
 				       	//keyUserInscritoTorneio=key;
@@ -184,7 +185,7 @@
 			                "pontos": inscritos[key].pontos,	
 			                "jogados": inscritos[key].jogados,
 			                "derrota": inscritos[key].derrota,
-			                "empate": inscritos[key].empate	               
+			                "empate": inscritos[key].empate              
 			              })
 				       }
 				       $scope.resultado = ranking;
@@ -195,7 +196,7 @@
 					       		$scope.sairTorneioVar = true;				       		
 					      		$scope.keyUserInscritoTorneio = ranking[i].keyUserTorneio;
 					      		keyUserInscritoTorneio = $scope.keyUserInscritoTorneio;
-					      		console.log("aqui "+ranking[i].gamertag, keyUserInscritoTorneio);
+					      		//console.log("aqui "+ranking[i].gamertag, keyUserInscritoTorneio);
 					       		cargarJogos();
 					       		break;
 					       	} else {
@@ -206,10 +207,10 @@
 					   }
 			       });
 			       var arrayDatos = {idTorneio, temporadaInicial};
-					console.log(arrayDatos);
+					//console.log(arrayDatos);
 						//armazenar idTorneio
 			    	dataService.set(arrayDatos);
-			    	console.log("---- "+ dataService.get().idTorneio);
+			    	//console.log("---- "+ dataService.get().idTorneio);
 			       $ionicLoading.hide();
 			   	}else{
 			   		$scope.nohay = "Ainda nao há inscritos neste torneio. Voce pode ser o primeiro!"
@@ -247,10 +248,11 @@
 		}
 
 	    $scope.entrarTorneio = function(){
+	    	//console.log("ABC--- "+temporadaInicial);
 	    	if($scope.loggedIn){
 		    	recuperar (totalJogos);
 
-			    console.log(keyUser, gamertag, jsondJogos);
+			    //console.log(keyUser, gamertag, jsondJogos);
 			  
 			    firebase.database().ref().child('desafio/desafios/temporadas/oficial/'+idTorneio+'/inscritos/').push({
 			    	key:keyUser,
@@ -273,7 +275,7 @@
 	  				temporadaAtualEmpate:0,
 	  				temporadaAtualDerrota:0
 	            }).then(function(response) {
-	              	console.log("response: "+response);
+	              	//console.log("response: "+response);
 	              	$scope.verBtnInscricao = true;
 	              	$scope.cargarDatos();	              	
 	            }); 
@@ -309,7 +311,7 @@
 	    */
 
 	    $scope.sairTorneio = function(){
-	    	console.log(" KeyUserInscrito "+$scope.keyUserInscritoTorneio);
+	    	//console.log(" KeyUserInscrito "+$scope.keyUserInscritoTorneio);
 	    	keyUserInscritoTorneio = $scope.keyUserInscritoTorneio;
 
 			var confirmPopup = $ionicPopup.confirm({
@@ -321,7 +323,7 @@
 				if(res) {
 				    firebase.database().ref('desafio/desafios/temporadas/oficial/'+idTorneio+'/inscritos/'+keyUserInscritoTorneio).remove();
 			    
-				    console.log('Sim');	 
+				    console.log('Eliminado');	 
 
 					   var alertPopup = $ionicPopup.alert({
 					     title: 'Ok',
@@ -332,8 +334,9 @@
 					     if(res){
 					     	$scope.cargarDatos();
 							$scope.verBtnInscricao = false;
+							$scope.sairTorneioVar = false;
 							//$state.go('app.inicio');
-							window.location.reload();
+							//window.location.reload();
 					     }
 					   });
 					
@@ -349,17 +352,19 @@
 	    /// Jogos
 	    var resultadoJogos = [];
 	    function cargarJogos(){
-	    	console.log("---" +keyUserInscritoTorneio);
+	    	//console.log("Cargando---" +keyUserInscritoTorneio);
 		    var refJogos = firebase.database().ref('desafio/desafios/temporadas/oficial/'+idTorneio+'/inscritos/'+keyUserInscritoTorneio);
 		    refJogos.once('value').then(function(snapshot) {
+		    	//console.log("Jogos lista "+snapshot.val());
 		    	if(snapshot.val() != null){
-		    		$scope.$apply(function(){
+		    		//$scope.$apply(function(){
 			    		$scope.comJogos = snapshot.val();
 			    		$scope.jogados = $scope.comJogos.jogados;
 			    		$scope.derrota = $scope.comJogos.derrota;
 			    		$scope.empate = $scope.comJogos.empate;
 			    		$scope.pontos = $scope.comJogos.pontos;
 			    		$scope.vitoria = $scope.comJogos.vitoria;
+			    		$scope.temporadaAtual = $scope.comJogos.temporadaAtual;
 
 			    		var comJogos = []; 
 			    		comJogos.push($scope.comJogos.jogos);
@@ -373,28 +378,42 @@
 				                "placar":comJogos[0][key].placar,
 				                "status":comJogos[0][key].status
 				            });
-			    		}
-			    		
-			    		/*
-			    		var todosJogos = comJogos[0];
-			    		todosJogos.forEach(function(minisnapshot) {
-				          	   resultadoJogos.push({
-				                "jogo":minisnapshot.val().jogo, 
-				                "bloqueado":minisnapshot.val().bloqueado, 
-				                "estado":minisnapshot.val().estado, 
-				                "pontos":minisnapshot.val().pontos
-				              });
-				          });
-				      	//});
-				      	*/
-				      	$scope.jogosLista = resultadoJogos;  
-				      });
+			    		}			    		
+			
+				      	$scope.jogosLista = resultadoJogos; 
+				      	/*
+				      	$scope.jogosL = {};
+
+						var position;
+						var datosReverse = [];
+
+						var suma = resultadoJogos.length+1
+
+				      	for(var i = 50; i--;) {
+
+							position = resultadoJogos[i].jogo;
+							console.log(position);
+							if(!$scope.jogosL[position]) $scope.jogosL[position] = [];
+
+							$scope.jogosL[position].push ( {"jogo":resultadoJogos[i].jogo, "status":resultadoJogos[i].bloqueado });
+							//console.log($scope.jogosL);
+						} 
+						*/
+
+				      //});
 		    	} else {
-		    		console.log("No hay nadie inscrito");
+		    		console.log("No 	hay nadie inscrito");
 		    		
 		    	}	    	
 		    });
 		}
+
+		/*
+		$scope.reverse = function (array) {
+		  var copy = [].concat(array);
+		  return copy.reverse();
+		};
+		*/
 
   }]); //ctrl
 })();

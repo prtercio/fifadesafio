@@ -1,6 +1,10 @@
 <ion-view view-title="{{'JOGO' | translate}} {{jogo}}" cache-view="false">
+  <ion-nav-buttons side="secondary">
+        <button class="button button-icon icon ion-refresh" ng-click="datosIniciais()"></button>       
+  </ion-nav-buttons>
   <ion-content>
     <div ng-if="estado != 'Terminado'">
+      <div ng-show="verButtonAdicionar">
       <li class="item item-toggle" ng-show="!checkedPlacar">
         {{'RESULTADOONLINE' | translate}}
         <label class="toggle toggle-positive">
@@ -10,6 +14,7 @@
           </div>
         </label>
       </li>
+      
       <li class="item item-toggle" ng-show="!checkedRecuperar">
         {{'RESULTADOMANUAL' | translate}}
         <label class="toggle toggle-positive">
@@ -19,8 +24,9 @@
           </div>
         </label>
       </li>
-      <form name="myForm" novalidate ng-show="checkedPlacar">
-        <div class="row" align="center">
+      </div>
+      <form name="myForm" novalidate ng-show="checkedPlacar" >
+        <div class="row" align="center" ng-show="verButtonAdicionar">
           <div class="col col-20 padSuperior">
             <span>{{'MANDANTE' | translate}}</span> 
           </div>
@@ -35,15 +41,17 @@
           <span> {{'VISITANTE' | translate}}</span> 
         </div>
       </div>        
-      <div class="padding">
+      <div class="padding" ng-if="verButtonAdicionar">
         <button type="button" class="button button-block button-positive" ng-disabled="!resultado" ng-click="submit(resultado)">{{'ADICIONARCONQUISTAS' | translate}}</button>
       </div>
     </form>
 
 
     <!-- RECUPERAR RESULTADO -->
-    <div class="padding" ng-if="loggedIn" ng-show="checkedRecuperar">
-      <button class="button button-positive button-block icon ion-ios-football" ng-click="recuperarJogo()" ng-disabled="btnDisabled"> {{'RECUPERARRESULTADO' | translate}}</button>
+    <div ng-show="verButtonAdicionar">
+      <div class="padding" ng-if="loggedIn" ng-show="checkedRecuperar">
+        <button class="button button-positive button-block icon ion-ios-football" ng-click="recuperarJogo()" ng-disabled="btnDisabled"> {{'RECUPERARRESULTADO' | translate}}</button>
+      </div>
     </div>
 
     <h4 ng-if="status">{{semFifa}}</h4>
@@ -67,14 +75,16 @@
         </div>
       </div>
     </div>
-    <div class="card" ng-if="timeCasa">
-      <div class="padding" >
-        <h4 align="center" class="vermelho">{{'SELECCIONETIME' | translate}}:</h4>
+    <div ng-show="timeCasa">
+    <div class="card" ng-show="verIonRadioJogos">
+      <div class="padding">
+        <h4 align="center" class="vermelho" >{{'SELECCIONETIME' | translate}}:</h4>
         <ion-list>
           <ion-radio ng-model="choice" ng-value="'A'" ng-change='jogoSelecionado(choice)'>{{'MANDANTE' | translate}}: <strong>{{casa}}</strong></ion-radio>
           <ion-radio ng-model="choice" ng-value="'B'" ng-change='jogoSelecionado(choice)'>{{'VISITANTE' | translate}}: <strong>{{fora}}</strong></ion-radio>
         </ion-list>          
       </div>
+    </div>
     </div>
     <div ng-show="verPlacarFinal">
       <div 
@@ -85,25 +95,27 @@
     <h3 align="center">{{totalPontos}} {{'PONTOS' | translate}}</h3>
   </div>
 </div>
-<li class="item item-toggle" ng-show="timeCasa">
+<li class="item item-toggle" ng-show="verEnviar">
   {{'DETALHECONQUISTAS' | translate}}
   <label class="toggle toggle-positive">
-    <input type="checkbox" ng-model="checkedConq" aria-label="Toggle ngHide">
+    <input type="checkbox" ng-model="checkedConq" aria-label="Toggle ngHide" >
     <div class="track">
       <div class="handle"></div>
     </div>
   </label>
 </li>
 <ion-list ng-show="checkedConq">
-  <ion-item ng-repeat="shop in items" class="item item-icon-left item-verde"  >
+  <ion-item ng-repeat="shop in items" class="item item-icon-left item-verde" ng-show="verEnviar">
     <i class="icon ion-checkmark verde"></i>
     <h2 class="verde">{{shop[0]}}.  {{'PONTOS' | translate}}: {{shop[1]}}</h2>
+    <!--
     <ion-option-button class="button-assertive" ng-click="removeLista(shop)">
       Delete
     </ion-option-button>
+    -->
   </ion-item>  
 </ion-list>
-<div ng-show="timeCasa" class="padding">
+<div ng-show="verEnviar" class="padding">
   <button class="button button-block button-balanced" ng-click="enviarResultado()">{{'ENVIAR' | translate}}</button>
 </div>
 </div>
