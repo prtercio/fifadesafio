@@ -692,13 +692,14 @@
                 var richPresence = false;
                 var resultadoFifa = "";
                 $scope.placar = "";
-                console.log( "OnlineManue ", onlineManual );
+                console.log( "OnlineManual Cambio", onlineManual );
                 //_________________________________________________________Si busca Online
                 if ( onlineManual === "Online" ) {
                     $timeout( function() {
                         $ionicLoading.hide();
                     }, 20000 );
                     var urlOnline = 'https://xboxapi.com/v2/' + idUsuario + '/presence';
+                    console.log( "urlOnline", urlOnline );
                     $http( {
                         url: urlOnline,
                         //url: 'https://xboxapi.com/v2/2535419577962363/presence', //Menino
@@ -814,6 +815,7 @@
                 } else {
                     $ionicLoading.hide();
                     var resultadoFifa2 = "Jugando FIFA 17 FUT Draft Online " + res1 + "-" + res2 + " MAN - VIS, 2.\u00ba t.";
+                    console.log( "Resultado Fifa", resultadoFifa2 );
                     var idFifa = 69094388;
                     $scope.lista = true;
                     $scope.status = true;
