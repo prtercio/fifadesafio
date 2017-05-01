@@ -77,7 +77,10 @@ trans.factory('asyncLoader', function ($q, $timeout) {
         X:"VS",
         ENVIAR:"Enviar",
         TEMPORADAATUAL:"Temporada actual",
-        REINICIAR: "Reiniciar"
+        REINICIAR: "Reiniciar",
+        ESTAOFF: 'está offline!',
+        OJOGORECUPERADO:"Importante: El resultado solo podrá ser recuperado cuando el usuario permanezca Online y en la pantalla de la partida.",
+        RECUPERARCOMMENU:"No puedes recuperar el resultado del juego mientras estés en el Menú."
       };
     } if (options.key === 'pt') {
       translations = {
@@ -137,7 +140,10 @@ trans.factory('asyncLoader', function ($q, $timeout) {
         X:"X",
         ENVIAR:"Enviar",
         TEMPORADAATUAL:"Temporada atual",
-        REINICIAR: "Reiniciar"
+        REINICIAR: "Reiniciar",
+        ESTAOFF: 'está offline!',
+        OJOGORECUPERADO:"Importante: O resultado só pode ser recuperado quando o usuario estiver Online e na tela da partida",
+        RECUPERARCOMMENU:"Não poderá recuperar o resultado da partida enquanto estiver no Menú."
       };
     }
     if (options.key === 'en') {

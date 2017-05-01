@@ -51,8 +51,7 @@
       $scope.$apply(function(){
         $scope.detalheJogo = snapshot.val(); 
       }); 
-    });
-   
+    });   
 
   }]); //ctrl
 })();

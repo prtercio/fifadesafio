@@ -247,6 +247,6 @@ input[type=number] {
     padding-left: 10px;
 }
 
-.padSuperior{
-  padding-top: 10px;
-}
+  .padSuperior {
+        padding-top: 10px;
+  }

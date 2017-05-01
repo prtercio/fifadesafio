@@ -20,6 +20,8 @@
   ){
 
     	// ------------------------------------------------------------------------------- RECUPERAR REGRAS CONQUISTAS
+    
+
 
     	if($localStorage.email == "benbaodan@outlook.com"){
     		$scope.admin = true;
