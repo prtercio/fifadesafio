@@ -739,7 +739,7 @@
                                     $ionicLoading.hide();
                                     var alertPopup = $ionicPopup.alert( {
                                         title: 'Opps!',
-                                        template: "<p align='center'><strong>" + gamerSeleccionado + "</strong> no está no Fifa! 1</p>"
+                                        template: "<p align='center'><strong>" + gamerSeleccionado + "</strong> {{'NAOFIFA' | translate}}</p>"
                                     } );
                                     alertPopup.then( function( res ) {
                                         console.log( 'cerrar' );
@@ -764,7 +764,7 @@
                                     console.log( "Please goto Fifa 2." );
                                     var alertPopup = $ionicPopup.alert( {
                                         title: 'Opps!',
-                                        template: "<p align='center'><strong>" + gamerSeleccionado + "</strong> no está no Fifa! 2</p>"
+                                        template: "<p align='center'><strong>" + gamerSeleccionado + "</strong>  {{'NAOFIFA' | translate}}</p>"
                                     } );
                                     alertPopup.then( function( res ) {
                                         console.log( 'cerrar' );

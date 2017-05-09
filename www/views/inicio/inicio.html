@@ -4,6 +4,8 @@
   </ion-nav-buttons>
   <ion-content>
     <h1>Inicio</h1>
+       <br />
+        {{fecha | date:"dd/MM/yyyy HH:mm a" : 'UTC'}}
     <script id="templates/popover.html" type="text/ng-template">
     <ion-popover-view style="height: 330px;">
       <ion-content>
@@ -28,6 +30,7 @@
             <p>tsantos@desoft.mx</p>
           </div>          
         </ion-list>
+
       </ion-content>
     </ion-popover-view>
   </script>

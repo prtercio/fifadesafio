@@ -1,98 +1,134 @@
-img.resize{
-    width:200px; /* you can use % */
+img.resize {
+    width: 200px;
+    /* you can use % */
     height: auto;
 }
 
-img.resizePeq{
-    width:100px; /* you can use % */
+img.resizeMed {
+    width: 100%;
+    /* you can use % */
     height: auto;
 }
 
-img.resizeTotal{
-    width:100%; /* you can use % */
+img.resizePeq {
+    width: 100px;
+    /* you can use % */
     height: auto;
 }
 
-.borderGris{
-  border: 1px;
-  border-color: grey;
-  border-style: solid; 
+img.resizeTotal {
+    width: 100%;
+    /* you can use % */
+    height: auto;
 }
- 
 
-.verde{
-	color: green !important;
+.borderGris {
+    border: 1px;
+    border-color: grey;
+    border-style: solid;
+}
+
+.verde {
+    color: green !important;
 }
 
 .item.item-verde {
-  border-color: green;
+    border-color: green;
 }
 
-.bgverde{
-  background: #CCFFCC;
+.bgverde {
+    background: #CCFFCC;
 }
 
-.bgazul{
+.bgazul {
     background: #E0FFFF;
 }
 
-.bgbisque{
-  background: #FFFFCC;
+.bgbisque {
+    background: #FFFFCC;
 }
 
-.bgazure{
-  background:  #F8F8FF;
-
+.bgazure {
+    background: #F8F8FF;
 }
 
-.vermelho{
-	color: red !important;
+.vermelho {
+    color: red !important;
 }
 
-.laranja{
-  color:#FFBF00 !important;
+.branco {
+    color: #FFFFFF !important;
 }
 
-.gris{
-  color: grey;
+.laranja {
+    color: #FFBF00 !important;
 }
 
-.gris2{
-  color: #D8D8D8;
+.gris {
+    color: grey;
 }
 
-.azul{
-  color: blue;
+.gris2 {
+    color: #D8D8D8;
+}
+
+.verdeOp60 {
+    background: rgba(255, 255, 0, 0.9);
+}
+
+.verdeOp40 {
+    background: rgba(255, 255, 0, 0.6);
+}
+
+.verdeOp20 {
+    background: rgba(255, 255, 0, 0.4);
+}
+
+.amarelobg60 {
+    background: rgba(255, 255, 0, 0.9);
+}
+
+.grisbg {
+    background: rgba(105, 105, 105, 0.9);
+}
+
+.vermelhorescurobg {
+    background: rgba(153, 0, 0, 0.9);
+}
+
+.azul {
+    color: blue;
 }
 
 .item.item-azul {
-  border-color: blue;
+    border-color: blue;
 }
 
 .right {
-  float: right;
+    float: right;
 }
 
 .center {
-  text-align: center;
+    text-align: center;
 }
 
 .styled-select select {
-   background: transparent;
-   width: 268px;
-   padding: 5px;
-   font-size: 16px;
-   line-height: 1;
-   border: 0;
-   border-radius: 0;
-   height: 34px;
-   -webkit-appearance: none;
-   }
+    background: transparent;
+    width: 268px;
+    padding: 5px;
+    font-size: 16px;
+    line-height: 1;
+    border: 0;
+    border-radius: 0;
+    height: 34px;
+    -webkit-appearance: none;
+}
 
 .styled-select {
-   overflow: hidden;
-   border: 1px solid #ccc;
+    overflow: hidden;
+    border: 1px solid #ccc;
 }
+
 
 /*
 input#file{
@@ -110,105 +146,103 @@ input#file3{
 }
 */
 
-.botaoSubir{
-  box-shadow: rgb(242, 156, 147) 0px 1px 0px 0px inset; 
-  background: linear-gradient(rgb(254, 26, 0) 5%, rgb(206, 1, 0) 100%) rgb(254, 26, 0); 
-  border-radius: 6px; 
-  border: 1px solid rgb(216, 53, 38); 
-  display: inline-block; 
-  cursor: pointer; 
-  color: rgb(255, 255, 255); 
-  font-family: Arial; 
-  font-size: 20px; 
-  font-weight: bold; 
-  padding: 6px 35px; 
-  text-decoration: none; 
-  text-shadow: rgb(178, 62, 53) 0px 1px 0px;
+.botaoSubir {
+    box-shadow: rgb(242, 156, 147) 0px 1px 0px 0px inset;
+    background: linear-gradient(rgb(254, 26, 0) 5%, rgb(206, 1, 0) 100%) rgb(254, 26, 0);
+    border-radius: 6px;
+    border: 1px solid rgb(216, 53, 38);
+    display: inline-block;
+    cursor: pointer;
+    color: rgb(255, 255, 255);
+    font-family: Arial;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 6px 35px;
+    text-decoration: none;
+    text-shadow: rgb(178, 62, 53) 0px 1px 0px;
 }
 
-item.linearer{
-  border-color: red;
+item.linearer {
+    border-color: red;
 }
 
-#Vitória{
-  background: url('../img/vitoria.png');
-  background-color: transparent;
-  background-repeat:no-repeat;
-  width: 60px;
-  height: 60px;
-
+#Vitória {
+    background: url('../img/vitoria.png');
+    background-color: transparent;
+    background-repeat: no-repeat;
+    width: 60px;
+    height: 60px;
 }
 
-#Empate{
-  background: url('../img/empate.png');
-   background-color: transparent;
-  background-repeat:no-repeat;
-  width: 60px;
-  height: 60px;
+#Empate {
+    background: url('../img/empate.png');
+    background-color: transparent;
+    background-repeat: no-repeat;
+    width: 60px;
+    height: 60px;
 }
 
-#Derrota{
-  background: url('../img/derrota.png');
-   background-color: transparent;
-  background-repeat:no-repeat;
-  width: 60px;
-  height: 60px;
+#Derrota {
+    background: url('../img/derrota.png');
+    background-color: transparent;
+    background-repeat: no-repeat;
+    width: 60px;
+    height: 60px;
 }
 
-.fontepequena{
-  font-size: .7em;
+.fontepequena {
+    font-size: .7em;
 }
 
-.badge-container{
-      position: relative;
+.badge-container {
+    position: relative;
 }
 
-
-.iconCustom{
- padding-left: 7px;
+.iconCustom {
+    padding-left: 7px;
 }
 
 .profile-item {
-  text-align: center;
+    text-align: center;
 }
 
 .profile-picture {
-  border: 1px solid rgba(0, 0, 0, 0.25);
-  padding: 3px;
-  border-radius: 100%;
-  -webkit-box-sizing: content-box;
-  -moz-box-sizing: content-box;
-  box-sizing: content-box;
-  margin: 0 auto;
-  width: 128px;
-  height: 128px;
-  overflow: hidden;
+    border: 1px solid rgba(0, 0, 0, 0.25);
+    padding: 3px;
+    border-radius: 100%;
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+    margin: 0 auto;
+    width: 128px;
+    height: 128px;
+    overflow: hidden;
 }
 
 .profile-picture img {
-  width: 128px;
-  border-radius: 100%;
+    width: 128px;
+    border-radius: 100%;
 }
 
 .profile-name {
-  padding-top: 20px;
-  font-size: x-large !important;
-  font-weight: bold !important;
-  text-transform: capitalize;
+    padding-top: 20px;
+    font-size: x-large !important;
+    font-weight: bold !important;
+    text-transform: capitalize;
 }
 
 textarea#styled {
-  width: 300px;
-  height: 200px;
-  border: 3px solid #cccccc;
-  padding: 5px;
-  font-family: Tahoma, sans-serif;
-  background-position: bottom right;
-  background-repeat: no-repeat;
+    width: 300px;
+    height: 200px;
+    border: 3px solid #cccccc;
+    padding: 5px;
+    font-family: Tahoma, sans-serif;
+    background-position: bottom right;
+    background-repeat: no-repeat;
 }
 
-.desbloqueado{
-  background-color: red;
+.desbloqueado {
+    background-color: red;
 }
 
 img.custom-thumbnail {
@@ -216,30 +250,32 @@ img.custom-thumbnail {
     max-height: 50px !important;
 }
 
-.fixed-outside{
-  position: absolute;
-  bottom: 0;
-  color:white;
-  width: 100%;
-  height:  120px;
-  text-align:center;
+.fixed-outside {
+    position: absolute;
+    bottom: 0;
+    color: white;
+    width: 100%;
+    height: 120px;
+    text-align: center;
 }
 
-.has-bottom .scroll{
-  padding-bottom:120px !important;
+.has-bottom .scroll {
+    padding-bottom: 120px !important;
 }
 
 .button-circle {
-  width: 50px !important;
-  height: 50px !important;
-  border-radius: 50% !important;
+    width: 50px !important;
+    height: 50px !important;
+    border-radius: 50% !important;
 }
 
-.fixed-tabela{
-   position: absolute;
+.fixed-tabela {
+    position: absolute;
 }
 
-.fixed {position:fixed;}
+.fixed {
+    position: fixed;
+}
 
 input[type=number] {
     border: 1px solid green;
@@ -247,6 +283,69 @@ input[type=number] {
     padding-left: 10px;
 }
 
-  .padSuperior {
-        padding-top: 10px;
-  }
+.padSuperior {
+    padding-top: 10px;
+}
+
+.nuevoTamnho {
+    font-size: 1.3em !important;
+}
+
+.tamanhoIcon {
+    font-size: 70px !important;
+}
+
+.scroll-content#imagebg {
+    /*background-color: #F4F4F4;
+    background: url(http://placehold.it/300x300);*/
+    background: url(../img/bg.png);
+    max-width: 100% !important;
+    height: auto !important;
+    background-repeat: no-repeat;
+}
+
+.bgmenu {
+    background-image: url(../img/bgmenu.png);
+    background-repeat: repeat;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    height: 100%;
+    position: absolute;
+}
+
+.transp .item-content {
+    background-color: transparent !important;
+    color: #fff;
+}
+
+.itemtransparente {
+    /*background: rgba(255, 255, 255, 0.8) !important; */
+    background: transparent !important;
+}
+
+.itemtransp .item-content {
+    background: rgba(153, 0, 0, 0.9) !important;
+    color: #fff;
+}
+
+.itemtrans .item-content {
+    background: transparent !important;
+}
+
+.itemNoborda {
+    border: transparent !important;
+}
+
+.itembordagris {
+    border-color: #6B6969;
+}
+
+.item .menu {
+    background: transparent;
+}
+
+.item.item-light {
+    color: #444;
+    background: rgba(255, 0, 255, 0.9);
+}

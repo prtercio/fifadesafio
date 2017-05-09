@@ -1,5 +1,12 @@
 <ion-view view-title="{{'CONFIGURACAO' | translate}}"> 
   <ion-content>
+  <div class="list">
+  	<a class="item item-thumbnail-left">
+      <img src="{{imagem}}"/>
+      <h2>{{gamertag}}</h2>
+      <p>{{email}}</p>
+    </a>
+  </div>
   <h5 align="center">{{'SELECIONARIDIOMA' | translate}}:</h5>
   <div class="padding">
   	<button class="button button-block button-energized" ng-click="showPopup()">{{'IDIOMA' | translate}}: {{idioma}}</button>
