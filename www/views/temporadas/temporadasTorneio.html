@@ -36,7 +36,7 @@
 						<div class="col col-10 branco">{{value.jogados}}</div>
 						<div class="col col-10 branco" >{{value.vitoria}}</div>
 						<div class="col col-20 branco" >{{value.pontos}}</div>
-						<div class="col col-10 branco" ng-class="{bgverde:$index==0,bgazul:$index==1, bgbisque:$index==2, branco:$index>=3}" ng-if="value.jogados > 0 && gamertag != value.gamertag"><a class="button button-small button-balanced" href="#/app/temporadasRankingJogos/{{value.gamertag}}|{{value.keyUserTorneio}}"> <i class="icon ion-ios-redo"></i></a></div>
+						<div class="col col-10 branco" ng-if="value.jogados > 0 && gamertag != value.gamertag"><a class="button button-small button-balanced" href="#/app/temporadasRankingJogos/{{value.gamertag}}|{{value.keyUserTorneio}}"> <i class="icon ion-ios-redo"></i></a></div>
 					</div>				
 				</div>
 			</div>
