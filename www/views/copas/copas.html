@@ -1,5 +1,17 @@
 <ion-view view-title="Copas">
-  <ion-content>
-    <h1>Copas</h1>
-  </ion-content>
+	<ion-content ng-controller="CtrlCopas as vm" overflow-scroll="true" id="imagebg">
+		<main>
+			<section>
+				<div id="carousel-5" class="carousel-wrapper">
+					<a-carousel 
+					id="tamanho"
+					carousel-options="::vm.carouselOptions6"
+					array-provider="::vm.carouselData6"
+					on-select="vm.onSelectCarousel(item)">
+					</a-carousel>
+				</div>
+				<h4> Current selection: <strong>{{vm.itemSelected.idTorneio}}</strong></h4>
+			</section>
+		</main>
+	</ion-content>
 </ion-view>

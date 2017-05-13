@@ -1,18 +1,34 @@
+
 <ion-view view-title="{{'TEMPORADAS'|translate}}">
-  <ion-content>
+  <ion-content ng-controller="CtrlTemporadas as vm" overflow-scroll="true" id="imagebg">
   	<div class="item item-divider">
    	 {{'OFICIAL'|translate}}
   	</div>
+		<main>
+			<section>
+				<div id="carousel-5" class="carousel-wrapper">
+					<a-carousel 
+					id="tamanho"
+					carousel-options="::vm.carouselOptions6"
+					array-provider="::vm.carouselData6"
+					on-select="vm.onSelectCarousel(item)">
+					</a-carousel>
+				</div>
+				<h4> Current selection: <strong>{{vm.itemSelected.idTorneio}}</strong></h4>
+			</section>
+		</main>
+		<!--
     <ion-list>
 	  <ion-item class="item item-avatar" ng-repeat="(key, value) in temporadas track by $index" href="#/app/temporadasTorneio/{{key}}">
-	  	<img src="venkman.jpg">
+	  	<img src="{{value.img_es}}" ng-if="idioma == 'es'">
+	  	<img src="{{value.img_pt}}" ng-if="idioma == 'pt'">
 	    <h2>{{value.nome}}</h2>
-	    <!-- <p>Inicio: {{value.configuracao.dataInicio | date:'dd/MM/yyyy'}}</p>
-	    <p>Fin: {{value.configuracao.dataFim | date:'dd/MM/yyyy'}}</p> -->
+
 	    <p>Status: {{status | filtroAbertoFechado}}</p>
 	    <p>Temporada Inicial: {{temporadaInicial}}</p>
 	    <p ng-repeat="lang in value.premio.descricao track by $index" ng-if="$index == idioma">Premio: {{lang.nome}}</p>
 	  </ion-item>
 	</ion-list>
+	-->
   </ion-content>
 </ion-view>

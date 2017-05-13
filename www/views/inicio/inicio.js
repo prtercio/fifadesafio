@@ -9,6 +9,7 @@
       } else {
         $scope.admin = false;
       }
+      var idioma = window.localStorage.getItem( 'lang' );
       var data = new Date();
       var dia = data.getDate();
       var mes = data.getMonth() + 1;
@@ -18,16 +19,19 @@
       var fechaFormatada = Date.UTC( data.getFullYear(), data.getMonth(), data.getDate(), 10, 0, 0 );
       $scope.fecha = fechaFormatada;
       console.log( fechaFormatada );
+      var images = [];
       if ( localStorage.getItem( "fechaAtualizacao" ) ) {
         if ( localStorage.getItem( "fechaAtualizacao" ) == dataHoje ) {
           console.log( "Já está atualizada" );
         } else {
           atualizarConquistas();
           localStorage.setItem( "fechaAtualizacao", dataHoje );
+          atualizarTemporadas();
         }
       } else {
         atualizarConquistas();
         localStorage.setItem( "fechaAtualizacao", dataHoje );
+        atualizarTemporadas();
       }
 
       function atualizarConquistas() {
@@ -85,6 +89,31 @@
       $scope.cerrarMenu = function() {
         $scope.popover.hide();
       };
+
+      function atualizarTemporadas() {
+        //temporadas
+        var ref = firebase.database().ref( 'desafio/desafios/temporadas/oficial' );
+        ref.once( "value" ).then( function( snapshot ) {
+          $scope.$apply( function() {
+            snapshot.forEach( function( minisnapshot ) {
+              if ( idioma == "es" ) {
+                images.push( {
+                  img: minisnapshot.val().img_es,
+                  idTorneio: minisnapshot.key
+                } );
+                localStorage.setItem( 'temporadas', JSON.stringify( images ) );
+                // images carousel
+              } else if ( idioma == "pt" ) {
+                images.push( {
+                  img: minisnapshot.val().img_pt,
+                  idTorneio: minisnapshot.key
+                } );
+                localStorage.setItem( 'temporadas', JSON.stringify( images ) );
+              }
+            } );
+          } );
+        } );
+      }
     }
   ] ); //ctrl
 } )();
