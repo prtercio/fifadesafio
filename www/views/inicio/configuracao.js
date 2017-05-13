@@ -4,10 +4,11 @@
   config.controller( 'CtrlConfiguracao', [ '$scope', '$localStorage', '$ionicPopup', '$window', '$ionicPopover',
     function( $scope, $localStorage, $ionicPopup, $window, $ionicPopover ) {
       $scope.idioma = localStorage.getItem( "lang" );
-      $scope.gamertag = $localStorage.account.gamertag;
-      $scope.email = $localStorage.account.email;
-      $scope.imagem = $localStorage.account.imagem;
-      console.log( $scope.imagem );
+      if ( $localStorage.account.gamertag ) {
+        $scope.gamertag = $localStorage.account.gamertag;
+        $scope.email = $localStorage.account.email;
+        $scope.imagem = $localStorage.account.imagem;
+      }
       $scope.showPopup = function() {
         $ionicPopup.show( {
           template: '',
