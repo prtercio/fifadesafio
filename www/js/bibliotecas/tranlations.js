@@ -81,11 +81,11 @@ trans.factory( 'asyncLoader', function( $q, $timeout ) {
                 DATAFIM: "Fecha del Final",
                 MINPARTICIPANTES: "No. Mínimo de Participantes",
                 INSCPARTICIPANTES: "Participantes Inscriptos",
-                NOHAYINSCRITOS: "Aún no hay inscriptos en este desafío.  ¡Tú puedes ser el primero, inscríbete!",
                 GENIAL: "¡Enhorabuena!",
                 VOCEESTAPARTICIPANDO: "Ya estás participando de este desafio.",
                 SAIRTORNEIO: "¿Seguro que quieres salir de este desafío?",
-                ENTRARLOGADO: "Para entrar en este desafío debes iniciar sesión."
+                ENTRARLOGADO: "Para entrar en este desafío debes iniciar sesión.",
+                NAOHAINSCRITOS: "Aún no hay inscriptos en este desafío. ¿Qué tal ser el primero?"
             };
         }
         if ( options.key === 'pt' ) {
@@ -158,11 +158,11 @@ trans.factory( 'asyncLoader', function( $q, $timeout ) {
                 DATAFIM: "Data Final",
                 MINPARTICIPANTES: "No. Mínimo de Participantes",
                 INSCPARTICIPANTES: "Participantes Inscritos",
-                NOHAYINSCRITOS: "Ainda não há inscritos neste desafio.  ¡Seja o primeiro!",
                 GENIAL: "Show de bola!",
                 VOCEESTAPARTICIPANDO: "Você já está participando neste desafio.",
                 SAIRTORNEIO: "Você tem certeza que quer sair deste desafio?",
-                ENTRARLOGADO: "Para entrar neste desafio deve está logado."
+                ENTRARLOGADO: "Para entrar neste desafio deve está logado.",
+                NAOHAINSCRITOS: "Ainda não há inscritos neste desafio. Você pode ser o primeiro!"
             };
         }
         if ( options.key === 'en' ) {
