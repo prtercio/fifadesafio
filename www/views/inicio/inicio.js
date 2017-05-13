@@ -23,15 +23,16 @@
       if ( localStorage.getItem( "fechaAtualizacao" ) ) {
         if ( localStorage.getItem( "fechaAtualizacao" ) == dataHoje ) {
           console.log( "Já está atualizada" );
-        } else {
-          atualizarConquistas();
-          localStorage.setItem( "fechaAtualizacao", dataHoje );
           atualizarTemporadas();
+        } else {
+          console.log( "data diferente, atualizando" );
+          localStorage.setItem( "fechaAtualizacao", dataHoje );
+          atualizarConquistas();
         }
       } else {
+        console.log( "nao há ,atualizando" );
         atualizarConquistas();
         localStorage.setItem( "fechaAtualizacao", dataHoje );
-        atualizarTemporadas();
       }
 
       function atualizarConquistas() {
@@ -40,6 +41,7 @@
         refConquistas.once( "value" ).then( function( snapshot ) {
           localStorage.setItem( 'conquistas', JSON.stringify( snapshot.val() ) );
           Utils.hide();
+          atualizarTemporadas();
         } );
       }
       //
@@ -91,7 +93,9 @@
       };
 
       function atualizarTemporadas() {
+        console.log( "atualizando temporadas" );
         //temporadas
+        Utils.show();
         var ref = firebase.database().ref( 'desafio/desafios/temporadas/oficial' );
         ref.once( "value" ).then( function( snapshot ) {
           $scope.$apply( function() {
@@ -112,6 +116,9 @@
               }
             } );
           } );
+          console.log( "temporadas atualizadas" );
+          console.log( localStorage.getItem( 'temporadas' ) );
+          Utils.hide();
         } );
       }
     }
