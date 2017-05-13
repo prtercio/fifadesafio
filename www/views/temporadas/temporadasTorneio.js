@@ -716,13 +716,14 @@
 				} else {
 					var alertPopup = $ionicPopup.alert( {
 						title: 'Opps!',
-						template: 'Para entrar neste desafio vc deve está logado.'
+						template: "<p>{{'ENTRARLOGADO' | translate}}</p>"
 					} );
 					alertPopup.then( function( res ) {
 						if ( res ) {
 							console.log( "fechado" );
 						}
 					} );
+					$ionicLoading.hide( {} );
 				}
 			} // function
 			/*

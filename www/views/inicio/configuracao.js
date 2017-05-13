@@ -4,10 +4,13 @@
   config.controller( 'CtrlConfiguracao', [ '$scope', '$localStorage', '$ionicPopup', '$window', '$ionicPopover',
     function( $scope, $localStorage, $ionicPopup, $window, $ionicPopover ) {
       $scope.idioma = localStorage.getItem( "lang" );
-      if ( $localStorage.account.gamertag ) {
+      if ( firebase.auth().currentUser ) {
         $scope.gamertag = $localStorage.account.gamertag;
         $scope.email = $localStorage.account.email;
         $scope.imagem = $localStorage.account.imagem;
+        $scope.logado = true;
+      } else {
+        $scope.logado = false;
       }
       $scope.showPopup = function() {
         $ionicPopup.show( {
