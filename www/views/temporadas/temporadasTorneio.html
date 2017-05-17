@@ -30,7 +30,7 @@
 								
 							</div>
 						</div>
-						<div class="col col-40 branco">{{value.gamertag}}</div>
+						<div class="col col-40" ng-class="{verdeBold:value.gamertag==gamertag, branco:value.gamertag!=gamertag}">{{value.gamertag}}</div>
 						<div class="col col-10 branco">{{value.jogados}}</div>
 						<div class="col col-10 branco" >{{value.vitoria}}</div>
 						<div class="col col-20 branco" >{{value.pontos}}</div>

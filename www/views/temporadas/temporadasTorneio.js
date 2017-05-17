@@ -3,6 +3,11 @@
 	var copas = angular.module( 'App.CtrlTempTorneio', [] );
 	copas.controller( 'CtrlTempTorneio', [ '$scope', 'idTorneio', '$localStorage', '$state', '$ionicPopup', '$window', '$ionicLoading', 'dataService',
 		function( $scope, idTorneio, $localStorage, $state, $ionicPopup, $window, $ionicLoading, dataService ) {
+			if ( $localStorage.account ) {
+				$scope.gamertag = $localStorage.account.gamertag;
+			} else {
+				$scope.gamertag = "visitante";
+			}
 			if ( firebase.auth().currentUser ) {
 				$scope.loggedIn = true;
 				console.log( "logado" );
@@ -610,7 +615,6 @@
 									"derrota": inscritos[ key ].derrota,
 									"empate": inscritos[ key ].empate
 								} )
-								console.log( "---", ranking );
 							}
 							$scope.resultado = ranking;
 							verInscrito( ranking );
@@ -696,11 +700,11 @@
 					} ).then( function( response ) {
 						//console.log("response: "+response);
 						$scope.verBtnInscricao = true;
-						console.log( "add cantidad de inscritos" );
+						//console.log( "add cantidad de inscritos" );
 						firebase.database().ref().child( 'desafio/desafios/temporadas/oficial/' + idTorneio + '/configuracao' ).update( {
 							inscritos: gamesInscritos + 1
 						} ).then( function( response ) {
-							console.log( " inscritos add" );
+							//console.log( " inscritos add" );
 							$ionicLoading.hide( {} );
 							$scope.cargarDatos();
 							var alertPopup = $ionicPopup.alert( {
@@ -716,7 +720,7 @@
 				} else {
 					var alertPopup = $ionicPopup.alert( {
 						title: 'Opps!',
-						template: "<p>{{'ENTRARLOGADO' | translate}}</p>"
+						template: '<p align="center"><i class="icon ion-alert-circled laranja tamanhoIcon"></i></p><p align="center"><strong>{{"ENTRARLOGADO" | translate}}</strong></p>'
 					} );
 					alertPopup.then( function( res ) {
 						if ( res ) {

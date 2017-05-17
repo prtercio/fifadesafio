@@ -51,7 +51,6 @@
                   img: minisnapshot.val().img_es,
                   idTorneio: minisnapshot.key
                 } );
-                console.log( "aqui" );
                 // images carousel
               } else if ( idioma == "pt" ) {
                 images.push( {
@@ -160,7 +159,7 @@
             } );
           } );
           Utils.hide();
-          window.reload();
+          location.reload();
         } );
       }
     }

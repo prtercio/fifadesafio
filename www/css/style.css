@@ -32,6 +32,15 @@ img.resizeTotal {
     color: #00FF00 !important;
 }
 
+.verdeBold {
+    color: #00FF00 !important;
+    font-weight: bold;
+}
+
+.verdeOriginal {
+    color: green !important;
+}
+
 .item.item-verde {
     border-color: green;
 }
@@ -59,8 +68,6 @@ img.resizeTotal {
 .branco {
     color: #FFFFFF !important;
 }
-
-.brancobg {}
 
 .laranja {
     color: #FFBF00 !important;
