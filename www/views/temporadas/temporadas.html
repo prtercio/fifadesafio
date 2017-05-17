@@ -1,7 +1,9 @@
-
-<ion-view view-title="{{'TEMPORADAS'|translate}}">
-  <ion-content ng-controller="CtrlTemporadas as vm" overflow-scroll="true" id="imagebg">
-  	<div class="item item-divider">
+<ion-view view-title="{{'TEMPORADAS'|translate}}" ng-controller="CtrlTemporadas as vm">
+ 	<ion-nav-buttons side="secondary">      
+        <a class="button button-icon icon ion-loop" ng-click="atualizarTemporadas()"></a>
+  </ion-nav-buttons>
+  <ion-content  overflow-scroll="true" id="imagebg">
+  	<div class="item item-divider vermelho">
    	 {{'OFICIAL'|translate}}
   	</div>
 		<main>
@@ -14,7 +16,7 @@
 					on-select="vm.onSelectCarousel(item)">
 					</a-carousel>
 				</div>
-				<h4> Current selection: <strong>{{vm.itemSelected.idTorneio}}</strong></h4>
+				<!--<h4> Current selection: <strong>{{vm.itemSelected.idTorneio}}</strong></h4>-->
 			</section>
 		</main>
 		<!--
@@ -30,5 +32,9 @@
 	  </ion-item>
 	</ion-list>
 	-->
+	 
   </ion-content>
+  <div class="bar bar-footer bar-energized">
+  <p>Publicidade</p>
+</div>
 </ion-view>

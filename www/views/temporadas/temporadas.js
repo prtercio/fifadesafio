@@ -30,45 +30,47 @@
         img: "http://lorempixel.com/output/sports-h-c-120-180-2.jpg",
         idTorneio: "-KeBBks76AzFloDfk1"
       } ];
-      var totalDesafios = 0;
-      Utils.show();
-      var ref = firebase.database().ref( 'desafio/desafios/temporadas/oficial' );
-      ref.once( "value" ).then( function( snapshot ) {
-        $scope.$apply( function() {
-          $scope.temporadas = snapshot.val();
-          var numSnap = snapshot.numChildren();
-          snapshot.forEach( function( minisnapshot ) {
-            totalDesafios++;
-            console.log( "totalDesafios", totalDesafios );
-            $scope.status = minisnapshot.val().configuracao.estatus;
-            $scope.temporadaInicial = minisnapshot.val().configuracao.temporada;
-            var temporada = minisnapshot.val().configuracao.temporada;
-            if ( idioma == "es" ) {
-              images.push( {
-                img: minisnapshot.val().img_es,
-                idTorneio: minisnapshot.key
-              } );
-              console.log( "aqui" );
-              // images carousel
-            } else if ( idioma == "pt" ) {
-              images.push( {
-                img: minisnapshot.val().img_pt,
-                idTorneio: minisnapshot.key
-              } );
-            }
-            if ( numSnap == images.length ) {
-              console.log( "llamando activate" );
-              llamarActivate();
-            }
+      var totalDesafios = window.localStorage.getItem( "totalFotosTemporadas" );;
+      cargarTemporadas();
+
+      function cargarTemporadas() {
+        Utils.show();
+        var ref = firebase.database().ref( 'desafio/desafios/temporadas/oficial' );
+        ref.once( "value" ).then( function( snapshot ) {
+          $scope.$apply( function() {
+            $scope.temporadas = snapshot.val();
+            var numSnap = snapshot.numChildren();
+            snapshot.forEach( function( minisnapshot ) {
+              //totalDesafios++;
+              $scope.status = minisnapshot.val().configuracao.estatus;
+              $scope.temporadaInicial = minisnapshot.val().configuracao.temporada;
+              var temporada = minisnapshot.val().configuracao.temporada;
+              if ( idioma == "es" ) {
+                images.push( {
+                  img: minisnapshot.val().img_es,
+                  idTorneio: minisnapshot.key
+                } );
+                console.log( "aqui" );
+                // images carousel
+              } else if ( idioma == "pt" ) {
+                images.push( {
+                  img: minisnapshot.val().img_pt,
+                  idTorneio: minisnapshot.key
+                } );
+              }
+              if ( numSnap == images.length ) {
+                llamarActivate();
+              }
+            } );
           } );
+          Utils.hide();
         } );
-        Utils.hide();
-      } );
-      activate();
+        activate();
+      }
 
       function activate() {
         // Mock data for carousel
-        vm.carouselData6 = createArray( 2, true );
+        vm.carouselData6 = createArray( totalDesafios, true );
 
         function createArray( total, randomImg ) {
           randomImg = typeof randomImg === 'undefined' ? false : randomImg;
@@ -125,6 +127,43 @@
           id: id,
           src: 'http://lorempixel.com/120/80/?' + imgId
         }
+      }
+      $scope.prova = function() {
+        console.log( "clickando" );
+      }
+      $scope.atualizarTemporadas = function() {
+        console.log( "1 atualizando temporadas" );
+        //temporadas
+        Utils.show();
+        var imgs = [];
+        var totalFotos = 0;
+        var ref = firebase.database().ref( 'desafio/desafios/temporadas/oficial' );
+        ref.once( "value" ).then( function( snapshot ) {
+          $scope.$apply( function() {
+            snapshot.forEach( function( minisnapshot ) {
+              if ( idioma == "es" ) {
+                imgs.push( {
+                  img: minisnapshot.val().img_es,
+                  idTorneio: minisnapshot.key
+                } );
+                totalFotos++;
+                localStorage.setItem( 'temporadas', JSON.stringify( imgs ) );
+                window.localStorage.setItem( "totalFotosTemporadas", totalFotos );
+                // images carousel
+              } else if ( idioma == "pt" ) {
+                imgs.push( {
+                  img: minisnapshot.val().img_pt,
+                  idTorneio: minisnapshot.key
+                } );
+                totalFotos++;
+                localStorage.setItem( 'temporadas', JSON.stringify( imgs ) );
+                window.localStorage.setItem( "totalFotosTemporadas", totalFotos );
+              }
+            } );
+          } );
+          Utils.hide();
+          cargarTemporadas();
+        } );
       }
     }
   ] ); //ctrl

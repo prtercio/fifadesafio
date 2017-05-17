@@ -3,6 +3,9 @@
     var copas = angular.module( 'App.CtrlCopas', [] );
     copas.controller( 'CtrlCopas', [ '$scope', '$timeout',
         function( $scope, $timeout ) {
+            $scope.prova = function() {
+                console.log( "clickando" );
+            }
             var images = [ {
                 img: "../img/copa.png",
                 idTorneio: "-KeBBks76AzFloDfkS",
