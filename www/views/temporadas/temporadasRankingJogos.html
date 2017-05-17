@@ -1,12 +1,12 @@
 <ion-view view-title="{{jogoNome}}">
-  <ion-content>
+  <ion-content id="imagebg">
   <div>
-    <div class="row borderGris bgazure">    
+    <div class="row borderGris vermelhorescurobg branco">    
       <div class="col col-20"><strong>Jogos</strong></div>
       <div class="col col-20"><strong>Vitória</strong></div>
       <div class="col col-20"><strong>Empate</strong></div>
       <div class="col col-20"><strong>Derrota</strong></div>
-      <div class="col col-20 verde"><strong>Pontos</strong></div>    
+      <div class="col col-20 branco"><strong>Pontos</strong></div>    
     </div>
 
     <div class="row">    
@@ -16,20 +16,20 @@
       <div class="col col-20 padding"><strong>{{derrota}}</strong></div>
       <div class="col col-20 padding verde"><strong>{{pontos}}</strong></div>    
     </div>  
-    <div class="item item-divider">
+    <div class="item item-divider amarelobg60 itemNoborda" ng-show="temporadaAtual > 0">
       {{'TEMPORADAATUAL' | translate}}: {{temporadaAtual}}
     </div>
     </div>
      <ion-list>
-       <a class="item item-icon-left item-icon-right" ng-repeat="jogo in jogos | orderBy:'jogo*1':true" type="item-text-wrap" href="#/app/temporadasRankingJogosDetalhe/{{jogo.jogo}}|{{keyUsuario}}" ng-if="jogo.estado == 'Terminado'">                              
+       <a class="item item-icon-left item-icon-right itemtransparente itembordagris" ng-repeat="jogo in jogos | orderBy:'jogo*1':true" type="item-text-wrap" href="#/app/temporadasRankingJogosDetalhe/{{jogo.jogo}}|{{keyUsuario}}" ng-if="jogo.estado == 'Terminado'">                              
                    <i class="icon ion-ios-game-controller-a"></i>
                   <strong>{{'JOGO' | translate}} {{jogo.jogo}}</strong>
-                  <in 
+                  <in class="brancobg"
                     ng-class="{verde : jogo.status=='v', vermelho : jogo.status=='d', laranja : jogo.status=='e', gris2: jogo.estado=='Próximo'}">
                   {{jogo.status | filtroStatus}} : {{jogo.placar}}
                   </in>                 
                   <span class="item-note">
-                     <p class="right" ng-if="jogo.estado=='Terminado'">{{'PONTOS' | translate}}: <strong>{{jogo.pontos}}</strong></p>
+                     <p class="right branco" ng-if="jogo.estado=='Terminado'">{{'PONTOS' | translate}}: <strong>{{jogo.pontos}}</strong></p>
                   </span>
                   <i class="icon ion-chevron-right icon-accessory"></i>
       </a>

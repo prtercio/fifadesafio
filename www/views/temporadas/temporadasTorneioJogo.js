@@ -284,7 +284,7 @@
                         listarConquistaVitoria( resultado1, resultado2 );
                         console.log( golsPro, golsContra );
                         placarInverso( resultado1, resultado2, "v" );
-                        calcularStatusTemporada( temporadaAtual );
+                        if ( temporadaAtual > 0 ) calcularStatusTemporada( temporadaAtual );
                         if ( atualizarNumerosTemporadas == true ) {
                             novaTemporadaAtualVitoria = 0;
                             novaTemporadaAtualEmpate = 0;
@@ -297,7 +297,7 @@
                         }
                         $scope.totalPontos = totalPontos;
                     } else if ( resultado1 < resultado2 ) {
-                        calcularStatusTemporada( temporadaAtual );
+                        if ( temporadaAtual > 0 ) calcularStatusTemporada( temporadaAtual );
                         var resultadoFinal = "Derrota";
                         $scope.placarFinal = "d";
                         seEmpate = 0;
@@ -316,7 +316,7 @@
                         }
                     } else {
                         novosPontosEmpate = 1;
-                        calcularStatusTemporada( temporadaAtual );
+                        if ( temporadaAtual > 0 ) calcularStatusTemporada( temporadaAtual );
                         var resultadoFinal = "Empate";
                         $scope.placarFinal = "e";
                         seEmpate = 1;
@@ -339,7 +339,7 @@
                     golsContra = Number( antGolsContra ) + Number( resultado1 );
                     if ( resultado1 < resultado2 ) {
                         novosPontosVitoria = 3;
-                        calcularStatusTemporada( temporadaAtual );
+                        if ( temporadaAtual > 0 ) calcularStatusTemporada( temporadaAtual );
                         var resultadoFinal = "Vitoria";
                         $scope.placarFinal = "v";
                         seEmpate = 0;
@@ -357,7 +357,7 @@
                             novaTemporadaAtualEmpate = temporadaAtualEmpate;
                         }
                     } else if ( resultado1 > resultado2 ) {
-                        calcularStatusTemporada( temporadaAtual );
+                        if ( temporadaAtual > 0 ) calcularStatusTemporada( temporadaAtual );
                         var resultadoFinal = "Derrota";
                         $scope.placarFinal = "d";
                         seEmpate = 0;
@@ -376,7 +376,7 @@
                         }
                     } else {
                         novosPontosEmpate = 1;
-                        calcularStatusTemporada( temporadaAtual );
+                        if ( temporadaAtual > 0 ) calcularStatusTemporada( temporadaAtual );
                         var resultadoFinal = "Empate";
                         $scope.placarFinal = "e";
                         seEmpate = 1;

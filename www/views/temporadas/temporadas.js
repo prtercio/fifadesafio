@@ -30,10 +30,11 @@
         img: "http://lorempixel.com/output/sports-h-c-120-180-2.jpg",
         idTorneio: "-KeBBks76AzFloDfk1"
       } ];
-      var totalDesafios = window.localStorage.getItem( "totalFotosTemporadas" );;
+      var totalDesafios = 0;
       cargarTemporadas();
 
       function cargarTemporadas() {
+        totalDesafios = window.localStorage.getItem( "totalFotosTemporadas" );
         Utils.show();
         var ref = firebase.database().ref( 'desafio/desafios/temporadas/oficial' );
         ref.once( "value" ).then( function( snapshot ) {
@@ -57,9 +58,6 @@
                   img: minisnapshot.val().img_pt,
                   idTorneio: minisnapshot.key
                 } );
-              }
-              if ( numSnap == images.length ) {
-                llamarActivate();
               }
             } );
           } );
@@ -162,7 +160,7 @@
             } );
           } );
           Utils.hide();
-          cargarTemporadas();
+          window.reload();
         } );
       }
     }

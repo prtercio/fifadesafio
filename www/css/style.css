@@ -29,7 +29,7 @@ img.resizeTotal {
 }
 
 .verde {
-    color: green !important;
+    color: #00FF00 !important;
 }
 
 .item.item-verde {
@@ -53,12 +53,14 @@ img.resizeTotal {
 }
 
 .vermelho {
-    color: red !important;
+    color: #FF0000 !important;
 }
 
 .branco {
     color: #FFFFFF !important;
 }
+
+.brancobg {}
 
 .laranja {
     color: #FFBF00 !important;

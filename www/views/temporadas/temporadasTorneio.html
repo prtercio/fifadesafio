@@ -64,9 +64,9 @@
 				      <div class="col col-20 padding"><strong>{{vitoria}}</strong></div>
 				      <div class="col col-20 padding"><strong>{{empate}}</strong></div>
 				      <div class="col col-20 padding"><strong>{{derrota}}</strong></div>
-				      <div class="col col-20 padding branco"><strong>{{pontos}}</strong></div>    
+				      <div class="col col-20 padding verde"><strong>{{pontos}}</strong></div>    
 				    </div> 
-				    <div class="item item-divider amarelobg60 itemNoborda">
+				    <div class="item item-divider amarelobg60 itemNoborda" ng-show="temporadaAtual > 0">
 						   {{'TEMPORADAATUAL' | translate}}: {{temporadaAtual}}
 					</div>
 				    <!-- <h5 align="center"></hr> -->
@@ -97,7 +97,7 @@
 			            {{jogo.status | filtroStatus}} : {{jogo.placar}}
 			            </in>			            
 			            <span class="item-note">
-			               <p class="right" ng-if="jogo.estado=='Terminado'">{{'PONTOS' | translate}}: <strong>{{jogo.pontos}}</strong></p>
+			               <p class="right branco" ng-if="jogo.estado=='Terminado'">{{'PONTOS' | translate}}: <strong>{{jogo.pontos}}</strong></p>
 			            </span>
 			            <i class="icon ion-chevron-right icon-accessory"></i>
 
