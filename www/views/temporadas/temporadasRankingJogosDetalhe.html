@@ -20,14 +20,18 @@
 
   <div ng-if="detalheJogo.estado == 'Terminado'">
     <ion-item class="item itemtransparente itembordagris">
-      <h2 class="center">{{'PONTOS' | translate}}: {{detalheJogo.pontos}}</h2>
+      <h2 class="center verde">{{'PONTOS' | translate}}: {{detalheJogo.pontos}}</h2>
     </ion-item>
     <h5 class="center">{{'DETALHECONQUISTAS' | translate}}</h5>
     <ion-list>
       <ion-item ng-repeat="detalhe in detalheJogo.conquistas track by $index" class="item itemtransparente itembordagris">
-        <h2>{{detalhe}}</h2>
+        <h2 class="verde">{{detalhe}}</h2>
       </ion-item>
     </ion-list>
+    </div>
+
+    <div ng-show="detalheJogo.img" class="padding">
+      <img class="resize" src="{{detalheJogo.img}}" />
   </div>
 </ion-content>
 </ion-view>

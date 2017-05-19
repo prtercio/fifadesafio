@@ -3,7 +3,7 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module( 'App', [ 'ionic', 'App.CtrlInicio', 'App.CtrlConquistas', 'App.CtrlConfiguracao', 'App.CtrlAdministracao', 'App.CtrlTemporadas', 'App.CtrlTempTorneio', 'App.CtrlTempTorneioJogo', 'App.CtrlTemporadasRankingJogos', 'App.CtrlTemporadasRankingJogosDetalhe', 'App.CtrlCopas', 'App.dataServices', 'App.FiltroStatus', 'App.FiltroAbertoFechado', 'ngStorage', 'ngCordovaOauth', 'App.translations', 'aCarousel' ] ).constant( 'Social', {
+angular.module( 'App', [ 'ionic', 'App.CtrlInicio', 'App.CtrlConquistas', 'App.CtrlConfiguracao', 'App.CtrlAdministracao', 'App.CtrlTemporadas', 'App.CtrlTempTorneio', 'App.CtrlTempTorneioJogo', 'App.CtrlTemporadasRankingJogos', 'App.CtrlTemporadasRankingJogosDetalhe', 'App.CtrlCopas', 'App.CtrlTorneiosTodos', 'App.CtrlTorneiosTodosDetalhes', 'App.dataServices', 'App.FiltroStatus', 'App.FiltroAbertoFechado', 'ngStorage', 'ngCordovaOauth', 'App.translations', 'aCarousel' ] ).constant( 'Social', {
     facebookAppId: "1025234637591184",
     googleWebClientId: "86899339460-kqrko1uuhu9a532l9f0jdhf9tgnp8b00.apps.googleusercontent.com",
     twitterKey: "aJWByCgPhUgYZJMojyFeH2h8F",
@@ -155,6 +155,27 @@ angular.module( 'App', [ 'ionic', 'App.CtrlInicio', 'App.CtrlConquistas', 'App.C
       views: {
         'menuContent': {
           templateUrl: 'views/copas/copas.html'
+        }
+      }
+    } ).state( 'app.torneiosTodos', {
+      url: '/torneiosTodos',
+      views: {
+        'menuContent': {
+          templateUrl: 'views/torneios/todosxtodos/principal.html',
+          controller: 'CtrlTorneiosTodos'
+        }
+      }
+    } ).state( 'app.torneiosTodosDetalhes', {
+      url: '/torneiosTodosDetalhes/:torneioId',
+      views: {
+        'menuContent': {
+          templateUrl: 'views/torneios/todosxtodos/torneiosTodosDetalhes.html',
+          controller: 'CtrlTorneiosTodosDetalhes as idTorneio'
+        }
+      },
+      resolve: {
+        idTorneio: function( $stateParams ) {
+          return $stateParams.torneioId;
         }
       }
     } ).state( 'app.login', {

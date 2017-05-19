@@ -583,6 +583,15 @@
 			var fechaInicio;
 			var fechaFinal;
 			var gamesInscritos = 0;
+			var estatusDesafio = "";
+			//------------------------------------------------------------ Data
+			var data = new Date();
+			var dia = data.getDate();
+			var mes = data.getMonth() + 1;
+			var ano = data.getFullYear();
+			var fechaFormatada = Date.UTC( data.getFullYear(), data.getMonth(), data.getDate(), 0, 0, 0 );
+			console.log( "fechaFormatada", fechaFormatada );
+			$scope.terminarDesafio = false;
 			//-------------------------------------------------------------
 			$scope.cargarDatos = function() {
 				ranking = [];
@@ -595,6 +604,11 @@
 				ref.once( "value" ).then( function( snapshot ) {
 					if ( snapshot.val() != null ) {
 						$scope.$apply( function() {
+							estatusDesafio = snapshot.val().configuracao.estatus;
+							console.log( "estatus", estatusDesafio );
+							if ( snapshot.val().configuracao.estatus == 'Fechado' ) {
+								$scope.terminarDesafio = true;
+							}
 							$scope.torneio = snapshot.val();
 							totalJogos = snapshot.val().configuracao.jogos;
 							temporadaInicial = snapshot.val().configuracao.temporada;
@@ -708,7 +722,12 @@
 							$ionicLoading.hide( {} );
 							$scope.cargarDatos();
 							var alertPopup = $ionicPopup.alert( {
-								template: '<p align="center"><i class="icon ion-happy-outline verde tamanhoIcon"></i></p><p align="center"><strong>{{"VOCEESTAPARTICIPANDO" | translate}}</strong></p>'
+								template: '<p align="center"><i class="icon ion-happy-outline verde tamanhoIcon"></i></p><p align="center"><strong>{{"VOCEESTAPARTICIPANDO" | translate}}</strong></p>',
+								buttons: [ {
+									text: '<b>Ok</b>',
+									type: 'button-balanced',
+									onTap: function( e ) {}
+								} ]
 							} );
 							alertPopup.then( function( res ) {
 								if ( res ) {
@@ -720,7 +739,12 @@
 				} else {
 					var alertPopup = $ionicPopup.alert( {
 						title: 'Opps!',
-						template: '<p align="center"><i class="icon ion-alert-circled laranja tamanhoIcon"></i></p><p align="center"><strong>{{"ENTRARLOGADO" | translate}}</strong></p>'
+						template: '<p align="center"><i class="icon ion-alert-circled laranja tamanhoIcon"></i></p><p align="center"><strong>{{"ENTRARLOGADO" | translate}}</strong></p>',
+						buttons: [ {
+							text: '<b>Ok</b>',
+							type: 'button-balanced',
+							onTap: function( e ) {}
+						} ]
 					} );
 					alertPopup.then( function( res ) {
 						if ( res ) {
@@ -739,36 +763,52 @@
 				//console.log(" KeyUserInscrito "+$scope.keyUserInscritoTorneio);
 				keyUserInscritoTorneio = $scope.keyUserInscritoTorneio;
 				var confirmPopup = $ionicPopup.confirm( {
-					template: '<p align="center"><i class="icon ion-alert-circled laranja tamanhoIcon"></i></p><p align="center"><strong>{{"SAIRTORNEIO" | translate}}</strong></p>'
+					template: '<p align="center"><i class="icon ion-alert-circled laranja tamanhoIcon"></i></p><p align="center"><strong>{{"SAIRTORNEIO" | translate}}</strong></p>',
+					buttons: [ {
+						text: 'Cancel',
+						//type: 'button-positive',
+						onTap: function( e ) {}
+					}, {
+						text: '<b>Ok</b>',
+						type: 'button-balanced',
+						onTap: function( e ) {
+							//console.log( "ok", e.returnValue );
+							confirmarSaida();
+						}
+					} ]
 				} );
-				confirmPopup.then( function( res ) {
+				//confirmPopup.then( function( res ) {
+				function confirmarSaida() {
 					$ionicLoading.show( {} );
-					if ( res ) {
-						firebase.database().ref( 'desafio/desafios/temporadas/oficial/' + idTorneio + '/inscritos/' + keyUserInscritoTorneio ).remove();
-						firebase.database().ref( 'desafio/desafios/temporadas/oficial/' + idTorneio + '/configuracao' ).update( {
-							inscritos: gamesInscritos - 1
-						} ).then( function( response ) {
-							console.log( 'Eliminado 1' );
-							$ionicLoading.hide( {} );
-							var alertPopup = $ionicPopup.alert( {
-								template: '<p align="center"><i class="icon ion-alert-circled laranja tamanhoIcon"></i></p><p align="center"><strong>Deleted</strong></p>'
-							} );
-							alertPopup.then( function( res ) {
-								if ( res ) {
-									$scope.cargarDatos();
-									$scope.verBtnInscricao = false;
-									$scope.sairTorneioVar = false;
-									//$state.go('app.inicio');
-									//window.location.reload();
-								}
-							} );
+					//if ( res ) {
+					firebase.database().ref( 'desafio/desafios/temporadas/oficial/' + idTorneio + '/inscritos/' + keyUserInscritoTorneio ).remove();
+					firebase.database().ref( 'desafio/desafios/temporadas/oficial/' + idTorneio + '/configuracao' ).update( {
+						inscritos: gamesInscritos - 1
+					} ).then( function( response ) {
+						console.log( 'Eliminado 1' );
+						$ionicLoading.hide( {} );
+						var alertPopup = $ionicPopup.alert( {
+							template: '<p align="center"><i class="icon ion-alert-circled laranja tamanhoIcon"></i></p><p align="center"><strong>Deleted</strong></p>'
 						} );
-						console.log( 'Eliminado' );
+						alertPopup.then( function( res ) {
+							if ( res ) {
+								$scope.cargarDatos();
+								$scope.verBtnInscricao = false;
+								$scope.sairTorneioVar = false;
+								//$state.go('app.inicio');
+								//window.location.reload();
+							}
+						} );
+					} );
+					console.log( 'Eliminado' );
+					/*
 					} else {
 						console.log( 'Nao' );
 						$ionicLoading.hide( {} );
 					}
-				} );
+					*/
+				}
+				//} );
 			}; // function
 			/// Jogos
 			var resultadoJogos = [];

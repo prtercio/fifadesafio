@@ -1,0 +1,111 @@
+<ion-view view-title="Torneio">
+
+     <ion-content id="imagebg">
+       <br />
+       <br />
+        <div class="row borderGris branco vermelhorescurobg">    
+          <div class="col col-10">#</div>
+          <div class="col col-20 center">Gamer</div>
+          <div class="col col-10 center">J</div>
+          <div class="col col-10 center">V</div>
+          <div class="col col-10 center">E</div>
+          <div class="col col-10 center">D</div>
+          <div class="col col-10 center">GP</div>
+          <div class="col col-10 center">GC</div>
+          <div class="col col-10 center">Pts.</div>
+     
+        </div>
+        <div class="borderGris">
+          <div class="row" ng-repeat="(key, value) in torneio | orderBy:'pontos':true">       
+            <div class="col col-10 center">
+              
+              <div ng-class="{verdeOp60:$index==0,verdeOp40:$index==1, verdeOp20:$index==2, branco:$index>=3}"><strong>{{$index + 1}}</strong>
+                
+              </div>
+            </div>
+            <div class="col col-20 branco">{{value.gamer}}</div>
+            <div class="col col-10  branco bgbisque center">{{value.jogos}}</div>
+            <div class="col col-10 branco center" >{{value.vitoria}}</div>
+            <div class="col col-10  branco bgbisque center" >{{value.empate}}</div>
+            <div class="col col-10 branco center" >{{value.derrota}}</div>
+            <div class="col col-10  branco bgbisque center" >{{value.golsPro}}</div>
+            <div class="col col-10 branco center" >{{value.golsContra}}</div>
+            <div class="col col-10  branco bgbisque center" >{{value.pontos}}</div>
+          </div>        
+        </div>
+        <ion-slide-box show-pager="true" does-continue="true" slide-interval="5000" disable-scroll="false">
+            <ion-slide  ng-repeat="(key, rodada) in rodadas track by $index">
+              <div class="card padding" style="width:390px;height:150px;margin:auto;display:block">
+            <h3>Rodada {{key}}-{{rodada.rodada}}</h3>            
+               <div class="row" ng-repeat="(krod, rod) in rodada">
+                 <div class="col-40 center" ng-repeat="jg in rod">
+                    <h5>{{krod}}-{{jg}}</h5>
+                 </div>
+                 <div class="col-20 center" ng-repeat="jg in rod">
+                  <a class="button button-small button-balanced"> <i class="icon ion-ios-redo"></i></a>
+                 </div>
+               </div>
+             </ion-slide>
+        </ion-slide-box>
+            <!--
+            <div class="card padding" align="center">
+            <h3 align="center">Rodada 1</h3>            
+               <div class="row">
+                 <div class="col-20">
+                 Gamer1
+                 </div>
+                 <div class="col-20 center">
+                 2
+                 </div>
+                 <div class="col-10 center">
+                 x
+                 </div>
+                 <div class="col-20 center">
+                 3
+                 </div>
+                 <div class="col-20 left">
+                 Gamer2
+                 </div>
+                 <div class="col-10 center">
+                 <a class="button button-small button-balanced"> <i class="icon ion-ios-redo"></i></a>
+                 </div>
+               </div>
+               <hr>
+                 <div class="row">
+                 <div class="col-20">
+                 Gamer3
+                 </div>
+                 <div class="col-20 center">
+                 1
+                 </div>
+                 <div class="col-10 center">
+                 x
+                 </div>
+                 <div class="col-20 center">
+                 0
+                 </div>
+                 <div class="col-20 left">
+                 Gamer3
+                 </div>
+                 <div class="col-10 center">
+                 <a class="button button-small button-balanced"> <i class="icon ion-ios-redo"></i></a>
+                 </div>
+               </div>
+               </div>
+              
+            </ion-slide>
+            <ion-slide>      
+                <p>Abc2</p>
+                <button class="button button-block">Button de Prova</button>
+            </ion-slide>
+            <ion-slide>
+                <p>Abc3</p>
+                <button class="button button-block">Button de Prova</button>
+            </ion-slide>
+        </ion-slide-box>
+        -->
+
+     </ion-content>
+   
+
+</ion-view>

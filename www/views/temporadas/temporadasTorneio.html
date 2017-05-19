@@ -3,9 +3,9 @@
       <button 
       	class="button" 
       	ng-click="sairTorneio()" 
-      	ng-if="sairTorneioVar && torneio.configuracao.estatus == 'Aberto'">{{'SAIR' | translate}}</button>
+      	ng-if="sairTorneioVar && torneio.configuracao.estatus == 'Aberto' && !terminarDesafio">{{'SAIR' | translate}}</button>
       <button class="button button-balanced icon-left icon ion-ios-game-controller-b-outline" 
-      		ng-if="!sairTorneioVar && torneio.configuracao.estatus == 'Aberto' && torneio.configuracao.inscritos != torneio.configuracao.maxParticipantes" ng-click="entrarTorneio()">{{'ENTRAR' | translate}}</button>
+      		ng-if="!sairTorneioVar && torneio.configuracao.estatus == 'Aberto' && torneio.configuracao.inscritos != torneio.configuracao.maxParticipantes && !terminarDesafio" ng-click="entrarTorneio()">{{'ENTRAR' | translate}}</button>
   	</ion-nav-buttons>
 
   	<ion-tabs class="tabs-dark tabs-icon-top">
@@ -13,6 +13,15 @@
            <ion-content id="imagebg">
            <br />
            <br />
+           		<div class="item item-divider amarelobg60 itemNoborda" ng-show="terminarDesafio">
+			      <p align="center">{{'DESAFIOFINALIZADO' | translate}}</p>
+			      <p align="center">{{'CAMPEAO' | translate}}:</p>
+			      <br />
+			      	<div ng-repeat="(key, value) in resultado | orderBy:'pontos':true">	
+			      		<h1 align="center" ng-show="$index == 0">{{value.gamertag}}</h1>
+			      	</div>
+			      <br />
+			    </div>
 			    <div class="row borderGris branco vermelhorescurobg" ng-show="totalInscritos > 0">		
 					<div class="col col-10">#</div>
 					<div class="col col-40">Gamertag</div>

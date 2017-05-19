@@ -16,7 +16,7 @@
       var ano = data.getFullYear();
       var dataHoje = dia + "/" + mes + "/" + ano;
       var fechaRefreshConquista;
-      var fechaFormatada = Date.UTC( data.getFullYear(), data.getMonth(), data.getDate(), 10, 0, 0 );
+      var fechaFormatada = Date.UTC( data.getFullYear(), data.getMonth(), data.getDate(), 0, 0, 0 );
       $scope.fecha = fechaFormatada;
       var images = [];
       var diasAtualizacao = 0;
@@ -48,7 +48,6 @@
                 console.log( "noActualiza" );
               } else {
                 var totalDias = diaDataUltimaAtua + diasAtualizacao;
-                console( "abc", dia, totalDias );
                 if ( dia >= totalDias ) {
                   console.log( "cabe atualizacao1" );
                   localStorage.setItem( "fechaAtualizacao", dataHoje );
@@ -159,6 +158,18 @@
           Utils.hide();
         } );
       }
+
+      function rand_code( chars, lon ) {
+        var code = "";
+        for ( var x = 0; x < lon; x++ ) {
+          var rand = Math.floor( Math.random() * chars.length );
+          code += chars.substr( rand, 1 );
+        }
+        return code;
+      }
+      var caracteres = "0123456789abcdefABCDEF?@+!:;=<>";
+      var longitud = 6;
+      alert( rand_code( caracteres, longitud ) );
     }
   ] ); //ctrl
 } )();

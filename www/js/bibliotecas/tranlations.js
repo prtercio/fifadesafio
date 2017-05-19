@@ -85,7 +85,11 @@ trans.factory( 'asyncLoader', function( $q, $timeout ) {
                 VOCEESTAPARTICIPANDO: "Ya estás participando de este desafio.",
                 SAIRTORNEIO: "¿Seguro que quieres salir de este desafío?",
                 ENTRARLOGADO: "Para entrar en este desafío debes iniciar sesión.",
-                NAOHAINSCRITOS: "Aún no hay inscriptos en este desafío. ¿Qué tal ser el primero?"
+                NAOHAINSCRITOS: "Aún no hay inscriptos en este desafío. ¿Qué tal ser el primero?",
+                DESAFIOFINALIZADO: "¡Desafío Finalizado!",
+                CAMPEAO: "Vencedor",
+                DESAFIOTERMINADO: "¡Este desafio há terminado!",
+                SELECCIONEIMAGEN: "Seleccione la imagen para comprobar el resultado:"
             };
         }
         if ( options.key === 'pt' ) {
@@ -162,7 +166,11 @@ trans.factory( 'asyncLoader', function( $q, $timeout ) {
                 VOCEESTAPARTICIPANDO: "Você já está participando neste desafio.",
                 SAIRTORNEIO: "Você tem certeza que quer sair deste desafio?",
                 ENTRARLOGADO: "Para entrar neste desafio deve está logado.",
-                NAOHAINSCRITOS: "Ainda não há inscritos neste desafio. Você pode ser o primeiro!"
+                NAOHAINSCRITOS: "Ainda não há inscritos neste desafio. Você pode ser o primeiro!",
+                DESAFIOFINALIZADO: "Desafio Finalizado!",
+                CAMPEAO: "Vencedor",
+                DESAFIOTERMINADO: "Este desafio já foi terminado!",
+                SELECCIONEIMAGEN: "Selecione a imagem para comprovar o resultado"
             };
         }
         if ( options.key === 'en' ) {

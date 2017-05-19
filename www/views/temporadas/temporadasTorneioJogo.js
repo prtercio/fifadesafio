@@ -16,6 +16,7 @@
             var idJogo = id;
             var itemList = [];
             $scope.verPontos = false;
+            $scope.selecionarImagen = false;
             $scope.verEnviar = false;
             $scope.chat = "jogo" + idJogo;
             $scope.jogo = idJogo;
@@ -79,6 +80,8 @@
             var atualizarNumerosTemporadas = false;
             var novosPontosVitoria = 0;
             var novosPontosEmpate = 0;
+            var estatusDesafio = "";
+            var imageSelecionada = "";
             $scope.datosIniciais = function() {
                 //$ionicHistory.goBack();  
                 $state.go( $state.current, {}, {
@@ -86,6 +89,34 @@
                     historyroot: true
                 } );
             }
+            Utils.show();
+            var ref = firebase.database().ref( 'desafio/desafios/temporadas/oficial/' + idTorneio + '/configuracao' );
+            ref.once( "value" ).then( function( snapshot ) {
+                estatusDesafio = snapshot.val().estatus;
+                if ( estatusDesafio == "Fechado" ) {
+                    var alertPopup = $ionicPopup.alert( {
+                        title: 'Opps!',
+                        template: '<p align="center"><i class="icon ion-alert-circled laranja tamanhoIcon"></i></p><p align="center"><strong>{{"DESAFIOTERMINADO" | translate}}</strong></p>',
+                        buttons: [ {
+                            text: '<b>Ok</b>',
+                            type: 'button-balanced',
+                            onTap: function( e ) {
+                                var backCount = 1;
+                                $rootScope.$ionicGoBack = function( backCount ) {
+                                    $ionicHistory.goBack( backCount );
+                                };
+                                $rootScope.$ionicGoBack();
+                            }
+                        } ]
+                    } );
+                    alertPopup.then( function( res ) {
+                        if ( res ) {
+                            console.log( "fechado" );
+                        }
+                    } );
+                }
+                Utils.hide();
+            } );
             // RECUPERAR TRES ÚLITMOS JOGOS
             var refJ = firebase.database().ref( 'desafio/desafios/temporadas/oficial/' + idTorneio + '/inscritos/' + keyUsuario );
             refJ.once( "value" ).then( function( snapshot ) {
@@ -218,34 +249,56 @@
     });  
     */
             $scope.submit = function( resultado ) {
-                $scope.verButtonAdicionar = false;
-                $scope.verIonRadioJogos = true;
-                var resultadoLocal = resultado.local;
-                var resultadoVisitante = resultado.visitante;
-                if ( resultado.local == undefined ) {
-                    resultadoLocal = 0;
-                }
-                if ( resultado.visitante == undefined ) {
-                    resultadoVisitante = 0;
-                }
-                var r1 = String( resultado.local );
-                var r2 = String( resultado.visitante );
-                var splitRes1 = r1.split( "" );
-                var splitRes2 = r2.split( "" );
-                console.log( "aplit ", splitRes1.length, "2 ", splitRes2.length );
-                if ( splitRes1.length == 2 ) {
-                    lentLocal = 2;
+                if ( estatusDesafio != "Fechado" ) {
+                    $scope.verButtonAdicionar = false;
+                    $scope.verIonRadioJogos = true;
+                    var resultadoLocal = resultado.local;
+                    var resultadoVisitante = resultado.visitante;
+                    if ( resultado.local == undefined ) {
+                        resultadoLocal = 0;
+                    }
+                    if ( resultado.visitante == undefined ) {
+                        resultadoVisitante = 0;
+                    }
+                    var r1 = String( resultado.local );
+                    var r2 = String( resultado.visitante );
+                    var splitRes1 = r1.split( "" );
+                    var splitRes2 = r2.split( "" );
+                    if ( splitRes1.length == 2 ) {
+                        lentLocal = 2;
+                    } else {
+                        lentLocal == 1;
+                    }
+                    if ( splitRes2.length == 2 ) {
+                        lenVisitante = 2;
+                    } else {
+                        lenVisitante == 1;
+                    }
+                    onlineManual = "Manual";
+                    $scope.recuperarJogo( resultadoLocal, resultadoVisitante );
+                    $scope.verPlacarFinal = false;
                 } else {
-                    lentLocal == 1;
+                    var alertPopup = $ionicPopup.alert( {
+                        title: 'Opps!',
+                        template: '<p align="center"><i class="icon ion-alert-circled laranja tamanhoIcon"></i></p><p align="center"><strong>{{"DESAFIOTERMINADO" | translate}}</strong></p>',
+                        buttons: [ {
+                            text: '<b>Ok</b>',
+                            type: 'button-balanced',
+                            onTap: function( e ) {
+                                var backCount = 1;
+                                $rootScope.$ionicGoBack = function( backCount ) {
+                                    $ionicHistory.goBack( backCount );
+                                };
+                                $rootScope.$ionicGoBack();
+                            }
+                        } ]
+                    } );
+                    alertPopup.then( function( res ) {
+                        if ( res ) {
+                            console.log( "fechado" );
+                        }
+                    } );
                 }
-                if ( splitRes2.length == 2 ) {
-                    lenVisitante = 2;
-                } else {
-                    lenVisitante == 1;
-                }
-                onlineManual = "Manual";
-                $scope.recuperarJogo( resultadoLocal, resultadoVisitante );
-                $scope.verPlacarFinal = false;
             }
             $scope.identificarPlacar = function( dato ) {
                 console.log( dato );
@@ -258,7 +311,7 @@
                 $scope.btnDisabled = false;
             }
             $scope.jogoSelecionado = function( valor ) {
-                $scope.verEnviar = true;
+                $scope.selecionarImagen = true
                 $scope.verButtonAdicionar = false;
                 novaTemporadaAtualVitoria = 0;
                 novaTemporadaAtualEmpate = 0;
@@ -399,7 +452,49 @@
                 $scope.totalPontos = totalPontos;
                 console.log( "totalPontos", $scope.totalPontos, "Update", atualizarNumerosTemporadas, "tempAtual", temporadaNova, "TV", novaTemporadaAtualVitoria, "TE", novaTemporadaAtualEmpate, "TD", novaTemporadaAtualDerrota );
             }
-
+            $( document ).on( 'change', '#file', function( event ) {
+                imageSelecionada = event.target.files[ 0 ];
+                $scope.$apply( function() {
+                    $scope.verEnviar = true;
+                } );
+                console.log( "mudado" );
+            } );
+            $scope.upoadFile = function() {
+                $ionicLoading.show( {
+                    template: 'Enviando Foto 1...'
+                } ).then( function() {
+                    //console.log("Enviando Foto 1");
+                } );
+                var filename = imageSelecionada.name;
+                var storageRef = firebase.storage().ref( '/desafio/temporadas/imagensJogos/' + idTorneio + '/' + filename );
+                var uploadTask = storageRef.put( imageSelecionada );
+                uploadTask.on( 'state_changed', function( snapshot ) {
+                    var progress = ( snapshot.bytesTransferred / snapshot.totalBytes ) * 100;
+                    //console.log(progress);
+                    if ( progress === 100 ) {
+                        //console.log("Primeira imagen enviada com sucesso "+ imageSelecionada2);
+                        $ionicLoading.hide().then( function() {
+                            //console.log("Foto 1 enviada");
+                        } );
+                    }
+                }, function( error ) {
+                    // Handle unsuccessful uploads
+                }, function() {
+                    var downloadURL = uploadTask.snapshot.downloadURL;
+                    //console.log(downloadURL);
+                    $ionicLoading.show( {
+                        template: 'Update data...'
+                    } ).then( function() {
+                        //console.log("Actualizando Datos Foto 1");
+                    } );
+                    firebase.database().ref().child( 'desafio/desafios/temporadas/oficial/' + idTorneio + '/inscritos/' + keyUsuario + '/jogos/' + $scope.chat ).update( {
+                        img: downloadURL
+                    } ).then( function( response ) {
+                        $ionicLoading.hide().then( function() {} );
+                        $scope.enviarResultado();
+                    } );
+                } );
+            } // upload
             function listarConquistaVitoria( res1, res2 ) {
                 //console.log("atual: "+temporadaNova);
                 $scope.totalPontos = 0;
@@ -959,6 +1054,39 @@
             } // function
             // Enviar resposta
             $scope.enviarResultado = function() {
+                Utils.show();
+                var ref = firebase.database().ref( 'desafio/desafios/temporadas/oficial/' + idTorneio + '/configuracao' );
+                ref.once( "value" ).then( function( snapshot ) {
+                    estatusDesafio = snapshot.val().estatus;
+                    if ( estatusDesafio == "Fechado" ) {
+                        var alertPopup = $ionicPopup.alert( {
+                            title: 'Opps!',
+                            template: '<p align="center"><i class="icon ion-alert-circled laranja tamanhoIcon"></i></p><p align="center"><strong>{{"DESAFIOTERMINADO" | translate}}</strong></p>',
+                            buttons: [ {
+                                text: '<b>Ok</b>',
+                                type: 'button-balanced',
+                                onTap: function( e ) {
+                                    var backCount = 1;
+                                    $rootScope.$ionicGoBack = function( backCount ) {
+                                        $ionicHistory.goBack( backCount );
+                                    };
+                                    $rootScope.$ionicGoBack();
+                                }
+                            } ]
+                        } );
+                        alertPopup.then( function( res ) {
+                            if ( res ) {
+                                console.log( "fechado" );
+                            }
+                        } );
+                    } else {
+                        enviarResultadoFinal();
+                    }
+                    Utils.hide();
+                } );
+            }
+
+            function enviarResultadoFinal() {
                 Utils.message( Popup.loading_a, Popup.loading );
                 var zerarSequenciaVitoria = 0;
                 var zerarInvencibilidade = 0;
