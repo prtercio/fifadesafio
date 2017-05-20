@@ -1,27 +1,34 @@
 <ion-view view-title="Meus Torneios" ng-init="listarTorneio()">
-<ion-content id="imagebg">
-<ion-list>
-           <ion-item class="item item-icon-left cinza" ng-repeat="(key, value) in torneios | orderBy:'data':true" href="#/app/torneiosTodosDetalhes/{{value.key}}">
-              <i class="icon ion-ribbon-b"></i>
-              {{value.nome}}
-              <p>Chave de acesso: <strong>{{value.senha}}</strong></p>
-              <span class="badge badge-dark">{{value.participantes}}</span>
-                 <ion-option-button class="button-assertive"
-                             ng-click="onItemDelete(value.key)">
-            Delete
-          </ion-option-button>
-            </ion-item>
-      </ion-list>
+  <ion-content id="imagebg">
+    <ion-list>
+     <ion-item class="item item-icon-left cinza" ng-repeat="(key, value) in torneios | orderBy:'data':true" href="#/app/torneiosTodosDetalhes/{{value.key}}">
+      <i class="icon ion-ribbon-b"></i>
+      {{value.nome}}
+      <p>Chave de acesso: <strong>{{value.senha}}</strong></p>
+      <span class="badge badge-dark">{{value.participantes}}</span>
+      <ion-option-button ng-if="esCriado" class="button-assertive"
+      ng-click="onItemDelete(value.key)">
+      Delete
+    </ion-option-button>
+  </ion-item>
+</ion-list>
 
 </ion-content>
 <ion-footer>
-<fab-button-left class="amarelobg60" target-id="content">
+  <fab-button-left class="amarelobg60" target-id="content">
     <i class="icon ion ion-search"></i>
-</fab-button-left>
-<fab-button-right class="vermelho" target-id="content" ng-click="modal.show()">
+  </fab-button-left>
+  <fab-button-right class="vermelho" target-id="content" ng-click="crearNovo()">
     <i class="icon ion ion-plus-round"></i>
-</fab-button-right>
+  </fab-button-right>
 </ion-footer>
+ <script id="popup-novotorneio.html" type="text/ng-template">    
+      <p align="center"><i class="icon ion-ribbon-b cinza  tamanhoIcon"></i></p>
+        <p align="center"><strong>{{'CRIARNOVO' | translate}}</strong></p>
+        <input type="text" ng-model="data.nome"  placeholder="{{'NOMEGAMERTAG' | translate}}" name="datanome">
+
+      </script>
+<!--
  <script id="templates/novoTorneio.html" type="text/ng-template">
       <ion-modal-view>
         <ion-header-bar class="bar bar-header bar-dark">
@@ -35,11 +42,13 @@
               <span class="input-label">Nome</span>
               <input ng-model="nome" type="text" required>
             </label>           
-            <button ng-disabled="novoT.$error.required" class="button button-full button-balanced" ng-click="crearNovo(nome)">Criar</button>
+            <button ng-disabled="novoT.$error.required" class="button button-full button-balanced" ng-click="crearNovo()">Criar</button>
           </div>
           </form>
         </ion-content>
       </ion-modal-view>
     </script>
+  -->
+
 
 </ion-view>

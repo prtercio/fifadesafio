@@ -4,21 +4,21 @@
    <div ng-show="noInscritos" class="padding center" >
      <h4 class="laranja">{{'ADICIONARPARTICPANTES' | translate}}</h4>
      <div ng-repeat="input in inputs">
-     <div class="row">
-     <div class="col col-10">
-     <h3 class="laranja">{{$index + 1}}</h3>
-     </div>
-     <div class="col col-80">
-      <label class="item item-input">
-    <input type="text" ng-model="input.value" placeholder="{{'NOMEGAMERTAG' | translate}}">
-  </label>
-      </div>      
-      <div class="col col-10">
-      <button  class="button button-small button-balanced" ng-if="$index == inputs.length - 1" 
-      ng-click="addInput()">+</button>
-      <button class="button button-small button-balanced" ng-if="$index != inputs.length - 1"
-      ng-click="removeInput($index)">-</button>
-      </div>
+       <div class="row">
+         <div class="col col-10">
+           <h3 class="laranja">{{$index + 1}}</h3>
+         </div>
+         <div class="col col-80">
+          <label class="item item-input">
+            <input type="text" ng-model="input.value" placeholder="{{'NOMEGAMERTAG' | translate}}">
+          </label>
+        </div>      
+        <div class="col col-10">
+          <button  class="button button-small button-balanced" ng-if="$index == inputs.length - 1" 
+          ng-click="addInput()">+</button>
+          <button class="button button-small button-balanced" ng-if="$index != inputs.length - 1"
+          ng-click="removeInput($index)">-</button>
+        </div>
       </div>
     </div>
   </div>
@@ -71,81 +71,46 @@
           <in class="letraTamanhoJogo">{{item.jogo}}</in>
         </div>
         <div class="col col-20">            
-          <a class="button button-small button-balanced" href="{{item.idTorneio}}{{item.idRodada}}"> <i class="icon ion-edit"></i></a>
+          <a class="button button-small button-balanced" ng-click="editarJogo(group.rodada, item.jogo, item.idTorneio, item.idRodada)"> <i class="icon ion-edit"></i></a>
         </div>
       </div>
     </ion-item>
   </div>
 </ion-list>
 </div>
-            <!--
-            <div class="card padding" align="center">
-            <h3 align="center">Rodada 1</h3>            
-               <div class="row">
-                 <div class="col-20">
-                 Gamer1
-                 </div>
-                 <div class="col-20 center">
-                 2
-                 </div>
-                 <div class="col-10 center">
-                 x
-                 </div>
-                 <div class="col-20 center">
-                 3
-                 </div>
-                 <div class="col-20 left">
-                 Gamer2
-                 </div>
-                 <div class="col-10 center">
-                 <a class="button button-small button-balanced"> <i class="icon ion-ios-redo"></i></a>
-                 </div>
-               </div>
-               <hr>
-                 <div class="row">
-                 <div class="col-20">
-                 Gamer3
-                 </div>
-                 <div class="col-20 center">
-                 1
-                 </div>
-                 <div class="col-10 center">
-                 x
-                 </div>
-                 <div class="col-20 center">
-                 0
-                 </div>
-                 <div class="col-20 left">
-                 Gamer3
-                 </div>
-                 <div class="col-10 center">
-                 <a class="button button-small button-balanced"> <i class="icon ion-ios-redo"></i></a>
-                 </div>
-               </div>
-               </div>
-              
-            </ion-slide>
-            <ion-slide>      
-                <p>Abc2</p>
-                <button class="button button-block">Button de Prova</button>
-            </ion-slide>
-            <ion-slide>
-                <p>Abc3</p>
-                <button class="button button-block">Button de Prova</button>
-            </ion-slide>
-        </ion-slide-box>
-      -->
+</ion-content>
+<script id="popup-editarjogo.html" type="text/ng-template">    
+  <p align="center"><i class="icon ion-ribbon-b cinza  tamanhoIcon"></i></p>
+  <p align="center"><strong>{{'RONDA' | translate}} {{rodadaAtual}}</strong></p>
+  <div class="row">
+    <div class="col col-40" align="right">
+      <h4>{{oponente1}}</h4> 
+    </div>
+    <div class="col col-20 center padInferior"><h4>{{'X' | translate}}</h4></div>
+     <div class="col col-40">
+      <h4>{{oponente2}}</h4> 
+    </div>
+   
+  </div>
+  <div class="row">
+    <!-- -->
+    <div class="col col-50" align="center">
+      <input type="number" name="local" ng-model="data.local" >
+    </div>
+    <div class="col col-50" align="center">
+     <input type="number" name="visitante" ng-model="data.visitante">
+   </div>
 
-    </ion-content>
-    <ion-footer>
-     <fab-button-right class="vermelho" target-id="content" ng-show="noInscritos" ng-click="enviarDatos()">
-        <i class="icon ion ion-paper-airplane"></i>
-      </fab-button-right>
-
-      <fab-button-right class="vermelho" target-id="content" ng-show="!noInscritos">
-        <i class="icon ion ion-compose"></i>
-      </fab-button-right>
-    </ion-footer>
-
-
-  </ion-view>
+ </div>
+</script>
+<ion-footer>
+ <fab-button-right class="vermelho" target-id="content" ng-show="noInscritos" ng-click="enviarDatos()">
+  <i class="icon ion ion-paper-airplane"></i>
+</fab-button-right>
+<!--
+<fab-button-right class="vermelho" target-id="content" ng-show="!noInscritos">
+  <i class="icon ion ion-compose"></i>
+</fab-button-right>
+-->
+</ion-footer>
+</ion-view>

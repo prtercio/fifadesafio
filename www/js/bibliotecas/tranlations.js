@@ -91,7 +91,10 @@ trans.factory( 'asyncLoader', function( $q, $timeout ) {
                 DESAFIOTERMINADO: "¡Este desafio há terminado!",
                 SELECCIONEIMAGEN: "Seleccione la imagen para comprobar el resultado:",
                 ADICIONARPARTICPANTES: "Agregue los participantes:",
-                NOMEGAMERTAG: "Nombre"
+                NOMEGAMERTAG: "Nombre",
+                SAIRTORNEIOTODOS: "¿Seguro que quieres eliminar este torneo?",
+                CRIARNOVO: "Nuevo Torneo",
+                RODADA: "Ronda"
             };
         }
         if ( options.key === 'pt' ) {
@@ -174,7 +177,10 @@ trans.factory( 'asyncLoader', function( $q, $timeout ) {
                 DESAFIOTERMINADO: "Este desafio já foi terminado!",
                 SELECCIONEIMAGEN: "Selecione a imagem para comprovar o resultado",
                 ADICIONARPARTICPANTES: "Adicione os participantes:",
-                NOMEGAMERTAG: "Nome"
+                NOMEGAMERTAG: "Nome",
+                SAIRTORNEIOTODOS: "Você tem certeza que quer eliminar este torneio?",
+                CRIARNOVO: "Novo Torneio",
+                RODADA: "Rodada"
             };
         }
         if ( options.key === 'en' ) {

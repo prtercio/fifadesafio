@@ -114,7 +114,11 @@ img.resizeTotal {
 }
 
 .right {
-    float: right;
+    float: right !important;
+}
+
+.left {
+    float: left !important;
 }
 
 .center {
@@ -294,6 +298,10 @@ input[type=number] {
 
 .padSuperior {
     padding-top: 10px;
+}
+
+.padInferior {
+    padding-top: 6px !important;
 }
 
 .nuevoTamnho {
@@ -534,5 +542,11 @@ button.fab-button-left.amarelo {
 ion-item.item-dark.cinza {
     background: rgba(200, 200, 200, 0.9) !important;
     border-color: #999 !important;
+    color: #666 !important;
+}
+
+div.popup-head, div.popup-body, div.popup-buttons {
+    background: rgba(200, 200, 200, 0.9) !important;
+    border-color: rgba(200, 200, 200, 0.9) !important;
     color: #666 !important;
 }
