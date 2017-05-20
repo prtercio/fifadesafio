@@ -1,38 +1,45 @@
-<ion-view view-title="Meus Torneios">
-<!--
-  <ion-tabs class="tabs-dark tabs-icon-top">
-   <ion-tab title="Criados" icon-on="ion-ios-list" icon-off="ion-ios-list-outline">
-     <ion-content id="imagebg">
-       <br />
-       <br />
-       
-     </ion-content>
-   </ion-tab>
-
-   <ion-tab title="Disputados" icon-on="ion-ios-football" icon-off="ion-ios-football-outline">
-
-    <ion-content has-header="true" padding="false" id="imagebg">
-      <br />
-      <br />
-      {{torneios}}
-
-    </ion-content>
-  </ion-tab>        
-</ion-tabs>
--->
-<ion-content>
+<ion-view view-title="Meus Torneios" ng-init="listarTorneio()">
+<ion-content id="imagebg">
 <ion-list>
-           <ion-item class="item item-icon-left" ng-repeat="(key, value) in torneios track by $index" href="#/app/torneiosTodosDetalhes/{{key}}">
+           <ion-item class="item item-icon-left cinza" ng-repeat="(key, value) in torneios | orderBy:'data':true" href="#/app/torneiosTodosDetalhes/{{value.key}}">
               <i class="icon ion-ribbon-b"></i>
-              {{value.configuracao.nome}}
-              <p>Chave: <strong>{{value.configuracao.senha}}</strong></p>
-              <span class="badge badge-assertive">{{value.configuracao.participantes}}</span>
+              {{value.nome}}
+              <p>Chave de acesso: <strong>{{value.senha}}</strong></p>
+              <span class="badge badge-dark">{{value.participantes}}</span>
+                 <ion-option-button class="button-assertive"
+                             ng-click="onItemDelete(value.key)">
+            Delete
+          </ion-option-button>
             </ion-item>
       </ion-list>
 
 </ion-content>
-    <button class="button button-float" ng-click="showActionsheet()">
-        <i class="icon ion-plus"></i>
-      </button>
+<ion-footer>
+<fab-button-left class="amarelobg60" target-id="content">
+    <i class="icon ion ion-search"></i>
+</fab-button-left>
+<fab-button-right class="vermelho" target-id="content" ng-click="modal.show()">
+    <i class="icon ion ion-plus-round"></i>
+</fab-button-right>
+</ion-footer>
+ <script id="templates/novoTorneio.html" type="text/ng-template">
+      <ion-modal-view>
+        <ion-header-bar class="bar bar-header bar-dark">
+          <h1 class="title">Novo Torneio</h1>
+          <button class="button button-clear button-primary" ng-click="modal.hide()">Cancel</button>
+        </ion-header-bar>
+        <ion-content class="padding"  id="imagebg">
+        <form name="novoT">
+          <div class="list">
+            <label class="item item-input">
+              <span class="input-label">Nome</span>
+              <input ng-model="nome" type="text" required>
+            </label>           
+            <button ng-disabled="novoT.$error.required" class="button button-full button-balanced" ng-click="crearNovo(nome)">Criar</button>
+          </div>
+          </form>
+        </ion-content>
+      </ion-modal-view>
+    </script>
 
 </ion-view>

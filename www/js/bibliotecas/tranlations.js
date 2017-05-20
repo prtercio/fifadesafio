@@ -89,7 +89,9 @@ trans.factory( 'asyncLoader', function( $q, $timeout ) {
                 DESAFIOFINALIZADO: "¡Desafío Finalizado!",
                 CAMPEAO: "Vencedor",
                 DESAFIOTERMINADO: "¡Este desafio há terminado!",
-                SELECCIONEIMAGEN: "Seleccione la imagen para comprobar el resultado:"
+                SELECCIONEIMAGEN: "Seleccione la imagen para comprobar el resultado:",
+                ADICIONARPARTICPANTES: "Agregue los participantes:",
+                NOMEGAMERTAG: "Nombre"
             };
         }
         if ( options.key === 'pt' ) {
@@ -170,7 +172,9 @@ trans.factory( 'asyncLoader', function( $q, $timeout ) {
                 DESAFIOFINALIZADO: "Desafio Finalizado!",
                 CAMPEAO: "Vencedor",
                 DESAFIOTERMINADO: "Este desafio já foi terminado!",
-                SELECCIONEIMAGEN: "Selecione a imagem para comprovar o resultado"
+                SELECCIONEIMAGEN: "Selecione a imagem para comprovar o resultado",
+                ADICIONARPARTICPANTES: "Adicione os participantes:",
+                NOMEGAMERTAG: "Nome"
             };
         }
         if ( options.key === 'en' ) {

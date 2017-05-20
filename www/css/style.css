@@ -46,7 +46,7 @@ img.resizeTotal {
 }
 
 .bgverde {
-    background: #CCFFCC;
+    background: #CCFFCC !important;
 }
 
 .bgazul {
@@ -90,11 +90,11 @@ img.resizeTotal {
 }
 
 .verdeOp20 {
-    background: rgba(255, 255, 0, 0.4);
+    background: rgba(255, 255, 0, 0.4) !important;
 }
 
 .amarelobg60 {
-    background: rgba(255, 255, 0, 0.9);
+    background: rgba(255, 255, 0, 0.9) !important;
 }
 
 .grisbg {
@@ -496,4 +496,43 @@ $assertive :#ef473a;
 
 .left {
     float: left !important;
+}
+
+.list .item.item-accordion {
+    line-height: 38px;
+    padding-top: 0;
+    padding-bottom: 0;
+    transition: 0.09s all linear;
+}
+
+.list .item.item-accordion.ng-hide {
+    line-height: 0px;
+}
+
+.list .item.item-accordion.ng-hide-add, .list .item.item-accordion.ng-hide-remove {
+    display: block !important;
+}
+
+.letraTamanhoJogo {
+    font-size: 1.3em !important;
+    color: #FFF !important;
+}
+
+button.fab-button-right.vermelho {
+    background: rgba(153, 0, 0, 0.9);
+}
+
+button.fab-button-left.amarelo {
+    background: rgba(200, 200, 200, 0.9)
+}
+
+.cinza .item-content {
+    background: rgba(200, 200, 200, 0.9) !important;
+    color: #333;
+}
+
+ion-item.item-dark.cinza {
+    background: rgba(200, 200, 200, 0.9) !important;
+    border-color: #999 !important;
+    color: #666 !important;
 }

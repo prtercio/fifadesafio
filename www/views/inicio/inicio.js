@@ -158,18 +158,6 @@
           Utils.hide();
         } );
       }
-
-      function rand_code( chars, lon ) {
-        var code = "";
-        for ( var x = 0; x < lon; x++ ) {
-          var rand = Math.floor( Math.random() * chars.length );
-          code += chars.substr( rand, 1 );
-        }
-        return code;
-      }
-      var caracteres = "0123456789abcdefABCDEF?@+!:;=<>";
-      var longitud = 6;
-      alert( rand_code( caracteres, longitud ) );
     }
   ] ); //ctrl
 } )();
