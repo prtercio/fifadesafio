@@ -120,7 +120,6 @@
 
         function enviarDatosJogos() {
           Utils.show();
-          console.log( oponente1, oponente2, keyRodada, idRodada, resultado1, resultado2 );
           var linkRodada = "desafio/torneios/todosxtodos/" + keyUsuario + "/" + idTorneio + "/rodadas/" + keyRodada + "/" + idRodada;
           var linkRanking = "desafio/torneios/todosxtodos/" + keyUsuario + "/" + idTorneio + "/ranking/";
           var resultadoFinal = oponente1 + ">" + resultado1 + "@" + resultado2 + "<" + oponente2;
@@ -208,8 +207,6 @@
               }
             }
           }
-          console.log( "r1", arrayOp1 );
-          console.log( "r2", arrayOp2 );
           firebase.database().ref( linkRodada ).update( {
             jogo: resultadoFinal
           } ).then( function( response ) {
@@ -271,6 +268,25 @@
         var nuevoArray = [];
         for ( var i = 0; i < dato.length; i++ ) {
           nuevoArray.push( dato[ i ].value );
+          if ( dato[ i ].value === "" ) {
+            var alertPopup = $ionicPopup.alert( {
+              template: '<p align="center"><i class="icon ion-alert-circled laranja tamanhoIcon"></i></p><p align="center"><strong>{{"CAMPOSPREENCHIDOS" | translate}}</strong></p>',
+              buttons: [ {
+                text: '<b>Ok</b>',
+                type: 'button-balanced',
+                onTap: function( e ) {}
+              } ]
+            } );
+            alertPopup.then( function( res ) {
+              if ( res ) {
+                console.log( "fechado" );
+              }
+            } );
+            $scope.hayVazios = true;
+            break;
+          } else {
+            $scope.hayVazios = false;
+          }
           console.log( nuevoArray );
         }
         var sorted_arr = nuevoArray.slice().sort();
@@ -296,56 +312,58 @@
           } );
         } else {
           var gamesQtd = $scope.inputs.length;
-          if ( gamesQtd > 3 ) {
-            for ( var i = 0; i < gamesQtd; i++ ) {
-              gamesRound.push( dato[ i ].value );
-              if ( dato[ i ].value != undefined ) {
-                rankingSend.push( {
-                  "derrota": 0,
-                  "empate": 0,
-                  "gamer": dato[ i ].value,
-                  "golsContra": 0,
-                  "golsPro": 0,
-                  "historio": "",
-                  "jogos": 0,
-                  "pontos": 0,
-                  "vitoria": 0
-                } );
-                console.log( rankingSend );
-                if ( i == gamesQtd - 1 ) procesarDatos();
-              } else {
-                console.log( "Todos los campos deve ser preenchidos" );
-                var alertPopup = $ionicPopup.alert( {
-                  template: '<p align="center"><i class="icon ion-alert-circled laranja tamanhoIcon"></i></p><p align="center"><strong>{{"CAMPOSPREENCHIDOS" | translate}}</strong></p>',
-                  buttons: [ {
-                    text: '<b>Ok</b>',
-                    type: 'button-balanced',
-                    onTap: function( e ) {}
-                  } ]
-                } );
-                alertPopup.then( function( res ) {
-                  if ( res ) {
-                    console.log( "fechado" );
-                  }
-                } );
-                break;
+          if ( !$scope.hayVazios ) {
+            if ( gamesQtd > 3 ) {
+              for ( var i = 0; i < gamesQtd; i++ ) {
+                gamesRound.push( dato[ i ].value );
+                if ( dato[ i ].value !== undefined ) {
+                  rankingSend.push( {
+                    "derrota": 0,
+                    "empate": 0,
+                    "gamer": dato[ i ].value,
+                    "golsContra": 0,
+                    "golsPro": 0,
+                    "historio": "",
+                    "jogos": 0,
+                    "pontos": 0,
+                    "vitoria": 0
+                  } );
+                  console.log( rankingSend );
+                  if ( i == gamesQtd - 1 ) procesarDatos();
+                } else {
+                  console.log( "Todos los campos deve ser preenchidos" );
+                  var alertPopup = $ionicPopup.alert( {
+                    template: '<p align="center"><i class="icon ion-alert-circled laranja tamanhoIcon"></i></p><p align="center"><strong>{{"CAMPOSPREENCHIDOS" | translate}}</strong></p>',
+                    buttons: [ {
+                      text: '<b>Ok</b>',
+                      type: 'button-balanced',
+                      onTap: function( e ) {}
+                    } ]
+                  } );
+                  alertPopup.then( function( res ) {
+                    if ( res ) {
+                      console.log( "fechado" );
+                    }
+                  } );
+                  break;
+                }
               }
+            } else {
+              console.log( "Adicione pelo menos 4 participantes" );
+              var alertPopup = $ionicPopup.alert( {
+                template: '<p align="center"><i class="icon ion-alert-circled laranja tamanhoIcon"></i></p><p align="center"><strong>{{"NUMEROMININO" | translate}}</strong></p>',
+                buttons: [ {
+                  text: '<b>Ok</b>',
+                  type: 'button-balanced',
+                  onTap: function( e ) {}
+                } ]
+              } );
+              alertPopup.then( function( res ) {
+                if ( res ) {
+                  console.log( "fechado" );
+                }
+              } );
             }
-          } else {
-            console.log( "Adicione pelo menos 4 participantes" );
-            var alertPopup = $ionicPopup.alert( {
-              template: '<p align="center"><i class="icon ion-alert-circled laranja tamanhoIcon"></i></p><p align="center"><strong>{{"NUMEROMININO" | translate}}</strong></p>',
-              buttons: [ {
-                text: '<b>Ok</b>',
-                type: 'button-balanced',
-                onTap: function( e ) {}
-              } ]
-            } );
-            alertPopup.then( function( res ) {
-              if ( res ) {
-                console.log( "fechado" );
-              }
-            } );
           }
         }
       }
