@@ -1,6 +1,10 @@
 <ion-view view-title="Torneio" ng-init="carregarDados()">
-
+  
+<ion-nav-buttons>      
+      
+  </ion-nav-buttons>
  <ion-content id="imagebg"> 
+  
    <div ng-show="noInscritos" class="padding center" >
      <h4 class="laranja">{{'ADICIONARPARTICPANTES' | translate}}</h4>
      <div ng-repeat="input in inputs">
@@ -14,9 +18,9 @@
           </label>
         </div>      
         <div class="col col-10">
-          <button  class="button button-small button-balanced" ng-if="$index == inputs.length - 1" 
-          ng-click="addInput()">+</button>
-          <button class="button button-small button-balanced" ng-if="$index != inputs.length - 1"
+          <button  class="button button-small button-energized" ng-if="$index == inputs.length - 1" 
+          ng-click="addInput(input.value)">+</button>
+          <button class="button button-small button-energized" ng-if="$index != inputs.length - 1"
           ng-click="removeInput($index)">-</button>
         </div>
       </div>
@@ -104,9 +108,12 @@
  </div>
 </script>
 <ion-footer>
- <fab-button-right class="vermelho" target-id="content" ng-show="noInscritos" ng-click="enviarDatos()">
-  <i class="icon ion ion-paper-airplane"></i>
-</fab-button-right>
+
+<fab-button-left class="verde centrar" target-id="content" ng-show="noInscritos" ng-click="enviarDatos()">
+  <i class="icon ion ion-checkmark"></i>
+</fab-button-left>
+
+
 <!--
 <fab-button-right class="vermelho" target-id="content" ng-show="!noInscritos">
   <i class="icon ion ion-compose"></i>

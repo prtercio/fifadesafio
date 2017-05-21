@@ -1,8 +1,8 @@
 ( function() {
   'use strict';
   var temporadasRankingJogos = angular.module( 'App.CtrlTorneiosTodosDetalhes', [] );
-  temporadasRankingJogos.controller( 'CtrlTorneiosTodosDetalhes', [ '$scope', 'Utils', '$state', '$localStorage', 'Popup', '$stateParams', 'idTorneio', 'PopupFactoryRanking',
-    function( $scope, Utils, $state, $localStorage, Popup, $stateParams, idTorneio, PopupFactoryRanking ) {
+  temporadasRankingJogos.controller( 'CtrlTorneiosTodosDetalhes', [ '$scope', 'Utils', '$state', '$localStorage', 'Popup', '$stateParams', 'idTorneio', 'PopupFactoryRanking', '$ionicPopup',
+    function( $scope, Utils, $state, $localStorage, Popup, $stateParams, idTorneio, PopupFactoryRanking, $ionicPopup ) {
       var keyUsuario = $localStorage.keyUser;
       var ranking = [];
       var rankingSend = [];
@@ -11,6 +11,13 @@
       var gamesRound = []
       var rodadasQtd = 0;
       var rodadasJogos = 0;
+      if ( $localStorage.account ) {
+        $scope.logado = true;
+        $scope.gamertag = $localStorage.account.gamertag;
+      } else {
+        $scope.logado = false;
+        $scope.gamertag = "visitante";
+      }
       var refTorneio = firebase.database().ref( 'desafio/torneios/todosxtodos/' + keyUsuario + '/' + idTorneio );
       $scope.carregarDados = function() {
         Utils.show();
@@ -254,24 +261,92 @@
       $scope.removeInput = function( index ) {
         $scope.inputs.splice( index, 1 );
       }
+
+      function verificarDuplicado( array ) {
+        return array.slice();
+      };
       $scope.enviarDatos = function() {
         var dato = $scope.inputs;
-        var gamesQtd = $scope.inputs.length;
-        for ( var i = 0; i < gamesQtd; i++ ) {
-          gamesRound.push( dato[ i ].value );
-          rankingSend.push( {
-            "derrota": 0,
-            "empate": 0,
-            "gamer": dato[ i ].value,
-            "golsContra": 0,
-            "golsPro": 0,
-            "historio": "",
-            "jogos": 0,
-            "pontos": 0,
-            "vitoria": 0
+        console.log( dato );
+        var nuevoArray = [];
+        for ( var i = 0; i < dato.length; i++ ) {
+          nuevoArray.push( dato[ i ].value );
+          console.log( nuevoArray );
+        }
+        var sorted_arr = nuevoArray.slice().sort();
+        var results = [];
+        for ( var i = 0; i < nuevoArray.length - 1; i++ ) {
+          if ( sorted_arr[ i + 1 ] == sorted_arr[ i ] ) {
+            results.push( sorted_arr[ i ] );
+          }
+        }
+        if ( results.length > 0 ) {
+          var alertPopup = $ionicPopup.alert( {
+            template: '<p align="center"><i class="icon ion-alert-circled laranja tamanhoIcon"></i></p><p align="center"><strong>{{"NOMESREPETIDOS" | translate}}</strong></p>',
+            buttons: [ {
+              text: '<b>Ok</b>',
+              type: 'button-balanced',
+              onTap: function( e ) {}
+            } ]
           } );
-          console.log( rankingSend );
-          if ( i == gamesQtd - 1 ) procesarDatos();
+          alertPopup.then( function( res ) {
+            if ( res ) {
+              console.log( "fechado" );
+            }
+          } );
+        } else {
+          var gamesQtd = $scope.inputs.length;
+          if ( gamesQtd > 3 ) {
+            for ( var i = 0; i < gamesQtd; i++ ) {
+              gamesRound.push( dato[ i ].value );
+              if ( dato[ i ].value != undefined ) {
+                rankingSend.push( {
+                  "derrota": 0,
+                  "empate": 0,
+                  "gamer": dato[ i ].value,
+                  "golsContra": 0,
+                  "golsPro": 0,
+                  "historio": "",
+                  "jogos": 0,
+                  "pontos": 0,
+                  "vitoria": 0
+                } );
+                console.log( rankingSend );
+                if ( i == gamesQtd - 1 ) procesarDatos();
+              } else {
+                console.log( "Todos los campos deve ser preenchidos" );
+                var alertPopup = $ionicPopup.alert( {
+                  template: '<p align="center"><i class="icon ion-alert-circled laranja tamanhoIcon"></i></p><p align="center"><strong>{{"CAMPOSPREENCHIDOS" | translate}}</strong></p>',
+                  buttons: [ {
+                    text: '<b>Ok</b>',
+                    type: 'button-balanced',
+                    onTap: function( e ) {}
+                  } ]
+                } );
+                alertPopup.then( function( res ) {
+                  if ( res ) {
+                    console.log( "fechado" );
+                  }
+                } );
+                break;
+              }
+            }
+          } else {
+            console.log( "Adicione pelo menos 4 participantes" );
+            var alertPopup = $ionicPopup.alert( {
+              template: '<p align="center"><i class="icon ion-alert-circled laranja tamanhoIcon"></i></p><p align="center"><strong>{{"NUMEROMININO" | translate}}</strong></p>',
+              buttons: [ {
+                text: '<b>Ok</b>',
+                type: 'button-balanced',
+                onTap: function( e ) {}
+              } ]
+            } );
+            alertPopup.then( function( res ) {
+              if ( res ) {
+                console.log( "fechado" );
+              }
+            } );
+          }
         }
       }
 
@@ -298,6 +373,7 @@
           ranking: rankingSend
         } ).then( function( response ) {
           console.log( "se actualizó" );
+          $scope.carregarDados();
           /*
           firebase.database().ref( 'desafio/torneios/todosxtodos/' + keyUsuario + "/" + idTorneio + "/configuracao" ).update( {
             participantes: gamesRound.length

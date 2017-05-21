@@ -94,7 +94,13 @@ trans.factory( 'asyncLoader', function( $q, $timeout ) {
                 NOMEGAMERTAG: "Nombre",
                 SAIRTORNEIOTODOS: "¿Seguro que quieres eliminar este torneo?",
                 CRIARNOVO: "Nuevo Torneo",
-                RODADA: "Ronda"
+                RODADA: "Ronda",
+                PARACRIARTORNEIO: "Para crear un nuevo torneo debes estar logado.",
+                MEUSTORNEIOS: "Mis Torneos",
+                NOVO: "Nuevo",
+                CAMPOSPREENCHIDOS: "Todos los campos deben ser llenados.",
+                NUMEROMININO: "¡Debes agregar al menos 4 participantes!",
+                NOMESREPETIDOS: "Cambie o borre los nombres duplicados!"
             };
         }
         if ( options.key === 'pt' ) {
@@ -180,7 +186,13 @@ trans.factory( 'asyncLoader', function( $q, $timeout ) {
                 NOMEGAMERTAG: "Nome",
                 SAIRTORNEIOTODOS: "Você tem certeza que quer eliminar este torneio?",
                 CRIARNOVO: "Novo Torneio",
-                RODADA: "Rodada"
+                RODADA: "Rodada",
+                PARACRIARTORNEIO: "Para criar un novo torneio você deve estar logado.",
+                MEUSTORNEIOS: "Meus Torneios",
+                NOVO: "Novo",
+                CAMPOSPREENCHIDOS: "Todos os campos devem ser preenchidos.",
+                NUMEROMININO: "Você debe adicionar pelo menos 4 participantes!",
+                NOMESREPETIDOS: "Modifique ou elimine os nomes repetidos!"
             };
         }
         if ( options.key === 'en' ) {

@@ -1,11 +1,16 @@
-<ion-view view-title="Meus Torneios" ng-init="listarTorneio()">
+<ion-view view-title="{{'MEUSTORNEIOS'|translate}}" ng-init="listarTorneio()" cache-view="false">
   <ion-content id="imagebg">
+  <div ng-show="!logado">
+  <br />
+  <h4 align="center" class="laranja">{{'PARACRIARTORNEIO'| translate}}</h4>
+  </div>
     <ion-list>
      <ion-item class="item item-icon-left cinza" ng-repeat="(key, value) in torneios | orderBy:'data':true" href="#/app/torneiosTodosDetalhes/{{value.key}}">
       <i class="icon ion-ribbon-b"></i>
       {{value.nome}}
       <p>Chave de acesso: <strong>{{value.senha}}</strong></p>
-      <span class="badge badge-dark">{{value.participantes}}</span>
+      <span class="badge badge-dark" ng-show="value.participantes">{{value.participantes}}</span>
+      <span class="badge badge-assertive" ng-show="!value.participantes">{{'NOVO' | translate}}</span>
       <ion-option-button ng-if="esCriado" class="button-assertive"
       ng-click="onItemDelete(value.key)">
       Delete
@@ -18,7 +23,7 @@
   <fab-button-left class="amarelobg60" target-id="content">
     <i class="icon ion ion-search"></i>
   </fab-button-left>
-  <fab-button-right class="vermelho" target-id="content" ng-click="crearNovo()">
+  <fab-button-right class="vermelho" target-id="content" ng-click="crearNovo()" ng-if="logado">
     <i class="icon ion ion-plus-round"></i>
   </fab-button-right>
 </ion-footer>

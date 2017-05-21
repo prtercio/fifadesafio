@@ -11,6 +11,13 @@
       var novaDataFimUtc = new Date();
       var dataFormatada = Date.UTC( novaDataFimUtc.getFullYear(), novaDataFimUtc.getMonth(), novaDataFimUtc.getDate() + 1, 0, 0, 0 );
       var torneios = [];
+      if ( $localStorage.account ) {
+        $scope.logado = true;
+        $scope.gamertag = $localStorage.account.gamertag;
+      } else {
+        $scope.logado = false;
+        $scope.gamertag = "visitante";
+      }
       $scope.listarTorneio = function() {
         torneios = [];
         Utils.show();
@@ -69,21 +76,23 @@
         } );
         */
         function enviarNovoTorneio() {
-          var senha = rand_code( caracteres, longitud );
-          var datos = {
-            nome: nome,
-            senha: senha,
-            data: dataFormatada
+          if ( $scope.logado == true ) {
+            var senha = rand_code( caracteres, longitud );
+            var datos = {
+              nome: nome,
+              senha: senha,
+              data: dataFormatada
+            }
+            firebase.database().ref( 'desafio/torneios/todosxtodos/' + keyUsuario ).push( {
+              configuracao: datos,
+              ranking: "",
+              rodadas: ""
+            } ).then( function( response ) {
+              //$scope.modal.hide();
+              Utils.hide();
+              $scope.listarTorneio();
+            } );
           }
-          firebase.database().ref( 'desafio/torneios/todosxtodos/' + keyUsuario ).push( {
-            configuracao: datos,
-            ranking: "",
-            rodadas: ""
-          } ).then( function( response ) {
-            //$scope.modal.hide();
-            Utils.hide();
-            $scope.listarTorneio();
-          } );
         }
       }
       //gerador de senha

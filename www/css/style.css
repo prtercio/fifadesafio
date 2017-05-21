@@ -530,6 +530,10 @@ button.fab-button-right.vermelho {
     background: rgba(153, 0, 0, 0.9);
 }
 
+button.fab-button-left.verde {
+    background: #33cd5f;
+}
+
 button.fab-button-left.amarelo {
     background: rgba(200, 200, 200, 0.9)
 }
@@ -549,4 +553,10 @@ div.popup-head, div.popup-body, div.popup-buttons {
     background: rgba(200, 200, 200, 0.9) !important;
     border-color: rgba(200, 200, 200, 0.9) !important;
     color: #666 !important;
+}
+
+button.fab-button-left.centrar {
+    position: absolute !important;
+    bottom: 20px !important;
+    left: 45% !important;
 }
