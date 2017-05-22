@@ -113,9 +113,10 @@ trans.factory( 'asyncLoader', function( $q, $timeout ) {
                 TORNEIO: "Torneo",
                 TORNEIOJAFOIADICIONADO: "Este torneo ya se está agregado a su lista de OTROS TORNEOS",
                 CHAVE: "Clave",
-                ESTAECHAVEACESSO: "Esta es la clave de acceso para este torneo, por favor comparta DESPUES de agregar los participantes.",
+                ESTAECHAVEACESSO: "Esta es la clave de acceso para este torneo, comparta con sus amigos y ¡A jugar!.",
                 ADICIONEPARTICCOMPARTA: "Acceda, agregue participantes y comparta la llave de acceso de este torneo",
-                ADICIONARADMIN: "Agregar Administrador"
+                ADICIONARADMIN: "Agregar Administrador",
+                ATUALIZAR: "Actualizar"
             };
         }
         if ( options.key === 'pt' ) {
@@ -220,9 +221,10 @@ trans.factory( 'asyncLoader', function( $q, $timeout ) {
                 TORNEIO: "Torneo",
                 TORNEIOJAFOIADICIONADO: "Este torneio já está adicionado em sua lista de OUTROS TORNEIOS",
                 CHAVE: "Chave",
-                ESTAECHAVEACESSO: "Esta é a chave de acesso para este torneio, por favor compartilhe DEPOIS de adicionar os participantes.",
+                ESTAECHAVEACESSO: "Esta é a chave de acesso para este torneio, compartilhe com seus amigos!",
                 ADICIONEPARTICCOMPARTA: "Entre aqui, adicione os participantes e compartilhe a chave de acesso deste torneio!",
-                ADICIONARADMIN: "Adicionar Administrador"
+                ADICIONARADMIN: "Adicionar Administrador",
+                ATUALIZAR: "Atualizar"
             };
         }
         if ( options.key === 'en' ) {

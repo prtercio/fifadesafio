@@ -479,6 +479,9 @@
           } );
         }
       }
+      $scope.atualizarRanking = function() {
+        $scope.carregarDados();
+      }
       //--------------------------- Outro
       function RoundRobinFinal( t ) {
         var e = [],
