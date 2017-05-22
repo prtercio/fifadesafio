@@ -22,6 +22,16 @@
       var diasAtualizacao = 0;
       console.log( localStorage.getItem( "fechaAtualizacao" ) );
       atualizarData();
+      $( document ).ready( function() {
+        $( ".cargar" ).bind( "click", function() {
+          $( 'p.mi_parrafo' ).each( function( index, el ) {
+            var data = $( this ).data();
+            for ( var i in data ) {
+              console.log( data.i );
+            }
+          } );
+        } );
+      } );
 
       function atualizarData() {
         Utils.show();

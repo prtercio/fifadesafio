@@ -536,13 +536,19 @@
         };
         $( document ).on( "click", '.whatsapp', function() {
           if ( isMobile.any() ) {
+            console.log( "zap" );
+            /*
             var text = $( this ).attr( "data-text" );
             var url = $( this ).attr( "data-link" );
-            var message = encodeURIComponent( text ) + " - " + encodeURIComponent( url );
+            */
+            var texto = $( 'p.mi_parrafo' ).data();
+            var textoKey = "Key: " + texto.link;
+            var textoGt = "Gt: " + texto.text;
+            var message = encodeURIComponent( textoGt ) + " - " + encodeURIComponent( textoKey );
             var whatsapp_url = "whatsapp://send?text=" + message;
             window.location.href = whatsapp_url;
           } else {
-            alert( "Por favor usa tu Celular para probar esta Demo" );
+            console.log( "No Celular" );
           }
         } );
       } );

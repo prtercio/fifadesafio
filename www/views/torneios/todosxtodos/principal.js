@@ -222,7 +222,6 @@
         function buscarTorneioChaveNovo() {
           Utils.show();
           var gtSemProceso = String( gamertagChave.gamertag );
-          console.log( "0", gamertagParaBuscar );
           if ( gtSemProceso.indexOf( " " ) == -1 ) {
             gamertagParaBuscar = gtSemProceso;
             console.log( "1", gamertagParaBuscar );
@@ -230,7 +229,6 @@
             gamertagParaBuscar = String( gtSemProceso.replace( /\s/g, '%20' ) );
             console.log( "2", gamertagParaBuscar );
           }
-          console.log( "----- ", gamertagParaBuscar );
           chaveParaBuscar = gamertagChave.chave;
           firebase.database().ref( 'desafio/torneios/todosxtodos/' + gamertagParaBuscar + '/' + chaveParaBuscar ).once( "value" ).then( function( snapshot ) {
             Utils.hide();

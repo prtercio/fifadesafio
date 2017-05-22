@@ -7,6 +7,11 @@
     <h1>Inicio</h1>
        <br />
         {{fecha | date:"dd/MM/yyyy HH:mm a" : 'UTC'}}
+
+        <p class="mi_parrafo" data-barrio="Jardines del Nogalar" data-colonia="San Nicolás de los"  data-cp="66486"></p>
+        <p class="mi_parrafo" data-barrio="Jardines del Nogalar 2" data-colonia="San Nicolás de los2"  data-cp="66485"></p>
+        <p><input type="button" class="cargar" value="Obtener información"></p>
+
     <script id="templates/popover.html" type="text/ng-template">
     <ion-popover-view style="height: 330px;">
       <ion-content>
@@ -31,7 +36,6 @@
             <p>tsantos@desoft.mx</p>
           </div>          
         </ion-list>
-
       </ion-content>
     </ion-popover-view>
   </script>
