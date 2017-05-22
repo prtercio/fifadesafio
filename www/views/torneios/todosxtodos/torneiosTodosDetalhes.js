@@ -536,7 +536,6 @@
         };
         $( document ).on( "click", '.whatsapp', function() {
           if ( isMobile.any() ) {
-            console.log( "zap" );
             /*
             var text = $( this ).attr( "data-text" );
             var url = $( this ).attr( "data-link" );
@@ -544,6 +543,7 @@
             var texto = $( 'p.mi_parrafo' ).data();
             var textoKey = "Key: " + texto.link;
             var textoGt = "Gt: " + texto.text;
+            console.log( textoKey, textoGt );
             var message = encodeURIComponent( textoGt ) + " - " + encodeURIComponent( textoKey );
             var whatsapp_url = "whatsapp://send?text=" + message;
             window.location.href = whatsapp_url;
