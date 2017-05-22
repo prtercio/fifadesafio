@@ -58,7 +58,6 @@
         var str = String( stg );
         var total = 30;
         var novaCadena = "";
-        console.log( cadena.indexOf( "99" ) );
         for ( var i = 0; i < total; i++ ) {
           if ( cadena.indexOf( str ) != -1 ) {
             novaCadena = cadena.replace( str, novo );

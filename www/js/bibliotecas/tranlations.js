@@ -118,7 +118,8 @@ trans.factory( 'asyncLoader', function( $q, $timeout ) {
                 ADICIONARADMIN: "Agregar Administrador",
                 ATUALIZAR: "Actualizar",
                 GERARCONFRONTOS: "Generar rondas",
-                RODADAS: "Rondas"
+                RODADAS: "Rondas",
+                TODOSXTODOS: "Campeonatos"
             };
         }
         if ( options.key === 'pt' ) {
@@ -228,7 +229,8 @@ trans.factory( 'asyncLoader', function( $q, $timeout ) {
                 ADICIONARADMIN: "Adicionar Administrador",
                 ATUALIZAR: "Atualizar",
                 GERARCONFRONTOS: "Gerar confrontos",
-                RODADAS: "Rodadas"
+                RODADAS: "Rodadas",
+                TODOSXTODOS: "Campeonatos"
             };
         }
         if ( options.key === 'en' ) {
