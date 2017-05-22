@@ -78,6 +78,7 @@
             games = snapshot.val().ranking;
             var snap = snapshot.val().configuracao.participantes;
             nomeTorneio = snapshot.val().configuracao.nome;
+            $scope.nomeTorneio = nomeTorneio;
             dataTorneio = snapshot.val().configuracao.data;
             if ( snap > 0 ) {
               $scope.noInscritos = false;

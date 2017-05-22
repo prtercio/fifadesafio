@@ -1,4 +1,4 @@
-<ion-view view-title="{{'TORNEIO'| translate}}" ng-init="carregarDados()">
+<ion-view view-title="{{nomeTorneio}}" ng-init="carregarDados()">
 
   <ion-nav-buttons side="secondary" >
    <div data-link="{{gamertagCompartir}}" data-text="chaveAcesso"></div>      
@@ -92,7 +92,7 @@
 
 </ion-tab>
 
-<ion-tab title="{{'RODADAS' | translate}}" icon-on="ion-ios-football" icon-off="ion-ios-football-outline" ng-if="!noInscritos">
+<ion-tab title="{{'RODADAS' | translate}}" icon-on="ion-ios-football" icon-off="ion-ios-football-outline" ng-show="!noInscritos">
   <ion-content id="imagebg">
   <br />
   <br />
@@ -120,8 +120,6 @@
 </div>
 </ion-list>
   </ion-tab>
-
-</ion-tabs>
     <script id="popup-editarjogo.html" type="text/ng-template">    
       <!-- <p align="center"><i class="icon ion-ribbon-b cinza  tamanhoIcon"></i></p> -->
       <p align="center"><strong>{{'RONDA' | translate}} {{rodadaAtual}}</strong></p>
@@ -146,7 +144,9 @@
 
      </div>
    </script>
-   <ion-footer align-title="center"  class="bar-dark" padding="true">
+</ion-tabs>
+
+
 
 
    
@@ -154,9 +154,11 @@
 
 
 <!--
+   <ion-footer align-title="center"  class="bar-dark" padding="true">
 <fab-button-right class="vermelho" target-id="content" ng-show="!noInscritos">
   <i class="icon ion ion-compose"></i>
 </fab-button-right>
--->
 </ion-footer>
+-->
+
 </ion-view>

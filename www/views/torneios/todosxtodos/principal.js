@@ -21,7 +21,7 @@
       var longitud = 6;
       var refTorneios = firebase.database().ref( 'desafio/torneios/todosxtodos/' + keyUsuario );
       var novaDataFimUtc = new Date();
-      var dataFormatada = Date.UTC( novaDataFimUtc.getFullYear(), novaDataFimUtc.getMonth(), novaDataFimUtc.getDate() + 1, novaDataFimUtc.getMinutes(), novaDataFimUtc.getSeconds(), 0 );
+      var dataFormatada = Date.UTC( novaDataFimUtc.getFullYear(), novaDataFimUtc.getMonth() + 1, novaDataFimUtc.getDate(), novaDataFimUtc.getMinutes(), novaDataFimUtc.getSeconds(), 0 );
       var torneios = [];
       var gamertagParaBuscar = "";
       var chaveParaBuscar = "";
