@@ -541,13 +541,17 @@
             var url = $( this ).attr( "data-link" );
             */
             var texto = $( 'p.mi_parrafo' ).data();
-            var textoKey = "Key: " + texto.link;
-            var textoGt = "Gt: " + texto.text;
+            var textoKey = "Key: " + texto.chave + "-" + $scope.chaveAcesso;
+            var textoGt = "Gt: " + texto.gamertag + "-" + $scope.gamertag;
             console.log( textoKey, textoGt );
             var message = encodeURIComponent( textoGt ) + " - " + encodeURIComponent( textoKey );
             var whatsapp_url = "whatsapp://send?text=" + message;
             window.location.href = whatsapp_url;
           } else {
+            var texto = $( 'p.mi_parrafo' ).data();
+            var textoKey = "Key: " + texto.chave + "-" + $scope.chaveAcesso;
+            var textoGt = "Gt: " + texto.gamertag + "-" + $scope.gamertag;
+            console.log( textoKey, textoGt );
             console.log( "No Celular" );
           }
         } );
