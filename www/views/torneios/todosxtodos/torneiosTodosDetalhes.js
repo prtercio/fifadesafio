@@ -540,11 +540,11 @@
             var text = $( this ).attr( "data-text" );
             var url = $( this ).attr( "data-link" );
             */
-            var texto = $( 'p.mi_parrafo' ).data();
-            var textoKey = "Key: " + texto.chave + "-" + $scope.chaveAcesso;
-            var textoGt = "Gt: " + texto.gamertag + "-" + $scope.gamertag;
+            var link = "http://fifadesafio.herokuapp.com";
+            var textoKey = "Key: " + $scope.chaveAcesso;
+            var textoGt = "Gt: " + $scope.gamertag;
             console.log( textoKey, textoGt );
-            var message = encodeURIComponent( textoGt ) + " - " + encodeURIComponent( textoKey );
+            var message = "Acesse: " + encodeURIComponent( link ) + " - " + encodeURIComponent( textoGt ) + " - " + encodeURIComponent( textoKey );
             var whatsapp_url = "whatsapp://send?text=" + message;
             window.location.href = whatsapp_url;
           } else {
