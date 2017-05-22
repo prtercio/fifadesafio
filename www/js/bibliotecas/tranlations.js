@@ -110,10 +110,12 @@ trans.factory( 'asyncLoader', function( $q, $timeout ) {
                 TORNEIOSADICIONADOS: "Podrás ver los torneos agregados en la pestaña 'Otros Torneos'",
                 AQUILISTATORNEIOOUTROS: "Aqui se listarán los torneos de tus amigos que hayas agregados.",
                 TORNEIOS: "Torneos",
+                TORNEIO: "Torneo",
                 TORNEIOJAFOIADICIONADO: "Este torneo ya se está agregado a su lista de OTROS TORNEOS",
                 CHAVE: "Clave",
                 ESTAECHAVEACESSO: "Esta es la clave de acceso para este torneo, por favor comparta DESPUES de agregar los participantes.",
-                ADICIONEPARTICCOMPARTA: "Acceda, agregue participantes y comparta la llave de acceso de este torneo"
+                ADICIONEPARTICCOMPARTA: "Acceda, agregue participantes y comparta la llave de acceso de este torneo",
+                ADICIONARADMIN: "Agregar Administrador"
             };
         }
         if ( options.key === 'pt' ) {
@@ -215,10 +217,12 @@ trans.factory( 'asyncLoader', function( $q, $timeout ) {
                 TORNEIOSADICIONADOS: "Você poderá ver os torneios adicionados na aba 'Outros Torneios'",
                 AQUILISTATORNEIOOUTROS: "Aqui se verá a lista dos torneios criados pelo seus amigos e adicionados por você.",
                 TORNEIOS: "Torneios",
+                TORNEIO: "Torneo",
                 TORNEIOJAFOIADICIONADO: "Este torneio já está adicionado em sua lista de OUTROS TORNEIOS",
                 CHAVE: "Chave",
                 ESTAECHAVEACESSO: "Esta é a chave de acesso para este torneio, por favor compartilhe DEPOIS de adicionar os participantes.",
-                ADICIONEPARTICCOMPARTA: "Entre aqui, adicione os participantes e compartilhe a chave de acesso deste torneio!"
+                ADICIONEPARTICCOMPARTA: "Entre aqui, adicione os participantes e compartilhe a chave de acesso deste torneio!",
+                ADICIONARADMIN: "Adicionar Administrador"
             };
         }
         if ( options.key === 'en' ) {

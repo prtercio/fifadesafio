@@ -1,4 +1,4 @@
-<ion-view view-title="Torneio" ng-init="carregarDados()">
+<ion-view view-title="{{'TORNEIO'| translate}}" ng-init="carregarDados()">
   
 <ion-nav-buttons side="secondary" >
                
@@ -66,7 +66,7 @@
         ng-class="{active: isGroupShown(group)}">
         <i class="icon" ng-class="isGroupShown(group) ? 'ion-minus' : 'ion-plus'"></i>
         &nbsp;
-        Rodada {{group.rodada}}
+        {{'RODADA' | translate}} {{group.rodada}}
       </ion-item>
       <ion-item class="item-accordion itemtransparente itembordagris"
       ng-repeat="item in group.items track by $index"
@@ -117,13 +117,13 @@
 </fab-button-left>
     <div class="buttons footer" ng-show="!noInscritos && eCriador">      
       <button class="button footer" ng-click="verChaveAcesso()">
-        Chave
+        {{'CHAVE'| translate}}
       </button>
       <button class="button footer">
         <i class="icon ion-social-whatsapp-outline whatsapp"></i>
       </button>
       <button class="button">
-        Adicionar Administrador
+        {{'ADICIONARADMIN'|translate}}
       </button>
       </div>
 

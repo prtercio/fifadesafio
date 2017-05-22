@@ -218,25 +218,41 @@
         }
 
         function buscarTorneioChaveNovo() {
+          Utils.show();
           var gtSemProceso = String( gamertagChave.gamertag );
-          gamertagParaBuscar = String( gtSemProceso.replace( /\s/g, '%20' ) );
+          if ( gamertagParaBuscar.indexOf( " " ) == -1 ) {
+            gamertagParaBuscar = gtSemProceso;
+          } else {
+            gamertagParaBuscar = String( gtSemProceso.replace( /\s/g, '%20' ) );
+          }
+          console.log( "----- ", gamertagParaBuscar );
           chaveParaBuscar = gamertagChave.chave;
           firebase.database().ref( 'desafio/torneios/todosxtodos/' + gamertagParaBuscar + '/' + chaveParaBuscar ).once( "value" ).then( function( snapshot ) {
+            Utils.hide();
             if ( snapshot.val() ) {
               var datosTorneio = snapshot.val().configuracao.nome;
               $scope.torneioencontrado = datosTorneio;
               var myPopup = PopupFactoryAddTorneio.getPopup( $scope );
+              var novoGT = "";
+              if ( gamertagParaBuscar.indexOf( "%20" ) == -1 ) {
+                novoGT = gamertagParaBuscar;
+              } else {
+                novoGT = substituirVazios( gamertagParaBuscar, " ", "%20" );
+              }
               // An elaborate, custom popup
               myPopup.then( function( res ) {
-                localStorageTorneioAdicionado.push( {
-                  "nome": snapshot.val().configuracao.nome,
-                  "data": snapshot.val().configuracao.data,
-                  "participantes": snapshot.val().configuracao.participantes,
-                  "gamertag": substituirVazios( gamertagParaBuscar, " ", "%20" ),
-                  "keyUsuario": gamertagParaBuscar,
-                  "keyTorneio": snapshot.key
-                } );
-                adicionarTorneioOutros();
+                console.log( "resAdd", res );
+                if ( res != undefined ) {
+                  localStorageTorneioAdicionado.push( {
+                    "nome": snapshot.val().configuracao.nome,
+                    "data": snapshot.val().configuracao.data,
+                    "participantes": snapshot.val().configuracao.participantes,
+                    "gamertag": novoGT,
+                    "keyUsuario": gamertagParaBuscar,
+                    "keyTorneio": snapshot.key
+                  } );
+                  adicionarTorneioOutros();
+                }
               } );
             } else {
               var alertPopup = $ionicPopup.alert( {
