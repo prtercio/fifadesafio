@@ -101,7 +101,7 @@ trans.factory( 'asyncLoader', function( $q, $timeout ) {
                 CAMPOSPREENCHIDOS: "Todos los campos deben ser llenados.",
                 NUMEROMININO: "¡Debes agregar al menos 4 participantes!",
                 NOMESREPETIDOS: "Cambie o borre los nombres duplicados!",
-                ADICIONENOVOTORNEIO: "Agregue u nuevo torneo e invite tus amigos a jugar!",
+                ADICIONENOVOTORNEIO: "Agregue un nuevo torneo e invite sus amigos a jugar!",
                 OUTROSTORNEIOS: "Otros Torneos",
                 CHAVEDEACESSO: "Clave de acceso",
                 BUSCARTORNEIO: "Buscar torneo:",
@@ -116,7 +116,8 @@ trans.factory( 'asyncLoader', function( $q, $timeout ) {
                 ESTAECHAVEACESSO: "Esta es la clave de acceso para este torneo, comparta con sus amigos y ¡A jugar!.",
                 ADICIONEPARTICCOMPARTA: "Acceda, agregue participantes y comparta la llave de acceso de este torneo",
                 ADICIONARADMIN: "Agregar Administrador",
-                ATUALIZAR: "Actualizar"
+                ATUALIZAR: "Actualizar",
+                GERARCONFRONTOS: "Generar rondas"
             };
         }
         if ( options.key === 'pt' ) {
@@ -224,7 +225,8 @@ trans.factory( 'asyncLoader', function( $q, $timeout ) {
                 ESTAECHAVEACESSO: "Esta é a chave de acesso para este torneio, compartilhe com seus amigos!",
                 ADICIONEPARTICCOMPARTA: "Entre aqui, adicione os participantes e compartilhe a chave de acesso deste torneio!",
                 ADICIONARADMIN: "Adicionar Administrador",
-                ATUALIZAR: "Atualizar"
+                ATUALIZAR: "Atualizar",
+                GERARCONFRONTOS: "Gerar confrontos"
             };
         }
         if ( options.key === 'en' ) {

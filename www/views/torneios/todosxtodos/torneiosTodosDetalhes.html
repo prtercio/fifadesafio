@@ -1,7 +1,7 @@
 <ion-view view-title="{{'TORNEIO'| translate}}" ng-init="carregarDados()">
   
 <ion-nav-buttons side="secondary" >
-               
+         <div data-link="{{gamertagCompartir}}" data-text="chaveAcesso"></div>      
   </ion-nav-buttons>
  <ion-content id="imagebg"> 
   
@@ -112,8 +112,8 @@
 <ion-footer-bar align-title="center" class="bar-dark" padding="true">
  
 
-<fab-button-left class="verde" target-id="content" ng-show="noInscritos" ng-click="enviarDatos()">
-  <i class="icon ion ion-checkmark"></i>
+<fab-button-left class="verde aumentarBotao" target-id="content" ng-show="noInscritos" ng-click="enviarDatos()">
+  {{'GERARCONFRONTOS'|translate}}
 </fab-button-left>
     <div class="buttons footer" ng-show="!noInscritos && eCriador">      
       <button class="button footer" ng-click="verChaveAcesso()">

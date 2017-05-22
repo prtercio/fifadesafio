@@ -138,7 +138,7 @@
       }
       $scope.verChaveAcesso = function() {
         var alertPopup = $ionicPopup.alert( {
-          template: '<p align="center"><i class="icon ion-key verdeBalanced tamanhoIcon"></i></p><p align="center"><strong>{{"ESTAECHAVEACESSO" | translate}}</strong></p><h3 class="vermelho" align="center" data-link="' + $scope.gamertagCompartir + '" data-text="' + $scope.chaveAcesso + '">' + $scope.chaveAcesso + '</h3>',
+          template: '<p align="center"><i class="icon ion-key verdeBalanced tamanhoIcon"></i></p><p align="center"><strong>{{"ESTAECHAVEACESSO" | translate}}</strong></p><h3 class="vermelho" align="center">' + $scope.chaveAcesso + '</h3>',
           buttons: [ {
             text: '<b>Ok</b>',
             type: 'button-balanced',

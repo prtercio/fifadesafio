@@ -534,6 +534,16 @@ button.fab-button-left.verde {
     background: #33cd5f !important;
 }
 
+button.fab-button-left.aumentarBotao {
+    border-radius: 10px !important;
+    width: 200px !important;
+    color: white !important;
+    text-decoration: none;
+    display: inline-block !important;
+    font-size: 16px !important;
+    left: 26% !important;
+}
+
 button.fab-button-left.verde {
     background: #33cd5f;
 }

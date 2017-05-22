@@ -9,14 +9,14 @@
       <div ng-show="!logado">
         <br />
         <br />
-        <h4 align="center" class="laranja">{{'PARACRIARTORNEIO'| translate}}</h4>
+        <h4 align="center" class="padding laranja">{{'PARACRIARTORNEIO'| translate}}</h4>
       </div>
       <div ng-show="!verTorneio">
         <br />
         <div align="center">
           <i class="icon ion-ribbon-b laranja tamanhoIcon center"></i>
         </div>
-        <h4 align="center" class="laranja">{{'ADICIONENOVOTORNEIO'| translate}}</h4>
+        <h4 align="center" class="laranja padding">{{'ADICIONENOVOTORNEIO'| translate}}</h4>
       </div>
       <ion-list>
        <ion-item class="item item-text-wrap item-icon-left cinza" ng-repeat="(key, value) in torneios | orderBy:'data':true" href="#/app/torneiosTodosDetalhes/{{keyUsuarioCriador}}&{{value.senha}}">
