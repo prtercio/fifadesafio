@@ -1,9 +1,15 @@
 ( function() {
   'use strict';
   var temporadasRankingJogos = angular.module( 'App.CtrlTorneiosTodosDetalhes', [] );
-  temporadasRankingJogos.controller( 'CtrlTorneiosTodosDetalhes', [ '$scope', 'Utils', '$state', '$localStorage', 'Popup', '$stateParams', 'idTorneio', 'PopupFactoryRanking', '$ionicPopup',
-    function( $scope, Utils, $state, $localStorage, Popup, $stateParams, idTorneio, PopupFactoryRanking, $ionicPopup ) {
-      var keyUsuario = $localStorage.keyUser;
+  temporadasRankingJogos.controller( 'CtrlTorneiosTodosDetalhes', [ '$scope', 'Utils', '$state', '$localStorage', 'Popup', '$stateParams', 'idTorneioKeyUsuario', 'PopupFactoryRanking', '$ionicPopup',
+    function( $scope, Utils, $state, $localStorage, Popup, $stateParams, idTorneioKeyUsuario, PopupFactoryRanking, $ionicPopup ) {
+      var keyUsuario = "";
+      var gamertag = $localStorage.account.gamertag
+      var idTorneio = idTorneioKeyUsuario.substring( idTorneioKeyUsuario.indexOf( "&" ) + 1 );
+      var keyUsariosinProcesar = idTorneioKeyUsuario.substring( 0, idTorneioKeyUsuario.indexOf( "&" ) );
+      var gtKeyEspacio = String( keyUsariosinProcesar );
+      var gtSemKeyEspacio = String( gtKeyEspacio.replace( /\s/g, '%20' ) );
+      var keyUsuario = gtSemKeyEspacio;
       var ranking = [];
       var rankingSend = [];
       var rodadas = [];
@@ -11,12 +17,57 @@
       var gamesRound = []
       var rodadasQtd = 0;
       var rodadasJogos = 0;
+      var nomeTorneio = "";
+      var dataTorneio = "";
+      $scope.chaveAcesso = idTorneio;
       if ( $localStorage.account ) {
         $scope.logado = true;
-        $scope.gamertag = $localStorage.account.gamertag;
+        $scope.gamertag = gamertag;
       } else {
         $scope.logado = false;
         $scope.gamertag = "visitante";
+      }
+      saberSiEadmin();
+
+      function saberSiEadmin() {
+        if ( keyUsuario.indexOf( "%20" ) == -1 ) {
+          if ( String( keyUsuario ) === String( gamertag ) ) {
+            $scope.eCriador = true;
+            $scope.dimensionColumna = 80;
+            return true;
+          } else {
+            $scope.dimensionColumna = 100;
+            $scope.eCriador = false;
+            return false;
+          }
+        } else {
+          if ( String( substituirVazios( keyUsuario, " ", "%20" ) ) === String( gamertag ) ) {
+            $scope.eCriador = true;
+            $scope.dimensionColumna = 80;
+            return true;
+          } else {
+            $scope.dimensionColumna = 100;
+            $scope.eCriador = false;
+            return false;
+          }
+        }
+      }
+
+      function substituirVazios( valor, novo, stg ) {
+        var cadena = valor;
+        var str = String( stg );
+        var total = 30;
+        var novaCadena = "";
+        console.log( cadena.indexOf( "99" ) );
+        for ( var i = 0; i < total; i++ ) {
+          if ( cadena.indexOf( str ) != -1 ) {
+            novaCadena = cadena.replace( str, novo );
+            cadena = novaCadena;
+          } else {
+            return novaCadena;
+            break;
+          }
+        }
       }
       var refTorneio = firebase.database().ref( 'desafio/torneios/todosxtodos/' + keyUsuario + '/' + idTorneio );
       $scope.carregarDados = function() {
@@ -26,7 +77,9 @@
           $scope.$apply( function() {
             games = snapshot.val().ranking;
             var snap = snapshot.val().configuracao.participantes;
-            if ( snap != undefined ) {
+            nomeTorneio = snapshot.val().configuracao.nome;
+            dataTorneio = snapshot.val().configuracao.data;
+            if ( snap > 0 ) {
               $scope.noInscritos = false;
               if ( snap % 2 ) {
                 console.log( "es impar" );
@@ -36,6 +89,7 @@
                 $scope.rodadasQtdJogos = rodadasJogos;
               }
               for ( var key in games ) {
+                $scope.gamertagCompartir = key;
                 ranking.push( {
                   "gamer": games[ key ].gamer,
                   "jogos": games[ key ].jogos,
@@ -82,6 +136,21 @@
           } );
         } );
       }
+      $scope.verChaveAcesso = function() {
+        var alertPopup = $ionicPopup.alert( {
+          template: '<p align="center"><i class="icon ion-key verdeBalanced tamanhoIcon"></i></p><p align="center"><strong>{{"ESTAECHAVEACESSO" | translate}}</strong></p><h3 class="vermelho" align="center" data-link="' + $scope.gamertagCompartir + '" data-text="' + $scope.chaveAcesso + '">' + $scope.chaveAcesso + '</h3>',
+          buttons: [ {
+            text: '<b>Ok</b>',
+            type: 'button-balanced',
+            onTap: function( e ) {}
+          } ]
+        } );
+        alertPopup.then( function( res ) {
+          if ( res ) {
+            console.log( "fechado" );
+          }
+        } );
+      }
       $scope.toggleGroup = function( group ) {
         group.show = !group.show;
       };
@@ -119,110 +188,112 @@
         } );
 
         function enviarDatosJogos() {
-          Utils.show();
-          var linkRodada = "desafio/torneios/todosxtodos/" + keyUsuario + "/" + idTorneio + "/rodadas/" + keyRodada + "/" + idRodada;
-          var linkRanking = "desafio/torneios/todosxtodos/" + keyUsuario + "/" + idTorneio + "/ranking/";
-          var resultadoFinal = oponente1 + ">" + resultado1 + "@" + resultado2 + "<" + oponente2;
-          var arrayOp1 = {};
-          var arrayOp2 = {};
-          if ( resultado1 > resultado2 ) {
-            for ( var i = 0; i < ranking.length; i++ ) {
-              if ( ranking[ i ].gamer == oponente1 ) {
-                arrayOp1 = {
-                  "gamer": ranking[ i ].gamer,
-                  "jogos": ranking[ i ].jogos + 1,
-                  "pontos": ranking[ i ].pontos + 3,
-                  "vitoria": ranking[ i ].vitoria + 1,
-                  "empate": ranking[ i ].empate,
-                  "derrota": ranking[ i ].derrota,
-                  "golsPro": ranking[ i ].golsPro + resultado1,
-                  "golsContra": ranking[ i ].golsContra + resultado2
+          if ( saberSiEadmin() ) {
+            Utils.show();
+            var linkRodada = "desafio/torneios/todosxtodos/" + keyUsuario + "/" + idTorneio + "/rodadas/" + keyRodada + "/" + idRodada;
+            var linkRanking = "desafio/torneios/todosxtodos/" + keyUsuario + "/" + idTorneio + "/ranking/";
+            var resultadoFinal = oponente1 + ">" + resultado1 + "@" + resultado2 + "<" + oponente2;
+            var arrayOp1 = {};
+            var arrayOp2 = {};
+            if ( resultado1 > resultado2 ) {
+              for ( var i = 0; i < ranking.length; i++ ) {
+                if ( ranking[ i ].gamer == oponente1 ) {
+                  arrayOp1 = {
+                    "gamer": ranking[ i ].gamer,
+                    "jogos": ranking[ i ].jogos + 1,
+                    "pontos": ranking[ i ].pontos + 3,
+                    "vitoria": ranking[ i ].vitoria + 1,
+                    "empate": ranking[ i ].empate,
+                    "derrota": ranking[ i ].derrota,
+                    "golsPro": ranking[ i ].golsPro + resultado1,
+                    "golsContra": ranking[ i ].golsContra + resultado2
+                  }
+                }
+                if ( ranking[ i ].gamer == oponente2 ) {
+                  arrayOp2 = {
+                    "gamer": ranking[ i ].gamer,
+                    "jogos": ranking[ i ].jogos + 1,
+                    "pontos": ranking[ i ].pontos,
+                    "vitoria": ranking[ i ].vitoria,
+                    "empate": ranking[ i ].empate,
+                    "derrota": ranking[ i ].derrota + 1,
+                    "golsPro": ranking[ i ].golsPro + resultado2,
+                    "golsContra": ranking[ i ].golsContra + resultado1
+                  }
                 }
               }
-              if ( ranking[ i ].gamer == oponente2 ) {
-                arrayOp2 = {
-                  "gamer": ranking[ i ].gamer,
-                  "jogos": ranking[ i ].jogos + 1,
-                  "pontos": ranking[ i ].pontos,
-                  "vitoria": ranking[ i ].vitoria,
-                  "empate": ranking[ i ].empate,
-                  "derrota": ranking[ i ].derrota + 1,
-                  "golsPro": ranking[ i ].golsPro + resultado2,
-                  "golsContra": ranking[ i ].golsContra + resultado1
+            } else if ( resultado2 > resultado1 ) {
+              for ( var i = 0; i < ranking.length; i++ ) {
+                if ( ranking[ i ].gamer == oponente1 ) {
+                  arrayOp1 = {
+                    "gamer": ranking[ i ].gamer,
+                    "jogos": ranking[ i ].jogos + 1,
+                    "pontos": ranking[ i ].pontos,
+                    "vitoria": ranking[ i ].vitoria,
+                    "empate": ranking[ i ].empate,
+                    "derrota": ranking[ i ].derrota + 1,
+                    "golsPro": ranking[ i ].golsPro + resultado1,
+                    "golsContra": ranking[ i ].golsContra + resultado2
+                  }
+                }
+                if ( ranking[ i ].gamer == oponente2 ) {
+                  arrayOp2 = {
+                    "gamer": ranking[ i ].gamer,
+                    "jogos": ranking[ i ].jogos + 1,
+                    "pontos": ranking[ i ].pontos + 3,
+                    "vitoria": ranking[ i ].vitoria + 1,
+                    "empate": ranking[ i ].empate,
+                    "derrota": ranking[ i ].derrota,
+                    "golsPro": ranking[ i ].golsPro + resultado2,
+                    "golsContra": ranking[ i ].golsContra + resultado1
+                  }
+                }
+              }
+            } else {
+              for ( var i = 0; i < ranking.length; i++ ) {
+                if ( ranking[ i ].gamer == oponente1 ) {
+                  arrayOp1 = {
+                    "gamer": ranking[ i ].gamer,
+                    "jogos": ranking[ i ].jogos + 1,
+                    "pontos": ranking[ i ].pontos + 1,
+                    "vitoria": ranking[ i ].vitoria,
+                    "empate": ranking[ i ].empate + 1,
+                    "derrota": ranking[ i ].derrota,
+                    "golsPro": ranking[ i ].golsPro + resultado1,
+                    "golsContra": ranking[ i ].golsContra + resultado2
+                  }
+                }
+                if ( ranking[ i ].gamer == oponente2 ) {
+                  arrayOp2 = {
+                    "gamer": ranking[ i ].gamer,
+                    "jogos": ranking[ i ].jogos + 1,
+                    "pontos": ranking[ i ].pontos + 1,
+                    "vitoria": ranking[ i ].vitoria,
+                    "empate": ranking[ i ].empate + 1,
+                    "derrota": ranking[ i ].derrota,
+                    "golsPro": ranking[ i ].golsPro + resultado2,
+                    "golsContra": ranking[ i ].golsContra + resultado1
+                  }
                 }
               }
             }
-          } else if ( resultado2 > resultado1 ) {
-            for ( var i = 0; i < ranking.length; i++ ) {
-              if ( ranking[ i ].gamer == oponente1 ) {
-                arrayOp1 = {
-                  "gamer": ranking[ i ].gamer,
-                  "jogos": ranking[ i ].jogos + 1,
-                  "pontos": ranking[ i ].pontos,
-                  "vitoria": ranking[ i ].vitoria,
-                  "empate": ranking[ i ].empate,
-                  "derrota": ranking[ i ].derrota + 1,
-                  "golsPro": ranking[ i ].golsPro + resultado1,
-                  "golsContra": ranking[ i ].golsContra + resultado2
-                }
-              }
-              if ( ranking[ i ].gamer == oponente2 ) {
-                arrayOp2 = {
-                  "gamer": ranking[ i ].gamer,
-                  "jogos": ranking[ i ].jogos + 1,
-                  "pontos": ranking[ i ].pontos + 3,
-                  "vitoria": ranking[ i ].vitoria + 1,
-                  "empate": ranking[ i ].empate,
-                  "derrota": ranking[ i ].derrota,
-                  "golsPro": ranking[ i ].golsPro + resultado2,
-                  "golsContra": ranking[ i ].golsContra + resultado1
-                }
-              }
-            }
-          } else {
-            for ( var i = 0; i < ranking.length; i++ ) {
-              if ( ranking[ i ].gamer == oponente1 ) {
-                arrayOp1 = {
-                  "gamer": ranking[ i ].gamer,
-                  "jogos": ranking[ i ].jogos + 1,
-                  "pontos": ranking[ i ].pontos + 1,
-                  "vitoria": ranking[ i ].vitoria,
-                  "empate": ranking[ i ].empate + 1,
-                  "derrota": ranking[ i ].derrota,
-                  "golsPro": ranking[ i ].golsPro + resultado1,
-                  "golsContra": ranking[ i ].golsContra + resultado2
-                }
-              }
-              if ( ranking[ i ].gamer == oponente2 ) {
-                arrayOp2 = {
-                  "gamer": ranking[ i ].gamer,
-                  "jogos": ranking[ i ].jogos + 1,
-                  "pontos": ranking[ i ].pontos + 1,
-                  "vitoria": ranking[ i ].vitoria,
-                  "empate": ranking[ i ].empate + 1,
-                  "derrota": ranking[ i ].derrota,
-                  "golsPro": ranking[ i ].golsPro + resultado2,
-                  "golsContra": ranking[ i ].golsContra + resultado1
-                }
-              }
-            }
-          }
-          firebase.database().ref( linkRodada ).update( {
-            jogo: resultadoFinal
-          } ).then( function( response ) {
-            console.log( "rodada atualizada" );
-            firebase.database().ref( linkRanking + "/" + novoKeyRanking1 ).update( arrayOp1 ).then( function( response ) {
-              console.log( "ranking1 atualizado" );
+            firebase.database().ref( linkRodada ).update( {
+              jogo: resultadoFinal
             } ).then( function( response ) {
-              firebase.database().ref( linkRanking + "/" + novoKeyRanking2 ).update( arrayOp2 ).then( function( response ) {
+              console.log( "rodada atualizada" );
+              firebase.database().ref( linkRanking + "/" + novoKeyRanking1 ).update( arrayOp1 ).then( function( response ) {
                 console.log( "ranking1 atualizado" );
               } ).then( function( response ) {
-                console.log( "actualizar tela" );
-                Utils.hide();
-                $scope.carregarDados();
+                firebase.database().ref( linkRanking + "/" + novoKeyRanking2 ).update( arrayOp2 ).then( function( response ) {
+                  console.log( "ranking1 atualizado" );
+                } ).then( function( response ) {
+                  console.log( "actualizar tela" );
+                  Utils.hide();
+                  $scope.carregarDados();
+                } );
               } );
             } );
-          } );
+          }
         }
         //firebase.database().ref( 'desafio/torneios/todosxtodos/' + keyUsuario + '/' + idTorneio );
       }
@@ -269,25 +340,17 @@
         for ( var i = 0; i < dato.length; i++ ) {
           nuevoArray.push( dato[ i ].value );
           if ( dato[ i ].value === "" ) {
-            var alertPopup = $ionicPopup.alert( {
-              template: '<p align="center"><i class="icon ion-alert-circled laranja tamanhoIcon"></i></p><p align="center"><strong>{{"CAMPOSPREENCHIDOS" | translate}}</strong></p>',
-              buttons: [ {
-                text: '<b>Ok</b>',
-                type: 'button-balanced',
-                onTap: function( e ) {}
-              } ]
-            } );
-            alertPopup.then( function( res ) {
-              if ( res ) {
-                console.log( "fechado" );
-              }
-            } );
             $scope.hayVazios = true;
             break;
           } else {
             $scope.hayVazios = false;
           }
-          console.log( nuevoArray );
+          if ( dato[ i ].value === null ) {
+            $scope.hayVazios = true;
+            break;
+          } else {
+            $scope.hayVazios = false;
+          }
         }
         var sorted_arr = nuevoArray.slice().sort();
         var results = [];
@@ -328,7 +391,6 @@
                     "pontos": 0,
                     "vitoria": 0
                   } );
-                  console.log( rankingSend );
                   if ( i == gamesQtd - 1 ) procesarDatos();
                 } else {
                   console.log( "Todos los campos deve ser preenchidos" );
@@ -364,6 +426,20 @@
                 }
               } );
             }
+          } else {
+            var alertPopup = $ionicPopup.alert( {
+              template: '<p align="center"><i class="icon ion-alert-circled laranja tamanhoIcon"></i></p><p align="center"><strong>{{"CAMPOSPREENCHIDOS" | translate}}</strong></p>',
+              buttons: [ {
+                text: '<b>Ok</b>',
+                type: 'button-balanced',
+                onTap: function( e ) {}
+              } ]
+            } );
+            alertPopup.then( function( res ) {
+              if ( res ) {
+                console.log( "fechado" );
+              }
+            } );
           }
         }
       }
@@ -382,25 +458,26 @@
             jogosRondas[ rondas ].push( {
               "jogo": gamesRound[ time1 ] + "$" + gamesRound[ time2 ]
             } );
-            console.log( jogosRondas );
           }
         }
-        firebase.database().ref( 'desafio/torneios/todosxtodos/' + keyUsuario + "/" + idTorneio ).update( {
-          "configuracao/participantes": gamesRound.length,
-          rodadas: jogosRondas,
-          ranking: rankingSend
-        } ).then( function( response ) {
-          console.log( "se actualizó" );
-          $scope.carregarDados();
-          /*
-          firebase.database().ref( 'desafio/torneios/todosxtodos/' + keyUsuario + "/" + idTorneio + "/configuracao" ).update( {
-            participantes: gamesRound.length
+        if ( saberSiEadmin() ) {
+          firebase.database().ref( 'desafio/torneios/todosxtodos/' + keyUsuario + "/" + idTorneio ).update( {
+            "configuracao/participantes": gamesRound.length,
+            rodadas: jogosRondas,
+            ranking: rankingSend
           } ).then( function( response ) {
-            
-            console.log( "se envió rodadas" );
+            console.log( "se actualizó" );
+            $scope.carregarDados();
+            /*
+            firebase.database().ref( 'desafio/torneios/todosxtodos/' + keyUsuario + "/" + idTorneio + "/configuracao" ).update( {
+              participantes: gamesRound.length
+            } ).then( function( response ) {
+              
+              console.log( "se envió rodadas" );
+            } );
+            */
           } );
-          */
-        } );
+        }
       }
       //--------------------------- Outro
       function RoundRobinFinal( t ) {
@@ -433,6 +510,39 @@
         }
         return e;
       }
+      $( document ).ready( function() {
+        var isMobile = {
+          Android: function() {
+            return navigator.userAgent.match( /Android/i );
+          },
+          BlackBerry: function() {
+            return navigator.userAgent.match( /BlackBerry/i );
+          },
+          iOS: function() {
+            return navigator.userAgent.match( /iPhone|iPad|iPod/i );
+          },
+          Opera: function() {
+            return navigator.userAgent.match( /Opera Mini/i );
+          },
+          Windows: function() {
+            return navigator.userAgent.match( /IEMobile/i );
+          },
+          any: function() {
+            return ( isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows() );
+          }
+        };
+        $( document ).on( "click", '.whatsapp', function() {
+          if ( isMobile.any() ) {
+            var text = $( this ).attr( "data-text" );
+            var url = $( this ).attr( "data-link" );
+            var message = encodeURIComponent( text ) + " - " + encodeURIComponent( url );
+            var whatsapp_url = "whatsapp://send?text=" + message;
+            window.location.href = whatsapp_url;
+          } else {
+            alert( "Por favor usa tu Celular para probar esta Demo" );
+          }
+        } );
+      } );
     }
   ] ); //ctrl
   temporadasRankingJogos.factory( "PopupFactoryRanking", function( $ionicPopup ) {

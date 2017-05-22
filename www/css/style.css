@@ -32,6 +32,10 @@ img.resizeTotal {
     color: #00FF00 !important;
 }
 
+.verdeBalanced {
+    color: #33cd5f !important;
+}
+
 .verdeBold {
     color: #00FF00 !important;
     font-weight: bold;
@@ -526,16 +530,16 @@ $assertive :#ef473a;
     color: #FFF !important;
 }
 
-button.fab-button-right.vermelho {
-    background: rgba(153, 0, 0, 0.9);
+button.fab-button-left.verde {
+    background: #33cd5f !important;
 }
 
 button.fab-button-left.verde {
     background: #33cd5f;
 }
 
-button.fab-button-left.amarelo {
-    background: rgba(200, 200, 200, 0.9)
+button.fab-button-right.laranja {
+    background: #ffc900 !important;
 }
 
 .cinza .item-content {
@@ -559,4 +563,12 @@ button.fab-button-left.centrar {
     position: absolute !important;
     bottom: 20px !important;
     left: 45% !important;
+}
+
+.buttons.footer button {
+    margin-right: 2px;
+}
+
+.buttons.footer {
+    min-width: 120px;
 }

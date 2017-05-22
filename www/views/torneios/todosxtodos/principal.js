@@ -1,41 +1,71 @@
 ( function() {
   'use strict';
   var temporadasRankingJogos = angular.module( 'App.CtrlTorneiosTodos', [] );
-  temporadasRankingJogos.controller( 'CtrlTorneiosTodos', [ '$scope', 'Utils', '$state', '$localStorage', 'Popup', '$stateParams', '$ionicModal', '$ionicPopup', 'PopupFactory',
-    function( $scope, Utils, $state, $localStorage, Popup, $stateParams, $ionicModal, $ionicPopup, PopupFactory ) {
-      var keyUsuario = $localStorage.keyUser;
+  temporadasRankingJogos.controller( 'CtrlTorneiosTodos', [ '$scope', 'Utils', '$state', '$localStorage', 'Popup', '$stateParams', '$ionicModal', '$ionicPopup', 'PopupFactory', 'PopupFactoryBuscar', 'PopupFactoryAddTorneio',
+    function( $scope, Utils, $state, $localStorage, Popup, $stateParams, $ionicModal, $ionicPopup, PopupFactory, PopupFactoryBuscar, PopupFactoryAddTorneio ) {
+      //var keyUsuario = $localStorage.keyUser;
+      var keyUsuario = "";
       var keyUsuarioCreadorTorneio = "";
-      var caracteres = "0123456789abcdefABCDEF?@+!:;=<>";
+      var gamertag = $localStorage.account.gamertag
+      var gtSemEspacio = "";
+      if ( gamertag ) {
+        keyUsuario = sustituirValorString( gamertag, '%20' );
+        gtSemEspacio = keyUsuario;
+        /*
+        var gtEspacio = String( gamertag );
+        var gtSemEspacio = String( gtEspacio.replace( /\s/g, '%20' ) );
+        keyUsuario = gtSemEspacio;
+        */
+      }
+      var caracteres = "0123456789abcdefghijlmnopqrstuvxzkywABCDEFGHIJLMNOPQRSTUVXZKYW-";
       var longitud = 6;
       var refTorneios = firebase.database().ref( 'desafio/torneios/todosxtodos/' + keyUsuario );
       var novaDataFimUtc = new Date();
-      var dataFormatada = Date.UTC( novaDataFimUtc.getFullYear(), novaDataFimUtc.getMonth(), novaDataFimUtc.getDate() + 1, 0, 0, 0 );
+      var dataFormatada = Date.UTC( novaDataFimUtc.getFullYear(), novaDataFimUtc.getMonth(), novaDataFimUtc.getDate() + 1, novaDataFimUtc.getMinutes(), novaDataFimUtc.getSeconds(), 0 );
       var torneios = [];
+      var gamertagParaBuscar = "";
+      var chaveParaBuscar = "";
+      $scope.verTorneio = true;
+      $scope.keyUsuarioCriador = "";
+      var localStorageTorneioAdicionado = [];
+      var torneioEncontradoEstado = false;
       if ( $localStorage.account ) {
         $scope.logado = true;
-        $scope.gamertag = $localStorage.account.gamertag;
+        $scope.gamertag = gamertag;
       } else {
         $scope.logado = false;
         $scope.gamertag = "visitante";
       }
+
+      function sustituirValorString( valor, stg ) {
+        var gtEspacio = String( valor );
+        var gtSemEspacio = String( gtEspacio.replace( /\s/g, stg ) );
+        return gtSemEspacio;
+      }
       $scope.listarTorneio = function() {
+        verTorneiosOutros();
         torneios = [];
         Utils.show();
         refTorneios.once( "value" ).then( function( snapshot ) {
           $scope.$apply( function() {
             var snap = snapshot.val();
+            var config = snapshot.val();
+            if ( snap == null ) {
+              $scope.verTorneio = false;
+            } else {
+              $scope.verTorneio = true;
+            }
             keyUsuarioCreadorTorneio = snapshot.key;
+            $scope.keyUsuarioCriador = keyUsuarioCreadorTorneio;
             if ( keyUsuario == keyUsuarioCreadorTorneio ) $scope.esCriado = true;
             for ( var key in snap ) {
               torneios.push( {
-                "key": key,
                 "nome": snap[ key ].configuracao.nome,
-                "senha": snap[ key ].configuracao.senha,
+                "senha": key,
                 "data": snap[ key ].configuracao.data,
                 "participantes": snap[ key ].configuracao.participantes
               } );
             }
-            console.log( torneios );
             $scope.torneios = torneios;
             Utils.hide();
           } );
@@ -55,42 +85,29 @@
             if ( res != undefined ) enviarNovoTorneio();
           }
         } );
-        /*
-        var myPopup = $ionicPopup.show( {
-          templateUrl: 'popup-novotorneio.html',
-          scope: $scope,
-          buttons: [ {
-            text: 'Cancel',
-            onTap: function( e ) {}
-          }, {
-            text: '<b>Ok</b>',
-            type: 'button-balanced',
-            onTap: function( e ) {
-              nome = $scope.nomeNovo;
-              console.log( nome );
-            }
-          }, ]
-        } );
-        myPopup.then( function( res ) {
-          alert( "you tapped: " + res );
-        } );
-        */
+
         function enviarNovoTorneio() {
+          Utils.show();
           if ( $scope.logado == true ) {
             var senha = rand_code( caracteres, longitud );
             var datos = {
               nome: nome,
-              senha: senha,
-              data: dataFormatada
+              data: dataFormatada,
+              participantes: 0
             }
-            firebase.database().ref( 'desafio/torneios/todosxtodos/' + keyUsuario ).push( {
-              configuracao: datos,
-              ranking: "",
-              rodadas: ""
+            firebase.database().ref( 'desafio/torneios/todosxtodos/' + gtSemEspacio + '/' + senha + '/configuracao' ).push( {
+              nome: 0
             } ).then( function( response ) {
-              //$scope.modal.hide();
-              Utils.hide();
-              $scope.listarTorneio();
+              console.log( "estrutura preparada" );
+              firebase.database().ref( 'desafio/torneios/todosxtodos/' + gtSemEspacio + '/' + senha ).update( {
+                configuracao: datos,
+                ranking: "",
+                rodadas: ""
+              } ).then( function( response ) {
+                //$scope.modal.hide();
+                Utils.hide();
+                $scope.listarTorneio();
+              } );
             } );
           }
         }
@@ -130,6 +147,161 @@
           }
         }
       }
+      $scope.buscarTorneio = function() {
+        if ( !torneioEncontradoEstado ) {
+          if ( $scope.valor == null ) {
+            $scope.valor = {}
+          } else {
+            gamertagParaBuscar = substituirVazios( gamertagParaBuscar, " ", "%20" );
+            $scope.valor = {
+              gamertag: gamertagParaBuscar,
+              chave: chaveParaBuscar
+            }
+          }
+        } else {
+          $scope.valor = {}
+          torneioEncontradoEstado = false;
+        }
+        var gamertagChave = "";
+        var myPopup = PopupFactoryBuscar.getPopup( $scope );
+        // An elaborate, custom popup
+        myPopup.then( function( res ) {
+          console.log( "aqui es res", res );
+          gamertagChave = res;
+          if ( !res ) {
+            gamertagParaBuscar = "";
+            chaveParaBuscar = "";
+          } else {
+            if ( res != undefined ) buscarTorneioChaveIgual();
+          }
+        } );
+
+        function buscarTorneioChaveIgual() {
+          if ( $localStorage.torneiosAdicionados ) {
+            console.log( "1 Ver aqui" );
+            console.log( $localStorage.torneiosAdicionados );
+            var torneioArmazenados = $localStorage.torneiosAdicionados;
+            console.log( "torneioArmazenados", torneioArmazenados.length )
+            if ( torneioArmazenados.length != 0 ) {
+              console.log( "2Ver aqui" );
+              for ( var i = 0; i < torneioArmazenados.length; i++ ) {
+                if ( torneioArmazenados[ i ].keyTorneio == gamertagChave.chave ) {
+                  console.log( "3 Ver aqui" );
+                  var alertPopup = $ionicPopup.alert( {
+                    template: '<p align="center"><i class="icon ion-alert-circled laranja tamanhoIcon"></i></p><p align="center"><strong>{{"TORNEIOJAFOIADICIONADO" | translate}}</strong></p>',
+                    buttons: [ {
+                      text: '<b>Ok</b>',
+                      type: 'button-energized',
+                      onTap: function( e ) {}
+                    } ]
+                  } );
+                  alertPopup.then( function( res ) {
+                    if ( res ) {
+                      console.log( "fechado" );
+                    }
+                  } );
+                  break;
+                } else {
+                  console.log( "4 Ver aqui" );
+                  buscarTorneioChaveNovo();
+                  break;
+                }
+              }
+            } else {
+              console.log( "5 Ver aqui" );
+              buscarTorneioChaveNovo();
+            }
+          } else {
+            console.log( "6 Ver aqui" );
+            buscarTorneioChaveNovo();
+          }
+        }
+
+        function buscarTorneioChaveNovo() {
+          var gtSemProceso = String( gamertagChave.gamertag );
+          gamertagParaBuscar = String( gtSemProceso.replace( /\s/g, '%20' ) );
+          chaveParaBuscar = gamertagChave.chave;
+          firebase.database().ref( 'desafio/torneios/todosxtodos/' + gamertagParaBuscar + '/' + chaveParaBuscar ).once( "value" ).then( function( snapshot ) {
+            if ( snapshot.val() ) {
+              var datosTorneio = snapshot.val().configuracao.nome;
+              $scope.torneioencontrado = datosTorneio;
+              var myPopup = PopupFactoryAddTorneio.getPopup( $scope );
+              // An elaborate, custom popup
+              myPopup.then( function( res ) {
+                localStorageTorneioAdicionado.push( {
+                  "nome": snapshot.val().configuracao.nome,
+                  "data": snapshot.val().configuracao.data,
+                  "participantes": snapshot.val().configuracao.participantes,
+                  "gamertag": substituirVazios( gamertagParaBuscar, " ", "%20" ),
+                  "keyUsuario": gamertagParaBuscar,
+                  "keyTorneio": snapshot.key
+                } );
+                adicionarTorneioOutros();
+              } );
+            } else {
+              var alertPopup = $ionicPopup.alert( {
+                template: '<p align="center"><i class="icon ion-alert-circled laranja tamanhoIcon"></i></p><p align="center"><strong>{{"VERIFICARDATOS" | translate}}</strong></p>',
+                buttons: [ {
+                  text: '<b>Ok</b>',
+                  type: 'button-energized',
+                  onTap: function( e ) {}
+                } ]
+              } );
+              alertPopup.then( function( res ) {
+                if ( res ) {
+                  console.log( "fechado" );
+                }
+              } );
+            }
+          } );
+        }
+
+        function adicionarTorneioOutros() {
+          $localStorage.torneiosAdicionados = localStorageTorneioAdicionado;
+          var datosGuardados = $localStorage.torneiosAdicionados;
+          console.log( "adicionarTorneioOutros", datosGuardados );
+          $scope.valor = {}
+          torneioEncontradoEstado = true;
+          verTorneiosOutros();
+        }
+      }
+
+      function verTorneiosOutros() {
+        if ( $localStorage.torneiosAdicionados ) {
+          if ( $localStorage.torneiosAdicionados.length != 0 ) {
+            $scope.verTorneiosOutros = true;
+            $scope.torneiosAdicionados = $localStorage.torneiosAdicionados;
+          } else {
+            $scope.verTorneiosOutros = false;
+          }
+        } else {
+          $scope.verTorneiosOutros = false;
+        }
+      }
+      $scope.onItemDeleteTorneioAdicionado = function( item ) {
+        var arraytorneioAdd = $localStorage.torneiosAdicionados;
+        console.log( "aqui elimna", item );
+        arraytorneioAdd.splice( item, 1 );
+        console.log( arraytorneioAdd );
+        verTorneiosOutros();
+      }
+
+      function substituirVazios( valor, novo, stg ) {
+        var cadena = valor;
+        var str = String( stg );
+        var total = 30;
+        var novaCadena = "";
+        console.log( cadena.indexOf( "99" ) );
+        for ( var i = 0; i < total; i++ ) {
+          if ( cadena.indexOf( str ) != -1 ) {
+            novaCadena = cadena.replace( str, novo );
+            cadena = novaCadena;
+          } else {
+            return novaCadena;
+            break;
+          }
+        }
+      }
     }
   ] ); //ctrl
   temporadasRankingJogos.factory( "PopupFactory", function( $ionicPopup ) {
@@ -155,6 +327,74 @@
               e.preventDefault();
             } else {
               return scope.data.nome;
+            }
+          }
+        }, ]
+      } )
+    }
+    if ( cancel == false ) {
+      return {
+        getPopup: getPopup
+      };
+    }
+  } );
+  temporadasRankingJogos.factory( "PopupFactoryBuscar", function( $ionicPopup ) {
+    var cancel = false;
+
+    function getPopup( scope ) {
+      return $ionicPopup.show( {
+        //template: '<p align="center"><i class="icon ion-ribbon-b verdeBold  tamanhoIcon"></i></p>' + '<p align="center"><strong>{{"CRIARNOVO" | translate}}</strong></p>' + '<input type="text" placeholder="{{"NOMEGAMERTAG"| translate}}" ng-model="data.nome">',
+        templateUrl: 'popup-buscartorneio.html',
+        scope: scope,
+        buttons: [ {
+          text: 'Cancel',
+          type: 'button-stable',
+          onTap: function( e ) {
+            cancel = true
+          }
+        }, {
+          text: '<b>Buscar</b>',
+          type: 'button-balanced',
+          onTap: function( e ) {
+            if ( !scope.valor ) {
+              console.log( scope.valor );
+              e.preventDefault();
+            } else {
+              return scope.valor;
+            }
+          }
+        }, ]
+      } )
+    }
+    if ( cancel == false ) {
+      return {
+        getPopup: getPopup
+      };
+    }
+  } );
+  temporadasRankingJogos.factory( "PopupFactoryAddTorneio", function( $ionicPopup ) {
+    var cancel = false;
+
+    function getPopup( scope ) {
+      return $ionicPopup.show( {
+        //template: '<p align="center"><i class="icon ion-ribbon-b verdeBold  tamanhoIcon"></i></p>' + '<p align="center"><strong>{{"CRIARNOVO" | translate}}</strong></p>' + '<input type="text" placeholder="{{"NOMEGAMERTAG"| translate}}" ng-model="data.nome">',
+        templateUrl: 'popup-adicionartorneio.html',
+        scope: scope,
+        buttons: [ {
+          text: 'Cancel',
+          type: 'button-stable',
+          onTap: function( e ) {
+            cancel = true
+          }
+        }, {
+          text: '<b>Add</b>',
+          type: 'button-balanced',
+          onTap: function( e ) {
+            if ( !scope.valor ) {
+              console.log( scope.valor );
+              e.preventDefault();
+            } else {
+              return scope.valor;
             }
           }
         }, ]

@@ -100,7 +100,20 @@ trans.factory( 'asyncLoader', function( $q, $timeout ) {
                 NOVO: "Nuevo",
                 CAMPOSPREENCHIDOS: "Todos los campos deben ser llenados.",
                 NUMEROMININO: "¡Debes agregar al menos 4 participantes!",
-                NOMESREPETIDOS: "Cambie o borre los nombres duplicados!"
+                NOMESREPETIDOS: "Cambie o borre los nombres duplicados!",
+                ADICIONENOVOTORNEIO: "Agregue u nuevo torneo e invite tus amigos a jugar!",
+                OUTROSTORNEIOS: "Otros Torneos",
+                CHAVEDEACESSO: "Clave de acceso",
+                BUSCARTORNEIO: "Buscar torneo:",
+                VERIFICARDATOS: "No se encontró este torneo, por favor revise el GAMERTAG y/o la CLAVE DE ACCESO y vuelva a intentar.",
+                TORNEIOENCONTRADO: "Torneo encontrado!",
+                TORNEIOSADICIONADOS: "Podrás ver los torneos agregados en la pestaña 'Otros Torneos'",
+                AQUILISTATORNEIOOUTROS: "Aqui se listarán los torneos de tus amigos que hayas agregados.",
+                TORNEIOS: "Torneos",
+                TORNEIOJAFOIADICIONADO: "Este torneo ya se está agregado a su lista de OTROS TORNEOS",
+                CHAVE: "Clave",
+                ESTAECHAVEACESSO: "Esta es la clave de acceso para este torneo, por favor comparta DESPUES de agregar los participantes.",
+                ADICIONEPARTICCOMPARTA: "Acceda, agregue participantes y comparta la llave de acceso de este torneo"
             };
         }
         if ( options.key === 'pt' ) {
@@ -192,7 +205,20 @@ trans.factory( 'asyncLoader', function( $q, $timeout ) {
                 NOVO: "Novo",
                 CAMPOSPREENCHIDOS: "Todos os campos devem ser preenchidos.",
                 NUMEROMININO: "Você debe adicionar pelo menos 4 participantes!",
-                NOMESREPETIDOS: "Modifique ou elimine os nomes repetidos!"
+                NOMESREPETIDOS: "Modifique ou elimine os nomes repetidos!",
+                ADICIONENOVOTORNEIO: "Adicione um novo torneio e convide seus amigos para jogar!",
+                OUTROSTORNEIOS: "Outros Torneios",
+                CHAVEDEACESSO: "Chave de acesso",
+                BUSCARTORNEIO: "Pesquisar torneio:",
+                VERIFICARDATOS: "Não se encontrou este torneio, por favore verifique o GAMERTAG e/ou a CHAVE DE ACESSO e volte a pesquisar.",
+                TORNEIOENCONTRADO: "Torneio encontrado!",
+                TORNEIOSADICIONADOS: "Você poderá ver os torneios adicionados na aba 'Outros Torneios'",
+                AQUILISTATORNEIOOUTROS: "Aqui se verá a lista dos torneios criados pelo seus amigos e adicionados por você.",
+                TORNEIOS: "Torneios",
+                TORNEIOJAFOIADICIONADO: "Este torneio já está adicionado em sua lista de OUTROS TORNEIOS",
+                CHAVE: "Chave",
+                ESTAECHAVEACESSO: "Esta é a chave de acesso para este torneio, por favor compartilhe DEPOIS de adicionar os participantes.",
+                ADICIONEPARTICCOMPARTA: "Entre aqui, adicione os participantes e compartilhe a chave de acesso deste torneio!"
             };
         }
         if ( options.key === 'en' ) {

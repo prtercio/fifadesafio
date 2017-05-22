@@ -170,11 +170,11 @@ angular.module( 'App', [ 'ionic', 'App.CtrlInicio', 'App.CtrlConquistas', 'App.C
       views: {
         'menuContent': {
           templateUrl: 'views/torneios/todosxtodos/torneiosTodosDetalhes.html',
-          controller: 'CtrlTorneiosTodosDetalhes as idTorneio'
+          controller: 'CtrlTorneiosTodosDetalhes as idTorneioKeyUsuario'
         }
       },
       resolve: {
-        idTorneio: function( $stateParams ) {
+        idTorneioKeyUsuario: function( $stateParams ) {
           return $stateParams.torneioId;
         }
       }
