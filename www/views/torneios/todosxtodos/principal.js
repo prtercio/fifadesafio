@@ -152,7 +152,9 @@
           if ( $scope.valor == null ) {
             $scope.valor = {}
           } else {
-            gamertagParaBuscar = substituirVazios( gamertagParaBuscar, " ", "%20" );
+            if ( gamertagParaBuscar.indexOf( "%20" ) == -1 ) {} else {
+              gamertagParaBuscar = substituirVazios( gamertagParaBuscar, " ", "%20" );
+            }
             $scope.valor = {
               gamertag: gamertagParaBuscar,
               chave: chaveParaBuscar
@@ -220,10 +222,13 @@
         function buscarTorneioChaveNovo() {
           Utils.show();
           var gtSemProceso = String( gamertagChave.gamertag );
-          if ( gamertagParaBuscar.indexOf( " " ) == -1 ) {
+          console.log( "0", gamertagParaBuscar );
+          if ( gtSemProceso.indexOf( " " ) == -1 ) {
             gamertagParaBuscar = gtSemProceso;
+            console.log( "1", gamertagParaBuscar );
           } else {
             gamertagParaBuscar = String( gtSemProceso.replace( /\s/g, '%20' ) );
+            console.log( "2", gamertagParaBuscar );
           }
           console.log( "----- ", gamertagParaBuscar );
           chaveParaBuscar = gamertagChave.chave;
