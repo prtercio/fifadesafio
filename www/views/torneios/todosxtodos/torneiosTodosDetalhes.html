@@ -1,134 +1,156 @@
 <ion-view view-title="{{'TORNEIO'| translate}}" ng-init="carregarDados()">
-  
-<ion-nav-buttons side="secondary" >
-         <div data-link="{{gamertagCompartir}}" data-text="chaveAcesso"></div>      
-  </ion-nav-buttons>
- <ion-content id="imagebg"> 
-  
-   <div ng-show="noInscritos" class="padding center" >
-     <h4 class="laranja">{{'ADICIONARPARTICPANTES' | translate}}</h4>
-     <div ng-repeat="input in inputs">
-       <div class="row">
-         <div class="col col-10">
-           <h3 class="laranja">{{$index + 1}}</h3>
-         </div>
-         <div class="col col-80">
-          <label class="item item-input">
-            <input type="text" ng-model="input.value" placeholder="{{'NOMEGAMERTAG' | translate}}">
-          </label>
-        </div>      
-        <div class="col col-10">
-          <button  class="button button-small button-energized" ng-if="$index == inputs.length - 1" 
-          ng-click="addInput(input.value)">+</button>
-          <button class="button button-small button-energized" ng-if="$index != inputs.length - 1"
-          ng-click="removeInput($index)">-</button>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div ng-show="!noInscritos">
 
-    <div class="row borderGris branco vermelhorescurobg">    
-      <div class="col col-10">#</div>
-      <div class="col col-20 center">Gamer</div>
-      <div class="col col-10 center">J</div>
-      <div class="col col-10 center">V</div>
-      <div class="col col-10 center">E</div>
-      <div class="col col-10 center">D</div>
-      <div class="col col-10 center">GP</div>
-      <div class="col col-10 center">GC</div>
-      <div class="col col-10 center">Pts.</div>
-
-    </div>
-    <div class="borderGris">
-      <div class="row" ng-repeat="(key, value) in torneio | orderBy:'pontos':true">       
-        <div class="col col-10 center">
-
-          <div ng-class="{verdeOp60:$index==0,verdeOp40:$index==1, verdeOp20:$index==2, branco:$index>=3}"><strong>{{$index + 1}}</strong>
-
+  <ion-nav-buttons side="secondary" >
+   <div data-link="{{gamertagCompartir}}" data-text="chaveAcesso"></div>      
+ </ion-nav-buttons>
+ <ion-tabs class="tabs-dark tabs-icon-top">
+   <ion-tab title="Ranking" icon-on="ion-ios-list" icon-off="ion-ios-list-outline">
+     <ion-content id="imagebg"> 
+      <br />
+      <br />
+      <div ng-show="noInscritos" class="padding center" >
+       <h4 class="laranja">{{'ADICIONARPARTICPANTES' | translate}}</h4>
+       <div ng-repeat="input in inputs">
+         <div class="row">
+           <div class="col col-10">
+             <h3 class="laranja">{{$index + 1}}</h3>
+           </div>
+           <div class="col col-80">
+            <label class="item item-input">
+              <input type="text" ng-model="input.value" placeholder="{{'NOMEGAMERTAG' | translate}}">
+            </label>
+          </div>      
+          <div class="col col-10">
+            <button  class="button button-small button-energized" ng-if="$index == inputs.length - 1" 
+            ng-click="addInput(input.value)">+</button>
+            <button class="button button-small button-energized" ng-if="$index != inputs.length - 1"
+            ng-click="removeInput($index)">-</button>
           </div>
         </div>
-        <div class="col col-20 branco">{{value.gamer}}</div>
-        <div class="col col-10  branco bgbisque center">{{value.jogos}}</div>
-        <div class="col col-10 branco center" >{{value.vitoria}}</div>
-        <div class="col col-10  branco bgbisque center" >{{value.empate}}</div>
-        <div class="col col-10 branco center" >{{value.derrota}}</div>
-        <div class="col col-10  branco bgbisque center" >{{value.golsPro}}</div>
-        <div class="col col-10 branco center" >{{value.golsContra}}</div>
-        <div class="col col-10  branco bgbisque center" >{{value.pontos}}</div>
-      </div>        
-    </div>
 
-    <ion-list>
-      <div ng-repeat="group in groups | orderBy:name:true">
-        <ion-item class="item-dark cinza"
-        ng-click="toggleGroup(group)"
-        ng-class="{active: isGroupShown(group)}">
-        <i class="icon" ng-class="isGroupShown(group) ? 'ion-minus' : 'ion-plus'"></i>
-        &nbsp;
-        {{'RODADA' | translate}} {{group.rodada}}
-      </ion-item>
-      <ion-item class="item-accordion itemtransparente itembordagris"
-      ng-repeat="item in group.items track by $index"
-      ng-show="isGroupShown(group)">
-      <div class="row" ng-show="$index < rodadasQtdJogos">
-        <div class="col col-{{dimensionColumna}} center">
-          <in class="letraTamanhoJogo">{{item.jogo}}</in>
-        </div>
-        <div class="col col-20" ng-show="eCriador">            
-          <a class="button button-small button-balanced" ng-click="editarJogo(group.rodada, item.jogo, item.idTorneio, item.idRodada)"> <i class="icon ion-edit"></i></a>
+      </div>
+    <button class="button button-block button-balanced" ng-disabled="inputs.length < 4" ng-click="enviarDatos()">
+      {{'GERARCONFRONTOS'|translate}}
+    </button>
+
+    </div>
+    <div ng-show="!noInscritos">
+
+
+     <div class="button-bar bar-dark" ng-show="!noInscritos && eCriador">      
+      <button class="button footer" ng-click="verChaveAcesso()">
+       <!-- {{'CHAVE'| translate}}-->
+       <i class="icon ion-key"></i>
+     </button>
+     <button class="button footer whatsapp">
+      <i class="icon ion-social-whatsapp-outline"></i>
+    </button>
+    <button class="button">
+      <!--{{'ADICIONARADMIN'|translate}}-->
+      <i class="icon ion-person-stalker"></i>
+    </button>
+    <button class="button" ng-click="atualizarRanking()">
+      <!--{{'ATUALIZAR'|translate}}-->
+      <i class="icon ion-loop"></i>
+    </button>
+  </div>
+
+  <div class="row borderGris branco vermelhorescurobg">    
+    <div class="col col-10">#</div>
+    <div class="col col-20 center">Gamer</div>
+    <div class="col col-10 center">J</div>
+    <div class="col col-10 center">V</div>
+    <div class="col col-10 center">E</div>
+    <div class="col col-10 center">D</div>
+    <div class="col col-10 center">GP</div>
+    <div class="col col-10 center">GC</div>
+    <div class="col col-10 center">Pts.</div>
+
+  </div>
+  <div class="borderGris">
+    <div class="row" ng-repeat="(key, value) in torneio | orderBy:'pontos':true">       
+      <div class="col col-10 center">
+
+        <div ng-class="{verdeOp60:$index==0,verdeOp40:$index==1, verdeOp20:$index==2, branco:$index>=3}"><strong>{{$index + 1}}</strong>
+
         </div>
       </div>
-    </ion-item>
+      <div class="col col-20 branco">{{value.gamer}}</div>
+      <div class="col col-10  branco bgbisque center">{{value.jogos}}</div>
+      <div class="col col-10 branco center" >{{value.vitoria}}</div>
+      <div class="col col-10  branco bgbisque center" >{{value.empate}}</div>
+      <div class="col col-10 branco center" >{{value.derrota}}</div>
+      <div class="col col-10  branco bgbisque center" >{{value.golsPro}}</div>
+      <div class="col col-10 branco center" >{{value.golsContra}}</div>
+      <div class="col col-10  branco bgbisque center" >{{value.pontos}}</div>
+    </div>        
   </div>
-</ion-list>
+
+  
 </div>
 
-</ion-content>
-<script id="popup-editarjogo.html" type="text/ng-template">    
-  <p align="center"><i class="icon ion-ribbon-b cinza  tamanhoIcon"></i></p>
-  <p align="center"><strong>{{'RONDA' | translate}} {{rodadaAtual}}</strong></p>
-  <div class="row">
-    <div class="col col-40" align="right">
-      <h4>{{oponente1}}</h4> 
-    </div>
-    <div class="col col-20 center padInferior"><h4>{{'X' | translate}}</h4></div>
-     <div class="col col-40">
-      <h4>{{oponente2}}</h4> 
-    </div>
-   
-  </div>
-  <div class="row">
-    <!-- -->
-    <div class="col col-50" align="center">
-      <input type="number" name="local" ng-model="data.local" >
-    </div>
-    <div class="col col-50" align="center">
-     <input type="number" name="visitante" ng-model="data.visitante">
-   </div>
 
- </div>
-</script>
-<ion-footer-bar align-title="center" class="bar-dark" padding="true">
- 
+</ion-tab>
 
-<fab-button-left class="verde aumentarBotao" target-id="content" ng-show="noInscritos" ng-click="enviarDatos()">
-  {{'GERARCONFRONTOS'|translate}}
-</fab-button-left>
-    <div class="buttons footer" ng-show="!noInscritos && eCriador">      
-      <button class="button footer" ng-click="verChaveAcesso()">
-        {{'CHAVE'| translate}}
-      </button>
-      <button class="button footer whatsapp">
-        <i class="icon ion-social-whatsapp-outline"></i>
-      </button>
-      <button class="button">
-        {{'ADICIONARADMIN'|translate}}
-      </button>
-       <button class="button" ng-click="atualizarRanking()">
-        {{'ATUALIZAR'|translate}}
-      </button>
+<ion-tab title="{{'RODADAS' | translate}}" icon-on="ion-ios-football" icon-off="ion-ios-football-outline" ng-if="!noInscritos">
+  <ion-content id="imagebg">
+  <br />
+  <br />
+ <ion-list ng-show="!noInscritos">
+    <div ng-repeat="group in groups | orderBy:name:true">
+      <ion-item class="item-dark cinza"
+      ng-click="toggleGroup(group)"
+      ng-class="{active: isGroupShown(group)}">
+      <i class="icon" ng-class="isGroupShown(group) ? 'ion-minus' : 'ion-plus'"></i>
+      &nbsp;
+      {{'RODADA' | translate}} {{group.rodada}}
+    </ion-item>
+    <ion-item class="item-accordion itemtransparente itembordagris"
+    ng-repeat="item in group.items track by $index"
+    ng-show="isGroupShown(group)">
+    <div class="row" ng-show="$index < rodadasQtdJogos">
+      <div class="col col-{{dimensionColumna}} center">
+        <in class="letraTamanhoJogo">{{item.jogo}}</in>
       </div>
+      <div class="col col-20" ng-show="eCriador">            
+        <a class="button button-small button-balanced" ng-click="editarJogo(group.rodada, item.jogo, item.idTorneio, item.idRodada)"> <i class="icon ion-edit"></i></a>
+      </div>
+    </div>
+  </ion-item>
+</div>
+</ion-list>
+  </ion-tab>
+
+</ion-tabs>
+    <script id="popup-editarjogo.html" type="text/ng-template">    
+      <!-- <p align="center"><i class="icon ion-ribbon-b cinza  tamanhoIcon"></i></p> -->
+      <p align="center"><strong>{{'RONDA' | translate}} {{rodadaAtual}}</strong></p>
+      <div class="row">
+        <div class="col col-40" align="right">
+          <h4>{{oponente1}}</h4> 
+        </div>
+        <div class="col col-20 center padInferior"><h4>{{'X' | translate}}</h4></div>
+        <div class="col col-40">
+          <h4>{{oponente2}}</h4> 
+        </div>
+
+      </div>
+      <div class="row">
+        <!-- -->
+        <div class="col col-50" align="center">
+          <input type="number" name="local" ng-model="data.local" >
+        </div>
+        <div class="col col-50" align="center">
+         <input type="number" name="visitante" ng-model="data.visitante">
+       </div>
+
+     </div>
+   </script>
+   <ion-footer align-title="center"  class="bar-dark" padding="true">
+
+
+   
+
 
 
 <!--
@@ -136,5 +158,5 @@
   <i class="icon ion ion-compose"></i>
 </fab-button-right>
 -->
-</ion-footer-bar>
+</ion-footer>
 </ion-view>

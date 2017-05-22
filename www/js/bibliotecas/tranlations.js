@@ -117,7 +117,8 @@ trans.factory( 'asyncLoader', function( $q, $timeout ) {
                 ADICIONEPARTICCOMPARTA: "Acceda, agregue participantes y comparta la llave de acceso de este torneo",
                 ADICIONARADMIN: "Agregar Administrador",
                 ATUALIZAR: "Actualizar",
-                GERARCONFRONTOS: "Generar rondas"
+                GERARCONFRONTOS: "Generar rondas",
+                RODADAS: "Rondas"
             };
         }
         if ( options.key === 'pt' ) {
@@ -226,7 +227,8 @@ trans.factory( 'asyncLoader', function( $q, $timeout ) {
                 ADICIONEPARTICCOMPARTA: "Entre aqui, adicione os participantes e compartilhe a chave de acesso deste torneio!",
                 ADICIONARADMIN: "Adicionar Administrador",
                 ATUALIZAR: "Atualizar",
-                GERARCONFRONTOS: "Gerar confrontos"
+                GERARCONFRONTOS: "Gerar confrontos",
+                RODADAS: "Rodadas"
             };
         }
         if ( options.key === 'en' ) {
