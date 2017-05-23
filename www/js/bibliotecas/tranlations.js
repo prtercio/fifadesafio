@@ -25,6 +25,8 @@ trans.factory( 'asyncLoader', function( $q, $timeout ) {
                 REGISTRO: "Registrárse",
                 ANTESREGISTRO: "Antes de registrárse, verifique su Gamertag...",
                 GAMERTAGOK: "Gamertag OK. ¡Registrate!",
+                VOCELOGADO: "¡Sessión iniciada!",
+                LINKRECUPERARSENHA: "O link para recuperar a senha será enviado ao seu email.",
                 VOLTAR: "Volver",
                 PONTOS: "Puntos",
                 JOGOS: "Juegos",
@@ -119,7 +121,13 @@ trans.factory( 'asyncLoader', function( $q, $timeout ) {
                 ATUALIZAR: "Actualizar",
                 GERARCONFRONTOS: "Generar rondas",
                 RODADAS: "Rondas",
-                TODOSXTODOS: "Campeonatos"
+                TODOSXTODOS: "Campeonatos",
+                VERIFICANDOGAMERTAG: "Verificando Gamertag",
+                GAMERTAGENCONTRADO: "Gamertag encontrado",
+                VERIFICANDOGAMERTAG: "Confirmando Gamertag",
+                RECUPERANDODADOS: "Recuperando datos",
+                REPETESENHA: "Repita la contraseña",
+                SENHASNOCOINCINDEN: "¡Las contraseñas no coinciden!"
             };
         }
         if ( options.key === 'pt' ) {
@@ -133,9 +141,11 @@ trans.factory( 'asyncLoader', function( $q, $timeout ) {
                 SENHA: "Senha",
                 INISESSAO: "Iniciar sessão",
                 RECSENHA: "Recuperar Senha",
-                REGISTRO: "Registro",
-                ANTESREGISTRO: "Antes de se registrar, verifique seu Gamertag...",
-                GAMERTAGOK: "Gamertag OK. Pode se registrar!",
+                REGISTRO: "Cadastro",
+                ANTESREGISTRO: "Antes de se cadastrar, verifique seu Gamertag...",
+                GAMERTAGOK: "Gamertag OK. Pode se cadastrar!",
+                VOCELOGADO: "Você está logado!",
+                LINKRECUPERARSENHA: "O link para recuperar a senha será enviado ao seu email.",
                 VOLTAR: "Volver",
                 PONTOS: "Pontos",
                 JOGOS: "Jogos",
@@ -221,7 +231,7 @@ trans.factory( 'asyncLoader', function( $q, $timeout ) {
                 TORNEIOSADICIONADOS: "Você poderá ver os torneios adicionados na aba 'Outros Torneios'",
                 AQUILISTATORNEIOOUTROS: "Aqui se verá a lista dos torneios criados pelo seus amigos e adicionados por você.",
                 TORNEIOS: "Torneios",
-                TORNEIO: "Torneo",
+                TORNEIO: "Tornieo",
                 TORNEIOJAFOIADICIONADO: "Este torneio já está adicionado em sua lista de OUTROS TORNEIOS",
                 CHAVE: "Chave",
                 ESTAECHAVEACESSO: "Esta é a chave de acesso para este torneio, compartilhe com seus amigos!",
@@ -230,7 +240,12 @@ trans.factory( 'asyncLoader', function( $q, $timeout ) {
                 ATUALIZAR: "Atualizar",
                 GERARCONFRONTOS: "Gerar confrontos",
                 RODADAS: "Rodadas",
-                TODOSXTODOS: "Campeonatos"
+                TODOSXTODOS: "Campeonatos",
+                GAMERTAGENCONTRADO: "Gamertag encontrado",
+                VERIFICANDOGAMERTAG: "Verificando Gamertag",
+                RECUPERANDODADOS: "Recuperando dados",
+                REPETESENHA: "Repita a senha",
+                SENHASNOCOINCINDEN: "As senhas estão diferentes!"
             };
         }
         if ( options.key === 'en' ) {

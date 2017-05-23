@@ -1,25 +1,25 @@
 <ion-view hide-back-button="true" hide-nav-bar="true">
-  <ion-content class="padding">
+  <ion-content class="padding" id="imagebg">
 
 
     <div class="list text-center padding">
-      <!--<img class="resizePeq" src="{{imagenGt}}">-->
+      <img class="resizePeq" src="img/goalone.png">
 
-      <h3><span class="bold">{{'REGISTRO' | translate}}</span></h3>
+      <h4><span class="bold">{{'REGISTRO' | translate}}</span></h4>
       <!--
       <h4 class="line-height-160">We're so glad to have you join us! Awesomeness begins with you.</h4>
       -->
     </div>
-    <p>{{ 'ANTESREGISTRO' | translate}}</p>
+    <p align="center">{{ 'ANTESREGISTRO' | translate}}</p>
     <form name="gtForm" novalidate ng-submit="gtForm.$valid && buscarGamertag(gamertag)" >
     <div class="row">
-      <div class="col col-75">
+      <div class="col col-80">
         <label class="item item-input" style="border-radius:5px; margin-bottom: 10px;">
             <span class="input-label">Gamertag:</span>
             <input name="text" type="text" ng-change="cambioEntrada()" ng-model="gamertag" placeholder="Gamertag" ng-minlength="5" ng-maxlength="30" required>
           </label>
       </div>
-      <div class="col col-25">
+      <div class="col col-20">
         <button type="submit" value="Enviar" class="button button-balanced icon ion-search" ng-disabled="gtForm.$invalid"></button>
       </div>
       </div>
@@ -30,8 +30,8 @@
           <div class="col col-10">
           </div>
           <div class="col col-65">
-            <h4 class="verde">{{gamertag}}</h4>
-            <p class="gris">{{'GAMERTAGOK' | translate}}</p>
+            <h4>{{gamertag}}</h4>
+            <p class="laranja">{{'GAMERTAGOK' | translate}}</p>
           </div>
           </div>
         <!--
@@ -44,14 +44,15 @@
       <div class="list">        
         
         <label class="item item-input" style="border-radius:5px; margin-bottom: 10px;">
-          <span class="input-label">Email:</span>
           <input name="email" type="email" ng-model="user.email" placeholder="Email" ng-minlength="5" ng-maxlength="30" required>
         </label>
         <label class="item item-input" style="border-radius:5px; margin-bottom: 10px;">
-          <span class="input-label">{{'SENHA' | translate}}:</span>
           <input name="password" type="password" ng-model="user.password" placeholder="{{'SENHA' | translate}}" ng-minlength="5" ng-maxlength="30" required>
-        </label>         
-        <input type="submit" value="Enviar" class="button button-block button-positive" ng-disabled="registerForm.$invalid" />
+        </label>
+        <label class="item item-input" style="border-radius:5px; margin-bottom: 10px;">
+          <input name="password" type="password" ng-model="user.repetepassword" placeholder="{{'REPETESENHA' | translate}}" ng-minlength="5" ng-maxlength="30" required>
+        </label>                
+        <input type="submit" value="{{'ENVIAR' |  translate}}" class="button button-block button-balanced" ng-disabled="registerForm.$invalid" />
       </div>
     </form>
 

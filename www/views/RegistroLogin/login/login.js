@@ -5,7 +5,7 @@
 // Afterwhich, an account will be saved on the Firebase Database which is independent from the Firebase Auth and Social Auth accounts.
 // If the user is previously logged in and the app is closed, the user is automatically logged back in whenever the app is reopened.
 'Use Strict';
-angular.module( 'App' ).controller( 'CtrlLogin', function( $scope, $state, $localStorage, Social, Utils, $cordovaOauth, Popup, $ionicPopup, $window, $ionicModal, dataService, $ionicLoading, $http ) {
+angular.module( 'App' ).controller( 'CtrlLogin', function( $scope, $state, $localStorage, Social, Utils, $cordovaOauth, Popup, $ionicPopup, $window, $ionicModal, dataService, $ionicLoading, $http, $ionicPopup ) {
   $scope.$on( '$ionicView.enter', function() {
     //Clear the Login Form.
     $scope.user = {
@@ -268,7 +268,7 @@ angular.module( 'App' ).controller( 'CtrlLogin', function( $scope, $state, $loca
   $scope.buscarGamertag = function( gt ) {
     gtValido = false;
     $ionicLoading.show( {
-      template: "Verificando Gamertag..."
+      template: "{{'VERIFICANDOGAMERTAG'|translate}}..."
     } );
     var gtEspacio = String( gt );
     var espacio = "-";
@@ -295,9 +295,8 @@ angular.module( 'App' ).controller( 'CtrlLogin', function( $scope, $state, $loca
       idXbox = respuesta.data.xuid;
       $ionicLoading.hide();
       $ionicLoading.show( {
-        template: "Gamertag encontrado. Recuperando dados..."
+        template: "{{'GAMERTAGENCONTRADO'|translate}}. {{'RECUPERANDODADOS'|translate}}..."
       } );
-      console.log( "P2 - GT encontrado" );
       $http( {
         url: 'https://xboxapi.com/v2/' + idXbox + '/profile',
         method: 'GET',
@@ -341,64 +340,80 @@ angular.module( 'App' ).controller( 'CtrlLogin', function( $scope, $state, $loca
   }
   // ---- Registro
   $scope.register = function( user ) {
-    $localStorage.gamertag = gamertag;
-    //Check if form is filled up.
-    if ( angular.isDefined( user ) ) {
-      Utils.show();
-      firebase.database().ref( 'desafio/users/' ).orderByChild( 'email' ).equalTo( user.email ).once( 'value' ).then( function( accounts ) {
-        if ( accounts.exists() ) {
-          Utils.message( Popup.errorIcon, Popup.emailAlreadyExists );
-        } else {
-          //Create Firebase account.
-          firebase.auth().createUserWithEmailAndPassword( user.email, user.password ).then( function() {
-            //Add Firebase account reference to Database. Firebase v3 Implementation.
-            firebase.database().ref().child( 'desafio/users/' ).push( {
-              email: user.email,
-              gamertag: gamertag,
-              userId: firebase.auth().currentUser.uid,
-              dateCreated: Date(),
-              provider: 'Firebase',
-              idXbox: idXbox,
-              imagenGt: imagenGt,
-              tipo: "plus"
-            } ).then( function( response ) {
-              //Account created successfully, logging user in automatically after a short delay.
-              Utils.message( Popup.successIcon, Popup.accountCreateSuccess ).then( function() {
-                getAccountAndLogin( response.key );
-                console.log( response.key );
-                $localStorage.account = response.key;
-              } ).catch( function() {
-                //User closed the prompt, proceed immediately to login.
-                getAccountAndLogin( response.key );
-                $localStorage.account = response.key;
+    if ( user.password === user.repetepassword ) {
+      $localStorage.gamertag = gamertag;
+      //Check if form is filled up.
+      if ( angular.isDefined( user ) ) {
+        Utils.show();
+        firebase.database().ref( 'desafio/users/' ).orderByChild( 'email' ).equalTo( user.email ).once( 'value' ).then( function( accounts ) {
+          if ( accounts.exists() ) {
+            Utils.message( Popup.errorIcon, Popup.emailAlreadyExists );
+          } else {
+            //Create Firebase account.
+            firebase.auth().createUserWithEmailAndPassword( user.email, user.password ).then( function() {
+              //Add Firebase account reference to Database. Firebase v3 Implementation.
+              firebase.database().ref().child( 'desafio/users/' ).push( {
+                email: user.email,
+                gamertag: gamertag,
+                userId: firebase.auth().currentUser.uid,
+                dateCreated: Date(),
+                provider: 'Firebase',
+                idXbox: idXbox,
+                imagenGt: imagenGt,
+                tipo: "plus"
+              } ).then( function( response ) {
+                //Account created successfully, logging user in automatically after a short delay.
+                Utils.message( Popup.successIcon, Popup.accountCreateSuccess ).then( function() {
+                  getAccountAndLogin( response.key );
+                  console.log( response.key );
+                  $localStorage.account = response.key;
+                } ).catch( function() {
+                  //User closed the prompt, proceed immediately to login.
+                  getAccountAndLogin( response.key );
+                  $localStorage.account = response.key;
+                } );
+                $localStorage.loginProvider = "Firebase";
+                $localStorage.email = user.email;
+                $localStorage.password = user.password;
               } );
-              $localStorage.loginProvider = "Firebase";
-              $localStorage.email = user.email;
-              $localStorage.password = user.password;
+            } ).catch( function( error ) {
+              var errorCode = error.code;
+              var errorMessage = error.message;
+              //Show error message.
+              console.log( errorCode );
+              switch ( errorCode ) {
+                case 'auth/email-already-in-use':
+                  Utils.message( Popup.errorIcon, Popup.emailAlreadyExists );
+                  break;
+                case 'auth/invalid-email':
+                  Utils.message( Popup.errorIcon, Popup.invalidEmail );
+                  break;
+                case 'auth/operation-not-allowed':
+                  Utils.message( Popup.errorIcon, Popup.notAllowed );
+                  break;
+                case 'auth/weak-password':
+                  Utils.message( Popup.errorIcon, Popup.weakPassword );
+                  break;
+                default:
+                  Utils.message( Popup.errorIcon, Popup.errorRegister );
+                  break;
+              }
             } );
-          } ).catch( function( error ) {
-            var errorCode = error.code;
-            var errorMessage = error.message;
-            //Show error message.
-            console.log( errorCode );
-            switch ( errorCode ) {
-              case 'auth/email-already-in-use':
-                Utils.message( Popup.errorIcon, Popup.emailAlreadyExists );
-                break;
-              case 'auth/invalid-email':
-                Utils.message( Popup.errorIcon, Popup.invalidEmail );
-                break;
-              case 'auth/operation-not-allowed':
-                Utils.message( Popup.errorIcon, Popup.notAllowed );
-                break;
-              case 'auth/weak-password':
-                Utils.message( Popup.errorIcon, Popup.weakPassword );
-                break;
-              default:
-                Utils.message( Popup.errorIcon, Popup.errorRegister );
-                break;
-            }
-          } );
+          }
+        } );
+      }
+    } else {
+      var alertPopup = $ionicPopup.alert( {
+        template: '<p align="center"><i class="icon ion-alert-circled laranja tamanhoIcon"></i></p><p align="center"><strong>{{"SENHASNOCOINCINDEN" | translate}}</strong></p>',
+        buttons: [ {
+          text: '<b>Ok</b>',
+          type: 'button-energized',
+          onTap: function( e ) {}
+        } ]
+      } );
+      alertPopup.then( function( res ) {
+        if ( res ) {
+          console.log( "fechado" );
         }
       } );
     }

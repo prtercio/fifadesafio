@@ -4,13 +4,22 @@
 
   </ion-nav-buttons>
   <ion-content  id="imagebg">
-    <h1>Inicio</h1>
-       <br />
-        {{fecha | date:"dd/MM/yyyy HH:mm a" : 'UTC'}}
-
-        <p class="mi_parrafo" data-barrio="Jardines del Nogalar" data-colonia="San Nicolás de los"  data-cp="66486"></p>
-        <p class="mi_parrafo" data-barrio="Jardines del Nogalar 2" data-colonia="San Nicolás de los2"  data-cp="66485"></p>
-        <p><input type="button" class="cargar" value="Obtener información"></p>
+  <div class="list text-center padding">
+        <img class="resizeMed" src="img/goalone.png">
+        <br />
+        <p class="">Benvindo ao desafio mais completo do Fifa 17! Participe dos desafios no FUT, Temporadas, Copas ou crie seu porprio Torneio no formato de Campeonato ou Copa.</p>
+      </div>
+      <div class="row">
+        <div class="col col-33">
+        <h5>Temporadas FUT</h5>
+        </div>
+        <div class="col col-33">
+        <h5>Temporadas</h5>
+        </div>
+        <div class="col col-33">
+        <h5>Torneio</h5>
+        </div>
+      </div>
 
     <script id="templates/popover.html" type="text/ng-template">
     <ion-popover-view style="height: 330px;">
