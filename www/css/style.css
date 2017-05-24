@@ -582,3 +582,7 @@ button.fab-button-left.centrar {
 .buttons.footer {
     min-width: 120px;
 }
+
+div.hscroller {
+    top: 15% !important;
+}

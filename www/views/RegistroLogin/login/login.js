@@ -19,6 +19,7 @@ angular.module( 'App' ).controller( 'CtrlLogin', function( $scope, $state, $loca
     var datosXboxRec = false;
     var imagenGt = "";
     var gamerscore = "";
+    var tipoUsuario = "";
     //Check if user is already authenticated on Firebase and authenticate using the saved credentials.
     if ( $localStorage ) {
       if ( $localStorage.loginProvider ) {
@@ -290,6 +291,7 @@ angular.module( 'App' ).controller( 'CtrlLogin', function( $scope, $state, $loca
         'Content-Type': 'application/json'
       }
     } ).then( function( respuesta ) {
+      console.log( "1", respuesta );
       gtValido = true;
       $scope.gtValido = gtValido;
       idXbox = respuesta.data.xuid;
@@ -310,15 +312,18 @@ angular.module( 'App' ).controller( 'CtrlLogin', function( $scope, $state, $loca
           'Content-Type': 'application/json'
         }
       } ).then( function( respuesta ) {
+        console.log( "2", respuesta );
         console.log( "P3 - Datos encontrado" );
         datosXboxRec = true;
         $ionicLoading.hide();
         gamertag = respuesta.data.Gamertag;
         imagenGt = respuesta.data.GameDisplayPicRaw;
         gamerscore = respuesta.data.Gamerscore;
+        tipoUsuario = respuesta.data.AccountTier;
         $scope.msg = "Este é o seu Gamertag?";
         $scope.gamertag = gamertag;
         $scope.imagenGt = imagenGt;
+        $scope.tipoUsuario = tipoUsuario;
       }, function( err ) {
         gtValido = false;
         datosXboxRec = false;
@@ -360,12 +365,12 @@ angular.module( 'App' ).controller( 'CtrlLogin', function( $scope, $state, $loca
                 provider: 'Firebase',
                 idXbox: idXbox,
                 imagenGt: imagenGt,
-                tipo: "plus"
+                tipo: "plus",
+                xboxTipo: tipoUsuario
               } ).then( function( response ) {
                 //Account created successfully, logging user in automatically after a short delay.
                 Utils.message( Popup.successIcon, Popup.accountCreateSuccess ).then( function() {
                   getAccountAndLogin( response.key );
-                  console.log( response.key );
                   $localStorage.account = response.key;
                 } ).catch( function() {
                   //User closed the prompt, proceed immediately to login.

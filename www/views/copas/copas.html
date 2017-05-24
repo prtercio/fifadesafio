@@ -3,6 +3,7 @@
         <button class="button button-icon icon ion-loop" ng-click="prova()"></button>
   </ion-nav-buttons>
 	<ion-content ng-controller="CtrlCopas as vm" overflow-scroll="true" id="imagebg">
+	<!--
 		<main>
 			<section>
 				<div id="carousel-5" class="carousel-wrapper">
@@ -16,5 +17,9 @@
 				<h4> Current selection: <strong>{{vm.itemSelected.idTorneio}}</strong></h4>
 			</section>
 		</main>
+		-->
+		 <hscroller>
+        <hcard ng-repeat="item in items" index="{{$index}}" desc="{{item.idTorneio}}" image="{{item.img}}"></hcard>
+      </hscroller>
 	</ion-content>
 </ion-view>
