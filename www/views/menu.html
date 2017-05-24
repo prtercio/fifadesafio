@@ -13,28 +13,41 @@
   </ion-side-menu-content>
 
   <ion-side-menu side="left" class="bgmenu">
+  <!--
     <ion-header-bar class="bar-dark">
       <h1 class="title">v:2.1.1</h1>
     </ion-header-bar>
-    <ion-content>
+    -->
+    <ion-content >
+    <div class="text-center">
+     <img class="resizeMed" src="img/goalone.png">
+    </div>
+    <div class="padding esquerdo">
       <ion-list>        
-        <ion-item class="itemNoborda itemtransp" menu-close href="#/app/inicio">
+        <ion-item  class="trans" menu-close href="#/app/inicio">
         <i class="icon fa fa-gamepad"></i> 
+
           {{'HOME' | translate}}
         </ion-item>
-        <ion-item class="itemNoborda itemtransp" menu-close href="#/app/temporadas">
+        <ion-item menu-close href="#/app/temporadas">
+          <!-- <i class="icon fa fa-shield"></i>-->
+                  <i class="icon"><img class="icon-menu" src="img/icon/temporadasb.png"/> </i>
           {{'TEMPORADAS' | translate}}
         </ion-item>
-        <ion-item class="itemNoborda itemtransp" menu-close href="#/app/copas">
+        <ion-item  menu-close href="#/app/copas">
+          <i class="icon"><img class="icon-menu" src="img/icon/copab.png"/> </i>
           {{'COPAS' | translate}}
         </ion-item>
-         <ion-item class="itemNoborda itemtransp" menu-close href="#/app/torneiosTodos">
-          {{'TODOSXTODOS' | translate}}
+         <ion-item menu-close href="#/app/torneiosTodos">
+         <i class="icon"><img class="icon-menu" src="img/icon/torneiob.png"/> </i>
+          {{'TODOSXTODOS' | translate}}          
         </ion-item>
-        <ion-item class="itemNoborda itemtransp" menu-close href="#/app/login">
+        <ion-item menu-close href="#/app/login">
+        <i class="icon fa fa-sign-in"></i> 
           Login
         </ion-item>
       </ion-list>
+      </div>
     </ion-content>
   </ion-side-menu>
 </ion-side-menus>

@@ -327,7 +327,7 @@ input[type=number] {
 
 .bgmenu {
     background-image: url(../img/bgmenu.png);
-    background-repeat: repeat;
+    background-repeat: no-repeat;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     background-size: cover;
@@ -343,6 +343,21 @@ input[type=number] {
 .itemtransparente {
     /*background: rgba(255, 255, 255, 0.8) !important; */
     background: transparent !important;
+}
+
+.item-complex .item-content, .item-radio .item-content .trans {
+    border: none !important;
+    background-color: transparent !important;
+}
+
+.item {
+    border: none !important;
+    background-color: transparent !important;
+    color: #FFF
+}
+
+.padding .esquerdo {
+    padding-left: 10px;
 }
 
 .itemtransp .item-content {
@@ -369,6 +384,13 @@ input[type=number] {
 .item.item-light {
     color: #444;
     background: rgba(255, 0, 255, 0.9);
+}
+
+.icon-menu {
+    width: 25px;
+    height: 25px;
+    top: 5px !important;
+    position: relative;
 }
 
 
