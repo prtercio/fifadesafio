@@ -13,7 +13,7 @@ div.hscroller::-webkit-scrollbar {
 
 div.hscroller-card {
     width: 120px;
-    height: 160px;
+    height: 220px;
     display: inline-block;
     background-color: #262626;
     vertical-align: middle;
@@ -21,7 +21,7 @@ div.hscroller-card {
 }
 
 div.hscroller-card img {
-    height: 120px;
+    height: 180px;
     width: 120px;
 }
 

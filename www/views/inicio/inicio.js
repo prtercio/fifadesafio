@@ -22,16 +22,6 @@
       var diasAtualizacao = 0;
       console.log( localStorage.getItem( "fechaAtualizacao" ) );
       atualizarData();
-      $( document ).ready( function() {
-        $( ".cargar" ).bind( "click", function() {
-          $( 'p.mi_parrafo' ).each( function( index, el ) {
-            var data = $( this ).data();
-            for ( var i in data ) {
-              console.log( data.i );
-            }
-          } );
-        } );
-      } );
 
       function atualizarData() {
         Utils.show();
@@ -39,7 +29,6 @@
           localStorage.setItem( "fechaAtualizacao", dataHoje );
           console.log( "no hay fecha" );
           atualizarConquistas();
-          atualizarTemporadas();
         }
         if ( !localStorage.getItem( "totalFotosTemporadas" ) ) {
           atualizarTemporadas();
@@ -62,18 +51,15 @@
                   console.log( "cabe atualizacao1" );
                   localStorage.setItem( "fechaAtualizacao", dataHoje );
                   atualizarConquistas();
-                  atualizarTemporadas();
                 }
               }
             } else {
               localStorage.setItem( "fechaAtualizacao", dataHoje );
               atualizarConquistas();
-              atualizarTemporadas();
             }
           } else {
             localStorage.setItem( "fechaAtualizacao", dataHoje );
             atualizarConquistas();
-            atualizarTemporadas();
           }
         } );
         Utils.hide();
@@ -135,39 +121,6 @@
       $scope.cerrarMenu = function() {
         $scope.popover.hide();
       };
-
-      function atualizarTemporadas() {
-        console.log( "atualizando temporadas" );
-        //temporadas
-        Utils.show();
-        var totalFotos = 0;
-        var ref = firebase.database().ref( 'desafio/desafios/temporadas/oficial' );
-        ref.once( "value" ).then( function( snapshot ) {
-          $scope.$apply( function() {
-            snapshot.forEach( function( minisnapshot ) {
-              if ( idioma == "es" ) {
-                images.push( {
-                  img: minisnapshot.val().img_es,
-                  idTorneio: minisnapshot.key
-                } );
-                totalFotos++;
-                window.localStorage.setItem( 'temporadas', JSON.stringify( images ) );
-                window.localStorage.setItem( "totalFotosTemporadas", totalFotos );
-                // images carousel
-              } else if ( idioma == "pt" ) {
-                images.push( {
-                  img: minisnapshot.val().img_pt,
-                  idTorneio: minisnapshot.key
-                } );
-                totalFotos++;
-                window.localStorage.setItem( 'temporadas', JSON.stringify( images ) );
-                window.localStorage.setItem( "totalFotosTemporadas", totalFotos );
-              }
-            } );
-          } );
-          Utils.hide();
-        } );
-      }
     }
   ] ); //ctrl
 } )();

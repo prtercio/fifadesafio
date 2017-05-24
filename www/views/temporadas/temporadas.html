@@ -1,40 +1,18 @@
-<ion-view view-title="{{'TEMPORADAS'|translate}}" ng-controller="CtrlTemporadas as vm">
- 	<ion-nav-buttons side="secondary">      
-        <a class="button button-icon icon ion-loop" ng-click="atualizarTemporadas()"></a>
-  </ion-nav-buttons>
-  <ion-content  overflow-scroll="true" id="imagebg">
-  	<div class="item item-divider vermelho">
-   	 {{'OFICIAL'|translate}}
-  	</div>
-		<main>
-			<section>
-				<div id="carousel-5" class="carousel-wrapper">
-					<a-carousel 
-					id="tamanho"
-					carousel-options="::vm.carouselOptions6"
-					array-provider="::vm.carouselData6"
-					on-select="vm.onSelectCarousel(item)">
-					</a-carousel>
-				</div>
-				<!--<h4> Current selection: <strong>{{vm.itemSelected.idTorneio}}</strong></h4>-->
-			</section>
-		</main>
-		<!--
-    <ion-list>
-	  <ion-item class="item item-avatar" ng-repeat="(key, value) in temporadas track by $index" href="#/app/temporadasTorneio/{{key}}">
-	  	<img src="{{value.img_es}}" ng-if="idioma == 'es'">
-	  	<img src="{{value.img_pt}}" ng-if="idioma == 'pt'">
-	    <h2>{{value.nome}}</h2>
+<ion-view view-title="{{'TEMPORADAS'|translate}}" ng-controller="CtrlTemporadas">
+	<ion-nav-buttons side="secondary">      
+		<a class="button button-icon icon ion-loop" ng-click="atualizarTemporadas()"></a>
+	</ion-nav-buttons>
+	<ion-content  overflow-scroll="true" id="imagebg">
+		<div class="item item-divider vermelho">
+			{{'OFICIAL'|translate}}
+		</div>
+		<br />
+		<hscroller>
+			<hcard ng-repeat="item in items track by $index" index="{{$index}}" desc="{{item.desc}}" image="{{item.img}}" url="#/app/temporadasTorneio/{{item.url}}"></hcard>
+		</hscroller>
 
-	    <p>Status: {{status | filtroAbertoFechado}}</p>
-	    <p>Temporada Inicial: {{temporadaInicial}}</p>
-	    <p ng-repeat="lang in value.premio.descricao track by $index" ng-if="$index == idioma">Premio: {{lang.nome}}</p>
-	  </ion-item>
-	</ion-list>
-	-->
-	 
-  </ion-content>
-  <div class="bar bar-footer bar-energized">
-  <p>Publicidade</p>
-</div>
+	</ion-content>
+	<div class="bar bar-footer bar-energized">
+		<p>Publicidade</p>
+	</div>
 </ion-view>

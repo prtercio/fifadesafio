@@ -4,7 +4,16 @@
   temporadasRankingJogos.controller( 'CtrlTorneiosTodosDetalhes', [ '$scope', 'Utils', '$state', '$localStorage', 'Popup', '$stateParams', 'idTorneioKeyUsuario', 'PopupFactoryRanking', '$ionicPopup',
     function( $scope, Utils, $state, $localStorage, Popup, $stateParams, idTorneioKeyUsuario, PopupFactoryRanking, $ionicPopup ) {
       var keyUsuario = "";
-      var gamertag = $localStorage.account.gamertag
+      var gamertag = "";
+      if ( $localStorage.account ) {
+        $scope.logado = true;
+        gamertag = $localStorage.account.gamertag;
+        $scope.gamertag = gamertag;
+      } else {
+        $scope.logado = false;
+        $scope.gamertag = "Anonimo";
+        gamertag = $scope.gamertag;
+      }
       var idTorneio = idTorneioKeyUsuario.substring( idTorneioKeyUsuario.indexOf( "&" ) + 1 );
       var keyUsariosinProcesar = idTorneioKeyUsuario.substring( 0, idTorneioKeyUsuario.indexOf( "&" ) );
       var gtKeyEspacio = String( keyUsariosinProcesar );
@@ -20,13 +29,6 @@
       var nomeTorneio = "";
       var dataTorneio = "";
       $scope.chaveAcesso = idTorneio;
-      if ( $localStorage.account ) {
-        $scope.logado = true;
-        $scope.gamertag = gamertag;
-      } else {
-        $scope.logado = false;
-        $scope.gamertag = "visitante";
-      }
       saberSiEadmin();
 
       function saberSiEadmin() {

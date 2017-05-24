@@ -4,9 +4,17 @@
   temporadasRankingJogos.controller( 'CtrlTorneiosTodos', [ '$scope', 'Utils', '$state', '$localStorage', 'Popup', '$stateParams', '$ionicModal', '$ionicPopup', 'PopupFactory', 'PopupFactoryBuscar', 'PopupFactoryAddTorneio',
     function( $scope, Utils, $state, $localStorage, Popup, $stateParams, $ionicModal, $ionicPopup, PopupFactory, PopupFactoryBuscar, PopupFactoryAddTorneio ) {
       //var keyUsuario = $localStorage.keyUser;
+      var gamertag = "";
+      if ( $localStorage.account ) {
+        $scope.logado = true;
+        $scope.gamertag = gamertag;
+        gamertag = $localStorage.account.gamertag
+      } else {
+        $scope.logado = false;
+        $scope.gamertag = "Anomimo";
+      }
       var keyUsuario = "";
       var keyUsuarioCreadorTorneio = "";
-      var gamertag = $localStorage.account.gamertag
       var gtSemEspacio = "";
       if ( gamertag ) {
         keyUsuario = sustituirValorString( gamertag, '%20' );
@@ -29,13 +37,6 @@
       $scope.keyUsuarioCriador = "";
       var localStorageTorneioAdicionado = [];
       var torneioEncontradoEstado = false;
-      if ( $localStorage.account ) {
-        $scope.logado = true;
-        $scope.gamertag = gamertag;
-      } else {
-        $scope.logado = false;
-        $scope.gamertag = "visitante";
-      }
 
       function sustituirValorString( valor, stg ) {
         var gtEspacio = String( valor );
@@ -44,32 +45,36 @@
       }
       $scope.listarTorneio = function() {
         verTorneiosOutros();
-        torneios = [];
-        Utils.show();
-        refTorneios.once( "value" ).then( function( snapshot ) {
-          $scope.$apply( function() {
-            var snap = snapshot.val();
-            var config = snapshot.val();
-            if ( snap == null ) {
-              $scope.verTorneio = false;
-            } else {
-              $scope.verTorneio = true;
-            }
-            keyUsuarioCreadorTorneio = snapshot.key;
-            $scope.keyUsuarioCriador = keyUsuarioCreadorTorneio;
-            if ( keyUsuario == keyUsuarioCreadorTorneio ) $scope.esCriado = true;
-            for ( var key in snap ) {
-              torneios.push( {
-                "nome": snap[ key ].configuracao.nome,
-                "senha": key,
-                "data": snap[ key ].configuracao.data,
-                "participantes": snap[ key ].configuracao.participantes
-              } );
-            }
-            $scope.torneios = torneios;
-            Utils.hide();
+        if ( $scope.gamertag != "Anomimo" ) {
+          torneios = [];
+          Utils.show();
+          refTorneios.once( "value" ).then( function( snapshot ) {
+            $scope.$apply( function() {
+              var snap = snapshot.val();
+              var config = snapshot.val();
+              if ( snap == null ) {
+                $scope.verTorneio = false;
+              } else {
+                $scope.verTorneio = true;
+              }
+              keyUsuarioCreadorTorneio = snapshot.key;
+              $scope.keyUsuarioCriador = keyUsuarioCreadorTorneio;
+              if ( keyUsuario == keyUsuarioCreadorTorneio ) $scope.esCriado = true;
+              for ( var key in snap ) {
+                torneios.push( {
+                  "nome": snap[ key ].configuracao.nome,
+                  "senha": key,
+                  "data": snap[ key ].configuracao.data,
+                  "participantes": snap[ key ].configuracao.participantes
+                } );
+              }
+              $scope.torneios = torneios;
+              Utils.hide();
+            } );
           } );
-        } );
+        } else {
+          console.log( "Nao pode criar" );
+        }
       }
       $scope.crearNovo = function() {
         var nome = "";
