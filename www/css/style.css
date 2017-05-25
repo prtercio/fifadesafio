@@ -179,7 +179,7 @@ input#file3{
     text-shadow: rgb(178, 62, 53) 0px 1px 0px;
 }
 
-item.linearer {
+.item.linearer {
     border-color: red;
 }
 
@@ -603,4 +603,8 @@ button.fab-button-left.centrar {
 
 .buttons.footer {
     min-width: 120px;
+}
+
+.item-input {
+    background: #E2E2E2 !important;
 }
