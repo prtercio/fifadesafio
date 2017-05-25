@@ -3,10 +3,7 @@
 		<a class="button button-icon icon ion-loop" ng-click="atualizarTemporadas()"></a>
 	</ion-nav-buttons>
 	<ion-content  overflow-scroll="true" id="imagebg">
-		<div class="item item-divider vermelho grisbg">
-			{{'OFICIAL'|translate}}
-		</div>
-		<br />
+		<h4>{{'OFICIAL'|translate}}</h4>
 		<hscroller>
 			<hcard ng-repeat="item in items track by $index" index="{{$index}}" desc="{{item.desc}}" image="{{item.img}}" url="#/app/temporadasTorneio/{{item.url}}"></hcard>
 		</hscroller>

@@ -21,21 +21,20 @@
             var totalDesafios = 0;
             snapshot.forEach( function( minisnapshot ) {
               totalDesafios++;
-              console.log( totalDesafios );
               $scope.status = minisnapshot.val().configuracao.estatus;
               $scope.temporadaInicial = minisnapshot.val().configuracao.temporada;
               var temporada = minisnapshot.val().configuracao.temporada;
               if ( idioma == "es" ) {
                 images.push( {
                   img: minisnapshot.val().img_es,
-                  desc: "Copa 10ma Divisao",
+                  desc: minisnapshot.val().nome,
                   url: minisnapshot.key
                 } );
                 // images carousel
               } else if ( idioma == "pt" ) {
                 images.push( {
                   img: minisnapshot.val().img_pt,
-                  desc: "Copa 10ma Divisao",
+                  desc: minisnapshot.val().nome,
                   url: minisnapshot.key
                 } );
               }

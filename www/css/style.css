@@ -608,3 +608,7 @@ button.fab-button-left.centrar {
 .item-input {
     background: #E2E2E2 !important;
 }
+
+div.hscroller-card {
+    background-color: transparent !important;
+}
