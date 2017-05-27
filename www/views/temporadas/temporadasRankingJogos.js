@@ -33,15 +33,18 @@
           $scope.temporadaAtual = $scope.comJogos.temporadaAtual;
           var comJogos = [];
           comJogos.push( $scope.comJogos.jogos );
+          console.log( $scope.comJogos.jogos );
           for ( var key in comJogos[ 0 ] ) {
-            resultadoJogos.push( {
-              "jogo": comJogos[ 0 ][ key ].jogo,
-              "bloqueado": comJogos[ 0 ][ key ].bloqueado,
-              "estado": comJogos[ 0 ][ key ].estado,
-              "pontos": comJogos[ 0 ][ key ].pontos,
-              "placar": comJogos[ 0 ][ key ].placar,
-              "status": comJogos[ 0 ][ key ].status
-            } );
+            for ( var obj in comJogos[ 0 ][ key ] ) {
+              resultadoJogos.push( {
+                "jogo": comJogos[ 0 ][ key ][ obj ].jogo,
+                "bloqueado": comJogos[ 0 ][ key ][ obj ].bloqueado,
+                "estado": comJogos[ 0 ][ key ][ obj ].estado,
+                "pontos": comJogos[ 0 ][ key ][ obj ].pontos,
+                "placar": comJogos[ 0 ][ key ][ obj ].placar,
+                "status": comJogos[ 0 ][ key ][ obj ].status
+              } );
+            }
           }
           $scope.jogos = resultadoJogos;
           //usando forEach tem que buscar 2 vezes n BD
