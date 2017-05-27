@@ -176,6 +176,7 @@
 			</a>	      
 
 		</ion-list>
+		<h4 ng-if="verPrimeiroJogo" align="center" class=" padding vermelhoClaro">{{'JOGOSLIBERADOSEM'|translate}}<strong class="vermelhoClaro">{{torneio.configuracao.dataInicio | date:'dd/MM/yyyy' : 'UTC'}}</strong></h4>
 
 	</ion-content>
 </ion-tab>
@@ -229,14 +230,8 @@
 			<div class="list padding">				  				      
 				<h4 align="center">{{torneio.configuracao.premio}}</h4>
 				<p>{{torneio.configuracao.premioCarac}}</p>
-
 			</div>
 		</div>
-
-
-
-
-		
 	</ion-content>
 </ion-tab>
 

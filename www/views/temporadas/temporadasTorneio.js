@@ -640,6 +640,7 @@
 			} else {
 				gamertag = "Anonimo";
 			}
+			$scope.verPrimeiroJogo = false;
 			$scope.gamertag = gamertag;
 			//console.log("------ "+gamertag);
 			$scope.sairTorneioVar = false;
@@ -978,8 +979,6 @@
 
 			function procesarResultadoSemana1() {
 				if ( fechaFormatada >= rangoDatas[ 0 ][ 0 ].dataAbertura0 ) {
-					console.log( "! " + fechaFormatada, rangoDatas[ 0 ][ 0 ].dataAbertura0 );
-					console.log( "! " + fechaFormatada, formatarDataAbertura( rangoDatas[ 0 ][ 0 ].dataAbertura1 ) );
 					var resultadoJogos = [];
 					var result = resultadoTodosJogos;
 					for ( var key in result ) {
@@ -1010,7 +1009,8 @@
 						}
 					}
 				} else {
-					console.log( "data nao é igualé menor" );
+					console.log( "data nao é igual é menor" );
+					$scope.verPrimeiroJogo = true;
 				}
 			}
 

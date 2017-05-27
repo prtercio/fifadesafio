@@ -129,7 +129,8 @@ trans.factory( 'asyncLoader', function( $q, $timeout ) {
                 RECUPERANDODADOS: "Recuperando datos",
                 REPETESENHA: "Repita la contraseña",
                 SENHASNOCOINCINDEN: "¡Las contraseñas no coinciden!",
-                INFO: "Info"
+                INFO: "Info",
+                JOGOSLIBERADOSEM: "Podrás iniciar a jugar apartir de "
             };
         }
         if ( options.key === 'pt' ) {
@@ -249,7 +250,8 @@ trans.factory( 'asyncLoader', function( $q, $timeout ) {
                 RECUPERANDODADOS: "Recuperando dados",
                 REPETESENHA: "Repita a senha",
                 SENHASNOCOINCINDEN: "As senhas estão diferentes!",
-                INFO: "Info"
+                INFO: "Info",
+                JOGOSLIBERADOSEM: "Você poderá jogar a partir de "
             };
         }
         if ( options.key === 'en' ) {
