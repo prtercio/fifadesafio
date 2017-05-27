@@ -1,28 +1,28 @@
 <ion-view view-title="{{'DESAFIO' | translate}}" ng-init="cargarDatos()" cache-view="false">
 	<ion-nav-buttons side="secondary">
-      <button 
-      	class="button" 
-      	ng-click="sairTorneio()" 
-      	ng-if="sairTorneioVar && torneio.configuracao.estatus == 'Aberto' && !terminarDesafio">{{'SAIR' | translate}}</button>
-      <button class="button button-balanced icon-left icon ion-ios-game-controller-b-outline" 
-      		ng-if="!sairTorneioVar && torneio.configuracao.estatus == 'Aberto' && torneio.configuracao.inscritos != torneio.configuracao.maxParticipantes && !terminarDesafio" ng-click="entrarTorneio()">{{'ENTRAR' | translate}}</button>
-  	</ion-nav-buttons>
+		<button 
+		class="button" 
+		ng-click="sairTorneio()" 
+		ng-if="sairTorneioVar && torneio.configuracao.estatus == 'Aberto' && !terminarDesafio">{{'SAIR' | translate}}</button>
+		<button class="button button-balanced icon-left icon ion-ios-game-controller-b-outline" 
+		ng-if="!sairTorneioVar && torneio.configuracao.estatus == 'Aberto' && torneio.configuracao.inscritos != torneio.configuracao.maxParticipantes && !terminarDesafio" ng-click="entrarTorneio()">{{'ENTRAR' | translate}}</button>
+	</ion-nav-buttons>
 
-  	<ion-tabs class="tabs-dark tabs-icon-top">
-           <ion-tab title="Ranking" icon-on="ion-ios-list" icon-off="ion-ios-list-outline">
-           <ion-content id="imagebg">
-           <br />
-           <br />
-           		<div class="item item-divider amarelobg60 itemNoborda" ng-show="terminarDesafio">
-			      <p align="center">{{'DESAFIOFINALIZADO' | translate}}</p>
-			      <p align="center">{{'CAMPEAO' | translate}}:</p>
-			      <br />
-			      	<div ng-repeat="(key, value) in resultado | orderBy:'pontos':true">	
-			      		<h1 align="center" ng-show="$index == 0">{{value.gamertag}}</h1>
-			      	</div>
-			      <br />
-			    </div>
-			    <div class="row borderGris branco vermelhorescurobg" ng-show="totalInscritos > 0">		
+	<ion-tabs class="tabs-dark tabs-icon-top">
+		<ion-tab title="Ranking" icon-on="ion-ios-list" icon-off="ion-ios-list-outline">
+			<ion-content id="imagebg">
+				<br />
+				<br />
+				<div class="item item-divider amarelobg60 itemNoborda" ng-show="terminarDesafio">
+					<p align="center">{{'DESAFIOFINALIZADO' | translate}}</p>
+					<p align="center">{{'CAMPEAO' | translate}}:</p>
+					<br />
+					<div ng-repeat="(key, value) in resultado | orderBy:'pontos':true">	
+						<h1 align="center" ng-show="$index == 0">{{value.gamertag}}</h1>
+					</div>
+					<br />
+				</div>
+				<div class="row borderGris branco vermelhorescurobg" ng-show="totalInscritos > 0">		
 					<div class="col col-10">#</div>
 					<div class="col col-40">Gamertag</div>
 					<div class="col col-10">J</div>
@@ -31,184 +31,215 @@
 					<div class="col col-10"></div>				
 				</div>
 				<div>
-				<div class="borderGris">
-					<div class="row" ng-repeat="(key, value) in resultado | orderBy:'pontos':true">				
-						<div class="col col-10 center">
-							
-							<div ng-class="{verdeOp60:$index==0,verdeOp40:$index==1, verdeOp20:$index==2, branco:$index>=3}"><strong>{{$index + 1}}</strong>
-								
+					<div class="borderGris">
+						<div class="row" ng-repeat="(key, value) in resultado | orderBy:'pontos':true">				
+							<div class="col col-10 center">
+
+								<div ng-class="{verdeOp60:$index==0,verdeOp40:$index==1, verdeOp20:$index==2, branco:$index>=3}"><strong>{{$index + 1}}</strong>
+
+								</div>
 							</div>
+							<div class="col col-40" ng-class="{verdeBold:value.gamertag==gamertag, branco:value.gamertag!=gamertag}">{{value.gamertag}}</div>
+							<div class="col col-10 branco">{{value.jogados}}</div>
+							<div class="col col-10 branco" >{{value.vitoria}}</div>
+							<div class="col col-20 branco" >{{value.pontos}}</div>
+							<div class="col col-10 branco" ng-if="value.jogados > 0 && gamertag != value.gamertag"><a class="button button-small button-balanced" href="#/app/temporadasRankingJogos/{{value.gamertag}}|{{value.keyUserTorneio}}"> <i class="icon ion-ios-redo"></i></a></div>
+						</div>				
+					</div>
+				</div>
+				<div  class="padding" ng-show="totalInscritos < 1">
+					<br />
+					<h3 align="center">{{'NAOHAINSCRITOS' | translate}}</h3>
+				</div>
+			</ion-content>
+		</ion-tab>
+
+		<ion-tab title="{{'MEUSJOGOS' | translate}}" icon-on="ion-ios-football" icon-off="ion-ios-football-outline">
+
+			<ion-content has-header="true" padding="false" id="imagebg">
+				<br />
+				<br />		 
+				<div ng-if="sairTorneioVar">
+					<div class="row borderGris vermelhorescurobg gris2">    
+						<div class="col col-20"><strong>{{'JOGOS' | translate}}</strong></div>
+						<div class="col col-20"><strong>{{'VITORIA' | translate}}</strong></div>
+						<div class="col col-20"><strong>{{'EMPATE' | translate}}</strong></div>
+						<div class="col col-20"><strong>{{'DERROTA' | translate}}</strong></div>
+						<div class="col col-20 branco"><strong>{{'PONTOS' | translate}}</strong></div>    
+					</div>
+
+					<div class="row">    
+						<div class="col col-20 padding"><strong>{{jogados}}</strong></div>
+						<div class="col col-20 padding"><strong>{{vitoria}}</strong></div>
+						<div class="col col-20 padding"><strong>{{empate}}</strong></div>
+						<div class="col col-20 padding"><strong>{{derrota}}</strong></div>
+						<div class="col col-20 padding verde"><strong>{{pontos}}</strong></div>    
+					</div> 
+					<div class="item item-divider amarelobg60 itemNoborda" ng-show="temporadaAtual > 0">
+					<div class="row">
+					<div class="col col-50">
+						{{'TEMPORADAATUAL' | translate}}: <strong class="vermelho">{{temporadaAtual}}</strong>
 						</div>
-						<div class="col col-40" ng-class="{verdeBold:value.gamertag==gamertag, branco:value.gamertag!=gamertag}">{{value.gamertag}}</div>
-						<div class="col col-10 branco">{{value.jogados}}</div>
-						<div class="col col-10 branco" >{{value.vitoria}}</div>
-						<div class="col col-20 branco" >{{value.pontos}}</div>
-						<div class="col col-10 branco" ng-if="value.jogados > 0 && gamertag != value.gamertag"><a class="button button-small button-balanced" href="#/app/temporadasRankingJogos/{{value.gamertag}}|{{value.keyUserTorneio}}"> <i class="icon ion-ios-redo"></i></a></div>
-					</div>				
+						<div class="col col-50">
+						{{'INICIO'|translate}}: <strong class="vermelho">{{torneio.configuracao.dataInicio | date:'dd/MM/yyyy' : 'UTC'}}</strong>
+						</div>
+						</div>
+					</div>
+					<!-- <h5 align="center"></hr> -->
 				</div>
+				<div ng-if="!sairTorneioVar">
+					<br />
+					<br />		   
+					<h4 align="center">{{'NOINSCRITOTORNEIO' | translate}}</h4>
+				</div>
+
+				<!-- Semana 5 -->
+				<ion-list ng-if="sairTorneioVar && semana5Ver" >
+					<div class="padding"><strong>{{semana5}}</strong><span ng-if="semana4Ver" class="vermelho"> {{bloqueado}}</span></div>					  
+					<a class="item item-icon-left item-icon-right itemtransparente itembordagris" ng-repeat="jogo in jogosLista4 | orderBy:'jogo*1':true" type="item-text-wrap" href="#/app/temporadasTorneioJogo/{{torneio.configuracao.jogos}}¡{{jogo.semana}}{{jogo.jogo}}|{{keyUserInscritoTorneio}}" ng-if="!jogo.bloqueado && jogo.jogo<51">
+						<i class="icon ion-ios-game-controller-a"></i>
+						<strong>{{'JOGO' | translate}} {{jogo.jogo}}</strong>
+						<in 
+						ng-class="{verde : jogo.status=='v', vermelho : jogo.status=='d', laranja : jogo.status=='e', gris2: jogo.estado=='Próximo'}">
+						{{jogo.status | filtroStatus}} : {{jogo.placar}}
+					</in>			            
+					<span class="item-note">
+						<p class="right branco" ng-if="jogo.estado=='Terminado'">{{'PONTOS' | translate}}: <strong>{{jogo.pontos}}</strong></p>
+					</span>
+					<i class="icon ion-chevron-right icon-accessory"></i>
+				</a>
+			</ion-list>	
+				<!-- Semana 4 -->
+				<ion-list ng-if="sairTorneioVar && semana4Ver" >
+					<div class="padding"><strong>{{semana4}}</strong><span ng-if="semana4Ver" class="vermelho"> {{bloqueado}}</span></div>					  
+					<a class="item item-icon-left item-icon-right itemtransparente itembordagris" ng-repeat="jogo in jogosLista3 | orderBy:'jogo*1':true" type="item-text-wrap" href="#/app/temporadasTorneioJogo/{{torneio.configuracao.jogos}}¡{{jogo.semana}}&{{jogo.jogo}}|{{keyUserInscritoTorneio}}" ng-if="!jogo.bloqueado && jogo.jogo<51">
+						<i class="icon ion-ios-game-controller-a"></i>
+						<strong>{{'JOGO' | translate}} {{jogo.jogo}}</strong>
+						<in 
+						ng-class="{verde : jogo.status=='v', vermelho : jogo.status=='d', laranja : jogo.status=='e', gris2: jogo.estado=='Próximo'}">
+						{{jogo.status | filtroStatus}} : {{jogo.placar}}
+					</in>			            
+					<span class="item-note">
+						<p class="right branco" ng-if="jogo.estado=='Terminado'">{{'PONTOS' | translate}}: <strong>{{jogo.pontos}}</strong></p>
+					</span>
+					<i class="icon ion-chevron-right icon-accessory"></i>
+				</a>
+			</ion-list>	
+				<!-- Semana 3 -->
+				<ion-list ng-if="sairTorneioVar && semana3Ver" >
+					<div class="padding"><strong>{{semana3}}</strong><span ng-if="semana3Ver" class="vermelho"> {{bloqueado}}</span></div>					  
+					<a class="item item-icon-left item-icon-right itemtransparente itembordagris" ng-repeat="jogo in jogosLista2 | orderBy:'jogo*1':true" type="item-text-wrap" href="#/app/temporadasTorneioJogo/{{torneio.configuracao.jogos}}¡{{jogo.semana}}&{{jogo.jogo}}|{{keyUserInscritoTorneio}}" ng-if="!jogo.bloqueado && jogo.jogo<51">
+						<i class="icon ion-ios-game-controller-a"></i>
+						<strong>{{'JOGO' | translate}} {{jogo.jogo}}</strong>
+						<in 
+						ng-class="{verde : jogo.status=='v', vermelho : jogo.status=='d', laranja : jogo.status=='e', gris2: jogo.estado=='Próximo'}">
+						{{jogo.status | filtroStatus}} : {{jogo.placar}}
+					</in>			            
+					<span class="item-note">
+						<p class="right branco" ng-if="jogo.estado=='Terminado'">{{'PONTOS' | translate}}: <strong>{{jogo.pontos}}</strong></p>
+					</span>
+					<i class="icon ion-chevron-right icon-accessory"></i>
+				</a>
+			</ion-list>	
+				<!-- Semana 2 -->
+				<ion-list ng-if="sairTorneioVar && semana2Ver" >
+					<div class="padding"><strong>{{semana2}}</strong><span ng-if="semana2Ver" class="vermelho"> {{bloqueado}}</span></div>					  
+					<a class="item item-icon-left item-icon-right itemtransparente itembordagris" ng-repeat="jogo in jogosLista1 | orderBy:'jogo*1':true" type="item-text-wrap" href="#/app/temporadasTorneioJogo/{{torneio.configuracao.jogos}}¡{{jogo.semana}}&{{jogo.jogo}}|{{keyUserInscritoTorneio}}" ng-if="!jogo.bloqueado && jogo.jogo<51">
+						<i class="icon ion-ios-game-controller-a"></i>
+						<strong>{{'JOGO' | translate}} {{jogo.jogo}}</strong>
+						<in 
+						ng-class="{verde : jogo.status=='v', vermelho : jogo.status=='d', laranja : jogo.status=='e', gris2: jogo.estado=='Próximo'}">
+						{{jogo.status | filtroStatus}} : {{jogo.placar}}
+					</in>			            
+					<span class="item-note">
+						<p class="right branco" ng-if="jogo.estado=='Terminado'">{{'PONTOS' | translate}}: <strong>{{jogo.pontos}}</strong></p>
+					</span>
+					<i class="icon ion-chevron-right icon-accessory"></i>
+				</a>
+			</ion-list>		
+			<!-- Semana 1 -->
+
+			<ion-list ng-if="sairTorneioVar" >
+				<div class="padding"><strong>{{semana1}}</strong></div>	
+				<a class="item item-icon-left item-icon-right itemtransparente itembordagris" ng-repeat="jogo in jogosLista | orderBy:'jogo*1':true" type="item-text-wrap" href="#/app/temporadasTorneioJogo/{{torneio.configuracao.jogos}}¡{{jogo.semana}}&{{jogo.jogo}}|{{keyUserInscritoTorneio}}" ng-if="!jogo.bloqueado && jogo.jogo<51">
+					<i class="icon ion-ios-game-controller-a"></i>
+					<strong>{{'JOGO' | translate}} {{jogo.jogo}}</strong>
+					<in 
+					ng-class="{verde : jogo.status=='v', vermelho : jogo.status=='d', laranja : jogo.status=='e', gris2: jogo.estado=='Próximo'}">
+					{{jogo.status | filtroStatus}} : {{jogo.placar}}
+				</in>			            
+				<span class="item-note">
+					<p class="right branco" ng-if="jogo.estado=='Terminado'">{{'PONTOS' | translate}}: <strong>{{jogo.pontos}}</strong></p>
+				</span>
+				<i class="icon ion-chevron-right icon-accessory"></i>
+
+			</a>	      
+
+		</ion-list>
+
+	</ion-content>
+</ion-tab>
+
+<ion-tab title="{{'INFO' | translate}}" icon-on="ion-ios-information" icon-off="ion-ios-information-outline">
+
+	<ion-content has-header="true" padding="false" id="imagebg">
+		<br />
+		<br />
+		<h4 align="center" class="branco">{{'INFOTORNEIO' | translate}}</h4>
+		<div class="list branco">
+			<a class="item item-icon-left itemtransparente itembordagris">
+				<i class="icon fa fa-bullseye"></i>
+				Status
+				<span class="item-note nuevoTamnho">{{torneio.configuracao.estatus | filtroAbertoFechado}}</span>
+			</a>				  
+			<a class="item item-icon-left itemtransparente itembordagris">
+				<i class="icon ion-ios-keypad"></i>
+				{{'TOTALJOGOS' | translate}}
+				<span class="badge badge-assertive">{{torneio.configuracao.jogos}}</span>
+			</a>
+			<a class="item item-icon-left itemtransparente itembordagris">
+				<i class="icon fa fa-flag-checkered"></i>
+				{{'TEMPORADAINICIO' | translate}}
+				<span class="badge badge-assertive">{{torneio.configuracao.temporada}}</span>
+			</a>
+			<a class="item item-icon-left itemtransparente itembordagris">
+				<i class="icon ion-checkmark-circled"></i>
+				{{'DATAINICIO' | translate}}
+				<span class="item-note nuevoTamnho">{{torneio.configuracao.dataInicio | date:'dd/MM/yyyy' : 'UTC'}} </span>
+			</a>
+			<a class="item item-icon-left itemtransparente itembordagris">
+				<i class="icon ion-close-circled"></i>
+				{{'DATAFIM' | translate}}
+				<span class="item-note laranja nuevoTamnho">{{torneio.configuracao.dataFim | date:'dd/MM/yyyy' : 'UTC'}} </span>
+			</a>
+			<a class="item item-icon-left itemtransparente itembordagris">
+				<i class="icon ion-ios-game-controller-b"></i>
+				{{'MINPARTICIPANTES' | translate}}
+				<span class="badge badge-energized">{{torneio.configuracao.minParticipantes}}</span>
+			</a>
+			<a class="item item-icon-left itemtransparente itembordagris">
+				<i class="icon ion-android-contacts"></i>
+				{{'INSCPARTICIPANTES' | translate}}
+				<span class="badge badge-balanced">{{torneio.configuracao.inscritos}}</span>
+			</a>
+		</div>
+		<div ng-if="torneio.configuracao.premioTF">
+			<h4 align="center">{{'PREMIO' | translate}}</h4>
+			<img class="center resizeMed" src="{{torneio.configuracao.premioImg}}">
+			<div class="list padding">				  				      
+				<h4 align="center">{{torneio.configuracao.premio}}</h4>
+				<p>{{torneio.configuracao.premioCarac}}</p>
+
 			</div>
-  			<div  class="padding" ng-show="totalInscritos < 1">
-  				<br />
-  				<h3 align="center">{{'NAOHAINSCRITOS' | translate}}</h3>
-  			</div>
-	  		</ion-content>
-	  	</ion-tab>
+		</div>
 
-	   	<ion-tab title="{{'MEUSJOGOS' | translate}}" icon-on="ion-ios-football" icon-off="ion-ios-football-outline">
-		   
-	      <ion-content has-header="true" padding="false" id="imagebg">
-	        	<br />
-		      	<br />		 
-		      	<div ng-if="sairTorneioVar">
-			         <div class="row borderGris vermelhorescurobg gris2">    
-				      <div class="col col-20"><strong>{{'JOGOS' | translate}}</strong></div>
-				      <div class="col col-20"><strong>{{'VITORIA' | translate}}</strong></div>
-				      <div class="col col-20"><strong>{{'EMPATE' | translate}}</strong></div>
-				      <div class="col col-20"><strong>{{'DERROTA' | translate}}</strong></div>
-				      <div class="col col-20 branco"><strong>{{'PONTOS' | translate}}</strong></div>    
-				    </div>
 
-				    <div class="row">    
-				      <div class="col col-20 padding"><strong>{{jogados}}</strong></div>
-				      <div class="col col-20 padding"><strong>{{vitoria}}</strong></div>
-				      <div class="col col-20 padding"><strong>{{empate}}</strong></div>
-				      <div class="col col-20 padding"><strong>{{derrota}}</strong></div>
-				      <div class="col col-20 padding verde"><strong>{{pontos}}</strong></div>    
-				    </div> 
-				    <div class="item item-divider amarelobg60 itemNoborda" ng-show="temporadaAtual > 0">
-						   {{'TEMPORADAATUAL' | translate}}: {{temporadaAtual}}
-					</div>
-				    <!-- <h5 align="center"></hr> -->
-			      </div>
-	      	<div ng-if="!sairTorneioVar">
-	      		<br />
-		      	<br />		   
-	      		<h4 align="center">{{'NOINSCRITOTORNEIO' | translate}}</h4>
-	      	</div>	   			
-			    <ion-list ng-if="sairTorneioVar" >
-			    	<!-- 
-			    	<div class="item item-divider"
-				        ng-repeat-start="(jogo, jogosL) in jogosL" ng-if="!jogosL[0].status &&  jogo<51">
-				        Game {{jogo}}{{jogosL[0].status}}
-				    </div>
-				    <div class="item"
-						ng-repeat="game in reverse(jogosL)" ng-if="!game.status && game.jogo<51">{{ game.jogo }}{{game.status}}
-					</div>
 
-					<div ng-repeat-end></div>
-					-->
-				   
-			      <a class="item item-icon-left item-icon-right itemtransparente itembordagris" ng-repeat="jogo in jogosLista | orderBy:'jogo*1':true" type="item-text-wrap" href="#/app/temporadasTorneioJogo/{{jogo.jogo}}|{{keyUserInscritoTorneio}}" ng-if="!jogo.bloqueado && jogo.jogo<51">
-			            <i class="icon ion-ios-game-controller-a"></i>
-			            <strong>{{'JOGO' | translate}} {{jogo.jogo}}</strong>
-			            <in 
-			            	ng-class="{verde : jogo.status=='v', vermelho : jogo.status=='d', laranja : jogo.status=='e', gris2: jogo.estado=='Próximo'}">
-			            {{jogo.status | filtroStatus}} : {{jogo.placar}}
-			            </in>			            
-			            <span class="item-note">
-			               <p class="right branco" ng-if="jogo.estado=='Terminado'">{{'PONTOS' | translate}}: <strong>{{jogo.pontos}}</strong></p>
-			            </span>
-			            <i class="icon ion-chevron-right icon-accessory"></i>
 
-			      </a>
-			      
-			    </ion-list>			
-	      </ion-content>
-	   	</ion-tab>
-
-	   		<ion-tab title="{{'INFO' | translate}}" icon-on="ion-ios-information" icon-off="ion-ios-information-outline">
-		   
-	      <ion-content has-header="true" padding="false" id="imagebg">
-	   			<br />
-           		<br />
-           		<h4 align="center" class="branco">{{'INFOTORNEIO' | translate}}</h4>
-           		<div class="list branco">
-           		  <a class="item item-icon-left itemtransparente itembordagris">
-				    <i class="icon fa fa-bullseye"></i>
-				    Status
-				    <span class="item-note nuevoTamnho">{{torneio.configuracao.estatus | filtroAbertoFechado}}</span>
-				  </a>				  
-				  <a class="item item-icon-left itemtransparente itembordagris">
-				    <i class="icon ion-ios-keypad"></i>
-				    {{'TOTALJOGOS' | translate}}
-				    <span class="badge badge-assertive">{{torneio.configuracao.jogos}}</span>
-				  </a>
-				   <a class="item item-icon-left itemtransparente itembordagris">
-				    <i class="icon fa fa-flag-checkered"></i>
-				    {{'TEMPORADAINICIO' | translate}}
-				    <span class="badge badge-assertive">{{torneio.configuracao.temporada}}</span>
-				  </a>
-				   <a class="item item-icon-left itemtransparente itembordagris">
-				    <i class="icon ion-checkmark-circled"></i>
-				    {{'DATAINICIO' | translate}}
-				    <span class="item-note nuevoTamnho">{{torneio.configuracao.dataInicio | date:'dd/MM/yyyy' : 'UTC'}} </span>
-				  </a>
-				  <a class="item item-icon-left itemtransparente itembordagris">
-				    <i class="icon ion-close-circled"></i>
-				    {{'DATAFIM' | translate}}
-				    <span class="item-note laranja nuevoTamnho">{{torneio.configuracao.dataFim | date:'dd/MM/yyyy' : 'UTC'}} </span>
-				  </a>
-				  <a class="item item-icon-left itemtransparente itembordagris">
-				    <i class="icon ion-ios-game-controller-b"></i>
-				    {{'MINPARTICIPANTES' | translate}}
-				    <span class="badge badge-energized">{{torneio.configuracao.minParticipantes}}</span>
-				  </a>
-				  <a class="item item-icon-left itemtransparente itembordagris">
-				    <i class="icon ion-android-contacts"></i>
-				    {{'INSCPARTICIPANTES' | translate}}
-				    <span class="badge badge-balanced">{{torneio.configuracao.inscritos}}</span>
-				  </a>
-				</div>
-				<div ng-if="torneio.configuracao.premioTF">
-				<h4 align="center">{{'PREMIO' | translate}}</h4>
-				<img class="center resizeMed" src="{{torneio.configuracao.premioImg}}">
-				<div class="list padding">				  				      
-				      <h4 align="center">{{torneio.configuracao.premio}}</h4>
-				      <p>{{torneio.configuracao.premioCarac}}</p>
 		
-					</div>
-				</div>
+	</ion-content>
+</ion-tab>
 
+</ion-tabs>
 
-
-			<!--
-		    	<div >
-			    	<div class="row borderGris bgazure">    
-				      <div class="col col-15"><strong>{{'JOGOS' | translate}}</strong></div>
-				      <div class="col col-30"><strong>{{'MAXPARTICIPANTES' | translate}}</strong></div>
-				      <div class="col col-30"><strong>{{'TEMPINICIAL' | translate}}</strong></div>
-				      <div class="col col-25 verde"><strong>Status</strong></div>    
-				    </div>
-				    <div class="row">
-				      <div class="col col-15 padding"><strong></strong></div>
-				      <div class="col col-30 padding"><strong>{{torneio.configuracao.maxParticipantes}}</strong></div>
-				      <div class="col col-30 padding"><strong>{{torneio.configuracao.temporada}}</strong></div>
-				      <div class="col col-25 padding verde"><strong>{{torneio.configuracao.estatus}}</strong></div>    
-				    </div>
-				    <div class="borderGris"> 
-					    <div class="row" align="center">
-					    	<div class="col col-50"><strong>{{'INICIO' | translate}}</strong></div>
-					    	<div class="col col-50"><strong>{{'FIM' | translate}}</strong></div>
-					    </div>
-					    <div class="row" align="center">
-					    	<div class="col col-50 verde">{{torneio.configuracao.dataInicio | date:'dd/MM/yyyy HH:mm a' : 'UTC'}} </div>
-					    	<div class="col col-50 vermelho">{{torneio.configuracao.dataFim | date:'dd/MM/yyyy HH:mm a' : 'UTC'}}</div>
-					    </div>
-				    </div>
-			    </div> 
-			-->
-		
-	      </ion-content>
-	   	</ion-tab>
-	   	  
-   </ion-tabs>
-   <!--
-   <div class="fixed-outside" ng-if="verBtnInscricao">
-	      <div class="row">
-	            <div class="col">
-	                <button class="button button-balanced icon-left icon ion-ios-game-controller-b-outline" ng-click="entrarTorneio()">Entrar</button>
-	            </div>            
-	        </div>
-	    </div>
-	-->  
 </ion-view>

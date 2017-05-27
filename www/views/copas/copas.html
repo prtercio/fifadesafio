@@ -1,9 +1,9 @@
-<ion-view view-title="Copas">
+<ion-view view-title="{{'COPAS' | translate}}">
 <ion-nav-buttons side="secondary">      
         <button class="button button-icon icon ion-loop" ng-click="prova()"></button>
   </ion-nav-buttons>
 	<ion-content ng-controller="CtrlCopas" overflow-scroll="true" id="imagebg">
-	<br />
+	<h4 class="padding-left">{{'DESAFIOS'|translate}}</h4>
 		 <hscroller>
 
         <hcard ng-repeat="item in items track by $index" index="{{$index}}" desc="{{item.desc}}" image="{{item.img}}" url="#/app/temporadasTorneio/{{item.url}}"></hcard>

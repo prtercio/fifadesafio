@@ -10,6 +10,12 @@ img.resizeMed {
     height: auto;
 }
 
+img.resizeMedMenu {
+    width: 60%;
+    /* you can use % */
+    height: auto;
+}
+
 img.resizePeq {
     width: 100px;
     /* you can use % */
@@ -47,6 +53,21 @@ img.resizeTotal {
 
 .item.item-verde {
     border-color: green;
+}
+
+li.item {
+    color: #FFF !important;
+    border-bottom-style: groove !important;
+    background: rgba(200, 200, 200, 0.3) !important;
+}
+
+div.item.item-text-wrap {
+    background: rgba(200, 200, 200, 0.3) !important;
+    border: none !important;
+}
+
+p.ng-binding {
+    color: #FFF !important;
 }
 
 .bgverde {
@@ -350,7 +371,7 @@ input[type=number] {
     background-color: transparent !important;
 }
 
-.item {
+ion-item.item {
     border: none !important;
     background-color: transparent !important;
     color: #FFF

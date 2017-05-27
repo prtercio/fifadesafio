@@ -31,7 +31,7 @@
           atualizarConquistas();
         }
         if ( !localStorage.getItem( "totalFotosTemporadas" ) ) {
-          atualizarTemporadas();
+          atualizarConquistas();
         }
         var refDias = firebase.database().ref( 'desafio/configuracaogeral/geral' );
         refDias.once( "value" ).then( function( snapshot ) {

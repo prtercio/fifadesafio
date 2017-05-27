@@ -56,6 +56,7 @@ trans.factory( 'asyncLoader', function( $q, $timeout ) {
                 DETALHEJOGO: "Detalle del Juego",
                 SAIR: "Salir",
                 DESAFIO: "Desafío",
+                DESAFIOS: "Desafíos",
                 DETALHEDESAFIO: "Detalles del desafío",
                 MEUSJOGOS: "Mis Juegos",
                 TEMPORADAS: "Temporadas",
@@ -127,7 +128,8 @@ trans.factory( 'asyncLoader', function( $q, $timeout ) {
                 VERIFICANDOGAMERTAG: "Confirmando Gamertag",
                 RECUPERANDODADOS: "Recuperando datos",
                 REPETESENHA: "Repita la contraseña",
-                SENHASNOCOINCINDEN: "¡Las contraseñas no coinciden!"
+                SENHASNOCOINCINDEN: "¡Las contraseñas no coinciden!",
+                INFO: "Info"
             };
         }
         if ( options.key === 'pt' ) {
@@ -175,6 +177,7 @@ trans.factory( 'asyncLoader', function( $q, $timeout ) {
                 DETALHEJOGO: "Detalhe do Jogo",
                 SAIR: "Sair",
                 DESAFIO: "Desafio",
+                DESAFIOS: "Desafios",
                 DETALHEDESAFIO: "Detalhes do desafio",
                 MEUSJOGOS: "Meus Jogos",
                 TEMPORADAS: "Temporadas",
@@ -245,7 +248,8 @@ trans.factory( 'asyncLoader', function( $q, $timeout ) {
                 VERIFICANDOGAMERTAG: "Verificando Gamertag",
                 RECUPERANDODADOS: "Recuperando dados",
                 REPETESENHA: "Repita a senha",
-                SENHASNOCOINCINDEN: "As senhas estão diferentes!"
+                SENHASNOCOINCINDEN: "As senhas estão diferentes!",
+                INFO: "Info"
             };
         }
         if ( options.key === 'en' ) {

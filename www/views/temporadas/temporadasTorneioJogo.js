@@ -10,8 +10,32 @@
             var arrayConquistas = [];
             var arrayConquistasDerrota = [];
             var arrayConquistasEmpate = [];
-            var id = idJogo.substring( 0, idJogo.indexOf( "|" ) );
+            var quantidadeJogos = idJogo.substring( 0, idJogo.indexOf( "¡" ) );
+            var semana = idJogo.substring( idJogo.indexOf( "¡" ) + 1, idJogo.indexOf( "&" ) );
+            var retirarSemana = semana.substring( 6 );
+            //console.log( retirarSemana, " abc" );
+            var id = idJogo.substring( idJogo.indexOf( "&" ) + 1, idJogo.indexOf( "|" ) );
             var keyUsuario = idJogo.substring( idJogo.indexOf( "|" ) + 1 );
+            var novaSemana = false;
+            var numeroSemanas = 0;
+            var quantidadeJogosSemanais = 0;
+            if ( Number( quantidadeJogos ) == 50 ) {
+                quantidadeJogosSemanais = Number( quantidadeJogos ) / 5;
+            } else if ( Number( quantidadeJogos ) == 30 ) {
+                quantidadeJogosSemanais = Number( quantidadeJogos ) / 3;
+            } else {
+                quantidadeJogosSemanais = Number( quantidadeJogos ) / 2;
+            }
+            console.log( "---------------quantidadeJogos", quantidadeJogosSemanais, id );
+            if ( Number( quantidadeJogosSemanais ) == Number( id ) ) {
+                if ( Number( id ) != quantidadeJogos ) {
+                    var somarSemana = Number( retirarSemana ) + 1;
+                    novaSemana = "semana" + somarSemana;
+                    console.log( "----------------novaSemana ", novaSemana );
+                } else {
+                    console.log( "----------------novaSemana ", novaSemana );
+                }
+            }
             //console.log(id, keyUsuario);
             var idJogo = id;
             var itemList = [];
@@ -207,7 +231,7 @@
                     }
                 }
             }
-            var refjogos = firebase.database().ref( 'desafio/desafios/temporadas/oficial/' + idTorneio + '/inscritos/' + keyUsuario + '/jogos/' + $scope.chat );
+            var refjogos = firebase.database().ref( 'desafio/desafios/temporadas/oficial/' + idTorneio + '/inscritos/' + keyUsuario + '/jogos/' + semana + '/' + $scope.chat );
             refjogos.once( "value" ).then( function( snapshot ) {
                 $scope.estadoJogo = snapshot.val();
                 $scope.estado = $scope.estadoJogo.estado;
@@ -335,7 +359,7 @@
                         seDerrota = 0;
                         seVitoria = 1;
                         listarConquistaVitoria( resultado1, resultado2 );
-                        console.log( golsPro, golsContra );
+                        //console.log( golsPro, golsContra );
                         placarInverso( resultado1, resultado2, "v" );
                         if ( temporadaAtual > 0 ) calcularStatusTemporada( temporadaAtual );
                         if ( atualizarNumerosTemporadas == true ) {
@@ -487,7 +511,7 @@
                     } ).then( function() {
                         //console.log("Actualizando Datos Foto 1");
                     } );
-                    firebase.database().ref().child( 'desafio/desafios/temporadas/oficial/' + idTorneio + '/inscritos/' + keyUsuario + '/jogos/' + $scope.chat ).update( {
+                    firebase.database().ref().child( 'desafio/desafios/temporadas/oficial/' + idTorneio + '/inscritos/' + keyUsuario + '/jogos/' + semana + '/' + $scope.chat ).update( {
                         img: downloadURL
                     } ).then( function( response ) {
                         $ionicLoading.hide().then( function() {} );
@@ -1156,8 +1180,8 @@
                     temporadaAtualEmpate: novaTemporadaAtualEmpate
                 } ).then( function( response ) {
                     Utils.message( Popup.loading_b, Popup.loading );
-                    console.log( "iniciando update jogo" );
-                    firebase.database().ref().child( 'desafio/desafios/temporadas/oficial/' + idTorneio + '/inscritos/' + keyUsuario + '/jogos/' + $scope.chat ).update( {
+                    console.log( "1 iniciando update jogo" );
+                    firebase.database().ref().child( 'desafio/desafios/temporadas/oficial/' + idTorneio + '/inscritos/' + keyUsuario + '/jogos/' + semana + '/' + $scope.chat ).update( {
                         estado: "Terminado",
                         pontos: totalPontos,
                         conquistas: conquistasEnviar,
@@ -1165,13 +1189,19 @@
                         status: statusEnviar
                     } ).then( function( response ) {
                         Utils.message( Popup.loading_a, Popup.loading );
-                        console.log( "iniciando update siguiente jogo" );
+                        console.log( "2 iniciando update siguiente jogo" );
+                        var semanaEnviar = "";
+                        if ( novaSemana != false ) {
+                            semanaEnviar = novaSemana;
+                        } else {
+                            semanaEnviar = semana;
+                        }
                         var somaJogo = Number( id ) + 1;
                         var siguienteJogo = "jogo" + somaJogo;
-                        firebase.database().ref().child( 'desafio/desafios/temporadas/oficial/' + idTorneio + '/inscritos/' + keyUsuario + '/jogos/' + siguienteJogo ).update( {
+                        firebase.database().ref().child( 'desafio/desafios/temporadas/oficial/' + idTorneio + '/inscritos/' + keyUsuario + '/jogos/' + semanaEnviar + '/' + siguienteJogo ).update( {
                             bloqueado: false
                         } ).then( function( response ) {
-                            console.log( "final update siguiente jogo" );
+                            console.log( "3 final update siguiente jogo" );
                             var backCount = 1;
                             $rootScope.$ionicGoBack = function( backCount ) {
                                 $ionicHistory.goBack( backCount );

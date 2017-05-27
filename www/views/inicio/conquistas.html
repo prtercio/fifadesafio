@@ -1,8 +1,8 @@
 <ion-view view-title="{{'CONQUISTAS' | translate}}"> 
-  <ion-content>
+  <ion-content id="imagebg">
     <li class="item item-toggle">
               {{'TEMPORADAS' | translate}}
-          <label class="toggle toggle-positive">
+          <label class="toggle toggle-energized">
             <input type="checkbox" ng-model="checkedTemporadas" aria-label="Toggle ngHide">
                 <div class="track">
                     <div class="handle"></div>
@@ -15,15 +15,15 @@
         <span class="item-note">
           <p class="right">{{'PONTOS' | translate}}: <strong>{{value.pontos}}</strong></p>
         </span>
-        <h2 class="verde">{{value.titulo}}</h2>
-        <p><strong>{{'DESCRICAO' | translate}}</strong>: {{value.descricao}}</p>
+        <h2 class="verdeOriginal">{{value.titulo}}</h2>
+        <p class="branco"><strong >{{'DESCRICAO' | translate}}</strong>: {{value.descricao}}</p>
       </div>
        <div class="item item-text-wrap" ng-repeat="(key, value) in conquistas.conquistasTemporadas.vitoria.es track by $index" ng-if="idioma == 'es'">
        <span class="item-note">
           <p class="right">{{'PONTOS' | translate}}: <strong>{{value.pontos}}</strong></p>
         </span>
-        <h2 class="verde">{{value.titulo}}</h2>
-        <p><strong>{{'DESCRICAO' | translate}}</strong>: {{value.descricao}}</p>
+        <h2 class="verdeOriginal">{{value.titulo}}</h2>
+        <p class="branco"><strong>{{'DESCRICAO' | translate}}</strong>: {{value.descricao}}</p>
         
       </div>
        <div class="item item-text-wrap" ng-repeat="(key, value) in conquistas.conquistasTemporadas.vitoria.pt track by $index" ng-if="idioma == 'pt'">
@@ -90,7 +90,7 @@
     <!-- Copa -->
     <li class="item item-toggle">
               {{'COPA' | translate}}
-          <label class="toggle toggle-positive">
+          <label class="toggle toggle-energized">
             <input type="checkbox" ng-model="checkedCopa" aria-label="Toggle ngHide">
                 <div class="track">
                     <div class="handle"></div>
