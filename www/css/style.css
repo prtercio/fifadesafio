@@ -637,3 +637,13 @@ button.fab-button-left.centrar {
 div.hscroller-card {
     background-color: transparent !important;
 }
+
+.background-spinner {
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-image: url('https://www.yugma.com/images/loading-animation-7.gif')
+}
+
+div.imgWithLoading, div.imgWithLoading img {
+    width: 100%;
+}

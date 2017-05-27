@@ -30,8 +30,12 @@
     </ion-list>
     </div>
 
-    <div ng-show="detalheJogo.img" class="padding">
-      <img class="resize" src="{{detalheJogo.img}}" />
+    <div  class="padding">
+      <!-- <img class="resize" src="{{detalheJogo.img}}" />
+      <img class="resize" ng-src='{{detalheJogo.img}}' spinner-load />-->
+      <img-with-loading 
+        img-src="{{detalheJogo.img}}" 
+        spinner-class="{{spinnerClass}}"/>
   </div>
 </ion-content>
 </ion-view>

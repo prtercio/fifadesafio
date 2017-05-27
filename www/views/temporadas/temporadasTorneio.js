@@ -31,7 +31,6 @@
 				return weekNo;
 			}
 			var result = getWeekNumber( new Date() );
-			console.log( result );
 			/* rango de semana
 			function rangeWeek( dateStr ) {
 				if ( !dateStr ) dateStr = new Date().getTime();
@@ -721,7 +720,6 @@
 					if ( snapshot.val() != null ) {
 						$scope.$apply( function() {
 							estatusDesafio = snapshot.val().configuracao.estatus;
-							console.log( "estatus", estatusDesafio );
 							if ( snapshot.val().configuracao.estatus == 'Fechado' ) {
 								$scope.terminarDesafio = true;
 							}

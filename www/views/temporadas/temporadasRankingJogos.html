@@ -21,7 +21,7 @@
     </div>
     </div>
      <ion-list>
-       <a class="item item-icon-left item-icon-right itemtransparente itembordagris" ng-repeat="jogo in jogos | orderBy:'jogo*1':true" type="item-text-wrap" href="#/app/temporadasRankingJogosDetalhe/{{jogo.jogo}}|{{keyUsuario}}" ng-if="jogo.estado == 'Terminado'">                              
+       <a class="item item-icon-left item-icon-right itemtransparente itembordagris" ng-repeat="jogo in jogos | orderBy:'jogo*1':true" type="item-text-wrap" href="#/app/temporadasRankingJogosDetalhe/{{jogo.semana}}&{{jogo.jogo}}|{{keyUsuario}}" ng-if="jogo.estado == 'Terminado'">                              
                    <i class="icon ion-ios-game-controller-a"></i>
                   <strong>{{'JOGO' | translate}} {{jogo.jogo}}</strong>
                   <in class="brancobg"

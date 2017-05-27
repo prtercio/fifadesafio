@@ -20,6 +20,7 @@
       var idTorneio = String( dataService.get().idTorneio );
       console.log( "id Torneio " + idTorneio );
       var temporadaInicial = String( dataService.get().temporadaInicial );
+      console.log( dataService.get() );
       var resultadoJogos = [];
       var refjogos = firebase.database().ref( 'desafio/desafios/temporadas/oficial/' + idTorneio + '/inscritos/' + keyUsuario ).orderByChild( 'jogo' );
       refjogos.once( "value" ).then( function( snapshot ) {
@@ -33,8 +34,8 @@
           $scope.temporadaAtual = $scope.comJogos.temporadaAtual;
           var comJogos = [];
           comJogos.push( $scope.comJogos.jogos );
-          console.log( $scope.comJogos.jogos );
           for ( var key in comJogos[ 0 ] ) {
+            console.log( "-----", key );
             for ( var obj in comJogos[ 0 ][ key ] ) {
               resultadoJogos.push( {
                 "jogo": comJogos[ 0 ][ key ][ obj ].jogo,
@@ -42,39 +43,20 @@
                 "estado": comJogos[ 0 ][ key ][ obj ].estado,
                 "pontos": comJogos[ 0 ][ key ][ obj ].pontos,
                 "placar": comJogos[ 0 ][ key ][ obj ].placar,
-                "status": comJogos[ 0 ][ key ][ obj ].status
+                "status": comJogos[ 0 ][ key ][ obj ].status,
+                "semana": key
               } );
             }
           }
           $scope.jogos = resultadoJogos;
-          //usando forEach tem que buscar 2 vezes n BD
-          //$scope.jogos = snapshot.val();
-          /*
-          snapshot.forEach(function(minisnapshot) {
-               
-               resultado.push({
-                "jogo":minisnapshot.val().jogo, 
-                "bloqueado":minisnapshot.val().bloqueado, 
-                "estado":minisnapshot.val().estado, 
-                "pontos":minisnapshot.val().pontos
-              })
-          });
-        });
-        */
+          var novosDatos = {
+            "idTorneio": idTorneio,
+            "keyUsuario": keyUsuario,
+            "semanas": $scope.comJogos.jogos
+          }
+          dataService.set( novosDatos );
         } );
       } );
-      /*
-       var refResumo = firebase.database().ref('desafio/desafios/temporadas/oficial/'+idTorneio+'/inscritos/'+keyUsuario);
-      refResumo.once("value").then(function(snapshot) {
-        $scope.$apply(function(){
-            $scope.resumo = snapshot.val();
-            $scope.jogosQuantidade = $scope.resumo.jogados;
-            $scope.vitoria = $scope.resumo.vitoria;
-            $scope.empate = $scope.resumo.empate;
-            $scope.derrota = $scope.resumo.derrota;
-            $scope.pontos = $scope.resumo.pontos;
-          });   
-          */
     }
   ] ); //ctrl
 } )();
