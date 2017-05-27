@@ -15,7 +15,9 @@
       <!--{{'ATUALIZAR'|translate}}-->
       <i class="icon ion-loop"></i>
     </button>
+   
   </div>
+  
 		<h4 class="padding-left laranja">{{'DESAFIOS'|translate}}</h4>
 		<hscroller>
 			<hcard ng-repeat="item in items track by $index" index="{{$index}}" desc="{{item.desc}}" image="{{item.img}}" url="#/app/temporadasTorneio/{{item.url}}"></hcard>

@@ -37,6 +37,11 @@
       $scope.keyUsuarioCriador = "";
       var localStorageTorneioAdicionado = [];
       var torneioEncontradoEstado = false;
+      var icon = 0;
+
+      function getRandomArbitrary( min, max ) {
+        return Math.floor( Math.random() * ( max - min ) + min );
+      }
 
       function sustituirValorString( valor, stg ) {
         var gtEspacio = String( valor );
@@ -65,7 +70,8 @@
                   "nome": snap[ key ].configuracao.nome,
                   "senha": key,
                   "data": snap[ key ].configuracao.data,
-                  "participantes": snap[ key ].configuracao.participantes
+                  "participantes": snap[ key ].configuracao.participantes,
+                  "icon": snap[ key ].configuracao.icon
                 } );
               }
               $scope.torneios = torneios;
@@ -92,13 +98,15 @@
         } );
 
         function enviarNovoTorneio() {
+          icon = getRandomArbitrary( 1, 50 );
           Utils.show();
           if ( $scope.logado == true ) {
             var senha = rand_code( caracteres, longitud );
             var datos = {
               nome: nome,
               data: dataFormatada,
-              participantes: 0
+              participantes: 0,
+              icon: icon
             }
             firebase.database().ref( 'desafio/torneios/todosxtodos/' + gtSemEspacio + '/' + senha + '/configuracao' ).push( {
               nome: 0
@@ -257,7 +265,8 @@
                     "participantes": snapshot.val().configuracao.participantes,
                     "gamertag": novoGT,
                     "keyUsuario": gamertagParaBuscar,
-                    "keyTorneio": snapshot.key
+                    "keyTorneio": snapshot.key,
+                    "icon": snapshot.val().configuracao.icon
                   } );
                   adicionarTorneioOutros();
                 }
@@ -337,13 +346,13 @@
         templateUrl: 'popup-novotorneio.html',
         scope: scope,
         buttons: [ {
-          text: 'Cancel',
+          text: '<i class="icon ion-close-round"></i>',
           type: 'button-stable',
           onTap: function( e ) {
             cancel = true
           }
         }, {
-          text: '<b>Save</b>',
+          text: '<i class="icon ion-plus-round"></i>',
           type: 'button-balanced',
           onTap: function( e ) {
             if ( !scope.data.nome ) {
@@ -371,13 +380,13 @@
         templateUrl: 'popup-buscartorneio.html',
         scope: scope,
         buttons: [ {
-          text: 'Cancel',
+          text: '<i class="icon ion-close-round"></i>',
           type: 'button-stable',
           onTap: function( e ) {
             cancel = true
           }
         }, {
-          text: '<b>Buscar</b>',
+          text: '<i class="icon ion-search"></i>',
           type: 'button-balanced',
           onTap: function( e ) {
             if ( !scope.valor ) {
@@ -405,13 +414,13 @@
         templateUrl: 'popup-adicionartorneio.html',
         scope: scope,
         buttons: [ {
-          text: 'Cancel',
+          text: '<i class="icon ion-close-round"></i>',
           type: 'button-stable',
           onTap: function( e ) {
             cancel = true
           }
         }, {
-          text: '<b>Add</b>',
+          text: '<i class="icon ion-plus-round"></i>',
           type: 'button-balanced',
           onTap: function( e ) {
             if ( !scope.valor ) {

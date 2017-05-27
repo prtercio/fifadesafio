@@ -1,6 +1,6 @@
 <ion-view view-title="{{'TORNEIOS'|translate}}" ng-init="listarTorneio()" cache-view="false">
   <ion-nav-buttons side="secondary">
-      <button class="button button-icon icon ion-loop" ng-click="prova()"></button>
+
   </ion-nav-buttons>
   <ion-tabs class="tabs-dark tabs-icon-top">
    <ion-tab title="{{'MEUSTORNEIOS'|translate}}" icon-on="ion-ios-list" icon-off="ion-ios-list-outline">
@@ -20,6 +20,7 @@
         </div>
         <h4 align="center" class="laranja padding">{{'ADICIONENOVOTORNEIO'| translate}}</h4>
       </div>
+      <!--
       <ion-list>
        <ion-item class="item item-text-wrap item-icon-left cinza" ng-repeat="(key, value) in torneios | orderBy:'data':true" href="#/app/torneiosTodosDetalhes/{{keyUsuarioCriador}}&{{value.senha}}">
         <i class="icon ion-ribbon-b"></i>
@@ -35,6 +36,27 @@
       </ion-option-button>
     </ion-item>
   </ion-list>
+  -->
+  <div class="row" style="flex-wrap: wrap;">
+      <ion-list class="col col-50" ng-repeat="(key, value) in torneios | orderBy:'data':true">
+      <ion-item class="item item-text-wrap cinza" href="#/app/torneiosTodosDetalhes/{{keyUsuarioCriador}}&{{value.senha}}">
+        <div class="center"><img src="img/torneios/{{value.icon}}.png"></div>
+        {{value.nome}}
+        <div ng-show="value.participantes == 0" class="vermelhoClaro">{{'ADICIONEPARTICCOMPARTA' | translate}}</div>  
+        <div  ng-show="value.participantes > 0" class="vermelhoClaro">{{value.data | date:"dd/MM/yyyy HH:mm" : 'UTC'}}</div>     
+        <span class="badge badge-dark" ng-show="value.participantes > 0">{{value.participantes}}</span>
+        <span class="badge badge-assertive" ng-show="value.participantes == 0">{{'NOVO' | translate}}</span>
+        
+
+        <ion-option-button ng-if="esCriado" class="button-assertive"
+        ng-click="onItemDelete(value.senha)">
+        Delete
+      </ion-option-button>
+    </ion-item>
+        
+      </ion-list>
+    </div>
+    
 
 </ion-content>
 </ion-tab>
@@ -53,10 +75,10 @@
 
     <ion-list>
      <ion-item class="item item-icon-left cinza" ng-repeat="(key, value) in torneiosAdicionados | orderBy:'data':true" href="#/app/torneiosTodosDetalhes/{{value.keyUsuario}}&{{value.keyTorneio}}">
-     <i class="icon ion-ribbon-a"></i>
-      {{value.nome}}
-      <p>Gamertag: <strong>{{value.gamertag}}</strong></p>
-      <p>{{'CHAVEDEACESSO'|translate}}: <strong>{{value.keyTorneio}}</strong></p>
+     <i class="icon"><img src="img/torneios/{{value.icon}}.png"/></i>
+      <strong>{{value.nome}}</strong>
+      <div>Gamertag: <strong>{{value.gamertag}}</strong></div>
+      <div>{{'CHAVEDEACESSO'|translate}}: <strong>{{value.keyTorneio}}</strong></div>
       <span class="badge badge-dark" ng-show="value.participantes > 0">{{value.participantes}}</span>
       <span class="badge badge-assertive" ng-show="value.participantes == 0">{{'NOVO' | translate}}</span>
       <ion-option-button ng-if="esCriado" class="button-assertive"
@@ -106,11 +128,11 @@
   <h4 align="center">{{'TORNEIOENCONTRADO' | translate}}</h4>
 
   <ul class="list">
-    <li class="item">
+    <li class="item verdeOriginal">
       {{torneioencontrado}}
     </li>
   </ul>
-  <p align="center" class="vermelho">{{'TORNEIOSADICIONADOS'| translate}}</p>
+  <div align="center" class="vermelho">{{'TORNEIOSADICIONADOS'| translate}}</div>
 
 </script>
 

@@ -26,7 +26,6 @@
             } else {
                 quantidadeJogosSemanais = Number( quantidadeJogos ) / 2;
             }
-            console.log( "---------------quantidadeJogos", quantidadeJogosSemanais, id );
             if ( Number( quantidadeJogosSemanais ) == Number( id ) ) {
                 if ( Number( id ) != quantidadeJogos ) {
                     var somarSemana = Number( retirarSemana ) + 1;
@@ -141,6 +140,7 @@
                 }
                 Utils.hide();
             } );
+            Utils.show();
             // RECUPERAR TRES ÚLITMOS JOGOS
             var refJ = firebase.database().ref( 'desafio/desafios/temporadas/oficial/' + idTorneio + '/inscritos/' + keyUsuario );
             refJ.once( "value" ).then( function( snapshot ) {
@@ -175,9 +175,9 @@
                 temporadaAtualEmpate = $scope.infoJogo.temporadaAtualEmpate;
                 temporadaAtualDerrota = $scope.infoJogo.temporadaAtualDerrota;
                 temporadaNova = temporadaAtual;
+                Utils.hide();
                 //console.log("TEMPACTUAL---- "+temporadaNova);
             } );
-            console.log( "conq " + conquistas );
             //Vitória armazenando as conquistas e os pontos dentro de arrayConquistas
             for ( var key in conquistas ) {
                 //-------------------------------------------------------------------------- PORTUGUES
@@ -231,6 +231,7 @@
                     }
                 }
             }
+            Utils.show();
             var refjogos = firebase.database().ref( 'desafio/desafios/temporadas/oficial/' + idTorneio + '/inscritos/' + keyUsuario + '/jogos/' + semana + '/' + $scope.chat );
             refjogos.once( "value" ).then( function( snapshot ) {
                 $scope.estadoJogo = snapshot.val();
@@ -238,6 +239,7 @@
                 $scope.$apply( function() {
                     $scope.detalheJogo = snapshot.val();
                 } );
+                Utils.hide();
             } );
             // si nao foi enviado
             if ( firebase.auth().currentUser ) {

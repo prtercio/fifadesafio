@@ -61,6 +61,10 @@ li.item {
     background: rgba(200, 200, 200, 0.3) !important;
 }
 
+li.item.ng-binding {
+    color: green !important;
+}
+
 div.item.item-text-wrap {
     background: rgba(200, 200, 200, 0.3) !important;
     border: none !important;
@@ -641,7 +645,7 @@ div.hscroller-card {
 .background-spinner {
     background-repeat: no-repeat;
     background-position: center center;
-    background-image: url('https://www.yugma.com/images/loading-animation-7.gif')
+    background-image: url('../img/loading-animation-7.gif')
 }
 
 div.imgWithLoading, div.imgWithLoading img {
