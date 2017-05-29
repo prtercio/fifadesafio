@@ -90,8 +90,25 @@ p.ng-binding {
     background: #F8F8FF;
 }
 
+.brancobg {
+    background: rgba(255, 255, 255, 0.9);
+    -moz-border-radius-topleft: 0px;
+    -moz-border-radius-topright: 15px;
+    -moz-border-radius-bottomleft: 15px;
+    -moz-border-radius-bottomright: 0px;
+    -webkit-border-top-left-radius: 0px;
+    -webkit-border-top-right-radius: 15px;
+    -webkit-border-bottom-left-radius: 15px;
+    -webkit-border-bottom-right-radius: 0px;
+}
+
 .vermelho {
     color: #FF0000 !important;
+}
+
+.vermelhoapp {
+    color: #990000 !important;
+    font-size: 1em;
 }
 
 .vermelhoClaro {
@@ -136,6 +153,10 @@ p.ng-binding {
 
 .vermelhorescurobg {
     background: rgba(153, 0, 0, 0.9);
+}
+
+.vermelhorescurobg2 {
+    background: rgba(153, 0, 0, 0.3);
 }
 
 .azul {

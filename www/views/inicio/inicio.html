@@ -1,27 +1,36 @@
 <ion-view view-title="Inicio" ng-init="showPopup()">
   <ion-nav-buttons side="secondary">      
-      <a class="button button-icon icon ion-help-circled" ng-click="popover.show($event)"></a>
+    <a class="button button-icon icon ion-help-circled" ng-click="popover.show($event)"></a>
 
   </ion-nav-buttons>
   <ion-content  id="imagebg">
-  <div class="list text-center padding">
-        <img class="resizeMed" src="img/goalone.png">
-        <br />
-        <p class="">Benvindo ao desafio mais completo do Fifa 17! Participe dos desafios no FUT, Temporadas, Copas ou crie seu porprio Torneio no formato de Campeonato ou Copa.</p>
+    <div class="list text-center padding">
+      <img class="resizeMed" src="img/goalone.png">
+      <br />
+      <p class="">Benvindo ao desafio mais completo do Fifa 17! Participe dos desafios no FUT, Temporadas, Copas ou crie seu porprio Torneio no formato de Campeonato ou Copa.</p>
+    </div>
+    <div class="row">
+      <div class="col col-33 center vermelhoapp padding ">
+        <div class="brancobg padding">
+        <img class="resizeMed" src="img/icon/copar.png" />
+        Copa
       </div>
-      <div class="row">
-        <div class="col col-33">
-        <img src="img/fut.png" />
-        </div>
-        <div class="col col-33">
-        <img src="img/temporadas.png" />
-        </div>
-        <div class="col col-33">
-        <img src="img/torneios.png" />
-        </div>
+    </div>
+    <div class="col col-33 center vermelhoapp padding">
+      <div class="brancobg padding">
+      <img class="resizeMed" src="img/icon/temporadasr.png" />
+        Temporadas
       </div>
+    </div>
+    <div class="col col-33 center vermelhoapp padding">
+      <div class="brancobg padding">
+        <img class="resizeMed" src="img/icon/torneio5.png" />
+        <span >Torneios</span>
+      </div>
+    </div>
+  </div>
 
-    <script id="templates/popover.html" type="text/ng-template">
+  <script id="templates/popover.html" type="text/ng-template">
     <ion-popover-view style="height: 330px;">
       <ion-content>
         <ion-list>
@@ -38,7 +47,7 @@
             <i class="icon ion-gear-b"></i>Administracao
           </ion-item>
           <div class="padding">         
-          <hr>
+            <hr>
             <span><strong>Desafio Fifa 17</strong><span class="gris fontepequena">v:2.0.2</span></span><hr>
             {{'DESENVOLVIDOPOR' | translate}}<br />
             <span><strong>Tércio Santos</strong></span>
@@ -48,5 +57,5 @@
       </ion-content>
     </ion-popover-view>
   </script>
-  </ion-content>
+</ion-content>
 </ion-view>

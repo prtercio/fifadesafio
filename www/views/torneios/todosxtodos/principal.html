@@ -40,7 +40,7 @@
   <div class="row" style="flex-wrap: wrap;">
       <ion-list class="col col-50" ng-repeat="(key, value) in torneios | orderBy:'data':true">
       <ion-item class="item item-text-wrap cinza" href="#/app/torneiosTodosDetalhes/{{keyUsuarioCriador}}&{{value.senha}}">
-        <div class="center"><img src="img/torneios/{{value.icon}}.png"></div>
+        <div class="center"><img class="resizeMedMenu" src="img/torneios/{{value.icon}}.png"></div>
         {{value.nome}}
         <div ng-show="value.participantes == 0" class="vermelhoClaro">{{'ADICIONEPARTICCOMPARTA' | translate}}</div>  
         <div  ng-show="value.participantes > 0" class="vermelhoClaro">{{value.data | date:"dd/MM/yyyy HH:mm" : 'UTC'}}</div>     
@@ -75,7 +75,7 @@
 
     <ion-list>
      <ion-item class="item item-icon-left cinza" ng-repeat="(key, value) in torneiosAdicionados | orderBy:'data':true" href="#/app/torneiosTodosDetalhes/{{value.keyUsuario}}&{{value.keyTorneio}}">
-     <i class="icon"><img src="img/torneios/{{value.icon}}.png"/></i>
+     <i class="icon"><img class="icon-menu" src="img/torneios/{{value.icon}}.png"/></i>
       <strong>{{value.nome}}</strong>
       <div>Gamertag: <strong>{{value.gamertag}}</strong></div>
       <div>{{'CHAVEDEACESSO'|translate}}: <strong>{{value.keyTorneio}}</strong></div>
