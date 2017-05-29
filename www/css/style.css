@@ -5,7 +5,7 @@ img.resize {
 }
 
 img.resizeMed {
-    width: 80%;
+    width: 60%;
     /* you can use % */
     height: auto;
 }
@@ -108,7 +108,7 @@ p.ng-binding {
 
 .vermelhoapp {
     color: #990000 !important;
-    font-size: 1em;
+    font-size: .8em;
 }
 
 .vermelhoClaro {
