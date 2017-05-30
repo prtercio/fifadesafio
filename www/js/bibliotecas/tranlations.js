@@ -130,7 +130,9 @@ trans.factory( 'asyncLoader', function( $q, $timeout ) {
                 REPETESENHA: "Repita la contraseña",
                 SENHASNOCOINCINDEN: "¡Las contraseñas no coinciden!",
                 INFO: "Info",
-                JOGOSLIBERADOSEM: "Podrás iniciar a jugar apartir de "
+                JOGOSLIBERADOSEM: "Podrás iniciar a jugar apartir de ",
+                INTERNETOFF: "¡Tu dispositivo no está conectado a internet!",
+                INTERNETON: "¡Conección a internet reestablecidad!"
             };
         }
         if ( options.key === 'pt' ) {
@@ -251,7 +253,9 @@ trans.factory( 'asyncLoader', function( $q, $timeout ) {
                 REPETESENHA: "Repita a senha",
                 SENHASNOCOINCINDEN: "As senhas estão diferentes!",
                 INFO: "Info",
-                JOGOSLIBERADOSEM: "Você poderá jogar a partir de "
+                JOGOSLIBERADOSEM: "Você poderá jogar a partir de ",
+                INTERNETOFF: "Seu dispositivo não está conectado a internet!",
+                INTERNETON: "A conexão foi reestabelecida!"
             };
         }
         if ( options.key === 'en' ) {

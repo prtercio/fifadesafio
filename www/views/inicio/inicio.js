@@ -4,17 +4,46 @@
   inicio.controller( 'CtrlInicio', [ '$scope', '$localStorage', '$ionicPopup', '$window', '$ionicPopover', 'Utils', 'CordovaNetwork',
     function( $scope, $localStorage, $ionicPopup, $window, $ionicPopover, Utils, CordovaNetwork ) {
       // ------------------------------------------------------------------------------- RECUPERAR REGRAS CONQUISTAS
-      CordovaNetwork.isOnline().then( function( isConnected, value ) {
-        console.log( "1------", isConnected );
-        if ( isConnected === true ) {
-          console.log( "conectado" );
-          alert( "Conectado" );
-        } else {
-          console.log( "no conectado" );
-          alert( "No conectado" );
-        }
-      } );
-      console.log( "---", CordovaNetwork.isOnline() );
+      // Update the online status icon based on connectivity
+      window.addEventListener( 'online', updateIndicator );
+      window.addEventListener( 'offline', updateIndicator );
+
+      function updateIndicator() {
+        // Show a different icon based on offline/online
+        CordovaNetwork.isOnline().then( function( isConnected ) {
+          console.log( "1------", isConnected );
+          if ( isConnected === true ) {
+            console.log( "conectado" );
+            var alertPopup = $ionicPopup.alert( {
+              template: '<p align="center"><i class="icon ion-happy verdeBalanced tamanhoIcon"></i></p><p align="center"><strong>{{"INTERNETON" | translate}}</strong></p>',
+              buttons: [ {
+                text: '<b>Ok</b>',
+                type: 'button-balanced',
+                onTap: function( e ) {}
+              } ]
+            } );
+            alertPopup.then( function( res ) {
+              if ( res ) {
+                console.log( "fechado" );
+              }
+            } );
+          } else {
+            var alertPopup = $ionicPopup.alert( {
+              template: '<p align="center"><i class="icon ion-alert-circled laranja tamanhoIcon"></i></p><p align="center"><strong>{{"INTERNETOFF" | translate}}</strong></p>',
+              buttons: [ {
+                text: '<b>Ok</b>',
+                type: 'button-energized',
+                onTap: function( e ) {}
+              } ]
+            } );
+            alertPopup.then( function( res ) {
+              if ( res ) {
+                console.log( "fechado" );
+              }
+            } );
+          }
+        } );
+      }
       if ( $localStorage.email == "benbaodan@outlook.com" ) {
         $scope.admin = true;
       } else {
