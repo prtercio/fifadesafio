@@ -1,9 +1,20 @@
 ( function() {
   'use strict';
   var inicio = angular.module( 'App.CtrlInicio', [] );
-  inicio.controller( 'CtrlInicio', [ '$scope', '$localStorage', '$ionicPopup', '$window', '$ionicPopover', 'Utils',
-    function( $scope, $localStorage, $ionicPopup, $window, $ionicPopover, Utils ) {
+  inicio.controller( 'CtrlInicio', [ '$scope', '$localStorage', '$ionicPopup', '$window', '$ionicPopover', 'Utils', 'CordovaNetwork',
+    function( $scope, $localStorage, $ionicPopup, $window, $ionicPopover, Utils, CordovaNetwork ) {
       // ------------------------------------------------------------------------------- RECUPERAR REGRAS CONQUISTAS
+      CordovaNetwork.isOnline().then( function( isConnected, value ) {
+        console.log( "1------", isConnected );
+        if ( isConnected === true ) {
+          console.log( "conectado" );
+          alert( "Conectado" );
+        } else {
+          console.log( "no conectado" );
+          alert( "No conectado" );
+        }
+      } );
+      console.log( "---", CordovaNetwork.isOnline() );
       if ( $localStorage.email == "benbaodan@outlook.com" ) {
         $scope.admin = true;
       } else {
