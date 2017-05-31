@@ -267,9 +267,37 @@ angular.module( 'App' ).controller( 'CtrlLogin', function( $scope, $state, $loca
   };
   //----------------------------------------------------------------------------------------- Register
   $scope.buscarGamertag = function( gt ) {
+    var numero = 0;
+    var gamertagB = gt;
+    Utils.show();
+    firebase.database().ref( 'desafio/users/' ).orderByChild( 'gamertag' ).equalTo( gamertagB ).once( 'value' ).then( function( accounts ) {
+      if ( accounts.exists() ) {
+        Utils.hide();
+        var alertPopup = $ionicPopup.alert( {
+          template: '<p align="center"><i class="icon ion-alert-circled laranja tamanhoIcon"></i></p><h4 align="center" class="verdeOriginal">' + gamertagB + '</h4><p align="center" class="vermelho"><strong>{{"GAMERTAGCADASTRADO" | translate}}</strong></p>',
+          buttons: [ {
+            text: '<b>Ok</b>',
+            type: 'button-energized',
+            onTap: function( e ) {}
+          } ]
+        } );
+        alertPopup.then( function( res ) {
+          if ( res ) {
+            console.log( "fechado" );
+          }
+        } );
+      } else {
+        //No account yet, proceed to completeAccount.
+        Utils.hide();
+        buscarGamertagXbox( gt );
+      }
+    } );
+  }
+
+  function buscarGamertagXbox( gt ) {
     gtValido = false;
     $ionicLoading.show( {
-      template: "{{'VERIFICANDOGAMERTAG'|translate}}..."
+      template: "<span>{{'VERIFICANDOGAMERTAG'|translate}}...</span>"
     } );
     var gtEspacio = String( gt );
     var espacio = "-";
@@ -297,7 +325,7 @@ angular.module( 'App' ).controller( 'CtrlLogin', function( $scope, $state, $loca
       idXbox = respuesta.data.xuid;
       $ionicLoading.hide();
       $ionicLoading.show( {
-        template: "{{'GAMERTAGENCONTRADO'|translate}}. {{'RECUPERANDODADOS'|translate}}..."
+        template: "<span>{{'GAMERTAGENCONTRADO'|translate}}. {{'RECUPERANDODADOS'|translate}}...</span>"
       } );
       $http( {
         url: 'https://xboxapi.com/v2/' + idXbox + '/profile',

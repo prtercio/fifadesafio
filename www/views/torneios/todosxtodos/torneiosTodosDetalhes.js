@@ -1,8 +1,46 @@
 ( function() {
   'use strict';
   var temporadasRankingJogos = angular.module( 'App.CtrlTorneiosTodosDetalhes', [] );
-  temporadasRankingJogos.controller( 'CtrlTorneiosTodosDetalhes', [ '$scope', 'Utils', '$state', '$localStorage', 'Popup', '$stateParams', 'idTorneioKeyUsuario', 'PopupFactoryRanking', '$ionicPopup',
-    function( $scope, Utils, $state, $localStorage, Popup, $stateParams, idTorneioKeyUsuario, PopupFactoryRanking, $ionicPopup ) {
+  temporadasRankingJogos.controller( 'CtrlTorneiosTodosDetalhes', [ '$scope', 'Utils', '$state', '$localStorage', 'Popup', '$stateParams', 'idTorneioKeyUsuario', 'PopupFactoryRanking', '$ionicPopup', 'CordovaNetwork',
+    function( $scope, Utils, $state, $localStorage, Popup, $stateParams, idTorneioKeyUsuario, PopupFactoryRanking, $ionicPopup, CordovaNetwork ) {
+      window.addEventListener( 'online', updateIndicator );
+      window.addEventListener( 'offline', updateIndicator );
+
+      function updateIndicator() {
+        // Show a different icon based on offline/online
+        CordovaNetwork.isOnline().then( function( isConnected ) {
+          if ( isConnected === true ) {
+            console.log( "conectado" );
+            var alertPopup = $ionicPopup.alert( {
+              template: '<p align="center"><i class="icon ion-happy verdeBalanced tamanhoIcon"></i></p><p align="center"><strong>{{"INTERNETON" | translate}}</strong></p>',
+              buttons: [ {
+                text: '<b>Ok</b>',
+                type: 'button-balanced',
+                onTap: function( e ) {}
+              } ]
+            } );
+            alertPopup.then( function( res ) {
+              if ( res ) {
+                console.log( "fechado" );
+              }
+            } );
+          } else {
+            var alertPopup = $ionicPopup.alert( {
+              template: '<p align="center"><i class="icon ion-alert-circled laranja tamanhoIcon"></i></p><p align="center"><strong>{{"INTERNETOFF" | translate}}</strong></p>',
+              buttons: [ {
+                text: '<b>Ok</b>',
+                type: 'button-energized',
+                onTap: function( e ) {}
+              } ]
+            } );
+            alertPopup.then( function( res ) {
+              if ( res ) {
+                console.log( "fechado" );
+              }
+            } );
+          }
+        } );
+      }
       var keyUsuario = "";
       var gamertag = "";
       if ( $localStorage.account ) {

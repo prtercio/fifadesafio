@@ -11,7 +11,6 @@
       function updateIndicator() {
         // Show a different icon based on offline/online
         CordovaNetwork.isOnline().then( function( isConnected ) {
-          console.log( "1------", isConnected );
           if ( isConnected === true ) {
             console.log( "conectado" );
             var alertPopup = $ionicPopup.alert( {

@@ -1,7 +1,7 @@
 ( function() {
   'use strict';
-  var temporadas = angular.module( 'App.CtrlTemporadas', [] );
-  temporadas.controller( 'CtrlTemporadas', [ '$scope', 'Utils', 'CordovaNetwork',
+  var temporadasUT = angular.module( 'App.CtrlTemporadasUT', [] );
+  temporadasUT.controller( 'CtrlTemporadasUT', [ '$scope', 'Utils', 'CordovaNetwork',
     function( $scope, Utils, CordovaNetwork ) {
       window.addEventListener( 'online', updateIndicator );
       window.addEventListener( 'offline', updateIndicator );
@@ -49,7 +49,7 @@
       function cargarTemporadas() {
         //var totalDesafios = window.localStorage.getItem( "totalFotosTemporadas" );
         Utils.show();
-        var ref = firebase.database().ref( 'desafio/desafios/temporadas/oficial' );
+        var ref = firebase.database().ref( 'desafio/desafios/temporadasUT/oficial' );
         ref.once( "value" ).then( function( snapshot ) {
           $scope.$apply( function() {
             images = [];

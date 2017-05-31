@@ -60,6 +60,7 @@ trans.factory( 'asyncLoader', function( $q, $timeout ) {
                 DETALHEDESAFIO: "Detalles del desafío",
                 MEUSJOGOS: "Mis Juegos",
                 TEMPORADAS: "Temporadas",
+                TEMPORADASUT: "Temporadas UT",
                 DESCRICAO: "Descripción",
                 RECUPERARRESULTADO: 'Recuperar resultado',
                 SELECCIONETIME: "Seleccione su equipo",
@@ -132,7 +133,8 @@ trans.factory( 'asyncLoader', function( $q, $timeout ) {
                 INFO: "Info",
                 JOGOSLIBERADOSEM: "Podrás iniciar a jugar apartir de ",
                 INTERNETOFF: "¡Tu dispositivo no está conectado a internet!",
-                INTERNETON: "¡Conección a internet reestablecidad!"
+                INTERNETON: "¡Conección a internet reestablecidad!",
+                GAMERTAGCADASTRADO: "Opps. Esta Gamertag ya está registrada"
             };
         }
         if ( options.key === 'pt' ) {
@@ -142,6 +144,7 @@ trans.factory( 'asyncLoader', function( $q, $timeout ) {
                 LENGUAJE: "Portugues",
                 HOME: "Home",
                 TEMPORADAS: "Temporadas",
+                TEMPORADASUT: "Temporadas UT",
                 COPAS: "Copas",
                 SENHA: "Senha",
                 INISESSAO: "Iniciar sessão",
@@ -255,7 +258,8 @@ trans.factory( 'asyncLoader', function( $q, $timeout ) {
                 INFO: "Info",
                 JOGOSLIBERADOSEM: "Você poderá jogar a partir de ",
                 INTERNETOFF: "Seu dispositivo não está conectado a internet!",
-                INTERNETON: "A conexão foi reestabelecida!"
+                INTERNETON: "A conexão foi reestabelecida!",
+                GAMERTAGCADASTRADO: "Opps! Esta Gamertag já foi cadastrada!"
             };
         }
         if ( options.key === 'en' ) {

@@ -1,7 +1,7 @@
 ( function() {
     'use strict';
-    var temporadasJogo = angular.module( 'App.CtrlTempTorneioJogo', [] );
-    temporadasJogo.controller( 'CtrlTempTorneioJogo', [ '$scope', 'Utils', '$state', '$localStorage', 'Popup', '$stateParams', '$window', 'idJogo', 'dataService', '$ionicLoading', '$http', '$ionicPopup', '$rootScope', '$ionicHistory', '$timeout', 'CordovaNetwork',
+    var temporadasJogoUT = angular.module( 'App.CtrlTempTorneioJogoUT', [] );
+    temporadasJogoUT.controller( 'CtrlTempTorneioJogoUT', [ '$scope', 'Utils', '$state', '$localStorage', 'Popup', '$stateParams', '$window', 'idJogo', 'dataService', '$ionicLoading', '$http', '$ionicPopup', '$rootScope', '$ionicHistory', '$timeout', 'CordovaNetwork',
         function( $scope, Utils, $state, $localStorage, Popup, $stateParams, $window, idJogo, dataService, $ionicLoading, $http, $ionicPopup, $rootScope, $ionicHistory, $timeout, CordovaNetwork ) {
             // si foi enviado:
             window.addEventListener( 'online', updateIndicator );
@@ -151,7 +151,7 @@
                 } );
             }
             Utils.show();
-            var ref = firebase.database().ref( 'desafio/desafios/temporadas/oficial/' + idTorneio + '/configuracao' );
+            var ref = firebase.database().ref( 'desafio/desafios/temporadasUT/oficial/' + idTorneio + '/configuracao' );
             ref.once( "value" ).then( function( snapshot ) {
                 estatusDesafio = snapshot.val().estatus;
                 if ( estatusDesafio == "Fechado" ) {
@@ -180,7 +180,7 @@
             } );
             Utils.show();
             // RECUPERAR TRES ÚLITMOS JOGOS
-            var refJ = firebase.database().ref( 'desafio/desafios/temporadas/oficial/' + idTorneio + '/inscritos/' + keyUsuario );
+            var refJ = firebase.database().ref( 'desafio/desafios/temporadasUT/oficial/' + idTorneio + '/inscritos/' + keyUsuario );
             refJ.once( "value" ).then( function( snapshot ) {
                 $scope.infoJogo = snapshot.val();
                 if ( $scope.infoJogo.jogados != 0 ) {
@@ -270,7 +270,7 @@
                 }
             }
             Utils.show();
-            var refjogos = firebase.database().ref( 'desafio/desafios/temporadas/oficial/' + idTorneio + '/inscritos/' + keyUsuario + '/jogos/' + semana + '/' + $scope.chat );
+            var refjogos = firebase.database().ref( 'desafio/desafios/temporadasUT/oficial/' + idTorneio + '/inscritos/' + keyUsuario + '/jogos/' + semana + '/' + $scope.chat );
             refjogos.once( "value" ).then( function( snapshot ) {
                 $scope.estadoJogo = snapshot.val();
                 $scope.estado = $scope.estadoJogo.estado;
@@ -530,7 +530,7 @@
                     //console.log("Enviando Foto 1");
                 } );
                 var filename = imageSelecionada.name;
-                var storageRef = firebase.storage().ref( '/desafio/temporadas/imagensJogos/' + idTorneio + '/' + filename );
+                var storageRef = firebase.storage().ref( '/desafio/temporadasUT/imagensJogos/' + idTorneio + '/' + filename );
                 var uploadTask = storageRef.put( imageSelecionada );
                 uploadTask.on( 'state_changed', function( snapshot ) {
                     var progress = ( snapshot.bytesTransferred / snapshot.totalBytes ) * 100;
@@ -551,7 +551,7 @@
                     } ).then( function() {
                         //console.log("Actualizando Datos Foto 1");
                     } );
-                    firebase.database().ref().child( 'desafio/desafios/temporadas/oficial/' + idTorneio + '/inscritos/' + keyUsuario + '/jogos/' + semana + '/' + $scope.chat ).update( {
+                    firebase.database().ref().child( 'desafio/desafios/temporadasUT/oficial/' + idTorneio + '/inscritos/' + keyUsuario + '/jogos/' + semana + '/' + $scope.chat ).update( {
                         img: downloadURL
                     } ).then( function( response ) {
                         $ionicLoading.hide().then( function() {} );
@@ -1119,7 +1119,7 @@
             // Enviar resposta
             $scope.enviarResultado = function() {
                 Utils.show();
-                var ref = firebase.database().ref( 'desafio/desafios/temporadas/oficial/' + idTorneio + '/configuracao' );
+                var ref = firebase.database().ref( 'desafio/desafios/temporadasUT/oficial/' + idTorneio + '/configuracao' );
                 ref.once( "value" ).then( function( snapshot ) {
                     estatusDesafio = snapshot.val().estatus;
                     if ( estatusDesafio == "Fechado" ) {
@@ -1201,7 +1201,7 @@
                 }
                 console.log( resultPenultimo, "ultimos :" + resultUltimo, "novoResultado: ", novoResultado, "penultimo: " + resultUltimo, "antepenultimo: " + resultPenultimo, "resultado 1 " + resultado1, "resultado 2 " + resultado2, "jogados: ", jogados + 1, "vitoria: ", anteriorVitoria + seVitoria, "Derrota: ", anteriorDerrota + seDerrota, "empate: ", anteriorEmpate + seEmpate, "invencibilidade ", zerarInvencibilidade, "sequenciaVitoria ", zerarSequenciaVitoria, "itemList ", itemList );
                 console.log( "iniciando update resumo" );
-                firebase.database().ref().child( 'desafio/desafios/temporadas/oficial/' + idTorneio + '/inscritos/' + keyUsuario ).update( {
+                firebase.database().ref().child( 'desafio/desafios/temporadasUT/oficial/' + idTorneio + '/inscritos/' + keyUsuario ).update( {
                     vitoria: anteriorVitoria + seVitoria,
                     pontos: antPontos + totalPontos,
                     jogados: jogados + 1,
@@ -1221,7 +1221,7 @@
                 } ).then( function( response ) {
                     Utils.message( Popup.loading_b, Popup.loading );
                     console.log( "1 iniciando update jogo" );
-                    firebase.database().ref().child( 'desafio/desafios/temporadas/oficial/' + idTorneio + '/inscritos/' + keyUsuario + '/jogos/' + semana + '/' + $scope.chat ).update( {
+                    firebase.database().ref().child( 'desafio/desafios/temporadasUT/oficial/' + idTorneio + '/inscritos/' + keyUsuario + '/jogos/' + semana + '/' + $scope.chat ).update( {
                         estado: "Terminado",
                         pontos: totalPontos,
                         conquistas: conquistasEnviar,
@@ -1238,7 +1238,7 @@
                         }
                         var somaJogo = Number( id ) + 1;
                         var siguienteJogo = "jogo" + somaJogo;
-                        firebase.database().ref().child( 'desafio/desafios/temporadas/oficial/' + idTorneio + '/inscritos/' + keyUsuario + '/jogos/' + semanaEnviar + '/' + siguienteJogo ).update( {
+                        firebase.database().ref().child( 'desafio/desafios/temporadasUT/oficial/' + idTorneio + '/inscritos/' + keyUsuario + '/jogos/' + semanaEnviar + '/' + siguienteJogo ).update( {
                             bloqueado: false
                         } ).then( function( response ) {
                             console.log( "3 final update siguiente jogo" );

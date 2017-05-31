@@ -1,0 +1,30 @@
+<ion-view view-title="{{'TEMPORADASUT'|translate}}" ng-controller="CtrlTemporadasUT">
+	<ion-nav-buttons side="secondary">      
+		<!--<a class="button button-icon icon ion-loop" ></a>-->
+	</ion-nav-buttons>
+	<ion-content  overflow-scroll="true" id="imagebg">
+	 <div class="button-bar bar-dark">      
+     <button class="button footer whatsapp">
+      <i class="icon ion-social-whatsapp-outline"></i>
+    </button>
+    <button class="button">
+      <!--{{'ADICIONARADMIN'|translate}}-->
+      <i class="icon ion-clipboard"></i>
+    </button>
+    <button class="button" ng-click="atualizarTemporadas()">
+      <!--{{'ATUALIZAR'|translate}}-->
+      <i class="icon ion-loop"></i>
+    </button>
+   
+  </div>
+  
+		<h4 class="padding-left laranja">{{'DESAFIOS'|translate}}</h4>
+		<hscroller>
+			<hcard ng-repeat="item in items track by $index" index="{{$index}}" desc="{{item.desc}}" image="{{item.img}}" url="#/app/temporadasTorneioUT/{{item.url}}"></hcard>
+		</hscroller>
+
+	</ion-content>
+	<div class="bar bar-footer bar-energized">
+		<p>Publicidade</p>
+	</div>
+</ion-view>

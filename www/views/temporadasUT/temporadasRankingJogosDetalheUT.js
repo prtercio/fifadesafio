@@ -1,7 +1,7 @@
 ( function() {
   'use strict';
-  var temporadasRankingJogos = angular.module( 'App.CtrlTemporadasRankingJogosDetalhe', [ 'App.CtrlImageDirectiva' ] );
-  temporadasRankingJogos.controller( 'CtrlTemporadasRankingJogosDetalhe', [ '$scope', 'Utils', '$state', '$localStorage', 'Popup', '$stateParams', '$window', 'idJogoDetalhe', '$ionicNavBarDelegate', 'dataService',
+  var temporadasRankingJogosUT = angular.module( 'App.CtrlTemporadasRankingJogosDetalheUT', [ 'App.CtrlImageDirectiva' ] );
+  temporadasRankingJogosUT.controller( 'CtrlTemporadasRankingJogosDetalheUT', [ '$scope', 'Utils', '$state', '$localStorage', 'Popup', '$stateParams', '$window', 'idJogoDetalhe', '$ionicNavBarDelegate', 'dataService',
     function( $scope, Utils, $state, $localStorage, Popup, $stateParams, $window, idJogoDetalhe, $ionicNavBarDelegate, dataService ) {
       $ionicNavBarDelegate.showBackButton( true );
       $scope.spinnerClass = 'background-spinner';
@@ -64,7 +64,7 @@
     }
   ] ); //ctrl
   /*
-  temporadasRankingJogos.directive( 'imgWithLoading', function() {
+  temporadasRankingJogosUT.directive( 'imgWithLoading', function() {
     return {
       restrict: 'E',
       template: '<div/>',
