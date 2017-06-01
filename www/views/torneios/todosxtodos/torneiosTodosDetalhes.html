@@ -1,7 +1,7 @@
 <ion-view ng-init="carregarDados()" view-title="{{'TORNEIO' | translate}}" >
 
   <ion-nav-buttons side="secondary" >
-        <button class="button button-icon icon ion-loop" ng-click="carregarDados()"></button>
+        <!-- <button class="button button-icon icon ion-loop" ng-click="carregarDados()"></button> -->
  </ion-nav-buttons>
  <ion-tabs class="tabs-dark tabs-icon-top">
    <ion-tab title="Ranking" icon-on="ion-ios-list" icon-off="ion-ios-list-outline">
@@ -42,12 +42,14 @@
        <!-- {{'CHAVE'| translate}}-->
        <i class="icon ion-key"></i>
      </button>
+     <!--
      <button class="button footer whatsapp">
       <i class="icon ion-social-whatsapp-outline"></i>
     </button>
-    <button class="button">
+    -->
+    <button class="button" ng-click="capturarTela()">
       <!--{{'ADICIONARADMIN'|translate}}-->
-      <i class="icon ion-person-stalker"></i>
+      <i class="icon ion-android-share-alt"></i>
     </button>
     <button class="button" ng-click="atualizarRanking()">
       <!--{{'ATUALIZAR'|translate}}-->
@@ -68,7 +70,7 @@
 
   </div>
   <div class="borderGris">
-    <div class="row" ng-repeat="(key, value) in torneio | orderBy:'pontos':true">       
+    <div class="row" ng-repeat="(key, value) in torneio | orderBy:['pontos','vitoria', 'golsPro', 'empate']:true">       
       <div class="col col-10 center">
 
         <div ng-class="{verdeOp60:$index==0,verdeOp40:$index==1, verdeOp20:$index==2, branco:$index>=3}"><strong>{{$index + 1}}</strong>
@@ -95,6 +97,8 @@
   <ion-content id="imagebg">
   <br />
   <br />
+  <h4 align="center" class="padding laranja" ng-show="!eCriador">{{'SELECIONEARODADA'| translate}}</h4>
+  <h4 align="center" class="padding laranja" ng-show="eCriador">{{'SELECIONEARODADAEDITE'| translate}}</h4>
  <ion-list ng-show="!noInscritos">
     <div ng-repeat="group in groups | orderBy:name:true">
       <ion-item class="item-dark cinza"

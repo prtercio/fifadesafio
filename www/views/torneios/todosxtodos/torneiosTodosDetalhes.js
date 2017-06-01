@@ -178,10 +178,10 @@
       }
       $scope.verChaveAcesso = function() {
         var alertPopup = $ionicPopup.alert( {
-          template: '<p align="center"><i class="icon ion-key verdeBalanced tamanhoIcon"></i></p><p align="center"><strong>{{"ESTAECHAVEACESSO" | translate}}</strong></p><h3 class="vermelho" align="center">' + $scope.chaveAcesso + '</h3>',
+          template: '<p align="center"><i class="icon ion-key verdeBalanced tamanhoIcon"></i></p>' + '<p align="center"><strong>{{"ESTAECHAVEACESSO" | translate}}</strong></p><div class="row"><div class="col col-80"><h3 class="vermelho" align="center">' + $scope.chaveAcesso + '</h3></div>' + '<div class="col col-20"><button class="button button-small button-balanced icon ion-social-whatsapp-outline whatsapp"></button></div></div>',
           buttons: [ {
             text: '<b>Ok</b>',
-            type: 'button-balanced',
+            type: 'button-energized',
             onTap: function( e ) {}
           } ]
         } );
@@ -483,6 +483,14 @@
           }
         }
       }
+      $scope.capturarTela = function() {
+        console.log( "click captra" );
+        html2canvas( document.body, {
+          onrendered: function( canvas ) {
+            document.body.appendChild( canvas );
+          }
+        } );
+      }
 
       function procesarDatos() {
         var res = RoundRobinFinal( gamesRound.length );
@@ -613,7 +621,7 @@
             cancel = true
           }
         }, {
-          text: '<b>Send</b>',
+          text: '<b>OK</b>',
           type: 'button-balanced',
           onTap: function( e ) {
             if ( !scope.data ) {

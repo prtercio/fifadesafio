@@ -134,7 +134,9 @@ trans.factory( 'asyncLoader', function( $q, $timeout ) {
                 JOGOSLIBERADOSEM: "Podrás iniciar a jugar apartir de ",
                 INTERNETOFF: "¡Tu dispositivo no está conectado a internet!",
                 INTERNETON: "¡Conección a internet reestablecidad!",
-                GAMERTAGCADASTRADO: "Opps. Esta Gamertag ya está registrada"
+                GAMERTAGCADASTRADO: "Opps. Esta Gamertag ya está registrada",
+                SELECIONEARODADA: "Seleccione la ronda:",
+                SELECIONEARODADAEDITE: "Seleccione la ronda y edite los resultados:"
             };
         }
         if ( options.key === 'pt' ) {
@@ -240,7 +242,7 @@ trans.factory( 'asyncLoader', function( $q, $timeout ) {
                 TORNEIOSADICIONADOS: "Você poderá ver os torneios adicionados na aba 'Outros Torneios'",
                 AQUILISTATORNEIOOUTROS: "Aqui se verá a lista dos torneios criados pelo seus amigos e adicionados por você.",
                 TORNEIOS: "Torneios",
-                TORNEIO: "Tornieo",
+                TORNEIO: "Torneio",
                 TORNEIOJAFOIADICIONADO: "Este torneio já está adicionado em sua lista de OUTROS TORNEIOS",
                 CHAVE: "Chave",
                 ESTAECHAVEACESSO: "Esta é a chave de acesso para este torneio, compartilhe com seus amigos!",
@@ -259,7 +261,9 @@ trans.factory( 'asyncLoader', function( $q, $timeout ) {
                 JOGOSLIBERADOSEM: "Você poderá jogar a partir de ",
                 INTERNETOFF: "Seu dispositivo não está conectado a internet!",
                 INTERNETON: "A conexão foi reestabelecida!",
-                GAMERTAGCADASTRADO: "Opps! Esta Gamertag já foi cadastrada!"
+                GAMERTAGCADASTRADO: "Opps! Esta Gamertag já foi cadastrada!",
+                SELECIONEARODADA: "Selecione a rodada:",
+                SELECIONEARODADAEDITE: "Seleccione a rodada e edite os resultados:"
             };
         }
         if ( options.key === 'en' ) {
