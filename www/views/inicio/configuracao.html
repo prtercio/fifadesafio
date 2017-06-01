@@ -1,17 +1,17 @@
 <ion-view view-title="{{'CONFIGURACAO' | translate}}"> 
-  <ion-content>
+  <ion-content class="grisbg">
   <div class="list" ng-show="logado">
-  	<a class="item item-thumbnail-left">
+  	<ion-item class="item item-thumbnail-left">
       <img src="{{imagem}}"/>
       <h2>{{gamertag}}</h2>
       <p>{{email}}</p>
-    </a>
+    </ion-item>
   </div>
   <h5 align="center">{{'SELECIONARIDIOMA' | translate}}:</h5>
   <div class="padding">
   	<button class="button button-block button-energized" ng-click="showPopup()">{{'IDIOMA' | translate}}: {{idioma}}</button>
   </div>
   <div class="padding">Iconos diseñados por <a href="http://www.flaticon.es/autores/madebyoliver" title="Madebyoliver">Madebyoliver</a> desde <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> con licencia <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
-  <div>Iconos diseñados por <a href="http://www.freepik.com" title="Freepik">Freepik</a> desde <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> con licencia <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+  <div class="padding">Iconos diseñados por <a href="http://www.freepik.com" title="Freepik">Freepik</a> desde <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> con licencia <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
   </ion-content>
 </ion-view>
