@@ -90,8 +90,8 @@
 
   
 </div>
-  <div><img src="{{image}}" /></div>
-  <a href="https://api.whatsapp.com/send?phone=5218112292869">Enviar</a>
+  
+  <!-- <a href="https://api.whatsapp.com/send?phone=5218112292869">Enviar</a> -->
   </ion-content>
 </ion-tab>
 
@@ -149,6 +149,18 @@
 
      </div>
    </script>
+    <script id="modal.html" type="text/ng-template">
+      <ion-modal-view>
+        <ion-header-bar class="bar bar-header bar-dark">
+          <h1 class="title">Caputra</h1>
+          <button class="button button-clear button-primary" ng-click="modal.hide()">Cancelar</button>
+        </ion-header-bar>
+        <ion-content class="padding">
+          <div id="prova"></div>
+            <button class="whatsapp2" class="button button-full button-positive" ng-click="enviarZa()">Enviar</button>          
+        </ion-content>
+      </ion-modal-view>
+    </script>
 </ion-tabs>
 
 

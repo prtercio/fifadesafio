@@ -693,3 +693,8 @@ a {
     color: #FFF !important;
     text-decoration: none !important;
 }
+
+#prova {
+    width: 300 !important;
+    height: 600 !important;
+}

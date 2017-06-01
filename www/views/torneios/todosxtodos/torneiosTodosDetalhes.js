@@ -1,8 +1,8 @@
 ( function() {
   'use strict';
   var temporadasRankingJogos = angular.module( 'App.CtrlTorneiosTodosDetalhes', [] );
-  temporadasRankingJogos.controller( 'CtrlTorneiosTodosDetalhes', [ '$scope', 'Utils', '$state', '$localStorage', 'Popup', '$stateParams', 'idTorneioKeyUsuario', 'PopupFactoryRanking', '$ionicPopup', 'CordovaNetwork',
-    function( $scope, Utils, $state, $localStorage, Popup, $stateParams, idTorneioKeyUsuario, PopupFactoryRanking, $ionicPopup, CordovaNetwork ) {
+  temporadasRankingJogos.controller( 'CtrlTorneiosTodosDetalhes', [ '$scope', 'Utils', '$state', '$localStorage', 'Popup', '$stateParams', 'idTorneioKeyUsuario', 'PopupFactoryRanking', '$ionicPopup', 'CordovaNetwork', '$ionicModal',
+    function( $scope, Utils, $state, $localStorage, Popup, $stateParams, idTorneioKeyUsuario, PopupFactoryRanking, $ionicPopup, CordovaNetwork, $ionicModal ) {
       window.addEventListener( 'online', updateIndicator );
       window.addEventListener( 'offline', updateIndicator );
 
@@ -496,25 +496,45 @@
         } );
       } );
       */
+      var img = "";
       $scope.capturarTela = function() {
         console.log( "click captra" );
         html2canvas( document.body, {
           onrendered: function( canvas ) {
             document.body.appendChild( canvas );
-            var img = canvas.toDataURL( "image/png" )
+            img = canvas.toDataURL( "image/png" )
             //window.open( img );
-            var link = "http://fifadesafio.herokuapp.com";
-            var textoKey = "Key: " + $scope.chaveAcesso;
-            var textoGt = "Gt: " + $scope.gamertag;
-            var img = img;
-            console.log( textoKey, textoGt );
-            var message = "Acesse: " + encodeURIComponent( link ) + " - " + encodeURIComponent( textoGt ) + " - " + encodeURIComponent( textoKey ) + encodeURIComponent( img );
-            var whatsapp_url = "whatsapp://send?text=" + message;
-            window.location.href = whatsapp_url;
-            $scope.image = img;
+            $scope.login();
           }
         } );
       }
+      $scope.enviarZa = function() {
+        /*
+          var text = $( this ).attr( "data-text" );
+          var url = $( this ).attr( "data-link" );
+          */
+        var link = "http://fifadesafio.herokuapp.com";
+        var textoKey = "Key: " + $scope.chaveAcesso;
+        var textoGt = "Gt: " + $scope.gamertag;
+        var message = "Acesse: " + encodeURIComponent( link ) + " - " + encodeURIComponent( textoGt ) + " - " + encodeURIComponent( textoKey ) + " - " + img;
+        var whatsapp_url = "whatsapp://send?text=" + message;
+        window.location.href = whatsapp_url;
+      };
+      // Create the login modal that we will use later
+      $ionicModal.fromTemplateUrl( 'modal.html', {
+        scope: $scope
+      } ).then( function( modal ) {
+        $scope.modal = modal;
+      } );
+      // Triggered in the login modal to close it
+      $scope.closeLogin = function() {
+        $scope.modal.hide();
+      };
+      // Open the login modal
+      $scope.login = function() {
+        $scope.modal.show();
+        $( "#prova" ).html( '<img src="' + img + '"/>' );
+      };
 
       function procesarDatos() {
         var res = RoundRobinFinal( gamesRound.length );
