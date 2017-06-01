@@ -483,11 +483,34 @@
           }
         }
       }
+      /*
+      $( document ).ready( function() {
+        $( "#button" ).click( function() {
+          html2canvas( $( "#testdiv" ), {
+            onrendered: function( canvas ) {
+              // canvas is the final rendered <canvas> element
+              var myImage = canvas.toDataURL( "image/jpg" );
+              window.open( myImage );
+            }
+          } );
+        } );
+      } );
+      */
       $scope.capturarTela = function() {
         console.log( "click captra" );
         html2canvas( document.body, {
           onrendered: function( canvas ) {
             document.body.appendChild( canvas );
+            var img = canvas.toDataURL( "image/png" )
+            //window.open( img );
+            var link = "http://fifadesafio.herokuapp.com";
+            var textoKey = "Key: " + $scope.chaveAcesso;
+            var textoGt = "Gt: " + $scope.gamertag;
+            var img = img;
+            console.log( textoKey, textoGt );
+            var message = "Acesse: " + encodeURIComponent( link ) + " - " + encodeURIComponent( textoGt ) + " - " + encodeURIComponent( textoKey ) + encodeURIComponent( img );
+            var whatsapp_url = "whatsapp://send?text=" + message;
+            window.location.href = whatsapp_url;
           }
         } );
       }
