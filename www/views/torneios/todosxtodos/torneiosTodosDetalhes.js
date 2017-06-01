@@ -511,6 +511,7 @@
             var message = "Acesse: " + encodeURIComponent( link ) + " - " + encodeURIComponent( textoGt ) + " - " + encodeURIComponent( textoKey ) + encodeURIComponent( img );
             var whatsapp_url = "whatsapp://send?text=" + message;
             window.location.href = whatsapp_url;
+            $scope.image = img;
           }
         } );
       }
