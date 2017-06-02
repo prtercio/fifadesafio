@@ -1,8 +1,8 @@
 ( function() {
   'use strict';
   var inicio = angular.module( 'App.CtrlInicio', [] );
-  inicio.controller( 'CtrlInicio', [ '$scope', '$localStorage', '$ionicPopup', '$window', '$ionicPopover', 'Utils', 'CordovaNetwork',
-    function( $scope, $localStorage, $ionicPopup, $window, $ionicPopover, Utils, CordovaNetwork ) {
+  inicio.controller( 'CtrlInicio', [ '$scope', '$localStorage', '$ionicPopup', '$window', '$ionicPopover', 'Utils', 'CordovaNetwork', '$ionicModal',
+    function( $scope, $localStorage, $ionicPopup, $window, $ionicPopover, Utils, CordovaNetwork, $ionicModal ) {
       // ------------------------------------------------------------------------------- RECUPERAR REGRAS CONQUISTAS
       // Update the online status icon based on connectivity
       window.addEventListener( 'online', updateIndicator );
@@ -159,6 +159,22 @@
       } );
       $scope.cerrarMenu = function() {
         $scope.popover.hide();
+      };
+      // Create the login modal that we will use later
+      $ionicModal.fromTemplateUrl( 'modalInicio.html', {
+        scope: $scope
+      } ).then( function( modal ) {
+        $scope.modal = modal;
+      } );
+      // Triggered in the login modal to close it
+      $scope.closeLogin = function() {
+        $scope.modal.hide();
+        //img = "";
+      };
+      // Open the login modal
+      $scope.abrirAjuda = function() {
+        $scope.modal.show();
+        //$( "#prova" ).html( '<img class="redimensionar" src="' + img + '"/>' );
       };
     }
   ] ); //ctrl

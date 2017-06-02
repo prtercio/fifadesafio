@@ -374,6 +374,22 @@
           }
         }
       }
+      // Create the login modal that we will use later
+      $ionicModal.fromTemplateUrl( 'modalTorneio.html', {
+        scope: $scope
+      } ).then( function( modal ) {
+        $scope.modal = modal;
+      } );
+      // Triggered in the login modal to close it
+      $scope.closeLogin = function() {
+        $scope.modal.hide();
+        //img = "";
+      };
+      // Open the login modal
+      $scope.abrirAjuda = function() {
+        $scope.modal.show();
+        //$( "#prova" ).html( '<img class="redimensionar" src="' + img + '"/>' );
+      };
     }
   ] ); //ctrl
   temporadasRankingJogos.factory( "PopupFactory", function( $ionicPopup ) {

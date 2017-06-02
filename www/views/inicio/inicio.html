@@ -1,7 +1,7 @@
 <ion-view view-title="Inicio" ng-init="showPopup()">
   <ion-nav-buttons side="secondary">      
-    <a class="button button-icon icon ion-help-circled" ng-click="popover.show($event)"></a>
-
+     <button class="button button-icon icon ion-help-circled" ng-click="abrirAjuda()"></button>
+     <button class="button button-icon icon  ion-android-more-vertical" ng-click="popover.show($event)"></button>
   </ion-nav-buttons>
   <ion-content  id="imagebg">
     <div class="text-center padding">
@@ -35,7 +35,6 @@
     </div>
     </a>
   </div>
-
   <script id="templates/popover.html" type="text/ng-template">
     <ion-popover-view style="height: 330px;">
 
@@ -64,5 +63,17 @@
       </ion-content>
     </ion-popover-view>
   </script>
+      <script id="modalInicio.html" type="text/ng-template">
+      <ion-modal-view class="semfondo">
+       
+        <ion-content class="padding fondo">
+         <p >Temporadas Regulamento</p>  
+          
+        </ion-content>
+         <ion-footer-bar class="semfondo">
+<button class="subir button button-block button-balanced" ng-click="modal.hide()">Ok</button>      
+    </ion-footer-bar>
+      </ion-modal-view>
+    </script>
 </ion-content>
 </ion-view>

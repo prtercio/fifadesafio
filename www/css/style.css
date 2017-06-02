@@ -698,3 +698,66 @@ img.redimensionar {
     max-width: 300px !important;
     max-height: 600px !important;
 }
+
+a.introjs-button .introjs-skipbutton .introjs-donebutton {
+    color: #000 !important;
+}
+
+ion-content.fondo {
+    background: rgba(0, 0, 0, 0.8) !important;
+}
+
+.modal.semfondo {
+    background-color: transparent !important;
+}
+
+.bar.semfondo {
+    background: rgba(0, 0, 0, 0.8) !important;
+}
+
+.button.button-block.subir {
+    margin: 0;
+}
+
+.centerDiv {
+    margin: auto;
+    width: 50%;
+    border: 3px solid red;
+    padding: 5px;
+}
+
+.subirTexto {
+    display: block;
+}
+
+.container {
+    position: relative;
+}
+
+.centerTexto {
+    position: absolute;
+    left: 0;
+    top: 30%;
+    width: 100%;
+    text-align: center;
+    font-size: 2em;
+    color: #FFF;
+}
+
+.circulo {
+    width: 60px;
+    height: 60px;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+    background: #33cd5f;
+}
+
+.circuloLaranja {
+    width: 60px;
+    height: 60px;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+    background: #FFBF00;
+}
