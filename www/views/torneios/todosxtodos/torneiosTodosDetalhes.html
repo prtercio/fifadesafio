@@ -90,7 +90,16 @@
 
   
 </div>
-  
+<!--
+  <div>
+  <input type="submit" value="Take Screenshot Of Div" ng-click="capture()" />
+<form method="POST" enctype="multipart/form-data" action="save.php" id="myForm">
+    <input type="hidden" name="img_val" id="img_val" value="" />
+</form>
+    <div id="target"></div>
+ Render your page inside of this div. -->
+
+
   <!-- <a href="https://api.whatsapp.com/send?phone=5218112292869">Enviar</a> -->
   </ion-content>
 </ion-tab>
@@ -121,6 +130,7 @@
         <a class="button button-small button-balanced" ng-click="editarJogo(group.rodada, item.jogo, item.idTorneio, item.idRodada)"> <i class="icon ion-edit"></i></a>
       </div>
     </div>
+
   </ion-item>
 </div>
 </ion-list>
@@ -156,7 +166,7 @@
           <button class="button button-clear button-primary" ng-click="modal.hide()">Cancelar</button>
         </ion-header-bar>
         <ion-content class="padding">
-          <div id="prova"></div>
+          <div id="prova" download></div>
             <button class="whatsapp2" class="button button-full button-positive" ng-click="enviarZa()">Enviar</button>          
         </ion-content>
       </ion-modal-view>

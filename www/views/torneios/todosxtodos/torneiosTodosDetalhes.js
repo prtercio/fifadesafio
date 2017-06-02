@@ -498,28 +498,36 @@
       */
       var img = "";
       $scope.capturarTela = function() {
-        console.log( "click captra" );
+        img = "";
         html2canvas( document.body, {
           onrendered: function( canvas ) {
             document.body.appendChild( canvas );
             img = canvas.toDataURL( "image/png" )
             //window.open( img );
-            $scope.login();
+            saveBase64AsFile( img, "image" );
+            //$scope.login();
           }
         } );
       }
+      /*
       $scope.enviarZa = function() {
-        /*
-          var text = $( this ).attr( "data-text" );
-          var url = $( this ).attr( "data-link" );
-          */
+ 
         var link = "http://fifadesafio.herokuapp.com";
         var textoKey = "Key: " + $scope.chaveAcesso;
         var textoGt = "Gt: " + $scope.gamertag;
         var message = "Acesse: " + encodeURIComponent( link ) + " - " + encodeURIComponent( textoGt ) + " - " + encodeURIComponent( textoKey ) + " - " + img;
         var whatsapp_url = "whatsapp://send?text=" + message;
         window.location.href = whatsapp_url;
+        $scope.closeLogin();
+        img = "";
       };
+      */
+      function saveBase64AsFile( base64, fileName ) {
+        var link = document.createElement( "a" );
+        link.setAttribute( "href", base64 );
+        link.setAttribute( "download", fileName );
+        link.click();
+      }
       // Create the login modal that we will use later
       $ionicModal.fromTemplateUrl( 'modal.html', {
         scope: $scope
@@ -529,11 +537,12 @@
       // Triggered in the login modal to close it
       $scope.closeLogin = function() {
         $scope.modal.hide();
+        //img = "";
       };
       // Open the login modal
       $scope.login = function() {
         $scope.modal.show();
-        $( "#prova" ).html( '<img src="' + img + '"/>' );
+        //$( "#prova" ).html( '<img class="redimensionar" src="' + img + '"/>' );
       };
 
       function procesarDatos() {

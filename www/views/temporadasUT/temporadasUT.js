@@ -1,8 +1,8 @@
 ( function() {
   'use strict';
   var temporadasUT = angular.module( 'App.CtrlTemporadasUT', [] );
-  temporadasUT.controller( 'CtrlTemporadasUT', [ '$scope', 'Utils', 'CordovaNetwork',
-    function( $scope, Utils, CordovaNetwork ) {
+  temporadasUT.controller( 'CtrlTemporadasUT', [ '$scope', 'Utils', 'CordovaNetwork', '$ionicModal',
+    function( $scope, Utils, CordovaNetwork, $ionicModal ) {
       window.addEventListener( 'online', updateIndicator );
       window.addEventListener( 'offline', updateIndicator );
 
@@ -85,6 +85,22 @@
       $scope.atualizarTemporadas = function() {
         cargarTemporadas();
       }
+      // Create the login modal that we will use later
+      $ionicModal.fromTemplateUrl( 'modalTemporadasUT.html', {
+        scope: $scope
+      } ).then( function( modal ) {
+        $scope.modal = modal;
+      } );
+      // Triggered in the login modal to close it
+      $scope.closeLogin = function() {
+        $scope.modal.hide();
+        //img = "";
+      };
+      // Open the login modal
+      $scope.login = function() {
+        $scope.modal.show();
+        //$( "#prova" ).html( '<img class="redimensionar" src="' + img + '"/>' );
+      };
     }
   ] ); //ctrl
 } )();

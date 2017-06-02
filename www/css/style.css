@@ -694,7 +694,7 @@ a {
     text-decoration: none !important;
 }
 
-#prova {
-    width: 300 !important;
-    height: 600 !important;
+img.redimensionar {
+    max-width: 300px !important;
+    max-height: 600px !important;
 }

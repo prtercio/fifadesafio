@@ -7,7 +7,7 @@
      <button class="button footer whatsapp">
       <i class="icon ion-social-whatsapp-outline"></i>
     </button>
-    <button class="button">
+    <button class="button" ng-click="modal.show()">
       <!--{{'ADICIONARADMIN'|translate}}-->
       <i class="icon ion-clipboard"></i>
     </button>
@@ -22,6 +22,17 @@
 		<hscroller>
 			<hcard ng-repeat="item in items track by $index" index="{{$index}}" desc="{{item.desc}}" image="{{item.img}}" url="#/app/temporadasTorneio/{{item.url}}"></hcard>
 		</hscroller>
+		<script id="modalTemporadas.html" type="text/ng-template">
+      <ion-modal-view>
+        <ion-header-bar class="bar bar-header bar-dark">
+          <h1 class="title">Regulamento</h1>
+          <button class="button button-clear button-primary" ng-click="modal.hide()">Cancelar</button>
+        </ion-header-bar>
+        <ion-content class="padding">
+         <p>Temporadas Regulamento</p>        
+        </ion-content>
+      </ion-modal-view>
+    </script>
 
 	</ion-content>
 	<div class="bar bar-footer bar-energized">
