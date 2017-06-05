@@ -115,28 +115,30 @@
         refTorneio.once( "value" ).then( function( snapshot ) {
           //saber si es administrador
           var admnis = snapshot.val().configuracao.admnis;
-          for ( var obj in admnis ) {
-            listaAdmin.push( {
-              "gt": admnis[ obj ].gamertag,
-              "key": admnis[ obj ].key,
-              "keynodo": obj
-            } )
-          }
-          for ( var i = 0; i < listaAdmin.length; i++ ) {
-            if ( listaAdmin[ i ].keynodo === "principal" ) {
-              $scope.eCriadorSuper = true;
-              $scope.eCriador = true;
-              $scope.dimensionColumna = 80;
-              break;
-            } else {
-              if ( listaAdmin[ i ].key === $localStorage.keyUser ) {
+          if ( $scope.logado ) {
+            for ( var obj in admnis ) {
+              listaAdmin.push( {
+                "gt": admnis[ obj ].gamertag,
+                "key": admnis[ obj ].key,
+                "keynodo": obj
+              } )
+            }
+            for ( var i = 0; i < listaAdmin.length; i++ ) {
+              if ( listaAdmin[ i ].keynodo === "principal" ) {
+                $scope.eCriadorSuper = true;
                 $scope.eCriador = true;
                 $scope.dimensionColumna = 80;
                 break;
               } else {
-                $scope.dimensionColumna = 100;
-                $scope.eCriador = false;
-                $scope.eCriadorSuper = false;
+                if ( listaAdmin[ i ].key === $localStorage.keyUser ) {
+                  $scope.eCriador = true;
+                  $scope.dimensionColumna = 80;
+                  break;
+                } else {
+                  $scope.dimensionColumna = 100;
+                  $scope.eCriador = false;
+                  $scope.eCriadorSuper = false;
+                }
               }
             }
           }
@@ -713,10 +715,7 @@
       $scope.onDeleteEditor = function( keyEditor ) {
         console.log( keyUsuario, idTorneio, $scope.chaveAcesso, keyEditor );
         firebase.database().ref( 'desafio/torneios/todosxtodos/' + keyUsuario + "/" + idTorneio + "/configuracao/admnis/" + keyEditor ).remove();
-        console.log( "se eliminó" );
-        console.log( listaAdmin );
         var posArray = listaAdmin.indexOf( keyEditor );
-        console.log( posArray );
         for ( var i = 0; i < listaAdmin.length; i++ ) {
           if ( listaAdmin[ i ].keynodo === keyEditor ) {
             console.log( i );
