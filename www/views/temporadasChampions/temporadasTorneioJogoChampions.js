@@ -1,78 +1,17 @@
 ( function() {
     'use strict';
-    var temporadasJogo = angular.module( 'App.CtrlTempTorneioJogo', [] );
-    temporadasJogo.controller( 'CtrlTempTorneioJogo', [ '$scope', 'Utils', '$state', '$localStorage', 'Popup', '$stateParams', '$window', 'idJogo', 'dataService', '$ionicLoading', '$http', '$ionicPopup', '$rootScope', '$ionicHistory', '$timeout', 'CordovaNetwork',
-        function( $scope, Utils, $state, $localStorage, Popup, $stateParams, $window, idJogo, dataService, $ionicLoading, $http, $ionicPopup, $rootScope, $ionicHistory, $timeout, CordovaNetwork ) {
+    var temporadasJogo = angular.module( 'App.CtrlTempTorneioJogoChampions', [] );
+    temporadasJogo.controller( 'CtrlTempTorneioJogoChampions', [ '$scope', 'Utils', '$state', '$localStorage', 'Popup', '$stateParams', '$window', 'idJogo', 'dataService', '$ionicLoading', '$http', '$ionicPopup', '$rootScope', '$ionicHistory', '$timeout',
+        function( $scope, Utils, $state, $localStorage, Popup, $stateParams, $window, idJogo, dataService, $ionicLoading, $http, $ionicPopup, $rootScope, $ionicHistory, $timeout ) {
             // si foi enviado:
-            window.addEventListener( 'online', updateIndicator );
-            window.addEventListener( 'offline', updateIndicator );
-
-            function updateIndicator() {
-                // Show a different icon based on offline/online
-                CordovaNetwork.isOnline().then( function( isConnected ) {
-                    if ( isConnected === true ) {
-                        console.log( "conectado" );
-                        var alertPopup = $ionicPopup.alert( {
-                            template: '<div align="center"><i class="icon ion-happy verdeBalanced tamanhoIcon"></i></div><div align="center"><strong>{{"INTERNETON" | translate}}</strong></<div>',
-                            buttons: [ {
-                                text: '<b>Ok</b>',
-                                type: 'button-balanced',
-                                onTap: function( e ) {}
-                            } ]
-                        } );
-                        alertPopup.then( function( res ) {
-                            if ( res ) {
-                                console.log( "fechado" );
-                            }
-                        } );
-                    } else {
-                        var alertPopup = $ionicPopup.alert( {
-                            template: '<div align="center"><i class="icon ion-alert-circled laranja tamanhoIcon"></i></div><div align="center"><strong>{{"INTERNETOFF" | translate}}</strong></div>',
-                            buttons: [ {
-                                text: '<b>Ok</b>',
-                                type: 'button-energized',
-                                onTap: function( e ) {}
-                            } ]
-                        } );
-                        alertPopup.then( function( res ) {
-                            if ( res ) {
-                                console.log( "fechado" );
-                            }
-                        } );
-                    }
-                } );
-            }
             $scope.idioma = localStorage.getItem( "lang" );
             $scope.conquistas = JSON.parse( localStorage.getItem( 'conquistas' ) ) || '[]';
             var urlLocal = 'js/BD/presenceEjemplo.json';
             var arrayConquistas = [];
             var arrayConquistasDerrota = [];
             var arrayConquistasEmpate = [];
-            var quantidadeJogos = idJogo.substring( 0, idJogo.indexOf( "¡" ) );
-            var semana = idJogo.substring( idJogo.indexOf( "¡" ) + 1, idJogo.indexOf( "&" ) );
-            var retirarSemana = semana.substring( 6 );
-            //console.log( retirarSemana, " abc" );
-            var id = idJogo.substring( idJogo.indexOf( "&" ) + 1, idJogo.indexOf( "|" ) );
+            var id = idJogo.substring( 0, idJogo.indexOf( "|" ) );
             var keyUsuario = idJogo.substring( idJogo.indexOf( "|" ) + 1 );
-            var novaSemana = false;
-            var numeroSemanas = 0;
-            var quantidadeJogosSemanais = 0;
-            if ( Number( quantidadeJogos ) == 50 ) {
-                quantidadeJogosSemanais = Number( quantidadeJogos ) / 5;
-            } else if ( Number( quantidadeJogos ) == 30 ) {
-                quantidadeJogosSemanais = Number( quantidadeJogos ) / 3;
-            } else {
-                quantidadeJogosSemanais = Number( quantidadeJogos ) / 2;
-            }
-            if ( Number( quantidadeJogosSemanais ) == Number( id ) ) {
-                if ( Number( id ) != quantidadeJogos ) {
-                    var somarSemana = Number( retirarSemana ) + 1;
-                    novaSemana = "semana" + somarSemana;
-                    console.log( "----------------novaSemana ", novaSemana );
-                } else {
-                    console.log( "----------------novaSemana ", novaSemana );
-                }
-            }
             //console.log(id, keyUsuario);
             var idJogo = id;
             var itemList = [];
@@ -151,13 +90,13 @@
                 } );
             }
             Utils.show();
-            var ref = firebase.database().ref( 'desafio/desafios/temporadas/oficial/' + idTorneio + '/configuracao' );
+            var ref = firebase.database().ref( 'desafio/desafios/temporadasChampions/oficial/' + idTorneio + '/configuracao' );
             ref.once( "value" ).then( function( snapshot ) {
                 estatusDesafio = snapshot.val().estatus;
                 if ( estatusDesafio == "Fechado" ) {
                     var alertPopup = $ionicPopup.alert( {
                         title: 'Opps!',
-                        template: '<div align="center"><i class="icon ion-alert-circled laranja tamanhoIcon"></i></div><div align="center"><strong>{{"DESAFIOTERMINADO" | translate}}</strong></div>',
+                        template: '<p align="center"><i class="icon ion-alert-circled laranja tamanhoIcon"></i></p><p align="center"><strong>{{"DESAFIOTERMINADO" | translate}}</strong></p>',
                         buttons: [ {
                             text: '<b>Ok</b>',
                             type: 'button-balanced',
@@ -178,9 +117,8 @@
                 }
                 Utils.hide();
             } );
-            Utils.show();
             // RECUPERAR TRES ÚLITMOS JOGOS
-            var refJ = firebase.database().ref( 'desafio/desafios/temporadas/oficial/' + idTorneio + '/inscritos/' + keyUsuario );
+            var refJ = firebase.database().ref( 'desafio/desafios/temporadasChampions/oficial/' + idTorneio + '/inscritos/' + keyUsuario );
             refJ.once( "value" ).then( function( snapshot ) {
                 $scope.infoJogo = snapshot.val();
                 if ( $scope.infoJogo.jogados != 0 ) {
@@ -213,9 +151,9 @@
                 temporadaAtualEmpate = $scope.infoJogo.temporadaAtualEmpate;
                 temporadaAtualDerrota = $scope.infoJogo.temporadaAtualDerrota;
                 temporadaNova = temporadaAtual;
-                Utils.hide();
                 //console.log("TEMPACTUAL---- "+temporadaNova);
             } );
+            console.log( "conq " + conquistas );
             //Vitória armazenando as conquistas e os pontos dentro de arrayConquistas
             for ( var key in conquistas ) {
                 //-------------------------------------------------------------------------- PORTUGUES
@@ -269,15 +207,13 @@
                     }
                 }
             }
-            Utils.show();
-            var refjogos = firebase.database().ref( 'desafio/desafios/temporadas/oficial/' + idTorneio + '/inscritos/' + keyUsuario + '/jogos/' + semana + '/' + $scope.chat );
+            var refjogos = firebase.database().ref( 'desafio/desafios/temporadasChampions/oficial/' + idTorneio + '/inscritos/' + keyUsuario + '/jogos/' + $scope.chat );
             refjogos.once( "value" ).then( function( snapshot ) {
                 $scope.estadoJogo = snapshot.val();
                 $scope.estado = $scope.estadoJogo.estado;
                 $scope.$apply( function() {
                     $scope.detalheJogo = snapshot.val();
                 } );
-                Utils.hide();
             } );
             // si nao foi enviado
             if ( firebase.auth().currentUser ) {
@@ -344,7 +280,7 @@
                 } else {
                     var alertPopup = $ionicPopup.alert( {
                         title: 'Opps!',
-                        template: '<div align="center"><i class="icon ion-alert-circled laranja tamanhoIcon"></i></div><div align="center"><strong>{{"DESAFIOTERMINADO" | translate}}</strong></div>',
+                        template: '<p align="center"><i class="icon ion-alert-circled laranja tamanhoIcon"></i></p><p align="center"><strong>{{"DESAFIOTERMINADO" | translate}}</strong></p>',
                         buttons: [ {
                             text: '<b>Ok</b>',
                             type: 'button-balanced',
@@ -375,8 +311,8 @@
                 $scope.btnDisabled = false;
             }
             $scope.jogoSelecionado = function( valor ) {
+                $scope.selecionarImagen = true
                 $scope.verButtonAdicionar = false;
-                $scope.verConquistas = true;
                 novaTemporadaAtualVitoria = 0;
                 novaTemporadaAtualEmpate = 0;
                 novaTemporadaAtualDerrota = 0;
@@ -399,9 +335,8 @@
                         seDerrota = 0;
                         seVitoria = 1;
                         listarConquistaVitoria( resultado1, resultado2 );
-                        //console.log( golsPro, golsContra );
+                        console.log( golsPro, golsContra );
                         placarInverso( resultado1, resultado2, "v" );
-                        if ( temporadaAtual > 0 ) calcularStatusTemporada( temporadaAtual );
                         if ( atualizarNumerosTemporadas == true ) {
                             novaTemporadaAtualVitoria = 0;
                             novaTemporadaAtualEmpate = 0;
@@ -414,7 +349,6 @@
                         }
                         $scope.totalPontos = totalPontos;
                     } else if ( resultado1 < resultado2 ) {
-                        if ( temporadaAtual > 0 ) calcularStatusTemporada( temporadaAtual );
                         var resultadoFinal = "Derrota";
                         $scope.placarFinal = "d";
                         seEmpate = 0;
@@ -433,7 +367,6 @@
                         }
                     } else {
                         novosPontosEmpate = 1;
-                        if ( temporadaAtual > 0 ) calcularStatusTemporada( temporadaAtual );
                         var resultadoFinal = "Empate";
                         $scope.placarFinal = "e";
                         seEmpate = 1;
@@ -456,7 +389,6 @@
                     golsContra = Number( antGolsContra ) + Number( resultado1 );
                     if ( resultado1 < resultado2 ) {
                         novosPontosVitoria = 3;
-                        if ( temporadaAtual > 0 ) calcularStatusTemporada( temporadaAtual );
                         var resultadoFinal = "Vitoria";
                         $scope.placarFinal = "v";
                         seEmpate = 0;
@@ -474,7 +406,6 @@
                             novaTemporadaAtualEmpate = temporadaAtualEmpate;
                         }
                     } else if ( resultado1 > resultado2 ) {
-                        if ( temporadaAtual > 0 ) calcularStatusTemporada( temporadaAtual );
                         var resultadoFinal = "Derrota";
                         $scope.placarFinal = "d";
                         seEmpate = 0;
@@ -493,7 +424,6 @@
                         }
                     } else {
                         novosPontosEmpate = 1;
-                        if ( temporadaAtual > 0 ) calcularStatusTemporada( temporadaAtual );
                         var resultadoFinal = "Empate";
                         $scope.placarFinal = "e";
                         seEmpate = 1;
@@ -514,14 +444,6 @@
                 $scope.items = itemList;
                 $scope.verPlacarFinal = true;
                 $scope.totalPontos = totalPontos;
-                var calcularMultipleCinco = idJogo % 5;
-                console.log( calcularMultipleCinco );
-                if ( calcularMultipleCinco == 0 ) {
-                    $scope.selecionarImagen = true;
-                } else {
-                    $scope.selecionarImagen = false;
-                    $scope.verEnviar = true;
-                }
                 console.log( "totalPontos", $scope.totalPontos, "Update", atualizarNumerosTemporadas, "tempAtual", temporadaNova, "TV", novaTemporadaAtualVitoria, "TE", novaTemporadaAtualEmpate, "TD", novaTemporadaAtualDerrota );
             }
             $( document ).on( 'change', '#file', function( event ) {
@@ -538,38 +460,34 @@
                     //console.log("Enviando Foto 1");
                 } );
                 var filename = imageSelecionada.name;
-                if ( $scope.selecionarImagen ) {
-                    var storageRef = firebase.storage().ref( '/desafio/temporadas/imagensJogos/' + idTorneio + '/' + filename );
-                    var uploadTask = storageRef.put( imageSelecionada );
-                    uploadTask.on( 'state_changed', function( snapshot ) {
-                        var progress = ( snapshot.bytesTransferred / snapshot.totalBytes ) * 100;
-                        //console.log(progress);
-                        if ( progress === 100 ) {
-                            //console.log("Primeira imagen enviada com sucesso "+ imageSelecionada2);
-                            $ionicLoading.hide().then( function() {
-                                //console.log("Foto 1 enviada");
-                            } );
-                        }
-                    }, function( error ) {
-                        // Handle unsuccessful uploads
-                    }, function() {
-                        var downloadURL = uploadTask.snapshot.downloadURL;
-                        //console.log(downloadURL);
-                        $ionicLoading.show( {
-                            template: 'Update data...'
-                        } ).then( function() {
-                            //console.log("Actualizando Datos Foto 1");
+                var storageRef = firebase.storage().ref( '/desafio/temporadasChampions/imagensJogos/' + idTorneio + '/' + filename );
+                var uploadTask = storageRef.put( imageSelecionada );
+                uploadTask.on( 'state_changed', function( snapshot ) {
+                    var progress = ( snapshot.bytesTransferred / snapshot.totalBytes ) * 100;
+                    //console.log(progress);
+                    if ( progress === 100 ) {
+                        //console.log("Primeira imagen enviada com sucesso "+ imageSelecionada2);
+                        $ionicLoading.hide().then( function() {
+                            //console.log("Foto 1 enviada");
                         } );
-                        firebase.database().ref().child( 'desafio/desafios/temporadas/oficial/' + idTorneio + '/inscritos/' + keyUsuario + '/jogos/' + semana + '/' + $scope.chat ).update( {
-                            img: downloadURL
-                        } ).then( function( response ) {
-                            $ionicLoading.hide().then( function() {} );
-                            $scope.enviarResultado();
-                        } );
+                    }
+                }, function( error ) {
+                    // Handle unsuccessful uploads
+                }, function() {
+                    var downloadURL = uploadTask.snapshot.downloadURL;
+                    //console.log(downloadURL);
+                    $ionicLoading.show( {
+                        template: 'Update data...'
+                    } ).then( function() {
+                        //console.log("Actualizando Datos Foto 1");
                     } );
-                } else {
-                    $scope.enviarResultado();
-                }
+                    firebase.database().ref().child( 'desafio/desafios/temporadasChampions/oficial/' + idTorneio + '/inscritos/' + keyUsuario + '/jogos/' + $scope.chat ).update( {
+                        img: downloadURL
+                    } ).then( function( response ) {
+                        $ionicLoading.hide().then( function() {} );
+                        $scope.enviarResultado();
+                    } );
+                } );
             } // upload
             function listarConquistaVitoria( res1, res2 ) {
                 //console.log("atual: "+temporadaNova);
@@ -910,7 +828,7 @@
                                     $ionicLoading.hide();
                                     var alertPopup = $ionicPopup.alert( {
                                         title: 'Opps!',
-                                        template: "<div align='center'><strong>" + gamerSeleccionado + "</strong> {{'NAOFIFA' | translate}}</div>"
+                                        template: "<p align='center'><strong>" + gamerSeleccionado + "</strong> {{'NAOFIFA' | translate}}</p>"
                                     } );
                                     alertPopup.then( function( res ) {
                                         console.log( 'cerrar' );
@@ -935,7 +853,7 @@
                                     console.log( "Please goto Fifa 2." );
                                     var alertPopup = $ionicPopup.alert( {
                                         title: 'Opps!',
-                                        template: "<div align='center'><strong>" + gamerSeleccionado + "</strong>  {{'NAOFIFA' | translate}}</div>"
+                                        template: "<p align='center'><strong>" + gamerSeleccionado + "</strong>  {{'NAOFIFA' | translate}}</p>"
                                     } );
                                     alertPopup.then( function( res ) {
                                         console.log( 'cerrar' );
@@ -956,7 +874,7 @@
                                     $ionicLoading.hide();
                                     var alertPopup = $ionicPopup.alert( {
                                         title: 'Opps!',
-                                        template: "<div align='center' class='vermelho padding'>{{'RECUPERARCOMMENU' | translate}}</div>"
+                                        template: "<p align='center' class='vermelho padding'>{{'RECUPERARCOMMENU' | translate}}</p>"
                                     } );
                                     alertPopup.then( function( res ) {
                                         console.log( 'cerrar' );
@@ -975,7 +893,7 @@
                             $ionicLoading.hide();
                             var alertPopup = $ionicPopup.alert( {
                                 title: 'Opps!',
-                                template: "<div align='center'><strong>" + gamerSeleccionado + "</strong> {{'ESTAOFF' | translate}}</div><br><div align='center' class='vermelho padding'>{{'OJOGORECUPERADO' | translate}}</div>"
+                                template: "<p align='center'><strong>" + gamerSeleccionado + "</strong> {{'ESTAOFF' | translate}}</p><br><p align='center' class='vermelho padding'>{{'OJOGORECUPERADO' | translate}}</p>"
                             } );
                             alertPopup.then( function( res ) {
                                 console.log( 'cerrar' );
@@ -1131,13 +1049,13 @@
             // Enviar resposta
             $scope.enviarResultado = function() {
                 Utils.show();
-                var ref = firebase.database().ref( 'desafio/desafios/temporadas/oficial/' + idTorneio + '/configuracao' );
+                var ref = firebase.database().ref( 'desafio/desafios/temporadasChampions/oficial/' + idTorneio + '/configuracao' );
                 ref.once( "value" ).then( function( snapshot ) {
                     estatusDesafio = snapshot.val().estatus;
                     if ( estatusDesafio == "Fechado" ) {
                         var alertPopup = $ionicPopup.alert( {
                             title: 'Opps!',
-                            template: '<div align="center"><i class="icon ion-alert-circled laranja tamanhoIcon"></i></div><div align="center"><strong>{{"DESAFIOTERMINADO" | translate}}</strong></div>',
+                            template: '<p align="center"><i class="icon ion-alert-circled laranja tamanhoIcon"></i></p><p align="center"><strong>{{"DESAFIOTERMINADO" | translate}}</strong></p>',
                             buttons: [ {
                                 text: '<b>Ok</b>',
                                 type: 'button-balanced',
@@ -1211,9 +1129,7 @@
                     //console.log(itemList[i][0]+":"+itemList[i][1]);
                     conquistasEnviar.push( itemList[ i ][ 0 ] + ":" + itemList[ i ][ 1 ] );
                 }
-                console.log( resultPenultimo, "ultimos :" + resultUltimo, "novoResultado: ", novoResultado, "penultimo: " + resultUltimo, "antepenultimo: " + resultPenultimo, "resultado 1 " + resultado1, "resultado 2 " + resultado2, "jogados: ", jogados + 1, "vitoria: ", anteriorVitoria + seVitoria, "Derrota: ", anteriorDerrota + seDerrota, "empate: ", anteriorEmpate + seEmpate, "invencibilidade ", zerarInvencibilidade, "sequenciaVitoria ", zerarSequenciaVitoria, "itemList ", itemList );
-                console.log( "iniciando update resumo" );
-                firebase.database().ref().child( 'desafio/desafios/temporadas/oficial/' + idTorneio + '/inscritos/' + keyUsuario ).update( {
+                firebase.database().ref().child( 'desafio/desafios/temporadasChampions/oficial/' + idTorneio + '/inscritos/' + keyUsuario ).update( {
                     vitoria: anteriorVitoria + seVitoria,
                     pontos: antPontos + totalPontos,
                     jogados: jogados + 1,
@@ -1232,8 +1148,8 @@
                     temporadaAtualEmpate: novaTemporadaAtualEmpate
                 } ).then( function( response ) {
                     Utils.message( Popup.loading_b, Popup.loading );
-                    console.log( "1 iniciando update jogo" );
-                    firebase.database().ref().child( 'desafio/desafios/temporadas/oficial/' + idTorneio + '/inscritos/' + keyUsuario + '/jogos/' + semana + '/' + $scope.chat ).update( {
+                    console.log( "iniciando update jogo" );
+                    firebase.database().ref().child( 'desafio/desafios/temporadasChampions/oficial/' + idTorneio + '/inscritos/' + keyUsuario + '/jogos/' + $scope.chat ).update( {
                         estado: "Terminado",
                         pontos: totalPontos,
                         conquistas: conquistasEnviar,
@@ -1241,19 +1157,13 @@
                         status: statusEnviar
                     } ).then( function( response ) {
                         Utils.message( Popup.loading_a, Popup.loading );
-                        console.log( "2 iniciando update siguiente jogo" );
-                        var semanaEnviar = "";
-                        if ( novaSemana != false ) {
-                            semanaEnviar = novaSemana;
-                        } else {
-                            semanaEnviar = semana;
-                        }
+                        console.log( "iniciando update siguiente jogo" );
                         var somaJogo = Number( id ) + 1;
                         var siguienteJogo = "jogo" + somaJogo;
-                        firebase.database().ref().child( 'desafio/desafios/temporadas/oficial/' + idTorneio + '/inscritos/' + keyUsuario + '/jogos/' + semanaEnviar + '/' + siguienteJogo ).update( {
+                        firebase.database().ref().child( 'desafio/desafios/temporadasChampions/oficial/' + idTorneio + '/inscritos/' + keyUsuario + '/jogos/' + siguienteJogo ).update( {
                             bloqueado: false
                         } ).then( function( response ) {
-                            console.log( "3 final update siguiente jogo" );
+                            console.log( "final update siguiente jogo" );
                             var backCount = 1;
                             $rootScope.$ionicGoBack = function( backCount ) {
                                 $ionicHistory.goBack( backCount );
@@ -1264,245 +1174,6 @@
                         } );
                     } );
                 } );
-            }
-            //----------------------------------------------------------------------------------------------- DADOS TEMPORDADAS
-            function calcularStatusTemporada( _temporadaAtual ) {
-                var tempAtual = _temporadaAtual;
-                switch ( tempAtual ) {
-                    case 10:
-                        console.log( "1 = 10" );
-                        calcularSituacao( 0, 9, 12, temporadaAtualVitoria, temporadaAtualEmpate, temporadaAtualDerrota );
-                        break;
-                    case 9:
-                        console.log( "2 = 9" );
-                        calcularSituacao( 6, 10, 13, temporadaAtualVitoria, temporadaAtualEmpate, temporadaAtualDerrota );
-                        break;
-                    case 8:
-                        console.log( "3 = 8" );
-                        calcularSituacao( 8, 12, 15, temporadaAtualVitoria, temporadaAtualEmpate, temporadaAtualDerrota );
-                        break;
-                    case 7:
-                        console.log( "4 = 7" );
-                        calcularSituacao( 8, 14, 17, temporadaAtualVitoria, temporadaAtualEmpate, temporadaAtualDerrota );
-                        break;
-                    case 6:
-                        console.log( "5 = 6" );
-                        calcularSituacao( 10, 16, 19, temporadaAtualVitoria, temporadaAtualEmpate, temporadaAtualDerrota );
-                        break;
-                    case 5:
-                        console.log( "6 = 5" );
-                        calcularSituacao( 10, 16, 19, temporadaAtualVitoria, temporadaAtualEmpate, temporadaAtualDerrota );
-                        break;
-                    case 4:
-                        console.log( "7 = 4" );
-                        calcularSituacao( 10, 16, 19, temporadaAtualVitoria, temporadaAtualEmpate, temporadaAtualDerrota );
-                        break;
-                    case 1:
-                        console.log( "10 = 1" );
-                        calcularSituacao( 14, 19, 23, temporadaAtualVitoria, temporadaAtualEmpate, temporadaAtualDerrota );
-                        break;
-                    default:
-                        console.log( "no es" );
-                }
-            }
-            // calcular situacao na divisao
-            function calcularSituacao( _pontosCair, _pontosSubir, _pontosTitulo, _temporadaAtualVitoria, _temporadaAtualEmpate, _temporadaAtualDerrota ) {
-                atualizarNumerosTemporadas = false;
-                temporadaNova = temporadaAtual;
-                var totalJogos = 10;
-                // vars que recupera o total de jogos somando vitoria, derrota y empate mais o jogo atual
-                var jogosDisputados = _temporadaAtualVitoria + _temporadaAtualEmpate + _temporadaAtualDerrota + 1;
-                var pontosVitoriaRecuperados = _temporadaAtualVitoria * 3;
-                var ptVitoria = novosPontosVitoria + pontosVitoriaRecuperados;
-                var ptEmpate = _temporadaAtualEmpate + novosPontosEmpate;
-                var totalPontosTemp = ptVitoria + ptEmpate;
-                var ptDerrota = _temporadaAtualDerrota + novaTemporadaAtualDerrota; // --
-                // vars para cuando nao se completou os 10 jogos
-                var jogosFaltantes = totalJogos - jogosDisputados - 1;
-                var pontosRestantes = jogosFaltantes * 3;
-                var pontosAconquistar = totalPontosTemp + pontosRestantes;
-                // si completou os 10 jogos
-                if ( jogosDisputados == totalJogos ) {
-                    console.log( "10 jogos", totalPontosTemp, _pontosTitulo, _pontosSubir );
-                    if ( totalPontosTemp < _pontosCair ) {
-                        if ( temporadaAtual != 10 ) {
-                            temporadaNova = temporadaAtual + 1;
-                            console.log( "1 - caiu da temp " + temporadaAtual + " para a temp " + temporadaNova );
-                        } else {
-                            temporadaNova = temporadaAtual;
-                            console.log( "2 - Permaneceu na temp " + temporadaNova );
-                        }
-                    } else if ( totalPontosTemp >= _pontosCair && totalPontosTemp < _pontosSubir ) {
-                        // actualizar aqui a temporada:
-                        temporadaNova = temporadaAtual;
-                        itemList.push( [ arrayConquistas[ 40 ][ 0 ], arrayConquistas[ 40 ][ 1 ] ] );
-                        totalPontos = totalPontos + arrayConquistas[ 40 ][ 1 ];
-                        console.log( "3 - permaneceu na temp " + temporadaNova );
-                    } else if ( totalPontosTemp >= _pontosSubir && totalPontosTemp < _pontosTitulo ) {
-                        if ( temporadaAtual != 1 ) {
-                            temporadaNova = temporadaAtual - 1;
-                            itemList.push( [ arrayConquistas[ 39 ][ 0 ], arrayConquistas[ 39 ][ 1 ] ] );
-                            totalPontos = totalPontos + arrayConquistas[ 39 ][ 1 ];
-                            console.log( "4 - subir pra temp " + temporadaNova );
-                        } else {
-                            itemList.push( [ arrayConquistas[ 40 ][ 0 ], arrayConquistas[ 40 ][ 1 ] ] );
-                            totalPontos = totalPontos + arrayConquistas[ 40 ][ 1 ];
-                            console.log( "5 - permaneceu na primeira" );
-                            temporadaNova = temporadaAtual;
-                        }
-                        // actualizar aqui a temporada                
-                    } else {
-                        if ( ptEmpate > 0 && ptDerrota == 0 ) {
-                            //campeao com empate 
-                            if ( temporadaAtual > 7 ) {
-                                itemList.push( [ arrayConquistas[ 28 ][ 0 ], arrayConquistas[ 28 ][ 1 ] ] );
-                                totalPontos = totalPontos + arrayConquistas[ 28 ][ 1 ];
-                            } else if ( temporadaAtual < 8 && temporadaAtual > 4 ) {
-                                itemList.push( [ arrayConquistas[ 31 ][ 0 ], arrayConquistas[ 31 ][ 1 ] ] );
-                                totalPontos = totalPontos + arrayConquistas[ 31 ][ 1 ];
-                            } else if ( temporadaAtual < 5 && temporadaAtual > 1 ) {
-                                itemList.push( [ arrayConquistas[ 34 ][ 0 ], arrayConquistas[ 34 ][ 1 ] ] );
-                                totalPontos = totalPontos + arrayConquistas[ 34 ][ 1 ];
-                            } else {
-                                itemList.push( [ arrayConquistas[ 37 ][ 0 ], arrayConquistas[ 37 ][ 1 ] ] );
-                                totalPontos = totalPontos + arrayConquistas[ 37 ][ 1 ];
-                            }
-                            console.log( "7 - Campeao con Empate" );
-                        } else if ( ptDerrota > 0 ) {
-                            //campeao com derrota
-                            if ( temporadaAtual > 7 ) {
-                                itemList.push( [ arrayConquistas[ 29 ][ 0 ], arrayConquistas[ 29 ][ 1 ] ] );
-                                totalPontos = totalPontos + arrayConquistas[ 29 ][ 1 ];
-                            } else if ( temporadaAtual < 8 && temporadaAtual > 4 ) {
-                                itemList.push( [ arrayConquistas[ 32 ][ 0 ], arrayConquistas[ 32 ][ 1 ] ] );
-                                totalPontos = totalPontos + arrayConquistas[ 32 ][ 1 ];
-                            } else if ( temporadaAtual < 5 && temporadaAtual > 1 ) {
-                                itemList.push( [ arrayConquistas[ 35 ][ 0 ], arrayConquistas[ 35 ][ 1 ] ] );
-                                totalPontos = totalPontos + arrayConquistas[ 35 ][ 1 ];
-                            } else {
-                                itemList.push( [ arrayConquistas[ 38 ][ 0 ], arrayConquistas[ 38 ][ 1 ] ] );
-                                totalPontos = totalPontos + arrayConquistas[ 38 ][ 1 ];
-                            }
-                            console.log( "8 - Campeao con Derrota" );
-                        } else {
-                            //campeao perfeito
-                            if ( temporadaAtual > 7 ) {
-                                itemList.push( [ arrayConquistas[ 27 ][ 0 ], arrayConquistas[ 27 ][ 1 ] ] );
-                                totalPontos = totalPontos + arrayConquistas[ 27 ][ 1 ];
-                            } else if ( temporadaAtual < 8 && temporadaAtual > 4 ) {
-                                itemList.push( [ arrayConquistas[ 30 ][ 0 ], arrayConquistas[ 30 ][ 1 ] ] );
-                                totalPontos = totalPontos + arrayConquistas[ 30 ][ 1 ];
-                            } else if ( temporadaAtual < 5 && temporadaAtual > 1 ) {
-                                itemList.push( [ arrayConquistas[ 33 ][ 0 ], arrayConquistas[ 33 ][ 1 ] ] );
-                                totalPontos = totalPontos + arrayConquistas[ 33 ][ 1 ];
-                            } else {
-                                itemList.push( [ arrayConquistas[ 36 ][ 0 ], arrayConquistas[ 36 ][ 1 ] ] );
-                                totalPontos = totalPontos + arrayConquistas[ 36 ][ 1 ];
-                            }
-                            console.log( "9 - Campeao Perfeito" );
-                        }
-                        // actualizar aqui a temporada
-                        temporadaNova = temporadaAtual - 1;
-                    }
-                    atualizarNumerosTemporadas = true;
-                } else {
-                    console.log( "menos de 10", totalPontosTemp, _pontosTitulo, _pontosSubir );
-                    if ( totalPontosTemp >= _pontosTitulo ) {
-                        console.log( "pontos é igual ou maior q pontos titulo" );
-                        if ( ptEmpate > 0 && ptDerrota == 0 ) {
-                            if ( temporadaAtual > 7 ) {
-                                itemList.push( [ arrayConquistas[ 28 ][ 0 ], arrayConquistas[ 28 ][ 1 ] ] );
-                                totalPontos = totalPontos + arrayConquistas[ 28 ][ 1 ];
-                            } else if ( temporadaAtual < 8 && temporadaAtual > 4 ) {
-                                itemList.push( [ arrayConquistas[ 31 ][ 0 ], arrayConquistas[ 31 ][ 1 ] ] );
-                                totalPontos = totalPontos + arrayConquistas[ 31 ][ 1 ];
-                            } else if ( temporadaAtual < 5 && temporadaAtual > 1 ) {
-                                itemList.push( [ arrayConquistas[ 34 ][ 0 ], arrayConquistas[ 34 ][ 1 ] ] );
-                                totalPontos = totalPontos + arrayConquistas[ 34 ][ 1 ];
-                            } else {
-                                itemList.push( [ arrayConquistas[ 37 ][ 0 ], arrayConquistas[ 37 ][ 1 ] ] );
-                                totalPontos = totalPontos + arrayConquistas[ 37 ][ 1 ];
-                            }
-                            console.log( "11 Antes - Campeao con Empate" );
-                        } else if ( ptDerrota > 0 ) {
-                            //campeao com derrota
-                            if ( temporadaAtual > 7 ) {
-                                itemList.push( [ arrayConquistas[ 29 ][ 0 ], arrayConquistas[ 29 ][ 1 ] ] );
-                                totalPontos = totalPontos + arrayConquistas[ 29 ][ 1 ];
-                            } else if ( temporadaAtual < 8 && temporadaAtual > 4 ) {
-                                itemList.push( [ arrayConquistas[ 32 ][ 0 ], arrayConquistas[ 32 ][ 1 ] ] );
-                                totalPontos = totalPontos + arrayConquistas[ 32 ][ 1 ];
-                            } else if ( temporadaAtual < 4 && temporadaAtual > 1 ) {
-                                itemList.push( [ arrayConquistas[ 35 ][ 0 ], arrayConquistas[ 35 ][ 1 ] ] );
-                                totalPontos = totalPontos + arrayConquistas[ 35 ][ 1 ];
-                            } else {
-                                itemList.push( [ arrayConquistas[ 38 ][ 0 ], arrayConquistas[ 38 ][ 1 ] ] );
-                                totalPontos = totalPontos + arrayConquistas[ 38 ][ 1 ];
-                            }
-                            console.log( "12 Antes - Campeao con Derrota" );
-                        } else {
-                            //campeao perfeito
-                            if ( temporadaAtual > 7 ) {
-                                itemList.push( [ arrayConquistas[ 27 ][ 0 ], arrayConquistas[ 27 ][ 1 ] ] );
-                                totalPontos = totalPontos + arrayConquistas[ 27 ][ 1 ];
-                            } else if ( temporadaAtual < 8 && temporadaAtual > 4 ) {
-                                itemList.push( [ arrayConquistas[ 30 ][ 0 ], arrayConquistas[ 30 ][ 1 ] ] );
-                                totalPontos = totalPontos + arrayConquistas[ 30 ][ 1 ];
-                            } else if ( temporadaAtual < 5 && temporadaAtual > 1 ) {
-                                itemList.push( [ arrayConquistas[ 33 ][ 0 ], arrayConquistas[ 33 ][ 1 ] ] );
-                                totalPontos = totalPontos + arrayConquistas[ 33 ][ 1 ];
-                            } else {
-                                itemList.push( [ arrayConquistas[ 36 ][ 0 ], arrayConquistas[ 36 ][ 1 ] ] );
-                                totalPontos = totalPontos + arrayConquistas[ 36 ][ 1 ];
-                            }
-                            console.log( "13 Antes - Campeao Perfeito", totalPontos );
-                            console.log( itemList );
-                        }
-                        temporadaNova = temporadaAtual - 1;
-                        atualizarNumerosTemporadas = true;
-                    }
-                    console.log( "# " + pontosRestantes, _pontosTitulo, _pontosSubir );
-                    console.log( "$ ", pontosAconquistar );
-                    if ( temporadaAtual != 1 ) {
-                        if ( temporadaAtual != 10 ) {
-                            if ( pontosAconquistar >= _pontosCair && pontosAconquistar < _pontosSubir ) {
-                                temporadaNova = temporadaAtual;
-                                atualizarNumerosTemporadas = true;
-                                itemList.push( [ arrayConquistas[ 40 ][ 0 ], arrayConquistas[ 40 ][ 1 ] ] );
-                                totalPontos = totalPontos + arrayConquistas[ 40 ][ 1 ];
-                                console.log( "14 Permaneceu, na temporada " + temporadaNova );
-                            } else if ( pontosAconquistar >= _pontosSubir && pontosAconquistar < _pontosTitulo ) {
-                                console.log( "15 podeSubir y nao pode ser campeao" );
-                            } else {
-                                if ( pontosAconquistar < _pontosCair ) {
-                                    temporadaNova = temporadaAtual + 1;
-                                    atualizarNumerosTemporadas = true;
-                                    console.log( "16 Caiu para a " + temporadaNova );
-                                }
-                                // enviar datos aqui
-                            }
-                        } else {
-                            if ( pontosAconquistar < _pontosSubir ) {
-                                temporadaNova = temporadaAtual;
-                                atualizarNumerosTemporadas = true;
-                                itemList.push( [ arrayConquistas[ 40 ][ 0 ], arrayConquistas[ 40 ][ 1 ] ] );
-                                totalPontos = totalPontos + arrayConquistas[ 40 ][ 1 ];
-                                console.log( "16.1 Permaneceu, na temporada " + temporadaNova );
-                            }
-                        }
-                    } else {
-                        atualizarNumerosTemporadas = true;
-                        if ( pontosAconquistar >= _pontosCair && pontosAconquistar < 23 ) {
-                            temporadaNova = temporadaAtual;
-                            itemList.push( [ arrayConquistas[ 40 ][ 0 ], arrayConquistas[ 40 ][ 1 ] ] );
-                            totalPontos = totalPontos + arrayConquistas[ 40 ][ 1 ];
-                            console.log( "17 Permaneceu, na temporada " + temporadaNova );
-                        } else {
-                            temporadaNova = temporadaAtual + 1;
-                            console.log( "18 Caiu para a " + temporadaNova );
-                        }
-                    }
-                }
             }
         }
     ] ); //ctrl

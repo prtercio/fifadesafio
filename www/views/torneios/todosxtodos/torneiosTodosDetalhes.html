@@ -1,7 +1,7 @@
 <ion-view ng-init="carregarDados()" view-title="{{'TORNEIO' | translate}}" >
 
-  <ion-nav-buttons side="secondary" >
-        <!-- <button class="button button-icon icon ion-loop" ng-click="carregarDados()"></button> -->
+  <ion-nav-buttons side="secondary">      
+   <button class="button button-icon icon  ion-android-more-vertical" ng-click="popover.show($event)" ng-show="eCriadorSuper"></button>
  </ion-nav-buttons>
  <ion-tabs class="tabs-dark tabs-icon-top">
    <ion-tab title="Ranking" icon-on="ion-ios-list" icon-off="ion-ios-list-outline">
@@ -29,9 +29,9 @@
         </div>
 
       </div>
-    <button class="button button-block button-balanced" ng-disabled="inputs.length < 4" ng-click="enviarDatos()">
-      {{'GERARCONFRONTOS'|translate}}
-    </button>
+      <button class="button button-block button-balanced" ng-disabled="inputs.length < 4" ng-click="enviarDatos()">
+        {{'GERARCONFRONTOS'|translate}}
+      </button>
 
     </div>
     <div ng-show="!noInscritos">
@@ -42,12 +42,9 @@
        <!-- {{'CHAVE'| translate}}-->
        <i class="icon ion-key"></i>
      </button>
-     <!--
-     <button class="button footer whatsapp">
-      <i class="icon ion-social-whatsapp-outline"></i>
-    </button>
-    -->
-    <button class="button" id="button" ng-click="capturarTela()">
+
+
+     <button class="button" id="button" ng-click="capturarTela()">
       <!--{{'ADICIONARADMIN'|translate}}-->
       <i class="icon ion-android-share-alt"></i>
     </button>
@@ -90,93 +87,135 @@
 
   
 </div>
-<!--
-  <div>
-  <input type="submit" value="Take Screenshot Of Div" ng-click="capture()" />
-<form method="POST" enctype="multipart/form-data" action="save.php" id="myForm">
-    <input type="hidden" name="img_val" id="img_val" value="" />
-</form>
-    <div id="target"></div>
- Render your page inside of this div. -->
-
-
-  <!-- <a href="https://api.whatsapp.com/send?phone=5218112292869">Enviar</a> -->
-  </ion-content>
+</ion-content>
 </ion-tab>
 
 <ion-tab title="{{'RODADAS' | translate}}" icon-on="ion-ios-football" icon-off="ion-ios-football-outline" ng-show="!noInscritos">
   <ion-content id="imagebg">
-  <br />
-  <br />
-  <h4 align="center" class="padding laranja" ng-show="!eCriador">{{'SELECIONEARODADA'| translate}}</h4>
-  <h4 align="center" class="padding laranja" ng-show="eCriador">{{'SELECIONEARODADAEDITE'| translate}}</h4>
- <ion-list ng-show="!noInscritos">
-    <div ng-repeat="group in groups | orderBy:name:true">
-      <ion-item class="item-dark cinza"
-      ng-click="toggleGroup(group)"
-      ng-class="{active: isGroupShown(group)}">
-      <i class="icon" ng-class="isGroupShown(group) ? 'ion-minus' : 'ion-plus'"></i>
-      &nbsp;
-      {{'RODADA' | translate}} {{group.rodada}}
+    <br />
+    <br />
+    <h4 align="center" class="padding laranja" ng-show="!eCriador">{{'SELECIONEARODADA'| translate}}</h4>
+    <h4 align="center" class="padding laranja" ng-show="eCriador">{{'SELECIONEARODADAEDITE'| translate}}</h4>
+    <ion-list ng-show="!noInscritos">
+      <div ng-repeat="group in groups | orderBy:name:true">
+        <ion-item class="item-dark cinza"
+        ng-click="toggleGroup(group)"
+        ng-class="{active: isGroupShown(group)}">
+        <i class="icon" ng-class="isGroupShown(group) ? 'ion-minus' : 'ion-plus'"></i>
+        &nbsp;
+        {{'RODADA' | translate}} {{group.rodada}}
+      </ion-item>
+      <ion-item class="item-accordion itemtransparente itembordagris"
+      ng-repeat="item in group.items track by $index"
+      ng-show="isGroupShown(group)">
+      <div class="row" ng-show="$index < rodadasQtdJogos">
+        <div class="col col-{{dimensionColumna}} center">
+          <in class="letraTamanhoJogo">{{item.jogo}}</in>
+        </div>
+        <div class="col col-20" ng-show="eCriador">            
+          <a class="button button-small button-balanced" ng-click="editarJogo(group.rodada, item.jogo, item.idTorneio, item.idRodada)"> <i class="icon ion-edit"></i></a>
+        </div>
+      </div>
+
     </ion-item>
-    <ion-item class="item-accordion itemtransparente itembordagris"
-    ng-repeat="item in group.items track by $index"
-    ng-show="isGroupShown(group)">
-    <div class="row" ng-show="$index < rodadasQtdJogos">
-      <div class="col col-{{dimensionColumna}} center">
-        <in class="letraTamanhoJogo">{{item.jogo}}</in>
-      </div>
-      <div class="col col-20" ng-show="eCriador">            
-        <a class="button button-small button-balanced" ng-click="editarJogo(group.rodada, item.jogo, item.idTorneio, item.idRodada)"> <i class="icon ion-edit"></i></a>
-      </div>
+  </div>
+</ion-list>
+</ion-tab>
+  <!--
+   <ion-tab title="{{'EDITORES' | translate}}" icon-on="ion-ios-personadd" icon-off="ion-ios-personadd-outline" ng-show="eCriadorSuper">
+     <ion-content id="imagebg"> 
+      <br />
+      <br />
+      <div ng-show="noInscritos" class="padding center" >
+
+
+    </div>
+    <div ng-show="!noInscritos">
+
+    <button class="button button-block button-energized" ng-click="abrirAddAdmin()">+ {{}}</button>
+  
+    </div>
+  </ion-content>
+</ion-tab>
+-->
+<script id="templates/popoverTorneio.html" type="text/ng-template">
+  <ion-popover-view style="height: 120px;">
+    <ion-content class="grisbg">
+      <ion-list>
+        <ion-item class="item item-icon-left branco" ng-click="abrirAddAdmin()">
+          <i class="icon ion-plus-circled"></i>{{'ADICIONARADMIN' | translate}}
+        </ion-item>          
+        <ion-item class="item item-icon-left branco" ng-click="abrirModalEditor()">
+          <i class="icon ion-close-circled"></i>{{'ELIMINARADMIN' | translate}}
+        </ion-item>           
+      </ion-list>
+    </ion-content>
+  </ion-popover-view>
+</script>
+<script id="popup-editarjogo.html" type="text/ng-template">    
+  <!-- <p align="center"><i class="icon ion-ribbon-b cinza  tamanhoIcon"></i></p> -->
+  <p align="center"><strong>{{'RONDA' | translate}} {{rodadaAtual}}</strong></p>
+  <div class="row">
+    <div class="col col-40" align="right">
+      <h4>{{oponente1}}</h4> 
+    </div>
+    <div class="col col-20 center padInferior"><h4>{{'X' | translate}}</h4></div>
+    <div class="col col-40">
+      <h4>{{oponente2}}</h4> 
     </div>
 
-  </ion-item>
-</div>
-</ion-list>
-  </ion-tab>
-    <script id="popup-editarjogo.html" type="text/ng-template">    
-      <!-- <p align="center"><i class="icon ion-ribbon-b cinza  tamanhoIcon"></i></p> -->
-      <p align="center"><strong>{{'RONDA' | translate}} {{rodadaAtual}}</strong></p>
-      <div class="row">
-        <div class="col col-40" align="right">
-          <h4>{{oponente1}}</h4> 
-        </div>
-        <div class="col col-20 center padInferior"><h4>{{'X' | translate}}</h4></div>
-        <div class="col col-40">
-          <h4>{{oponente2}}</h4> 
-        </div>
+  </div>
+  <div class="row">
+    <!-- -->
+    <div class="col col-50" align="center">
+      <input type="number" name="local" ng-model="data.local" >
+    </div>
+    <div class="col col-50" align="center">
+     <input type="number" name="visitante" ng-model="data.visitante">
+   </div>
 
+ </div>
+</script>
+
+<script id="popup-buscarEditor.html" type="text/ng-template">    
+  <!-- <p align="center"><i class="icon ion-ribbon-b cinza  tamanhoIcon"></i></p> -->
+  <p align="center"><strong>{{'BUSCARADMIN' | translate}}</strong></p>
+  <div class="list">
+    <label class="item item-input">
+      <input type="text" ng-model="data.gtKey"  placeholder="Gamertag" name="gamertag">
+    </label>
+  </div>
+
+</script>
+<script id="modalEliminarEditor.html" type="text/ng-template">
+  <ion-modal-view>
+    <ion-header-bar class="bar bar-header bar-dark">
+      <h1 class="title">{{'EDITORES' | translate}}</h1>
+      <button class="button button-clear button-primary" ng-click="cerrarModalEditor()">Cancelar</button>
+    </ion-header-bar>
+    <ion-content class="padding grisbg">
+    <div ng-repeat="item in editores track by $index">
+    <div class="row" ng-if="item.keynodo != 'principal'">
+    <div class="col col-10">
+    </div>
+      <div class="col col-70 branco">
+      {{item.gt}}
       </div>
-      <div class="row">
-        <!-- -->
-        <div class="col col-50" align="center">
-          <input type="number" name="local" ng-model="data.local" >
-        </div>
-        <div class="col col-50" align="center">
-         <input type="number" name="visitante" ng-model="data.visitante">
-       </div>
-
-     </div>
-   </script>
-    <script id="modal.html" type="text/ng-template">
-      <ion-modal-view>
-        <ion-header-bar class="bar bar-header bar-dark">
-          <h1 class="title">Caputra</h1>
-          <button class="button button-clear button-primary" ng-click="modal.hide()">Cancelar</button>
-        </ion-header-bar>
-        <ion-content class="padding">
-          <div id="prova" download></div>
-            <button class="whatsapp2" class="button button-full button-positive" ng-click="enviarZa()">Enviar</button>          
+      <div class="col col-20 branco">
+        <button class="button button-small button-assertive"  ng-click="onDeleteEditor(item.keynodo)"> <i class="icon ion-close-round"></i></button>
+      </div>
+    </div>
+       
         </ion-content>
       </ion-modal-view>
     </script>
-</ion-tabs>
+
+  </ion-tabs>
 
 
 
 
-   
+
 
 
 

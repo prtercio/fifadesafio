@@ -89,16 +89,16 @@
     <div ng-show="verPlacarFinal">
       <div 
         align="center" 
-       class="laranja">
+        ng-class="{verde : placarFinal=='v', vermelhoClaro : placarFinal=='d', laranja : placarFinal=='e'}">
       <h3>{{placarFinal | filtroStatus}}</h3>
     </div>        
     <h3 align="center">{{totalPontos}} {{'PONTOS' | translate}}</h3>
   </div>
 </div>
 <div class="padding">
-<li class="item item-toggle itemtransparente" ng-show="verConquistas">
+<li class="item item-toggle itemtransparente" ng-show="selecionarImagen">
   {{'DETALHECONQUISTAS' | translate}}
-  <label class="toggle toggle-energized">
+  <label class="toggle toggle-positive">
     <input type="checkbox" ng-model="checkedConq" aria-label="Toggle ngHide" >
     <div class="track">
       <div class="handle"></div>
@@ -106,9 +106,9 @@
   </label>
 </li>
 <ion-list ng-show="checkedConq">
-  <ion-item ng-repeat="shop in items" class="item item-icon-left item-verde itemtransparente" ng-show="verConquistas">
-    <i class="icon ion-checkmark branco"></i>
-    <h2 class="branco">{{shop[0]}}.  {{'PONTOS' | translate}}: {{shop[1]}}</h2>
+  <ion-item ng-repeat="shop in items" class="item item-icon-left item-verde itemtransparente" ng-show="selecionarImagen">
+    <i class="icon ion-checkmark verdeOriginal"></i>
+    <h2 class="verdeOriginal">{{shop[0]}}.  {{'PONTOS' | translate}}: {{shop[1]}}</h2>
     <!--
     <ion-option-button class="button-assertive" ng-click="removeLista(shop)">
       Delete
@@ -120,7 +120,6 @@
 <div class="card itemtransparente" ng-show="selecionarImagen">
       <div class="padding">
         <h5 align="center" class="laranja" >{{'SELECCIONEIMAGEN' | translate}}:</h5>
-        <div align="center" class="vermelho">{{'RECORDARSELIMAGEN' | translate}}</div>
       <input type="file" accept="image/*" id="file">
 </div>
 </div>

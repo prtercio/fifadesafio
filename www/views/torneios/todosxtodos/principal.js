@@ -137,7 +137,7 @@
         } );
 
         function enviarNovoTorneio() {
-          icon = getRandomArbitrary( 1, 50 );
+          var icon = getRandomArbitrary( 1, 50 );
           Utils.show();
           if ( $scope.logado == true ) {
             var senha = rand_code( caracteres, longitud );
@@ -145,7 +145,13 @@
               nome: nome,
               data: dataFormatada,
               participantes: 0,
-              icon: icon
+              icon: icon,
+              admnis: {
+                principal: {
+                  key: $localStorage.keyUser,
+                  gamertag: gamertag
+                }
+              }
             }
             firebase.database().ref( 'desafio/torneios/todosxtodos/' + gtSemEspacio + '/' + senha + '/configuracao' ).push( {
               nome: 0

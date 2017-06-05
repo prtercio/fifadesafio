@@ -43,7 +43,7 @@
       <div class="center"><img class="resizeMedMenu" src="img/torneios/{{value.icon}}.png"></div>
       {{value.nome}}
       <div ng-show="value.participantes == 0" class="vermelhoClaro">{{'ADICIONEPARTICCOMPARTA' | translate}}</div>  
-      <div  ng-show="value.participantes > 0" class="vermelhoClaro">{{value.data | date:"dd/MM/yyyy HH:mm" : 'UTC'}}</div>     
+      <div  ng-show="value.participantes > 0" class="vermelhoClaro">{{value.data | date:"dd/MM/yyyy" : 'UTC'}}</div>     
       <span class="badge badge-dark" ng-show="value.participantes > 0">{{value.participantes}}</span>
       <span class="badge badge-assertive" ng-show="value.participantes == 0">{{'NOVO' | translate}}</span>
 
@@ -137,9 +137,7 @@
 </script>
 <script id="modalTorneio.html" type="text/ng-template">
   <ion-modal-view class="semfondo">
-    <ion-header-bar class="semfondo">
-     <button class="subir button button-block button-balanced" ng-click="modal.hide()">Ok</button>
-   </ion-header-bar>
+
 
    <ion-content class="padding fondo">
      <br />
@@ -171,8 +169,25 @@
      </div>
       
   </div>
+   <br />
+   
+       <div class="row">
+        <div class="col col-20">
+        <div class="container">
+         <div class="circuloVermelho"></div>
+         <i class="icon ion ion-close centerTexto moverTexto"></i>
+      </div>
+</div> 
+      <div class="col col-80">      
+       <p class="branco">Deslize o torneio da direita a esquerda para eliminarlo.</p>
+     </div>
+      
+  </div>
 
 </ion-content>
+ <ion-footer-bar class="semfondo">
+<button class="subir button button-block button-balanced" ng-click="modal.hide()">Ok</button>      
+    </ion-footer-bar>
 
 </ion-modal-view>
 </script>

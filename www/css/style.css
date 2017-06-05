@@ -761,3 +761,17 @@ ion-content.fondo {
     border-radius: 50%;
     background: #FFBF00;
 }
+
+.circuloVermelho {
+    width: 60px;
+    height: 60px;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+    background: #ef473a;
+}
+
+div.item.comBorda {
+    border-style: 1px !important;
+    border-color: red !important;
+}

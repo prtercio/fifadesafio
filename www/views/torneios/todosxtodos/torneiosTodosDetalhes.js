@@ -1,8 +1,8 @@
 ( function() {
   'use strict';
   var temporadasRankingJogos = angular.module( 'App.CtrlTorneiosTodosDetalhes', [] );
-  temporadasRankingJogos.controller( 'CtrlTorneiosTodosDetalhes', [ '$scope', 'Utils', '$state', '$localStorage', 'Popup', '$stateParams', 'idTorneioKeyUsuario', 'PopupFactoryRanking', '$ionicPopup', 'CordovaNetwork', '$ionicModal',
-    function( $scope, Utils, $state, $localStorage, Popup, $stateParams, idTorneioKeyUsuario, PopupFactoryRanking, $ionicPopup, CordovaNetwork, $ionicModal ) {
+  temporadasRankingJogos.controller( 'CtrlTorneiosTodosDetalhes', [ '$scope', 'Utils', '$state', '$localStorage', 'Popup', '$stateParams', 'idTorneioKeyUsuario', 'PopupFactoryRanking', '$ionicPopup', 'CordovaNetwork', '$ionicModal', '$ionicPopover', 'PopupFactoryAddEditor',
+    function( $scope, Utils, $state, $localStorage, Popup, $stateParams, idTorneioKeyUsuario, PopupFactoryRanking, $ionicPopup, CordovaNetwork, $ionicModal, $ionicPopover, PopupFactoryAddEditor ) {
       window.addEventListener( 'online', updateIndicator );
       window.addEventListener( 'offline', updateIndicator );
 
@@ -10,7 +10,6 @@
         // Show a different icon based on offline/online
         CordovaNetwork.isOnline().then( function( isConnected ) {
           if ( isConnected === true ) {
-            console.log( "conectado" );
             var alertPopup = $ionicPopup.alert( {
               template: '<p align="center"><i class="icon ion-happy verdeBalanced tamanhoIcon"></i></p><p align="center"><strong>{{"INTERNETON" | translate}}</strong></p>',
               buttons: [ {
@@ -67,32 +66,32 @@
       var nomeTorneio = "";
       var dataTorneio = "";
       $scope.chaveAcesso = idTorneio;
-      saberSiEadmin();
-
-      function saberSiEadmin() {
-        if ( keyUsuario.indexOf( "%20" ) == -1 ) {
-          if ( String( keyUsuario ) === String( gamertag ) ) {
-            $scope.eCriador = true;
-            $scope.dimensionColumna = 80;
-            return true;
-          } else {
-            $scope.dimensionColumna = 100;
-            $scope.eCriador = false;
-            return false;
-          }
-        } else {
-          if ( String( substituirVazios( keyUsuario, " ", "%20" ) ) === String( gamertag ) ) {
-            $scope.eCriador = true;
-            $scope.dimensionColumna = 80;
-            return true;
-          } else {
-            $scope.dimensionColumna = 100;
-            $scope.eCriador = false;
-            return false;
-          }
-        }
-      }
-
+      var listaAdmin = [];
+      /*
+            function saberSiEadmin() {
+              if ( keyUsuario.indexOf( "%20" ) == -1 ) {
+                if ( String( keyUsuario ) === String( gamertag ) ) {
+                  $scope.eCriador = true;
+                  $scope.dimensionColumna = 80;
+                  return true;
+                } else {
+                  $scope.dimensionColumna = 100;
+                  $scope.eCriador = false;
+                  return false;
+                }
+              } else {
+                if ( String( substituirVazios( keyUsuario, " ", "%20" ) ) === String( gamertag ) ) {
+                  $scope.eCriador = true;
+                  $scope.dimensionColumna = 80;
+                  return true;
+                } else {
+                  $scope.dimensionColumna = 100;
+                  $scope.eCriador = false;
+                  return false;
+                }
+              }
+            }
+            */
       function substituirVazios( valor, novo, stg ) {
         var cadena = valor;
         var str = String( stg );
@@ -112,7 +111,35 @@
       $scope.carregarDados = function() {
         Utils.show();
         ranking = [];
+        listaAdmin = [];
         refTorneio.once( "value" ).then( function( snapshot ) {
+          //saber si es administrador
+          var admnis = snapshot.val().configuracao.admnis;
+          for ( var obj in admnis ) {
+            listaAdmin.push( {
+              "gt": admnis[ obj ].gamertag,
+              "key": admnis[ obj ].key,
+              "keynodo": obj
+            } )
+          }
+          for ( var i = 0; i < listaAdmin.length; i++ ) {
+            if ( listaAdmin[ i ].keynodo === "principal" ) {
+              $scope.eCriadorSuper = true;
+              $scope.eCriador = true;
+              $scope.dimensionColumna = 80;
+              break;
+            } else {
+              if ( listaAdmin[ i ].key === $localStorage.keyUser ) {
+                $scope.eCriador = true;
+                $scope.dimensionColumna = 80;
+                break;
+              } else {
+                $scope.dimensionColumna = 100;
+                $scope.eCriador = false;
+                $scope.eCriadorSuper = false;
+              }
+            }
+          }
           $scope.$apply( function() {
             games = snapshot.val().ranking;
             var snap = snapshot.val().configuracao.participantes;
@@ -219,7 +246,6 @@
         var myPopup = PopupFactoryRanking.getPopup( $scope );
         // An elaborate, custom popup
         myPopup.then( function( res ) {
-          console.log( 'res', res );
           if ( res == undefined ) {} else {
             resultado1 = res.local;
             resultado2 = res.visitante;
@@ -228,7 +254,7 @@
         } );
 
         function enviarDatosJogos() {
-          if ( saberSiEadmin() ) {
+          if ( $scope.eCriador ) {
             Utils.show();
             var linkRodada = "desafio/torneios/todosxtodos/" + keyUsuario + "/" + idTorneio + "/rodadas/" + keyRodada + "/" + idRodada;
             var linkRanking = "desafio/torneios/todosxtodos/" + keyUsuario + "/" + idTorneio + "/ranking/";
@@ -320,10 +346,7 @@
             firebase.database().ref( linkRodada ).update( {
               jogo: resultadoFinal
             } ).then( function( response ) {
-              console.log( "rodada atualizada" );
-              firebase.database().ref( linkRanking + "/" + novoKeyRanking1 ).update( arrayOp1 ).then( function( response ) {
-                console.log( "ranking1 atualizado" );
-              } ).then( function( response ) {
+              firebase.database().ref( linkRanking + "/" + novoKeyRanking1 ).update( arrayOp1 ).then( function( response ) {} ).then( function( response ) {
                 firebase.database().ref( linkRanking + "/" + novoKeyRanking2 ).update( arrayOp2 ).then( function( response ) {
                   console.log( "ranking1 atualizado" );
                 } ).then( function( response ) {
@@ -375,85 +398,99 @@
       };
       $scope.enviarDatos = function() {
         var dato = $scope.inputs;
-        console.log( dato );
-        var nuevoArray = [];
-        for ( var i = 0; i < dato.length; i++ ) {
-          nuevoArray.push( dato[ i ].value );
-          if ( dato[ i ].value === "" ) {
-            $scope.hayVazios = true;
-            break;
-          } else {
-            $scope.hayVazios = false;
-          }
-          if ( dato[ i ].value === null ) {
-            $scope.hayVazios = true;
-            break;
-          } else {
-            $scope.hayVazios = false;
-          }
-        }
-        var sorted_arr = nuevoArray.slice().sort();
-        var results = [];
-        for ( var i = 0; i < nuevoArray.length - 1; i++ ) {
-          if ( sorted_arr[ i + 1 ] == sorted_arr[ i ] ) {
-            results.push( sorted_arr[ i ] );
-          }
-        }
-        if ( results.length > 0 ) {
-          var alertPopup = $ionicPopup.alert( {
-            template: '<p align="center"><i class="icon ion-alert-circled laranja tamanhoIcon"></i></p><p align="center"><strong>{{"NOMESREPETIDOS" | translate}}</strong></p>',
-            buttons: [ {
-              text: '<b>Ok</b>',
-              type: 'button-balanced',
-              onTap: function( e ) {}
-            } ]
-          } );
-          alertPopup.then( function( res ) {
-            if ( res ) {
-              console.log( "fechado" );
+        var verficarPar = dato.length % 2;
+        if ( verficarPar == 0 ) {
+          var nuevoArray = [];
+          for ( var i = 0; i < dato.length; i++ ) {
+            nuevoArray.push( dato[ i ].value );
+            if ( dato[ i ].value === "" ) {
+              $scope.hayVazios = true;
+              break;
+            } else {
+              $scope.hayVazios = false;
             }
-          } );
-        } else {
-          var gamesQtd = $scope.inputs.length;
-          if ( !$scope.hayVazios ) {
-            if ( gamesQtd > 3 ) {
-              for ( var i = 0; i < gamesQtd; i++ ) {
-                gamesRound.push( dato[ i ].value );
-                if ( dato[ i ].value !== undefined ) {
-                  rankingSend.push( {
-                    "derrota": 0,
-                    "empate": 0,
-                    "gamer": dato[ i ].value,
-                    "golsContra": 0,
-                    "golsPro": 0,
-                    "historio": "",
-                    "jogos": 0,
-                    "pontos": 0,
-                    "vitoria": 0
-                  } );
-                  if ( i == gamesQtd - 1 ) procesarDatos();
-                } else {
-                  console.log( "Todos los campos deve ser preenchidos" );
-                  var alertPopup = $ionicPopup.alert( {
-                    template: '<p align="center"><i class="icon ion-alert-circled laranja tamanhoIcon"></i></p><p align="center"><strong>{{"CAMPOSPREENCHIDOS" | translate}}</strong></p>',
-                    buttons: [ {
-                      text: '<b>Ok</b>',
-                      type: 'button-balanced',
-                      onTap: function( e ) {}
-                    } ]
-                  } );
-                  alertPopup.then( function( res ) {
-                    if ( res ) {
-                      console.log( "fechado" );
-                    }
-                  } );
-                  break;
+            if ( dato[ i ].value === null ) {
+              $scope.hayVazios = true;
+              break;
+            } else {
+              $scope.hayVazios = false;
+            }
+          }
+          var sorted_arr = nuevoArray.slice().sort();
+          var results = [];
+          for ( var i = 0; i < nuevoArray.length - 1; i++ ) {
+            if ( sorted_arr[ i + 1 ] == sorted_arr[ i ] ) {
+              results.push( sorted_arr[ i ] );
+            }
+          }
+          if ( results.length > 0 ) {
+            var alertPopup = $ionicPopup.alert( {
+              template: '<p align="center"><i class="icon ion-alert-circled laranja tamanhoIcon"></i></p><p align="center"><strong>{{"NOMESREPETIDOS" | translate}}</strong></p>',
+              buttons: [ {
+                text: '<b>Ok</b>',
+                type: 'button-balanced',
+                onTap: function( e ) {}
+              } ]
+            } );
+            alertPopup.then( function( res ) {
+              if ( res ) {
+                console.log( "fechado" );
+              }
+            } );
+          } else {
+            var gamesQtd = $scope.inputs.length;
+            if ( !$scope.hayVazios ) {
+              if ( gamesQtd > 3 ) {
+                for ( var i = 0; i < gamesQtd; i++ ) {
+                  gamesRound.push( dato[ i ].value );
+                  if ( dato[ i ].value !== undefined ) {
+                    rankingSend.push( {
+                      "derrota": 0,
+                      "empate": 0,
+                      "gamer": dato[ i ].value,
+                      "golsContra": 0,
+                      "golsPro": 0,
+                      "historio": "",
+                      "jogos": 0,
+                      "pontos": 0,
+                      "vitoria": 0
+                    } );
+                    if ( i == gamesQtd - 1 ) procesarDatos();
+                  } else {
+                    var alertPopup = $ionicPopup.alert( {
+                      template: '<p align="center"><i class="icon ion-alert-circled laranja tamanhoIcon"></i></p><p align="center"><strong>{{"CAMPOSPREENCHIDOS" | translate}}</strong></p>',
+                      buttons: [ {
+                        text: '<b>Ok</b>',
+                        type: 'button-balanced',
+                        onTap: function( e ) {}
+                      } ]
+                    } );
+                    alertPopup.then( function( res ) {
+                      if ( res ) {
+                        console.log( "fechado" );
+                      }
+                    } );
+                    break;
+                  }
                 }
+              } else {
+                var alertPopup = $ionicPopup.alert( {
+                  template: '<p align="center"><i class="icon ion-alert-circled laranja tamanhoIcon"></i></p><p align="center"><strong>{{"NUMEROMININO" | translate}}</strong></p>',
+                  buttons: [ {
+                    text: '<b>Ok</b>',
+                    type: 'button-balanced',
+                    onTap: function( e ) {}
+                  } ]
+                } );
+                alertPopup.then( function( res ) {
+                  if ( res ) {
+                    console.log( "fechado" );
+                  }
+                } );
               }
             } else {
-              console.log( "Adicione pelo menos 4 participantes" );
               var alertPopup = $ionicPopup.alert( {
-                template: '<p align="center"><i class="icon ion-alert-circled laranja tamanhoIcon"></i></p><p align="center"><strong>{{"NUMEROMININO" | translate}}</strong></p>',
+                template: '<p align="center"><i class="icon ion-alert-circled laranja tamanhoIcon"></i></p><p align="center"><strong>{{"CAMPOSPREENCHIDOS" | translate}}</strong></p>',
                 buttons: [ {
                   text: '<b>Ok</b>',
                   type: 'button-balanced',
@@ -466,21 +503,21 @@
                 }
               } );
             }
-          } else {
-            var alertPopup = $ionicPopup.alert( {
-              template: '<p align="center"><i class="icon ion-alert-circled laranja tamanhoIcon"></i></p><p align="center"><strong>{{"CAMPOSPREENCHIDOS" | translate}}</strong></p>',
-              buttons: [ {
-                text: '<b>Ok</b>',
-                type: 'button-balanced',
-                onTap: function( e ) {}
-              } ]
-            } );
-            alertPopup.then( function( res ) {
-              if ( res ) {
-                console.log( "fechado" );
-              }
-            } );
           }
+        } else {
+          var alertPopup = $ionicPopup.alert( {
+            template: '<p align="center"><i class="icon ion-alert-circled laranja tamanhoIcon"></i></p><p align="center"><strong>{{"PARTICIPANTESPAR" | translate}}</strong></p>',
+            buttons: [ {
+              text: '<b>Ok</b>',
+              type: 'button-balanced',
+              onTap: function( e ) {}
+            } ]
+          } );
+          alertPopup.then( function( res ) {
+            if ( res ) {
+              console.log( "fechado" );
+            }
+          } );
         }
       }
       /*
@@ -528,22 +565,6 @@
         link.setAttribute( "download", fileName );
         link.click();
       }
-      // Create the login modal that we will use later
-      $ionicModal.fromTemplateUrl( 'modal.html', {
-        scope: $scope
-      } ).then( function( modal ) {
-        $scope.modal = modal;
-      } );
-      // Triggered in the login modal to close it
-      $scope.closeLogin = function() {
-        $scope.modal.hide();
-        //img = "";
-      };
-      // Open the login modal
-      $scope.login = function() {
-        $scope.modal.show();
-        //$( "#prova" ).html( '<img class="redimensionar" src="' + img + '"/>' );
-      };
 
       function procesarDatos() {
         var res = RoundRobinFinal( gamesRound.length );
@@ -561,7 +582,7 @@
             } );
           }
         }
-        if ( saberSiEadmin() ) {
+        if ( $scope.eCriador ) {
           firebase.database().ref( 'desafio/torneios/todosxtodos/' + keyUsuario + "/" + idTorneio ).update( {
             "configuracao/participantes": gamesRound.length,
             rodadas: jogosRondas,
@@ -569,21 +590,146 @@
           } ).then( function( response ) {
             console.log( "se actualizó" );
             $scope.carregarDados();
-            /*
-            firebase.database().ref( 'desafio/torneios/todosxtodos/' + keyUsuario + "/" + idTorneio + "/configuracao" ).update( {
-              participantes: gamesRound.length
-            } ).then( function( response ) {
-              
-              console.log( "se envió rodadas" );
-            } );
-            */
           } );
         }
       }
       $scope.atualizarRanking = function() {
         $scope.carregarDados();
       }
-      //--------------------------- Outro
+
+      function buscarAdministrador( gamertag ) {
+        Utils.show();
+        var numero = 0;
+        firebase.database().ref( 'desafio/users' ).orderByChild( 'gamertag' ).equalTo( gamertag ).once( 'value' ).then( function( accounts ) {
+          if ( accounts.exists() ) {
+            accounts.forEach( function( account ) {
+              numero++;
+              if ( numero == 1 ) {
+                //Account already exists, proceed to home.
+                firebase.database().ref( 'desafio/torneios/todosxtodos/' + keyUsuario + "/" + idTorneio + "/configuracao/admnis" ).push( {
+                  key: account.key,
+                  gamertag: gamertag
+                } ).then( function( response ) {
+                  Utils.hide();
+                  $scope.carregarDados();
+                  var alertPopup = $ionicPopup.alert( {
+                    template: '<p align="center"><i class="icon ion-happy verdeBalanced tamanhoIcon"></i></p><p align="center"><strong>{{"EDITORADICIONADO" | translate}}</strong></p>',
+                    buttons: [ {
+                      text: '<b>Ok</b>',
+                      type: 'button-balanced',
+                      onTap: function( e ) {}
+                    } ]
+                  } );
+                  alertPopup.then( function( res ) {
+                    if ( res ) {
+                      console.log( "fechado" );
+                    }
+                  } );
+                } );
+              }
+            } );
+          } else {
+            Utils.hide();
+            var alertPopup = $ionicPopup.alert( {
+              template: '<p align="center"><i class="icon ion-alert-circled laranja tamanhoIcon"></i></p><p align="center"><strong>{{"GAMERTAGNOENCONTRADO" | translate}}</strong></p>',
+              buttons: [ {
+                text: '<b>Ok</b>',
+                type: 'button-energized',
+                onTap: function( e ) {}
+              } ]
+            } );
+            alertPopup.then( function( res ) {
+              if ( res ) {
+                console.log( "fechado" );
+              }
+            } );
+          }
+        } );
+      }
+      //abrir menuFlotante
+      $ionicPopover.fromTemplateUrl( 'templates/popoverTorneio.html', {
+        scope: $scope,
+      } ).then( function( popover ) {
+        $scope.popover = popover;
+      } );
+      $scope.abrirAddAdmin = function() {
+        $scope.popover.hide();
+        $scope.data = {}
+        var myPopupEdit = PopupFactoryAddEditor.getPopupEdit( $scope );
+        // An elaborate, custom popup
+        myPopupEdit.then( function( res ) {
+          if ( res == undefined ) {} else {
+            var revisado = revisarEditor( res.gtKey );
+            if ( !revisado ) {
+              buscarAdministrador( res.gtKey );
+            } else {
+              var alertPopup = $ionicPopup.alert( {
+                template: '<p align="center"><i class="icon ion-alert-circled laranja tamanhoIcon"></i></p><p align="center"><strong>{{"GAMERTAGADMINIS" | translate}}</strong></p>',
+                buttons: [ {
+                  text: '<b>Ok</b>',
+                  type: 'button-energized',
+                  onTap: function( e ) {}
+                } ]
+              } );
+              alertPopup.then( function( res ) {
+                if ( res ) {
+                  console.log( "fechado" );
+                }
+              } );
+            }
+          }
+        } );
+      }
+
+      function revisarEditor( gamertag ) {
+        var retorno = false;
+        for ( var i = 0; i < listaAdmin.length; i++ ) {
+          if ( listaAdmin[ i ].gt === gamertag ) {
+            retorno = true
+            break;
+          }
+        }
+        return retorno;
+      }
+      // Create the login modal that we will use later
+      $ionicModal.fromTemplateUrl( 'modalEliminarEditor.html', {
+        scope: $scope
+      } ).then( function( modal ) {
+        $scope.modal = modal;
+      } );
+      // Triggered in the login modal to close it
+      $scope.cerrarModalEditor = function() {
+        $scope.modal.hide();
+        $scope.popover.hide();
+        //img = "";
+      };
+      // Open the login modal
+      $scope.abrirModalEditor = function() {
+        $scope.popover.hide();
+        $scope.modal.show();
+        $scope.editores = listaAdmin;
+        //$( "#prova" ).html( '<img class="redimensionar" src="' + img + '"/>' );
+      };
+      $scope.onDeleteEditor = function( keyEditor ) {
+        console.log( keyUsuario, idTorneio, $scope.chaveAcesso, keyEditor );
+        firebase.database().ref( 'desafio/torneios/todosxtodos/' + keyUsuario + "/" + idTorneio + "/configuracao/admnis/" + keyEditor ).remove();
+        console.log( "se eliminó" );
+        console.log( listaAdmin );
+        var posArray = listaAdmin.indexOf( keyEditor );
+        console.log( posArray );
+        for ( var i = 0; i < listaAdmin.length; i++ ) {
+          if ( listaAdmin[ i ].keynodo === keyEditor ) {
+            console.log( i );
+            listaAdmin.splice( i, 1 );
+            $scope.editores = listaAdmin;
+            $scope.carregarDados();
+            break;
+          }
+        }
+        $scope.editores = listaAdmin;
+      }
+      // Open the login modal
+      //-------------------------------------------------------------------------------------- Outro
       function RoundRobinFinal( t ) {
         var e = [],
           p = +t + ( t % 2 ),
@@ -644,7 +790,6 @@
             var link = "http://fifadesafio.herokuapp.com";
             var textoKey = "Key: " + $scope.chaveAcesso;
             var textoGt = "Gt: " + $scope.gamertag;
-            console.log( textoKey, textoGt );
             var message = "Acesse: " + encodeURIComponent( link ) + " - " + encodeURIComponent( textoGt ) + " - " + encodeURIComponent( textoKey );
             var whatsapp_url = "whatsapp://send?text=" + message;
             window.location.href = whatsapp_url;
@@ -652,8 +797,6 @@
             var texto = $( 'p.mi_parrafo' ).data();
             var textoKey = "Key: " + texto.chave + "-" + $scope.chaveAcesso;
             var textoGt = "Gt: " + texto.gamertag + "-" + $scope.gamertag;
-            console.log( textoKey, textoGt );
-            console.log( "No Celular" );
           }
         } );
       } );
@@ -690,6 +833,40 @@
     if ( cancel == false ) {
       return {
         getPopup: getPopup
+      };
+    }
+  } );
+  temporadasRankingJogos.factory( "PopupFactoryAddEditor", function( $ionicPopup ) {
+    var cancelEdit = false;
+
+    function getPopupEdit( scope ) {
+      return $ionicPopup.show( {
+        //template: '<p align="center"><i class="icon ion-ribbon-b verdeBold  tamanhoIcon"></i></p>' + '<p align="center"><strong>{{"CRIARNOVO" | translate}}</strong></p>' + '<input type="text" placeholder="{{"NOMEGAMERTAG"| translate}}" ng-model="data.nome">',
+        templateUrl: 'popup-buscarEditor.html',
+        scope: scope,
+        buttons: [ {
+          text: 'Cancel',
+          type: 'button-stable',
+          onTap: function( e ) {
+            cancelEdit = true
+          }
+        }, {
+          text: '<b>OK</b>',
+          type: 'button-balanced',
+          onTap: function( e ) {
+            if ( !scope.data ) {
+              //don't allow the user to close unless he enters wifi password
+              e.preventDefault();
+            } else {
+              return scope.data;
+            }
+          }
+        }, ]
+      } )
+    }
+    if ( cancelEdit == false ) {
+      return {
+        getPopupEdit: getPopupEdit
       };
     }
   } );

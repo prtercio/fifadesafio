@@ -93,6 +93,7 @@ trans.factory( 'asyncLoader', function( $q, $timeout ) {
                 DESAFIOFINALIZADO: "¡Desafío Finalizado!",
                 CAMPEAO: "Vencedor",
                 DESAFIOTERMINADO: "¡Este desafio há terminado!",
+                RECORDARSELIMAGEN: "Recuerde que a cada 5 juegos debes subir la imagen de los últimos 5 juegos.",
                 SELECCIONEIMAGEN: "Seleccione la imagen para comprobar el resultado:",
                 ADICIONARPARTICPANTES: "Agregue los participantes:",
                 NOMEGAMERTAG: "Nombre",
@@ -136,7 +137,15 @@ trans.factory( 'asyncLoader', function( $q, $timeout ) {
                 INTERNETON: "¡Conección a internet reestablecidad!",
                 GAMERTAGCADASTRADO: "Opps. Esta Gamertag ya está registrada",
                 SELECIONEARODADA: "Seleccione la ronda:",
-                SELECIONEARODADAEDITE: "Seleccione la ronda y edite los resultados:"
+                SELECIONEARODADAEDITE: "Seleccione la ronda y edite los resultados:",
+                PARTICIPANTESPAR: "Opps! El número de participantes debe ser par.",
+                ADICIONARADMIN: "Agregar editor",
+                ELIMINARADMIN: "Eliminar editor",
+                BUSCARADMIN: "Buscar Editor",
+                GAMERTAGNOENCONTRADO: "Gamertag no encontrado! Revísalo y intente otra vez.",
+                GAMERTAGADMINIS: "¡Este gamertag ya es editor!",
+                EDITORADICIONADO: "Editor agregado con éxito!",
+                EDITORES: "Editores"
             };
         }
         if ( options.key === 'pt' ) {
@@ -221,6 +230,7 @@ trans.factory( 'asyncLoader', function( $q, $timeout ) {
                 DESAFIOFINALIZADO: "Desafio Finalizado!",
                 CAMPEAO: "Vencedor",
                 DESAFIOTERMINADO: "Este desafio já foi terminado!",
+                RECORDARSELIMAGEN: "Lembre-se que a cada 5 jogos você deverá subir a imagen dos últimos 5 juegos.",
                 SELECCIONEIMAGEN: "Selecione a imagem para comprovar o resultado",
                 ADICIONARPARTICPANTES: "Adicione os participantes:",
                 NOMEGAMERTAG: "Nome",
@@ -263,7 +273,15 @@ trans.factory( 'asyncLoader', function( $q, $timeout ) {
                 INTERNETON: "A conexão foi reestabelecida!",
                 GAMERTAGCADASTRADO: "Opps! Esta Gamertag já foi cadastrada!",
                 SELECIONEARODADA: "Selecione a rodada:",
-                SELECIONEARODADAEDITE: "Seleccione a rodada e edite os resultados:"
+                SELECIONEARODADAEDITE: "Seleccione a rodada e edite os resultados:",
+                PARTICIPANTESPAR: "Opps! O número de participantes deve ser par.",
+                ADICIONARADMIN: "Adicionar editor",
+                ELIMINARADMIN: "Eliminar editor",
+                BUSCARADMIN: "Buscar Editor",
+                GAMERTAGNOENCONTRADO: "Gamertag não encontrado! Verifique e tente outra vez.",
+                GAMERTAGADMINIS: "Este gamertag já é um editor!",
+                EDITORADICIONADO: "Editor adicionado com sucesso!",
+                EDITORES: "Editores"
             };
         }
         if ( options.key === 'en' ) {

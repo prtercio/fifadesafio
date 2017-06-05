@@ -1,0 +1,35 @@
+<ion-view view-title="{{jogoNome}}">
+  <ion-content id="imagebg">
+  <div>
+    <div class="row borderGris vermelhorescurobg branco">    
+      <div class="col col-20"><strong>Jogos</strong></div>
+      <div class="col col-20"><strong>Vitória</strong></div>
+      <div class="col col-20"><strong>Empate</strong></div>
+      <div class="col col-20"><strong>Derrota</strong></div>
+      <div class="col col-20 branco"><strong>Pontos</strong></div>    
+    </div>
+
+    <div class="row">    
+      <div class="col col-20 padding"><strong>{{jogados}}</strong></div>
+      <div class="col col-20 padding"><strong>{{vitoria}}</strong></div>
+      <div class="col col-20 padding"><strong>{{empate}}</strong></div>
+      <div class="col col-20 padding"><strong>{{derrota}}</strong></div>
+      <div class="col col-20 padding verde"><strong>{{pontos}}</strong></div>    
+    </div>  
+    </div>
+     <ion-list>
+       <a class="item item-icon-left item-icon-right itemtransparente itembordagris" ng-repeat="jogo in jogos | orderBy:'jogo*1':true" type="item-text-wrap" href="#/app/temporadasRankingJogosDetalheChampions/{{jogo.semana}}&{{jogo.jogo}}|{{keyUsuario}}" ng-if="jogo.estado == 'Terminado'">                              
+                   <i class="icon ion-ios-game-controller-a"></i>
+                  <strong>{{'JOGO' | translate}} {{jogo.jogo}}</strong>
+                  <in class="brancoPeqbg"
+                    ng-class="{verde : jogo.status=='v', vermelhoClaro : jogo.status=='d', laranja : jogo.status=='e', gris2: jogo.estado=='Próximo'}">
+                  {{jogo.status | filtroStatus}} : {{jogo.placar}}
+                  </in>                 
+                  <span class="item-note">
+                     <p class="right branco" ng-if="jogo.estado=='Terminado'">{{'PONTOS' | translate}}: <strong>{{jogo.pontos}}</strong></p>
+                  </span>
+                  <i class="icon ion-chevron-right icon-accessory"></i>
+      </a>
+     </ion-list>
+  </ion-content>
+</ion-view>

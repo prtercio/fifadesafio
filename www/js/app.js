@@ -3,7 +3,7 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module( 'App', [ 'ionic', 'App.CtrlInicio', 'App.CtrlConquistas', 'App.CtrlConfiguracao', 'App.CtrlAdministracao', 'App.CtrlTemporadas', 'App.CtrlTempTorneio', 'App.CtrlTempTorneioJogo', 'App.CtrlTemporadasRankingJogos', 'App.CtrlTemporadasRankingJogosDetalhe', 'App.CtrlTemporadasUT', 'App.CtrlTempTorneioUT', 'App.CtrlTempTorneioJogoUT', 'App.CtrlTemporadasRankingJogosUT', 'App.CtrlTemporadasRankingJogosDetalheUT', 'App.CtrlCopas', 'App.CtrlTorneiosTodos', 'App.CtrlTorneiosTodosDetalhes', 'App.dataServices', 'App.FiltroStatus', 'App.FiltroAbertoFechado', 'ngStorage', 'ngCordovaOauth', 'App.translations', 'aCarousel', 'ion-fab-button', 'ionic.contrib.ui.hscrollcards', 'App.Conexion' ] ).constant( 'Social', {
+angular.module( 'App', [ 'ionic', 'App.CtrlInicio', 'App.CtrlConquistas', 'App.CtrlConfiguracao', 'App.CtrlAdministracao', 'App.CtrlTemporadas', 'App.CtrlTempTorneio', 'App.CtrlTempTorneioJogo', 'App.CtrlTemporadasRankingJogos', 'App.CtrlTemporadasRankingJogosDetalhe', 'App.CtrlTemporadasUT', 'App.CtrlTempTorneioUT', 'App.CtrlTempTorneioJogoUT', 'App.CtrlTemporadasRankingJogosUT', 'App.CtrlTemporadasRankingJogosDetalheUT', 'App.CtrlTemporadasChampions', 'App.CtrlTempTorneioChampions', 'App.CtrlTempTorneioJogoChampions', 'App.CtrlTemporadasRankingJogosChampions', 'App.CtrlTemporadasRankingJogosDetalheChampions', 'App.CtrlCopas', 'App.CtrlTorneiosTodos', 'App.CtrlTorneiosTodosDetalhes', 'App.dataServices', 'App.FiltroStatus', 'App.FiltroAbertoFechado', 'ngStorage', 'ngCordovaOauth', 'App.translations', 'aCarousel', 'ion-fab-button', 'ionic.contrib.ui.hscrollcards', 'App.Conexion' ] ).constant( 'Social', {
     facebookAppId: "1025234637591184",
     googleWebClientId: "86899339460-kqrko1uuhu9a532l9f0jdhf9tgnp8b00.apps.googleusercontent.com",
     twitterKey: "aJWByCgPhUgYZJMojyFeH2h8F",
@@ -90,20 +90,20 @@ angular.module( 'App', [ 'ionic', 'App.CtrlInicio', 'App.CtrlConquistas', 'App.C
           controller: 'CtrlAdministracao'
         }
       }
-    } ).state( 'app.temporadas', {
-      url: '/temporadas',
+    } ).state( 'app.temporadasChampions', {
+      url: '/temporadasChampions',
       views: {
         'menuContent': {
-          templateUrl: 'views/temporadas/temporadas.html'
+          templateUrl: 'views/temporadasChampions/temporadasChampions.html'
           //controller: 'CtrlTemporadas'
         }
       }
-    } ).state( 'app.temporadasTorneio', {
-      url: '/temporadasTorneio/:torneioId',
+    } ).state( 'app.temporadasTorneioChampions', {
+      url: '/temporadasTorneioChampions/:torneioId',
       views: {
         'menuContent': {
-          templateUrl: 'views/temporadas/temporadasTorneio.html',
-          controller: 'CtrlTempTorneio as idTorneio'
+          templateUrl: 'views/temporadasChampions/temporadasTorneioChampions.html',
+          controller: 'CtrlTempTorneioChampions as idTorneio'
         }
       },
       resolve: {
@@ -111,12 +111,12 @@ angular.module( 'App', [ 'ionic', 'App.CtrlInicio', 'App.CtrlConquistas', 'App.C
           return $stateParams.torneioId;
         }
       }
-    } ).state( 'app.temporadasTorneioJogo', {
-      url: '/temporadasTorneioJogo/:jogoId',
+    } ).state( 'app.temporadasTorneioJogoChampions', {
+      url: '/temporadasTorneioJogoChampions/:jogoId',
       views: {
         'menuContent': {
-          templateUrl: 'views/temporadas/temporadasTorneioJogo.html',
-          controller: 'CtrlTempTorneioJogo as idJogo'
+          templateUrl: 'views/temporadasChampions/temporadasTorneioJogoChampions.html',
+          controller: 'CtrlTempTorneioJogoChampions as idJogo'
         }
       },
       resolve: {
@@ -124,12 +124,12 @@ angular.module( 'App', [ 'ionic', 'App.CtrlInicio', 'App.CtrlConquistas', 'App.C
           return $stateParams.jogoId;
         }
       }
-    } ).state( 'app.temporadasRankingJogos', {
-      url: '/temporadasRankingJogos/:jogoId',
+    } ).state( 'app.temporadasRankingJogosChampions', {
+      url: '/temporadasRankingJogosChampions/:jogoId',
       views: {
         'menuContent': {
-          templateUrl: 'views/temporadas/temporadasRankingJogos.html',
-          controller: 'CtrlTemporadasRankingJogos as idJogos'
+          templateUrl: 'views/temporadasChampions/temporadasRankingJogosChampions.html',
+          controller: 'CtrlTemporadasRankingJogosChampions as idJogos'
         }
       },
       resolve: {
@@ -137,12 +137,12 @@ angular.module( 'App', [ 'ionic', 'App.CtrlInicio', 'App.CtrlConquistas', 'App.C
           return $stateParams.jogoId;
         }
       }
-    } ).state( 'app.temporadasRankingJogosDetalhe', {
-      url: '/temporadasRankingJogosDetalhe/:jogoId',
+    } ).state( 'app.temporadasRankingJogosDetalheChampions', {
+      url: '/temporadasRankingJogosDetalheChampions/:jogoId',
       views: {
         'menuContent': {
-          templateUrl: 'views/temporadas/temporadasRankingJogosDetalhe.html',
-          controller: 'CtrlTemporadasRankingJogosDetalhe as idJogoDetalhe'
+          templateUrl: 'views/temporadasChampions/temporadasRankingJogosDetalheChampions.html',
+          controller: 'CtrlTemporadasRankingJogosDetalheChampions as idJogoDetalhe'
         }
       },
       resolve: {
@@ -203,6 +203,66 @@ angular.module( 'App', [ 'ionic', 'App.CtrlInicio', 'App.CtrlConquistas', 'App.C
         'menuContent': {
           templateUrl: 'views/temporadasUT/temporadasRankingJogosDetalheUT.html',
           controller: 'CtrlTemporadasRankingJogosDetalheUT as idJogoDetalhe'
+        }
+      },
+      resolve: {
+        idJogoDetalhe: function( $stateParams ) {
+          return $stateParams.jogoId;
+        }
+      }
+    } ).state( 'app.temporadas', {
+      url: '/temporadas',
+      views: {
+        'menuContent': {
+          templateUrl: 'views/temporadas/temporadas.html'
+          //controller: 'CtrlTemporadas'
+        }
+      }
+    } ).state( 'app.temporadasTorneio', {
+      url: '/temporadasTorneio/:torneioId',
+      views: {
+        'menuContent': {
+          templateUrl: 'views/temporadas/temporadasTorneio.html',
+          controller: 'CtrlTempTorneio as idTorneio'
+        }
+      },
+      resolve: {
+        idTorneio: function( $stateParams ) {
+          return $stateParams.torneioId;
+        }
+      }
+    } ).state( 'app.temporadasTorneioJogo', {
+      url: '/temporadasTorneioJogo/:jogoId',
+      views: {
+        'menuContent': {
+          templateUrl: 'views/temporadas/temporadasTorneioJogo.html',
+          controller: 'CtrlTempTorneioJogo as idJogo'
+        }
+      },
+      resolve: {
+        idJogo: function( $stateParams ) {
+          return $stateParams.jogoId;
+        }
+      }
+    } ).state( 'app.temporadasRankingJogos', {
+      url: '/temporadasRankingJogos/:jogoId',
+      views: {
+        'menuContent': {
+          templateUrl: 'views/temporadas/temporadasRankingJogos.html',
+          controller: 'CtrlTemporadasRankingJogos as idJogos'
+        }
+      },
+      resolve: {
+        idJogos: function( $stateParams ) {
+          return $stateParams.jogoId;
+        }
+      }
+    } ).state( 'app.temporadasRankingJogosDetalhe', {
+      url: '/temporadasRankingJogosDetalhe/:jogoId',
+      views: {
+        'menuContent': {
+          templateUrl: 'views/temporadas/temporadasRankingJogosDetalhe.html',
+          controller: 'CtrlTemporadasRankingJogosDetalhe as idJogoDetalhe'
         }
       },
       resolve: {

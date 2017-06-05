@@ -1,0 +1,41 @@
+
+<ion-view view-title="{{'DETALHEJOGO' | translate}}" >
+
+  <ion-content class="padding" id="imagebg">
+<!--
+  <div class="list card" ng-repeat="img in imagenes">
+      <div class="item item-image">
+        <img src="{{img.imagem1}}">
+      </div> 
+      <div class="item item-image">
+        <img src="{{img.imagem2}}">
+      </div>        
+    </div>
+-->
+  <div class="padding bgverde" align="center">
+    <h1>{{detalheJogo.status | filtroStatus}}</h1>
+    <h3>{{detalheJogo.placar}}</h3>
+  </div>
+  <h5 class="center" >{{'CONQUISTAS' | translate }} </h5>
+
+  <div ng-if="detalheJogo.estado == 'Terminado'">
+    <ion-item class="item itemtransparente itembordagris">
+      <h2 class="center verde">{{'PONTOS' | translate}}: {{detalheJogo.pontos}}</h2>
+    </ion-item>
+    <h5 class="center">{{'DETALHECONQUISTAS' | translate}}</h5>
+    <ion-list>
+      <ion-item ng-repeat="detalhe in detalheJogo.conquistas track by $index" class="item itemtransparente itembordagris">
+        <h2 class="verde">{{detalhe}}</h2>
+      </ion-item>
+    </ion-list>
+    </div>
+
+    <div  class="padding">
+      <!-- <img class="resize" src="{{detalheJogo.img}}" />
+      <img class="resize" ng-src='{{detalheJogo.img}}' spinner-load />-->
+      <img-with-loading 
+        img-src="{{detalheJogo.img}}" 
+        spinner-class="{{spinnerClass}}"/>
+  </div>
+</ion-content>
+</ion-view>

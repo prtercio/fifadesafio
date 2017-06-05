@@ -1,0 +1,40 @@
+<ion-view view-title="FUT Champions" ng-controller="CtrlTemporadasChampions">
+	<ion-nav-buttons side="secondary">      
+		<!--<a class="button button-icon icon ion-loop" ></a>-->
+	</ion-nav-buttons>
+	<ion-content  overflow-scroll="true" id="imagebg">
+	 <div class="button-bar bar-dark">      
+     <button class="button footer whatsapp">
+      <i class="icon ion-social-whatsapp-outline"></i>
+    </button>
+    <button class="button" ng-click="modal.show()">
+      <!--{{'ADICIONARADMIN'|translate}}-->
+      <i class="icon ion-clipboard"></i>
+    </button>
+    <button class="button" ng-click="atualizarTemporadas()">
+      <!--{{'ATUALIZAR'|translate}}-->
+      <i class="icon ion-loop"></i>
+    </button>
+   
+  </div>
+  
+		<h4 class="padding-left laranja">{{'DESAFIOS'|translate}}</h4>
+		<hscroller>
+			<hcard ng-repeat="item in items track by $index" index="{{$index}}" desc="{{item.desc}}" image="{{item.img}}" url="#/app/temporadasTorneioChampions/{{item.url}}"></hcard>
+		</hscroller>
+		<script id="modalTemporadasChampions.html" type="text/ng-template">
+      <ion-modal-view>
+        <ion-header-bar class="bar bar-header bar-dark">
+          <h1 class="title">Regulamento</h1>
+          <button class="button button-clear button-primary" ng-click="modal.hide()">Cancelar</button>
+        </ion-header-bar>
+        <ion-content class="padding">
+         <p>FUT Champions</p>
+        </ion-content>
+      </ion-modal-view>
+    </script>
+	</ion-content>
+	<div class="bar bar-footer bar-energized">
+		<p>Publicidade</p>
+	</div>
+</ion-view>
