@@ -176,6 +176,108 @@
         $scope.modal.show();
         //$( "#prova" ).html( '<img class="redimensionar" src="' + img + '"/>' );
       };
+      //--------------------------------------------------------------------------- PUSH
+      const applicationServerPublicKey = 'BNV0EYiMEnl2pkIOifAJceOW-Ze5IrQD0PoMPpF4Uq_BwCGrBJCTAI5Kde7uGx9PpcssX6nyo__14FU44JjfI2c';
+      const applicationServerKey = urlB64ToUint8Array( applicationServerPublicKey );
+      var swRegistration;
+      var isSubscribed;
+      if ( 'serviceWorker' in navigator ) {
+        navigator.serviceWorker.register( 'service-worker.js' ).then( function( registration ) {
+          // Registration was successful
+          console.log( 'ServiceWorker registration successful with scope: ', registration.scope );
+        } ).catch( function( err ) {
+          // registration failed :(
+          console.log( 'ServiceWorker registration failed: ', err );
+        } );
+      }
+      if ( 'serviceWorker' in navigator && 'PushManager' in window ) {
+        console.log( 'Service Worker and Push is supported' );
+        navigator.serviceWorker.register( 'service-worker.js' ).then( function( swReg ) {
+          console.log( 'Service Worker is registered', swReg );
+          swRegistration = swReg;
+          initialiseUI();
+        } ).catch( function( error ) {
+          console.error( 'Service Worker Error', error );
+        } );
+      } else {
+        console.warn( 'Push messaging is not supported' );
+        //pushButton.textContent = 'Push Not Supported';
+      }
+
+      function initialiseUI() {
+        $scope.inscribir = function() {
+          //pushButton.disabled = true;
+          if ( isSubscribed ) {
+            // TODO: Unsubscribe user
+          } else {
+            subscribeUser();
+          }
+        };
+        swRegistration.pushManager.getSubscription().then( function( subscription ) {
+          isSubscribed = !( subscription === null );
+          updateSubscriptionOnServer( subscription );
+          if ( isSubscribed ) {
+            console.log( 'User IS subscribed.' );
+          } else {
+            console.log( 'User is NOT subscribed.' );
+          }
+          updateBtn();
+        } );
+      }
+
+      function updateBtn() {
+        if ( Notification.permission === 'denied' ) {
+          $scope.buttonPush = 'Push Messaging Blocked.';
+          updateSubscriptionOnServer( null );
+          return;
+        }
+        if ( isSubscribed ) {
+          $scope.buttonPush = 'Disable Push Messaging';
+        } else {
+          $scope.buttonPush = 'Enable Push Messaging';
+        }
+      }
+
+      function subscribeUser() {
+        swRegistration.pushManager.subscribe( {
+          userVisibleOnly: true,
+          applicationServerKey: applicationServerKey
+        } ).then( function( subscription ) {
+          console.log( 'User is subscribed:', subscription );
+          updateSubscriptionOnServer( subscription );
+          isSubscribed = true;
+          updateBtn();
+        } ).catch( function( err ) {
+          console.log( 'Failed to subscribe the user: ', err );
+          updateBtn();
+        } );
+      }
+
+      function updateSubscriptionOnServer( subscription ) {
+        // TODO: Send subscription to application server
+        //const subscriptionJson = document.querySelector( '.js-subscription-json' );
+        //const subscriptionDetails = document.querySelector( '.js-subscription-details' );
+        if ( subscription ) {
+          console.log( JSON.stringify( subscription ) );
+          //subscriptionDetails.classList.remove( 'is-invisible' );
+        } else {
+          //subscriptionDetails.classList.add( 'is-invisible' );
+        }
+      }
+
+      function urlB64ToUint8Array( base64String ) {
+        const padding = '='.repeat( ( 4 - base64String.length % 4 ) % 4 );
+        const base64 = ( base64String + padding ).replace( /\-/g, '+' ).replace( /_/g, '/' );
+        console.log( base64 );
+        const rawData = window.atob( base64 );
+        console.log( rawData );
+        const outputArray = new Uint8Array( rawData.length );
+        for ( let i = 0; i < rawData.length; ++i ) {
+          outputArray[ i ] = rawData.charCodeAt( i );
+        }
+        return outputArray;
+      }
+      // Fin Push
     }
   ] ); //ctrl
 } )();

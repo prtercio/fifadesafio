@@ -1,12 +1,12 @@
-
 {
-  "name": "My Ionic App",
-  "short_name": "My Ionic App",
-  "start_url": "index.html",
-  "display": "standalone",
-  "icons": [{
-    "src": "icon.png",
-    "sizes": "512x512",
-    "type": "image/png"
-  }]
+	"name": "My Ionic App",
+	"short_name": "My Ionic App",
+	"start_url": "index.html",
+	"display": "standalone",
+	"gcm_sender_id": "482941778795",
+	"icons": [ {
+		"src": "icon.png",
+		"sizes": "512x512",
+		"type": "image/png"
+	} ]
 }

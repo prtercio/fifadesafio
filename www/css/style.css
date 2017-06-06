@@ -771,6 +771,15 @@ ion-content.fondo {
     background: #ef473a;
 }
 
+.circuloAzul {
+    width: 60px;
+    height: 60px;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+    background: #387ef5;
+}
+
 div.item.comBorda {
     border-style: 1px !important;
     border-color: red !important;

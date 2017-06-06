@@ -94,10 +94,10 @@
   <ion-content id="imagebg">
     <br />
     <br />
-    <h4 align="center" class="padding laranja" ng-show="!eCriador">{{'SELECIONEARODADA'| translate}}</h4>
-    <h4 align="center" class="padding laranja" ng-show="eCriador">{{'SELECIONEARODADAEDITE'| translate}}</h4>
+    <h5 align="center" class="padding laranja" ng-show="!eCriador">{{'SELECIONEARODADA'| translate}}</h5>
+    <h5 align="center" class="padding laranja" ng-show="eCriador">{{'SELECIONEARODADAEDITE'| translate}}</h5>
     <ion-list ng-show="!noInscritos">
-      <div ng-repeat="group in groups | orderBy:name:true">
+      <div class="padding" ng-repeat="group in groups | orderBy:name:true">
         <ion-item class="item-dark cinza"
         ng-click="toggleGroup(group)"
         ng-class="{active: isGroupShown(group)}">

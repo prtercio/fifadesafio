@@ -97,6 +97,17 @@
     };
     firebase.initializeApp(config);
   </script>
+  <script type="text/javascript" src="https://cdn.onesignal.com/sdks/OneSignalSDK.js"></script>
+  <script>
+    var OneSignal = window.OneSignal || [];
+    OneSignal.push(["init", {
+      appId: "bfb30053-65d6-4ebd-8a0f-a5a5542c23e4",
+      autoRegister: false,
+      notifyButton: {
+        enable: true /* Set to false to hide */
+      }
+    }]);
+  </script>
   <!-- Login -->
   <script src="views/RegistroLogin/login/login.js"></script>
   <!-- Register -->

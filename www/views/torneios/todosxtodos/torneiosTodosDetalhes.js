@@ -124,21 +124,17 @@
               } )
             }
             for ( var i = 0; i < listaAdmin.length; i++ ) {
-              if ( listaAdmin[ i ].keynodo === "principal" ) {
-                $scope.eCriadorSuper = true;
+              if ( listaAdmin[ i ].key === $localStorage.keyUser ) {
+                if ( listaAdmin[ i ].keynodo == "principal" ) {
+                  $scope.eCriadorSuper = true;
+                }
                 $scope.eCriador = true;
                 $scope.dimensionColumna = 80;
                 break;
               } else {
-                if ( listaAdmin[ i ].key === $localStorage.keyUser ) {
-                  $scope.eCriador = true;
-                  $scope.dimensionColumna = 80;
-                  break;
-                } else {
-                  $scope.dimensionColumna = 100;
-                  $scope.eCriador = false;
-                  $scope.eCriadorSuper = false;
-                }
+                $scope.dimensionColumna = 100;
+                $scope.eCriador = false;
+                $scope.eCriadorSuper = false;
               }
             }
           }
