@@ -34,11 +34,9 @@
 					<div class="borderGris">
 						<div class="row" ng-repeat="(key, value) in resultado | orderBy:'pontos':true">				
 							<div class="col col-10 center">
-
 								<div ng-class="{verdeOp60:$index==0,verdeOp40:$index==1, verdeOp20:$index==2, branco:$index>=3}"><strong>{{$index + 1}}</strong>
-
-								</div>
 							</div>
+						</div>
 							<div class="col col-40" ng-class="{verdeBold:value.gamertag==gamertag, branco:value.gamertag!=gamertag}">{{value.gamertag}}</div>
 							<div class="col col-10 branco">{{value.jogados}}</div>
 							<div class="col col-10 branco" >{{value.vitoria}}</div>
@@ -95,7 +93,7 @@
 
 				<!-- Semana 5 -->
 				<ion-list ng-if="sairTorneioVar && semana5Ver" >
-					<div class="padding"><strong>{{semana5}}</strong><span ng-if="semana4Ver" class="vermelhoClaro"> {{bloqueado}}</span></div>					  
+					<div class="padding"><strong>{{semana5}}</strong></div>					  
 					<a class="item item-icon-left item-icon-right itemtransparente itembordagris" ng-repeat="jogo in jogosLista4 | orderBy:'jogo*1':true" type="item-text-wrap" href="#/app/temporadasTorneioJogo/{{torneio.configuracao.jogos}}¡{{jogo.semana}}{{jogo.jogo}}|{{keyUserInscritoTorneio}}" ng-if="!jogo.bloqueado && jogo.jogo<51">
 						<i class="icon ion-ios-game-controller-a"></i>
 						<strong>{{'JOGO' | translate}} {{jogo.jogo}}</strong>
@@ -111,7 +109,7 @@
 			</ion-list>	
 				<!-- Semana 4 -->
 				<ion-list ng-if="sairTorneioVar && semana4Ver" >
-					<div class="padding"><strong>{{semana4}}</strong><span ng-if="semana4Ver" class="vermelhoClaro"> {{bloqueado}}</span></div>					  
+					<div class="padding"><strong>{{semana4}}</strong></div>					  
 					<a class="item item-icon-left item-icon-right itemtransparente itembordagris" ng-repeat="jogo in jogosLista3 | orderBy:'jogo*1':true" type="item-text-wrap" href="#/app/temporadasTorneioJogo/{{torneio.configuracao.jogos}}¡{{jogo.semana}}&{{jogo.jogo}}|{{keyUserInscritoTorneio}}" ng-if="!jogo.bloqueado && jogo.jogo<51">
 						<i class="icon ion-ios-game-controller-a"></i>
 						<strong>{{'JOGO' | translate}} {{jogo.jogo}}</strong>
@@ -127,7 +125,7 @@
 			</ion-list>	
 				<!-- Semana 3 -->
 				<ion-list ng-if="sairTorneioVar && semana3Ver" >
-					<div class="padding"><strong>{{semana3}}</strong><span ng-if="semana3Ver" class="vermelhoClaro"> {{bloqueado}}</span></div>					  
+					<div class="padding"><strong>{{semana3}}</strong></div>					  
 					<a class="item item-icon-left item-icon-right itemtransparente itembordagris" ng-repeat="jogo in jogosLista2 | orderBy:'jogo*1':true" type="item-text-wrap" href="#/app/temporadasTorneioJogo/{{torneio.configuracao.jogos}}¡{{jogo.semana}}&{{jogo.jogo}}|{{keyUserInscritoTorneio}}" ng-if="!jogo.bloqueado && jogo.jogo<51">
 						<i class="icon ion-ios-game-controller-a"></i>
 						<strong>{{'JOGO' | translate}} {{jogo.jogo}}</strong>
@@ -143,7 +141,7 @@
 			</ion-list>	
 				<!-- Semana 2 -->
 				<ion-list ng-if="sairTorneioVar && semana2Ver" >
-					<div class="padding"><strong>{{semana2}}</strong><span ng-if="semana2Ver" class="vermelhoClaro"> {{bloqueado}}</span></div>					  
+					<div ng-if="semana2Ver" class="padding"><strong>{{semana2}}</strong></div>					  
 					<a class="item item-icon-left item-icon-right itemtransparente itembordagris" ng-repeat="jogo in jogosLista1 | orderBy:'jogo*1':true" type="item-text-wrap" href="#/app/temporadasTorneioJogo/{{torneio.configuracao.jogos}}¡{{jogo.semana}}&{{jogo.jogo}}|{{keyUserInscritoTorneio}}" ng-if="!jogo.bloqueado && jogo.jogo<51">
 						<i class="icon ion-ios-game-controller-a"></i>
 						<strong>{{'JOGO' | translate}} {{jogo.jogo}}</strong>
@@ -224,7 +222,7 @@
 				<span class="badge badge-balanced">{{torneio.configuracao.inscritos}}</span>
 			</a>
 		</div>
-		<div ng-if="torneio.configuracao.premioTF">
+		<div ng-if="torneio.configuracao.premioTF == true">
 			<h4 align="center">{{'PREMIO' | translate}}</h4>
 			<img class="center resizeMed" src="{{torneio.configuracao.premioImg}}">
 			<div class="list padding">				  				      

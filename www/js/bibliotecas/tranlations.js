@@ -144,8 +144,12 @@ trans.factory( 'asyncLoader', function( $q, $timeout ) {
                 BUSCARADMIN: "Buscar Editor",
                 GAMERTAGNOENCONTRADO: "Gamertag no encontrado! Revísalo y intente otra vez.",
                 GAMERTAGADMINIS: "¡Este gamertag ya es editor!",
-                EDITORADICIONADO: "Editor agregado con éxito!",
-                EDITORES: "Editores"
+                EDITORADICIONADO: "¡Editor agregado con éxito!",
+                EDITORES: "Editores",
+                SELECCIONEOPCAO: "Seleccione una opción:",
+                VITORIAPENALTY: "Victoria en los penaltis",
+                DERROTAPENALTY: "Derrota en los penaltis",
+                PENALTIS: "Penaltis:"
             };
         }
         if ( options.key === 'pt' ) {
@@ -281,7 +285,11 @@ trans.factory( 'asyncLoader', function( $q, $timeout ) {
                 GAMERTAGNOENCONTRADO: "Gamertag não encontrado! Verifique e tente outra vez.",
                 GAMERTAGADMINIS: "Este gamertag já é um editor!",
                 EDITORADICIONADO: "Editor adicionado com sucesso!",
-                EDITORES: "Editores"
+                EDITORES: "Editores",
+                SELECCIONEOPCAO: "Selecione uma opção:",
+                VITORIAPENALTY: "Vitória nos penaltis",
+                DERROTAPENALTY: "Derrota nos penaltis",
+                PENALTIS: "Penaltis:"
             };
         }
         if ( options.key === 'en' ) {

@@ -390,10 +390,11 @@
       $scope.removeInput = function( index ) {
         $scope.inputs.splice( index, 1 );
       }
-
-      function verificarDuplicado( array ) {
-        return array.slice();
-      };
+      /*
+            function verificarDuplicado( array ) {
+              return array.slice();
+            };
+            */
       $scope.enviarDatos = function() {
         var dato = $scope.inputs;
         var verficarPar = dato.length % 2;

@@ -67,10 +67,7 @@
         if ( !localStorage.getItem( "fechaAtualizacao" ) ) {
           localStorage.setItem( "fechaAtualizacao", dataHoje );
           console.log( "no hay fecha" );
-          atualizarConquistas();
-        }
-        if ( !localStorage.getItem( "totalFotosTemporadas" ) ) {
-          atualizarConquistas();
+          //atualizarConquistas();
         }
         var refDias = firebase.database().ref( 'desafio/configuracaogeral/geral' );
         refDias.once( "value" ).then( function( snapshot ) {
@@ -79,7 +76,8 @@
           var diaDataUltimaAtua = Number( dataUltima.substring( 0, dataUltima.indexOf( "/" ) ) );
           var mesAno = dataUltima.substring( dataUltima.indexOf( "/" ) + 1 );
           var mesDataUltimaAtua = Number( mesAno.substring( 0, mesAno.indexOf( "/" ) ) );
-          var anoDataUltimaAtual = Number( mesAno.substring( dataUltima.indexOf( "/" ) ) );
+          var anoDataUltimaAtual = Number( mesAno.substring( mesAno.indexOf( "/" ) + 1 ) );
+          console.log( mesAno, anoDataUltimaAtual, mesDataUltimaAtua, diaDataUltimaAtua );
           if ( ano === anoDataUltimaAtual ) {
             if ( mes === mesDataUltimaAtua ) {
               if ( dia === diaDataUltimaAtua ) {
@@ -177,6 +175,7 @@
         //$( "#prova" ).html( '<img class="redimensionar" src="' + img + '"/>' );
       };
       //--------------------------------------------------------------------------- PUSH
+      /*
       const applicationServerPublicKey = 'BNV0EYiMEnl2pkIOifAJceOW-Ze5IrQD0PoMPpF4Uq_BwCGrBJCTAI5Kde7uGx9PpcssX6nyo__14FU44JjfI2c';
       const applicationServerKey = urlB64ToUint8Array( applicationServerPublicKey );
       var swRegistration;
@@ -277,6 +276,7 @@
         }
         return outputArray;
       }
+      */
       // Fin Push
     }
   ] ); //ctrl

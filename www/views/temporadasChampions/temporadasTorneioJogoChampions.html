@@ -55,7 +55,6 @@
     </div>
     
     <h4 ng-if="status">{{semFifa}}</h4>
-
     <div class="card itemtransparente" ng-if="timeCasa" >      
       <div class="row">
         <div class="col-20" align="center">
@@ -75,6 +74,7 @@
         </div>
       </div>
     </div>
+   
     <div ng-show="timeCasa">
     <div class="card itemtransparente" ng-show="verIonRadioJogos">
       <div class="padding">
@@ -86,7 +86,22 @@
       </div>
     </div>
     </div>
-    <div ng-show="verPlacarFinal">
+     <div>
+     <div class="list padding" ng-show="penaltisResultado">
+
+  <label class="item item-input item-select">
+    <div class="input-label">
+      {{'PENALTIS' | translate}}
+    </div>
+    <select ng-model="mySelect" ng-change="showSelectValue(mySelect)">
+      <option value="true">{{'VITORIAPENALTY' | translate}}</option>
+      <option value="false">{{'DERROTAPENALTY' | translate}}</option>
+    </select>
+  </label>
+
+</div>
+    </div>
+    <div ng-show="penaltisResultadoSeleccionado">
       <div 
         align="center" 
         ng-class="{verde : placarFinal=='v', vermelhoClaro : placarFinal=='d', laranja : placarFinal=='e'}">
@@ -96,9 +111,9 @@
   </div>
 </div>
 <div class="padding">
-<li class="item item-toggle itemtransparente" ng-show="selecionarImagen">
+<li class="item item-toggle itemtransparente" ng-show="penaltisResultadoSeleccionado">
   {{'DETALHECONQUISTAS' | translate}}
-  <label class="toggle toggle-positive">
+  <label class="toggle toggle-energized">
     <input type="checkbox" ng-model="checkedConq" aria-label="Toggle ngHide" >
     <div class="track">
       <div class="handle"></div>
@@ -107,8 +122,8 @@
 </li>
 <ion-list ng-show="checkedConq">
   <ion-item ng-repeat="shop in items" class="item item-icon-left item-verde itemtransparente" ng-show="selecionarImagen">
-    <i class="icon ion-checkmark verdeOriginal"></i>
-    <h2 class="verdeOriginal">{{shop[0]}}.  {{'PONTOS' | translate}}: {{shop[1]}}</h2>
+    <i class="icon ion-checkmark branco"></i>
+    <h2 class="branco">{{shop[0]}}.  {{'PONTOS' | translate}}: {{shop[1]}}</h2>
     <!--
     <ion-option-button class="button-assertive" ng-click="removeLista(shop)">
       Delete

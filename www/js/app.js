@@ -50,6 +50,12 @@ angular.module( 'App', [ 'ionic', 'App.CtrlInicio', 'App.CtrlConquistas', 'App.C
         // org.apache.cordova.statusbar required
         StatusBar.styleDefault();
       }
+      /*
+      var notificationOpenedCallback = function( jsonData ) {
+        console.log( 'notificationOpenedCallback: ' + JSON.stringify( jsonData ) );
+      };
+      window.plugins.OneSignal.startInit( "bfb30053-65d6-4ebd-8a0f-a5a5542c23e4" ).handleNotificationOpened( notificationOpenedCallback ).endInit();
+      */
     } );
   } ).config( function( $stateProvider, $urlRouterProvider, $ionicConfigProvider ) {
     $ionicConfigProvider.platform.android.navBar.alignTitle( 'center' );

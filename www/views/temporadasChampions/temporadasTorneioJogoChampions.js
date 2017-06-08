@@ -38,6 +38,8 @@
             $scope.verButtonAdicionar = true;
             //$scope.verBtn = true;
             $scope.placar = "";
+            $scope.penaltisResultado = false;
+            $scope.penaltisResultadoSeleccionado = false;
             var gamerSeleccionado = $localStorage.account.gamertag;
             var conquistaSelecionadas = [];
             $scope.verPlacarFinal = false;
@@ -328,6 +330,7 @@
                     golsPro = Number( antGolsPro ) + Number( resultado1 );
                     golsContra = Number( antGolsContra ) + Number( resultado2 );
                     if ( resultado1 > resultado2 ) {
+                        $scope.penaltisResultadoSeleccionado = true;
                         novosPontosVitoria = 3;
                         var resultadoFinal = "Vitoria";
                         $scope.placarFinal = "v";
@@ -349,6 +352,7 @@
                         }
                         $scope.totalPontos = totalPontos;
                     } else if ( resultado1 < resultado2 ) {
+                        $scope.penaltisResultadoSeleccionado = true;
                         var resultadoFinal = "Derrota";
                         $scope.placarFinal = "d";
                         seEmpate = 0;
@@ -366,6 +370,7 @@
                             novaTemporadaAtualEmpate = temporadaAtualEmpate;
                         }
                     } else {
+                        $scope.penaltisResultado = true;
                         novosPontosEmpate = 1;
                         var resultadoFinal = "Empate";
                         $scope.placarFinal = "e";
@@ -388,6 +393,7 @@
                     golsPro = Number( antGolsPro ) + Number( resultado2 );
                     golsContra = Number( antGolsContra ) + Number( resultado1 );
                     if ( resultado1 < resultado2 ) {
+                        $scope.penaltisResultadoSeleccionado = true;
                         novosPontosVitoria = 3;
                         var resultadoFinal = "Vitoria";
                         $scope.placarFinal = "v";
@@ -406,6 +412,7 @@
                             novaTemporadaAtualEmpate = temporadaAtualEmpate;
                         }
                     } else if ( resultado1 > resultado2 ) {
+                        $scope.penaltisResultadoSeleccionado = true;
                         var resultadoFinal = "Derrota";
                         $scope.placarFinal = "d";
                         seEmpate = 0;
@@ -423,6 +430,7 @@
                             novaTemporadaAtualEmpate = temporadaAtualEmpate;
                         }
                     } else {
+                        $scope.penaltisResultado = true;
                         novosPontosEmpate = 1;
                         var resultadoFinal = "Empate";
                         $scope.placarFinal = "e";
@@ -445,6 +453,41 @@
                 $scope.verPlacarFinal = true;
                 $scope.totalPontos = totalPontos;
                 console.log( "totalPontos", $scope.totalPontos, "Update", atualizarNumerosTemporadas, "tempAtual", temporadaNova, "TV", novaTemporadaAtualVitoria, "TE", novaTemporadaAtualEmpate, "TD", novaTemporadaAtualDerrota );
+            }
+            $scope.showSelectValue = function( mySelect ) {
+                $scope.penaltisResultadoSeleccionado = true;
+                console.log( mySelect, arrayConquistasEmpate );
+                var item = itemList[ itemList.length - 1 ][ 0 ];
+                if ( item == arrayConquistasEmpate[ 10 ][ 0 ] ) {
+                    removeInput( itemList, itemList.indexOf( item ) );
+                    totalPontos = totalPontos - arrayConquistasEmpate[ 10 ][ 1 ];
+                    addEmpVitChampions( mySelect );
+                    $scope.totalPontos = totalPontos;
+                } else if ( item == arrayConquistasEmpate[ 11 ][ 0 ] ) {
+                    removeInput( itemList, itemList.indexOf( item ) );
+                    totalPontos = totalPontos - arrayConquistasEmpate[ 11 ][ 1 ]
+                    addEmpVitChampions( mySelect );
+                    $scope.totalPontos = totalPontos;
+                } else {
+                    addEmpVitChampions( mySelect );
+                    $scope.totalPontos = totalPontos;
+                }
+            }
+
+            function addEmpVitChampions( bool ) {
+                if ( bool == "true" ) {
+                    itemList.push( [ arrayConquistasEmpate[ 10 ][ 0 ], arrayConquistasEmpate[ 10 ][ 1 ] ] );
+                    totalPontos = totalPontos + arrayConquistasEmpate[ 10 ][ 1 ];
+                    console.log( "1", bool, itemList );
+                } else {
+                    itemList.push( [ arrayConquistasEmpate[ 11 ][ 0 ], arrayConquistasEmpate[ 11 ][ 1 ] ] );
+                    totalPontos = totalPontos + arrayConquistasEmpate[ 11 ][ 1 ];
+                    console.log( "2", bool, itemList );
+                }
+            }
+
+            function removeInput( arr, index ) {
+                arr.splice( index, 1 );
             }
             $( document ).on( 'change', '#file', function( event ) {
                 imageSelecionada = event.target.files[ 0 ];
