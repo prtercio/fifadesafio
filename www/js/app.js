@@ -72,6 +72,13 @@ angular.module( 'App', [ 'ionic', 'App.CtrlInicio', 'App.CtrlConquistas', 'App.C
           controller: 'CtrlInicio'
         }
       }
+    } ).state( 'app.sobre', {
+      url: '/sobre',
+      views: {
+        'menuContent': {
+          templateUrl: 'views/inicio/sobre.html'
+        }
+      }
     } ).state( 'app.conquistas', {
       url: '/conquistas',
       views: {

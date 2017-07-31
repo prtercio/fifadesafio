@@ -1,6 +1,8 @@
 <ion-view view-title="Inicio" ng-init="showPopup()">
-  <ion-nav-buttons side="secondary">      
+  <ion-nav-buttons side="secondary">  
+  <!--    
      <button class="button button-icon icon ion-help-circled" ng-click="abrirAjuda()"></button>
+     -->
      <button class="button button-icon icon  ion-android-more-vertical" ng-click="popover.show($event)"></button>
   </ion-nav-buttons>
   <ion-content  id="imagebg">
@@ -46,8 +48,8 @@
 
       <ion-content class="grisbg">
         <ion-list>
-          <ion-item class="item item-icon-left verdeOriginal" ng-href="#/tab/regras" ng-click="cerrarMenu()">
-            <i class="icon ion-clipboard"></i>{{'REGRAS' | translate}}
+          <ion-item class="item item-icon-left verdeOriginal" ng-href="#/app/sobre" ng-click="cerrarMenu()">
+            <i class="icon ion-information-circled"></i>{{'SOBRE' | translate}}
           </ion-item>          
           <ion-item class="item item-icon-left verdeOriginal" ng-href="#/app/conquistas" ng-click="cerrarMenu()">
             <i class="icon ion-ribbon-a"></i>{{'CONQUISTAS' | translate}}

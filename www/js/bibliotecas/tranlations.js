@@ -149,7 +149,9 @@ trans.factory( 'asyncLoader', function( $q, $timeout ) {
                 SELECCIONEOPCAO: "Seleccione una opción:",
                 VITORIAPENALTY: "Victoria en los penaltis",
                 DERROTAPENALTY: "Derrota en los penaltis",
-                PENALTIS: "Penaltis:"
+                PENALTIS: "Penaltis:",
+                QUEMSOMOS: "Quiénes somos",
+                SOBRE: "Sobre"
             };
         }
         if ( options.key === 'pt' ) {
@@ -254,7 +256,7 @@ trans.factory( 'asyncLoader', function( $q, $timeout ) {
                 VERIFICARDATOS: "Não se encontrou este torneio, por favore verifique o GAMERTAG e/ou a CHAVE DE ACESSO e volte a pesquisar.",
                 TORNEIOENCONTRADO: "Torneio encontrado!",
                 TORNEIOSADICIONADOS: "Você poderá ver os torneios adicionados na aba 'Outros Torneios'",
-                AQUILISTATORNEIOOUTROS: "Aqui se verá a lista dos torneios criados pelo seus amigos e adicionados por você.",
+                AQUILISTATORNEIOOUTROS: "Aqui você verá a lista de torneios criados pelos seus amigos e/ou torneios adicionados por você.",
                 TORNEIOS: "Torneios",
                 TORNEIO: "Torneio",
                 TORNEIOJAFOIADICIONADO: "Este torneio já está adicionado em sua lista de OUTROS TORNEIOS",
@@ -289,7 +291,9 @@ trans.factory( 'asyncLoader', function( $q, $timeout ) {
                 SELECCIONEOPCAO: "Selecione uma opção:",
                 VITORIAPENALTY: "Vitória nos penaltis",
                 DERROTAPENALTY: "Derrota nos penaltis",
-                PENALTIS: "Penaltis:"
+                PENALTIS: "Penaltis:",
+                QUEMSOMOS: "Quem somos",
+                SOBRE: "Sobre"
             };
         }
         if ( options.key === 'en' ) {
