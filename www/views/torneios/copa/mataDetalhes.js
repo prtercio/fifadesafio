@@ -91,8 +91,10 @@
             $scope.nomeTorneio = nomeTorneio;
             dataTorneio = snapshot.val().configuracao.data;
             cargadoCriterioDesempate = snapshot.val().configuracao.golsForaCasa;
-            $scope.jogosSemi = snapshot.val().jogos.semifinal;
-            $scope.jogoFinal = snapshot.val().jogos.final;
+            if ( snapshot.val().configuracao.iniciado == true ) {
+              $scope.jogosSemi = snapshot.val().jogos.semifinal;
+              $scope.jogoFinal = snapshot.val().jogos.final;
+            }
             if ( snapshot.val().configuracao.iniciado == false ) {
               $scope.noInscritos = true;
               $timeout( function() {
