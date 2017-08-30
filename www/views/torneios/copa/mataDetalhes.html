@@ -116,7 +116,7 @@
        <div class="row">
         <div class="center letraTamanhoJogo col col-{{dimensionColumnaC1ida}}">{{jogosSemi.confronto1.jogador2}}</div>
       </div>
-      <div class="padding" ng-if="confronto1SemiFinalizado">
+      <div class="padding" ng-if="confronto1SemiFinalizadoIda">
       <div ng-if="jogosSemi.confronto1.ida.golsJ1 == jogosSemi.confronto1.ida.golsJ2 && !eIdaVolta">
       <in class="laranja">No caso de empate, jogue uma nova partida.
 O resultado dessa nova partida deverá ser postado outra vez.</in>
@@ -127,7 +127,7 @@ O resultado dessa nova partida deverá ser postado outra vez.</in>
       <hr>
       </div>
         <div class="row">
-      <div class="center letraTamanhoJogo col col-{{dimensionColumna}}">{{jogosSemi.confronto2.jogador1}} </div>
+      <div class="center letraTamanhoJogo col col-{{dimensionColumnaC2ida}}">{{jogosSemi.confronto2.jogador1}} </div>
     </div>
       <div class="row">
       <div class="col col-{{dimensionColumnaC2ida}} center">
@@ -137,15 +137,15 @@ O resultado dessa nova partida deverá ser postado outra vez.</in>
       <re ng-if="jogosSemi.confronto2.ida.golsJ2 != 'x'">{{jogosSemi.confronto2.ida.golsJ2}}
       </re></in>
       </div>
-         <div class="col col-20" ng-show="eCriador  && jogosSemi.confronto2.volta.golsJ1 == 'x'">            
+         <div class="col col-20" ng-show="eCriador && jogosSemi.confronto2.volta.golsJ1 == 'x'">            
           <a class="btnEdit"
            ng-click="editarJogo('semifinal','ida','confronto2', jogosSemi.confronto2.jogador1, jogosSemi.confronto2.jogador2)"><img src="img/edit.png"/></a>
         </div>
       </div>
        <div class="row">
-        <div class="center letraTamanhoJogo col col-{{dimensionColumna}}"> {{jogosSemi.confronto2.jogador2}}</div>
+        <div class="center letraTamanhoJogo col col-{{dimensionColumnaC2ida}}"> {{jogosSemi.confronto2.jogador2}}</div>
       </div>
-       <div class="padding" ng-if="confronto2SemiFinalizado">
+       <div class="padding" ng-if="confronto2SemiFinalizadoIda">
       <div ng-if="jogosSemi.confronto2.ida.golsJ1 == jogosSemi.confronto2.ida.golsJ2 && !eIdaVolta">
       <in class="laranja">No caso de empate com o mesmo placar, jogue uma nova partida.
 O resultado dessa nova partida deverá ser postado outra vez.</in></div>
@@ -158,10 +158,10 @@ O resultado dessa nova partida deverá ser postado outra vez.</in></div>
       <h5 class="laranja padding" ng-if="jogosSemi.confronto1.volta != undefined">Jogos de Volta</h5>
 
       <div class="row">
-        <div class="center letraTamanhoJogo col col-{{dimensionColumna}}">{{jogosSemi.confronto1.jogador2}} </div>
+        <div class="center letraTamanhoJogo col col-{{dimensionColumnaC1Volta}}">{{jogosSemi.confronto1.jogador2}} </div>
       </div>
       <div class="row" ng-if="jogosSemi.confronto1.volta != undefined">
-        <div class="col col-{{dimensionColumna}} center">
+        <div class="col col-{{dimensionColumnaC1Volta}} center">
           <in class="letraTamanhoJogo">
           <re ng-if="jogosSemi.confronto1.volta.golsJ2 != 'x'">{{jogosSemi.confronto1.volta.golsJ2}} 
           </re > X 
@@ -169,12 +169,12 @@ O resultado dessa nova partida deverá ser postado outra vez.</in></div>
           </re></in>
           </div>
            <div class="col col-20" ng-show="eCriador && jogosSemi.confronto1.ida.golsJ1 != 'x' && jogoFinal.confronto.ida.golsJ1 == 'x'">            
-          <a class="btnEdit"
+            <a class="btnEdit"
            ng-click="editarJogo('semifinal','volta','confronto1', jogosSemi.confronto1.jogador2, jogosSemi.confronto1.jogador1)"> <img src="img/edit.png"/></a>
       </div>
       </div>
            <div class="row">
-        <div class="center letraTamanhoJogo col col-{{dimensionColumna}}"> {{jogosSemi.confronto1.jogador1}}</div>
+        <div class="center letraTamanhoJogo col col-{{dimensionColumnaC1Volta}}"> {{jogosSemi.confronto1.jogador1}}</div>
       </div>
        <div class="padding" ng-if="jogosSemi.confronto1.volta != undefined && jogosSemi.confronto1.volta.golsJ1 != 'x'">
       <div ng-if="empateJogosC1 && eIdaVolta">
@@ -186,10 +186,10 @@ O resultado dessa nova partida deverá ser postado no lugar do "JOGO DE VOLTA" s
       <hr>
       </div
        <div class="row">
-      <div class="center letraTamanhoJogo col col-{{dimensionColumna}}">{{jogosSemi.confronto2.jogador2}}</div>
+      <div class="center letraTamanhoJogo col col-{{dimensionColumnaC2Volta}}">{{jogosSemi.confronto2.jogador2}}</div>
     </div>
       <div class="row" ng-if="jogosSemi.confronto2.volta != undefined">
-      <div class="col col-{{dimensionColumna}}  center">
+      <div class="col col-{{dimensionColumnaC2Volta}}  center">
       <in class="letraTamanhoJogo"> 
       <re ng-if="jogosSemi.confronto2.volta.golsJ2 != 'x'">{{jogosSemi.confronto2.volta.golsJ2}} 
       </re> X 
@@ -202,7 +202,7 @@ O resultado dessa nova partida deverá ser postado no lugar do "JOGO DE VOLTA" s
         </div>
       </div>
         <div class="row">
-        <div class="center letraTamanhoJogo col col-{{dimensionColumna}}">  {{jogosSemi.confronto2.jogador1}}</div>
+        <div class="center letraTamanhoJogo col col-{{dimensionColumnaC2Volta}}">  {{jogosSemi.confronto2.jogador1}}</div>
       </div>
       <div class="padding" ng-if="jogosSemi.confronto1.volta != undefined && jogosSemi.confronto2.volta.golsJ1 != 'x'">
        <div ng-if="empateJogosC2 && eIdaVolta">
@@ -236,10 +236,10 @@ O resultado dessa nova partida deverá ser postado no lugar do "JOGO DE VOLTA"  
         <h5 class="laranja padding">Jogo de Ida</h5>
 
     <div class="row">
-      <div class="center letraTamanhoJogo col col-{{dimensionColumna}}">{{jogoFinal.confronto.jogador1}} </div>
+      <div class="center letraTamanhoJogo col col-{{dimensionColumnaIdaFinal}}">{{jogoFinal.confronto.jogador1}} </div>
     </div>
       <div class="row">
-        <div class="col col-{{dimensionColumna}} center">
+        <div class="col col-{{dimensionColumnaIdaFinal}} center">
           <in class="letraTamanhoJogo">
           <re ng-if="jogoFinal.confronto.ida.golsJ1 != 'x'">{{jogoFinal.confronto.ida.golsJ1}} 
           </re > x 
@@ -251,7 +251,7 @@ O resultado dessa nova partida deverá ser postado no lugar do "JOGO DE VOLTA"  
         </div>
       </div>
        <div class="row">
-        <div class="center letraTamanhoJogo col col-{{dimensionColumna}}">{{jogoFinal.confronto.jogador2}}</div>
+        <div class="center letraTamanhoJogo col col-{{dimensionColumnaIdaFinal}}">{{jogoFinal.confronto.jogador2}}</div>
       </div>
       <div class="padding" ng-if="jogoFinal.confronto.volta.golsJ1 != 'x'">
       <div ng-if="jogoFinal.confronto.ida.golsJ1 == jogoFinal.confronto.ida.golsJ2 && !eIdaVolta">
@@ -269,10 +269,10 @@ O resultado dessa nova partida deverá ser postado outra vez.</in>
         <h5 class="laranja padding">Jogo de Volta</h5>
 
     <div class="row">
-      <div class="center letraTamanhoJogo col col-{{dimensionColumna}}">{{jogoFinal.confronto.jogador2}} </div>
+      <div class="center letraTamanhoJogo col col-{{dimensionColumnaIdaVolta}}">{{jogoFinal.confronto.jogador2}} </div>
     </div>
       <div class="row">
-        <div class="col col-{{dimensionColumna}} center">
+        <div class="col col-{{dimensionColumnaIdaVolta}} center">
           <in class="letraTamanhoJogo">
           <re ng-if="jogoFinal.confronto.volta.golsJ2 != 'x'">{{jogoFinal.confronto.volta.golsJ2}} 
           </re > x 
@@ -284,7 +284,7 @@ O resultado dessa nova partida deverá ser postado outra vez.</in>
         </div>
       </div>
        <div class="row">
-        <div class="center letraTamanhoJogo col col-{{dimensionColumna}}">{{jogoFinal.confronto.jogador1}}</div>
+        <div class="center letraTamanhoJogo col col-{{dimensionColumnaIdaVolta}}">{{jogoFinal.confronto.jogador1}}</div>
       </div>
 
       <div class="padding" ng-if="jogoFinal.confronto.volta.golsJ1 != 'x'">

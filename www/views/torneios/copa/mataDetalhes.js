@@ -35,8 +35,12 @@
       var resultado1 = 0;
       var resultado2 = 0;
       $scope.campeao = false;
-      $scope.confronto1SemiFinalizado = false;
-      $scope.confronto2SemiFinalizado = false;
+      $scope.confronto1SemiFinalizadoIda = false;
+      $scope.confronto1SemiFinalizadoVolta = false;
+      $scope.confronto2SemiFinalizadoIda = false;
+      $scope.confronto2SemiFinalizadoVolta = false;
+      $scope.confrontoIdaFinal = false;
+      $scope.confrontoVoltaFinal = false;
       $scope.semiFinalizada = false;
       $scope.idaFinalFinalizada = false;
       $scope.voltaFinalFinalizada = false;
@@ -62,15 +66,19 @@
                 }
                 $scope.eCriador = true;
                 $scope.dimensionColumnaC1ida = 80;
-                $scope.dimensionColumnaC1volta = 80;
+                $scope.dimensionColumnaC1Volta = 80;
                 $scope.dimensionColumnaC2ida = 80;
-                $scope.dimensionColumnaC2volta = 80;
+                $scope.dimensionColumnaC2Volta = 80;
+                $scope.dimensionColumnaIdaFinal = 80;
+                $scope.dimensionColumnaIdaVolta = 80;
                 break;
               } else {
                 $scope.dimensionColumnaC1ida = 100;
-                $scope.dimensionColumnaC1volta = 100;
+                $scope.dimensionColumnaC1Volta = 100;
                 $scope.dimensionColumnaC2ida = 100;
-                $scope.dimensionColumnaC2volta = 100;
+                $scope.dimensionColumnaC2Volta = 100;
+                $scope.dimensionColumnaIdaFinal = 100;
+                $scope.dimensionColumnaIdaVolta = 100;
                 $scope.eCriador = false;
                 $scope.eCriadorSuper = false;
               }
@@ -83,6 +91,8 @@
             $scope.nomeTorneio = nomeTorneio;
             dataTorneio = snapshot.val().configuracao.data;
             cargadoCriterioDesempate = snapshot.val().configuracao.golsForaCasa;
+            $scope.jogosSemi = snapshot.val().jogos.semifinal;
+            $scope.jogoFinal = snapshot.val().jogos.final;
             if ( snapshot.val().configuracao.iniciado == false ) {
               $scope.noInscritos = true;
               $timeout( function() {
@@ -114,11 +124,15 @@
                 $timeout( function() {
                   $ionicTabsDelegate.select( 0, false );
                 }, 50 );
-                $scope.jogosSemi = snapshot.val().jogos.semifinal;
                 var golsCasaJ1C1 = snapshot.val().jogos.semifinal.confronto1.ida.golsJ1;
                 var golsForaJ2C1 = snapshot.val().jogos.semifinal.confronto1.ida.golsJ2;
                 var golsCasaJ2C1 = snapshot.val().jogos.semifinal.confronto1.volta.golsJ2;
                 var golsForaJ1C1 = snapshot.val().jogos.semifinal.confronto1.volta.golsJ1;
+                var golsCasaJ1C2 = snapshot.val().jogos.semifinal.confronto2.ida.golsJ1;
+                var golsForaJ2C2 = snapshot.val().jogos.semifinal.confronto2.ida.golsJ2;
+                var golsCasaJ2C2 = snapshot.val().jogos.semifinal.confronto2.volta.golsJ2;
+                var golsForaJ1C2 = snapshot.val().jogos.semifinal.confronto2.volta.golsJ1;
+                // Ida 4
                 var totalGolsJ1C1ida = golsCasaJ1C1 + golsForaJ2C1;
                 var totalGolsJ2C1volta = golsCasaJ2C1 + golsForaJ1C1;
                 if ( totalGolsJ1C1ida == totalGolsJ2C1volta ) {
@@ -126,10 +140,18 @@
                 } else {
                   $scope.empateJogosC1 = false;
                 }
-                var golsCasaJ1C2 = snapshot.val().jogos.semifinal.confronto2.ida.golsJ1;
-                var golsForaJ2C2 = snapshot.val().jogos.semifinal.confronto2.ida.golsJ2;
-                var golsCasaJ2C2 = snapshot.val().jogos.semifinal.confronto2.volta.golsJ2;
-                var golsForaJ1C2 = snapshot.val().jogos.semifinal.confronto2.volta.golsJ1;
+                // determinar se vejos o btn editar do jogo 1 e 2 ida
+                if ( $scope.eCriadorSuper == true || $scope.eCriador == true ) {
+                  if ( golsForaJ1C1 != "x" ) {
+                    $scope.confronto1SemiFinalizadoIda = true;
+                    $scope.dimensionColumnaC1ida = 100;
+                  }
+                  if ( golsForaJ2C2 != "x" ) {
+                    $scope.confronto2SemiFinalizadoIda = true;
+                    $scope.dimensionColumnaC2ida = 100;
+                  }
+                }
+                // Volta 4
                 var totalGolsJ1C2ida = golsCasaJ1C2 + golsForaJ2C2;
                 var totalGolsJ2C2volta = golsCasaJ2C2 + golsForaJ1C2;
                 if ( totalGolsJ1C2ida == totalGolsJ2C2volta ) {
@@ -137,37 +159,32 @@
                 } else {
                   $scope.empateJogosC2 = false;
                 }
-                if ( golsCasaJ1C1 != "x" ) {
-                  $scope.confronto1SemiFinalizado = true;
-                  if ( $scope.eCriadorSuper == true || $scope.eCriador == true ) {
-                    $scope.dimensionColumnaC1ida = 100;
-                  }
-                }
-                if ( golsCasaJ2C2 != "x" ) {
-                  $scope.confronto2SemiFinalizado = true;
-                  if ( $scope.eCriadorSuper == true || $scope.eCriador == true ) {
-                    $scope.dimensionColumnaC2ida = 100;
-                  }
-                }
                 verificarConclusaoSemininalQuatro();
               }
               if ( snapshot.val().jogos.final.confronto.jogador1 == "x" ) {
                 $scope.final = false;
                 console.log( "F", snapshot.val().jogos.final );
               } else {
+                if ( snapshot.val().jogos.final.confronto.ida.golsJ1 != 'x' ) {
+                  $scope.confronto1SemiFinalizadoVolta = true;
+                  $scope.dimensionColumnaC1Volta = 100;
+                  $scope.confronto2SemiFinalizadoVolta = true;
+                  $scope.dimensionColumnaC2Volta = 100;
+                }
                 $timeout( function() {
                   $ionicTabsDelegate.select( 1, false );
                 }, 50 );
                 $scope.final = true;
-                $scope.jogoFinal = snapshot.val().jogos.final;
                 console.log( "final ", snapshot.val().jogos.final.confronto.volta.golsJ1 );
                 if ( snapshot.val().jogos.final.confronto.volta.golsJ1 == "x" ) {
                   $scope.finalizaMata = true;
                 } else {
+                  $scope.dimensionColumnaIdaFinal = 100;
                   $scope.finalizaMata = false;
                 }
               }
               if ( snapshot.val().jogos.final.confronto.matamata == "finalizado" ) {
+                $scope.dimensionColumnaIdaVolta = 100;
                 $scope.campeao = true;
                 $scope.finalizaMata = true;
                 $timeout( function() {
