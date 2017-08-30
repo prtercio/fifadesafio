@@ -148,7 +148,7 @@
                     $scope.confronto1SemiFinalizadoIda = true;
                     $scope.dimensionColumnaC1ida = 100;
                   }
-                  if ( golsForaJ2C2 != "x" ) {
+                  if ( golsCasaJ2C2 != "x" ) {
                     $scope.confronto2SemiFinalizadoIda = true;
                     $scope.dimensionColumnaC2ida = 100;
                   }
@@ -161,12 +161,15 @@
                 } else {
                   $scope.empateJogosC2 = false;
                 }
-                verificarConclusaoSemininalQuatro();
+                if ( snapshot.val().jogos.final.confronto.jogador1 == 'x' ) {
+                  verificarConclusaoSemininalQuatro();
+                }
               }
               if ( snapshot.val().jogos.final.confronto.jogador1 == "x" ) {
                 $scope.final = false;
                 console.log( "F", snapshot.val().jogos.final );
               } else {
+                $scope.final = true;
                 if ( snapshot.val().jogos.final.confronto.ida.golsJ1 != 'x' ) {
                   $scope.confronto1SemiFinalizadoVolta = true;
                   $scope.dimensionColumnaC1Volta = 100;
@@ -176,7 +179,6 @@
                 $timeout( function() {
                   $ionicTabsDelegate.select( 1, false );
                 }, 50 );
-                $scope.final = true;
                 console.log( "final ", snapshot.val().jogos.final.confronto.volta.golsJ1 );
                 if ( snapshot.val().jogos.final.confronto.volta.golsJ1 == "x" ) {
                   $scope.finalizaMata = true;
@@ -186,12 +188,13 @@
                 }
               }
               if ( snapshot.val().jogos.final.confronto.matamata == "finalizado" ) {
-                $scope.dimensionColumnaIdaVolta = 100;
-                $scope.campeao = true;
-                $scope.finalizaMata = true;
                 $timeout( function() {
                   $ionicTabsDelegate.select( 2, false );
                 }, 50 );
+                $scope.desbloqueaFinal = true;
+                $scope.dimensionColumnaIdaVolta = 100;
+                $scope.campeao = true;
+                $scope.finalizaMata = true;
               }
             }
             Utils.hide();
@@ -774,6 +777,7 @@
               jogador2: $scope.jogosSemi[ conf2 ].vencedor
             } ).then( function( response ) {
               console.log( "Final Liberada y organizada" )
+              $scope.carregarDados();
             } );
           } else {
             $scope.desbloqueaFinal = false;
