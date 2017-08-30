@@ -147,6 +147,10 @@ p.ng-binding {
     color: #D8D8D8;
 }
 
+.grisEscuro {
+    color: #313131;
+}
+
 .verdeOp60 {
     background: rgba(255, 255, 0, 0.9);
 }
@@ -275,6 +279,10 @@ input#file3{
 
 .fontepequena {
     font-size: .7em;
+}
+
+.fontgrande {
+    font-size: 2em;
 }
 
 .badge-container {
@@ -783,4 +791,13 @@ ion-content.fondo {
 div.item.comBorda {
     border-style: 1px !important;
     border-color: red !important;
+}
+
+.btnEdit {
+    -webkit-border-radius: 5;
+    -moz-border-radius: 5;
+    border-radius: 5px;
+    background: #2cc76a;
+    padding: 3px 5px 3px 5px;
+    text-decoration: none;
 }

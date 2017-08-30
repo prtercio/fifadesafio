@@ -28,6 +28,7 @@
         <i class="icon fa fa-gamepad"></i> 
           {{'HOME' | translate}}
         </ion-item>
+
         <!--
          <ion-item menu-close href="#/app/temporadasChampions">
 
@@ -40,17 +41,23 @@
           {{'DESAFIOS'|translate}} UT
         </ion-item>
           -->
-        <ion-item menu-close href="#/app/temporadas">
+
+        <ion-item menu-close href="#/app/temporadas" ng-if="email != 'lucas10@gmail.com'">
           <!-- <i class="icon fa fa-shield"></i>-->
           <i class="icon"><img class="icon-menu" src="img/icon/temporadasb.png"/> </i>
           {{'DESAFIOS'|translate}} {{'TEMPORADAS' | translate}}
-        </ion-item>     
+        </ion-item>      
         <!--
         <ion-item  menu-close href="#/app/copas">
           <i class="icon"><img class="icon-menu" src="img/icon/copab.png"/> </i>
           {{'DESAFIOS'|translate}} {{'COPAS' | translate}}
         </ion-item>
         -->
+
+           <ion-item  menu-close href="#/app/torneiosCopa" ng-if="email == 'lucas10@gmail.com'">
+          <i class="icon"><img class="icon-menu" src="img/icon/copab.png"/> </i>
+         {{'MATA' | translate}} (Teste)
+        </ion-item>
          <ion-item menu-close href="#/app/torneiosTodos">
          <i class="icon"><img class="icon-menu" src="img/icon/torneiob.png"/> </i>
           {{'TORNEIOS'| translate}}        

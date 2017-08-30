@@ -1,0 +1,233 @@
+<ion-view view-title="{{'MATA'|translate}}" ng-init="listarTorneio()" cache-view="false">
+  <ion-nav-buttons side="secondary">
+   <button class="button button-icon icon ion-help-circled" ng-click="abrirAjuda()"></button>
+ </ion-nav-buttons>
+ <ion-tabs class="tabs-dark tabs-icon-top">
+   <ion-tab title="{{'MEUSMATA'|translate}}" icon-on="ion-ios-list" icon-off="ion-ios-list-outline">
+     <ion-content id="imagebg">
+      <br />
+      <br />
+      <div ng-show="!logado">
+        <br />
+        <br />
+        <p align="center"><i class="icon ion-alert-circled laranja tamanhoIcon"></i></p>
+        <h4 align="center" class="padding laranja">{{'PARACRIARMATA'| translate}}</h4>
+      </div>
+      <div ng-show="!verTorneio">
+        <br />
+        <div align="center">
+          <i class="icon ion-ribbon-b laranja tamanhoIcon center"></i>
+        </div>
+        <h4 align="center" class="laranja padding">{{'ADICIONENOVOMATA'| translate}}</h4>
+      </div>
+     
+<div class="row" style="flex-wrap: wrap;">
+  <ion-list class="col col-50" ng-repeat="(key, value) in torneios | orderBy:'data':true">
+    <ion-item class="item item-text-wrap cinza" href="#/app/torneiosMataDetalhes/{{keyUsuarioCriador}}&{{value.senha}}">
+      <div class="center"><img class="resizeMedMenu" src="img/torneios/{{value.icon}}.png"></div>
+      <div class="gris">{{value.nome}}</div>
+      <div ng-show="value.participantes == 0" class="vermelhoClaro">{{'ADICIONEPARTICCOMPARTAMATA' | translate}}</div>  
+      <div  ng-show="value.participantes > 0" class="vermelhoClaro">{{value.data | date:"dd/MM/yyyy" : 'UTC'}}</div>     
+      <span class="badge badge-dark" ng-show="value.participantes > 0">{{value.participantes}}</span>
+      <span class="badge badge-assertive" ng-show="value.participantes == 0">{{'NOVO' | translate}}</span>
+
+
+      <ion-option-button ng-if="esCriado" class="button-assertive"
+      ng-click="onItemDelete(value.senha)">
+      Delete
+    </ion-option-button>
+  </ion-item>
+
+</ion-list>
+</div>
+
+
+</ion-content>
+</ion-tab>
+
+<ion-tab title="{{'OUTROSMATA' | translate}}" icon-on="ion-ios-football" icon-off="ion-ios-football-outline">
+  <ion-content id="imagebg">
+    <br />
+    <br />
+    <div ng-show="!verTorneiosOutros">
+      <br />
+      <div align="center">
+        <i class="icon ion-ribbon-a laranja tamanhoIcon center"></i>
+      </div>
+      <h4 align="center" class="laranja">{{'AQUILISTAMATAOUTROS'| translate}}</h4>
+    </div>
+
+    <ion-list>
+     <ion-item class="item item-icon-left cinza" ng-repeat="(key, value) in torneiosAdicionados | orderBy:'data':true" href="#/app/torneiosMataDetalhes/{{value.keyUsuario}}&{{value.keyTorneio}}">
+       <i class="icon"><img class="icon-menu" src="img/torneios/{{value.icon}}.png"/></i>
+       <strong>{{value.nome}}</strong>
+       <div>Gamertag: <strong>{{value.gamertag}}</strong></div>
+       <div>{{'CHAVEDEACESSO'|translate}}: <strong>{{value.keyTorneio}}</strong></div>
+       <span class="badge badge-dark" ng-show="value.participantes > 0">{{value.participantes}}</span>
+       <span class="badge badge-assertive" ng-show="value.participantes == 0">{{'NOVO' | translate}}</span>
+       <ion-option-button ng-if="esCriado" class="button-assertive"
+       ng-click="onItemDeleteTorneioAdicionado(key)">
+       Delete
+     </ion-option-button>
+   </ion-item>
+ </ion-list>
+</ion-content>
+</ion-tab>
+
+</ion-tabs>
+
+<ion-footer>
+  <fab-button-right class="laranja" target-id="content" ng-click="buscarTorneio()">
+    <i class="icon ion ion-search"></i>
+  </fab-button-right>
+  <fab-button-left class="verde" target-id="content" ng-click="crearNovo()" ng-if="logado">
+    <i class="icon ion ion-plus-round"></i>
+  </fab-button-left>
+</ion-footer>
+<script id="popup-novotorneio.html" type="text/ng-template">    
+  <!-- <p align="center"><i class="icon ion-ribbon-b cinza  tamanhoIcon"></i></p>-->
+  <p align="center"><strong>{{'CRIARNOVOMATA' | translate}}</strong></p>
+  <div class="list">
+  <!-- <label class="item item-input">
+      <input type="number" ng-model="data.participantes"  placeholder="{{'NUMERODEPARTICIPANTES' | translate}}" name="datanome">
+    </label>
+    -->
+
+
+
+    <label class="item item-input">
+      <input type="text" ng-model="data.nome"  placeholder="{{'NOMEGAMERTAG' | translate}}" name="datanome">
+    </label>
+      <label class="item item-input item-select">
+    <div class="input-label">
+      Participantes
+    </div>
+    <select ng-model="numPartSelect" ng-change="verNumParticipantesSeleccionados(numPartSelect)">
+      <option selected>4</option>
+      <option>8</option>
+    </select>
+  </label>
+
+  </div>
+
+</script>
+<script id="popup-buscartorneio.html" type="text/ng-template">    
+  <!-- <p align="center"><i class="icon ion-ribbon-b cinza  tamanhoIcon"></i></p> -->
+  <p align="center"><strong>{{'BUSCARTORNEIO' | translate}}</strong></p>
+  <div class="list">
+    <label class="item item-input">
+      <input type="text" ng-model="valor.gamertag"  placeholder="Gamertag" name="gamertag">
+    </label>
+    <label class="item item-input">
+      <input type="text" ng-model="valor.chave"  placeholder="{{'CHAVEDEACESSO' | translate}}" name="chave">
+    </label>
+  </div>
+
+</script>
+<script id="popup-adicionartorneio.html" type="text/ng-template">    
+  <p align="center"><i class="icon ion-happy verdeBalanced  tamanhoIcon"></i></p>
+  <h4 align="center">{{'TORNEIOENCONTRADO' | translate}}</h4>
+
+  <ul class="list">
+    <li class="item verdeOriginal">
+      {{torneioencontrado}}
+    </li>
+  </ul>
+  <div align="center" class="vermelho">{{'TORNEIOSADICIONADOS'| translate}}</div>
+
+</script>
+<script id="modalTorneio.html" type="text/ng-template">
+  <ion-modal-view class="semfondo">
+
+
+   <ion-content class="padding fondo">
+     <br />
+     <br />
+      <br />
+      <div class="row">
+        <div class="col col-20">
+        <div class="container">
+         <div class="circulo"></div>
+         <i class="icon ion ion-plus-round centerTexto moverTexto"></i>
+      </div>
+</div> 
+      <div class="col col-80">      
+       <p class="branco">Crie novos Mata-Mata e convide seus amigos para jogar.</p>
+     </div>
+      
+  </div>
+     <div class="row">
+        <div class="col col-20">
+        <div class="container">
+         <div class="circuloLaranja"></div>
+         <i class=" ion ion-search centerTexto moverTexto"></i>
+      </div>
+</div> 
+      <div class="col col-80">      
+       <p class="branco">“Procure os mata-matas criados por seus amigos, e os adicione na lista de “Outros mata-matas."</p>
+     </div>
+      
+  </div>
+
+   
+       
+   
+       <div class="row">
+        <div class="col col-20">
+        <div class="container">
+         <div class="circuloVermelho"></div>
+         <i class="icon ion ion-close centerTexto moverTexto"></i>
+      </div>
+</div> 
+      <div class="col col-80">      
+       <p class="branco"> Deslizando o item da direita para a esquerda, você poderá eliminar o mata-mata da sua lista "Meus Mata-matas" e/ou "Outros Mata-mata".</p>
+     </div>
+      
+  </div>
+   <div class="row">
+        <div class="col col-20">
+        <div class="container">
+         <div class="circuloAzul"></div>
+         <i class="icon ion ion-android-more-vertical centerTexto moverTexto"></i>
+      </div>
+</div> 
+      <div class="col col-80">      
+       <p class="branco">Acrescente ou remova a função “Administrador” á alguns amigos que participam do seu mata-mata.</p>
+     </div>
+      
+  </div>
+
+</ion-content>
+ <ion-footer-bar class="semfondo">
+<button class="subir button button-block button-balanced" ng-click="modal.hide()">Ok</button>      
+    </ion-footer-bar>
+
+</ion-modal-view>
+</script>
+
+
+
+<!--
+ <script id="templates/novoTorneio.html" type="text/ng-template">
+      <ion-modal-view>
+        <ion-header-bar class="bar bar-header bar-dark">
+          <h1 class="title">Novo Torneio</h1>
+          <button class="button button-clear button-primary" ng-click="modal.hide()">Cancel</button>
+        </ion-header-bar>
+        <ion-content class="padding"  id="imagebg">
+        <form name="novoT">
+          <div class="list">
+            <label class="item item-input">
+              <span class="input-label">Nome</span>
+              <input ng-model="nome" type="text" required>
+            </label>           
+            <button ng-disabled="novoT.$error.required" class="button button-full button-balanced" ng-click="crearNovo()">Criar</button>
+          </div>
+          </form>
+        </ion-content>
+      </ion-modal-view>
+    </script>
+  -->
+
+
+</ion-view>

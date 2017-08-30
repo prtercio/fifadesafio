@@ -48,6 +48,7 @@
       } else {
         $scope.admin = false;
       }
+      $scope.email = $localStorage.account.email;
       var idioma = window.localStorage.getItem( 'lang' );
       var data = new Date();
       var dia = data.getDate();

@@ -9,7 +9,7 @@
     <div class="text-center padding">
       <img class="resizeMed" src="img/goalone.png">
       <br />
-      <p class="branco">Benvindo ao desafio mais completo do Fifa 17! Participe dos desafios no FUT, Temporadas, Copas ou crie seu porprio Torneio no formato de Campeonato ou Copa.</p>
+      <p class="branco">Bemvindo ao desafio mais completo do Fifa 17! Participe dos desafios no FUT, Temporadas, Copas ou crie seu porprio Torneio no formato de Campeonato ou Copa.</p>
     </div>
     <!--
     <h5 class="padding">{{push}}</h5>
@@ -26,11 +26,22 @@
       </a>
     </div>
     -->
-    <div class="col col-50 center vermelhoapp padding" >
+    
+    <div class="col col-50 center vermelhoapp padding" 
+    ng-if="email != 'lucas10@gmail.com'">
     <a href="#/app/temporadas">
       <div class="darkbg padding" >
       <img class="resizeMed" src="img/icon/temporadasg.png" />
         <div>Temporadas</div>
+      </div>
+      </a>
+    </div>
+    
+     <div class="col col-50 center vermelhoapp padding" ng-if="email == 'lucas10@gmail.com'">
+    <a href="#/app/torneiosCopa">
+      <div class="darkbg padding" >
+      <img class="resizeMed" src="img/icon/copag.png" />
+        <div>Mata-mata</div>
       </div>
       </a>
     </div>
