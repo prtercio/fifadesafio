@@ -139,7 +139,22 @@
 					} else if ( numeroDeParticipantesNovoMata > 1 ) {
 						if ( res != undefined ) enviarNovoTorneio();
 					} else {
-						console.log( res, "No envia" )
+						console.log( nome );
+						if ( nome != undefined ) {
+							var alertPopup = $ionicPopup.alert( {
+								template: '<p align="center"><i class="icon ion-alert-circled laranja tamanhoIcon"></i></p><p align="center"><strong>Escolha a quantidade de participantes.</strong></p>',
+								buttons: [ {
+									text: '<b>Ok</b>',
+									type: 'button-energized',
+									onTap: function( e ) {}
+								} ]
+							} );
+							alertPopup.then( function( res ) {
+								if ( res ) {
+									console.log( "fechado" );
+								}
+							} );
+						}
 					}
 				} );
 				var torneio4 = {

@@ -44,7 +44,8 @@
       $scope.confrontoVoltaFinal = false;
       $scope.semiFinalizada = false;
       $scope.idaFinalFinalizada = false;
-      $scope.voltaFinalFinalizada = false;
+      $scope.voltaFinalFinalizada = true;
+      $scope.finalizaMataBtn = true;
       var refTorneio = firebase.database().ref( 'desafio/torneios/matamata/' + keyUsuario + '/' + idTorneio );
       $scope.carregarDados = function() {
         Utils.show();
@@ -241,6 +242,7 @@
                   $scope.dimensionColumnaIdaFinal = 100;
                   $scope.campeao = true;
                   $scope.finalizaMata = true;
+                  $scope.finalizaMataBtn = false;
                   $scope.verBtnFinal = false;
                 } else {
                   $timeout( function() {

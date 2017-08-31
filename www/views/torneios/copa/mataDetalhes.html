@@ -116,12 +116,14 @@
        <div class="row">
         <div class="center letraTamanhoJogo col col-{{dimensionColumnaC1ida}}">{{jogosSemi.confronto1.jogador2}}</div>
       </div>
+      <!--
       <div class="padding" ng-if="confronto1SemiFinalizadoIda">
       <div ng-if="jogosSemi.confronto1.ida.golsJ1 == jogosSemi.confronto1.ida.golsJ2 && !eIdaVolta">
       <in class="laranja">No caso de empate, jogue uma nova partida.
 O resultado dessa nova partida deverá ser postado outra vez.</in>
       </div>      
       </div>
+      -->
     
       <div class="padding">
       <hr>
@@ -220,7 +222,7 @@ O resultado dessa nova partida deverá ser postado no lugar do "JOGO DE VOLTA"  
 <ion-content id="imagebg">
   <br />
   <br />
-  <h3 align="center" class="grisEscuro"> Final </h3>
+  <h3 align="center" class="letraTamanhoJogo"> Final </h3>
   <div ng-if="!desbloqueaFinal">
    <p align="center"><i class="icon ion-alert-circled laranja tamanhoIcon"></i></p>
   <h4 class="center padding laranja">A Final ainda está bloqueada. </h4>
@@ -300,10 +302,10 @@ O resultado dessa nova partida deverá ser postado outra vez.</in>
      
   </div>
   </div>
-   <div class="padding">
+   <div class="padding" ng-if="finalizaMataBtn">
       <p class="laranja center">Depois de enviar o jogo de volta, para determinar o campeão, finalize o Mata-mata</p>
       <button ng-disabled="finalizaMata" class="button button-block button-balanced" ng-click="finalizarMataMata()">Finalizar Mata-mata</button>
-      </div>
+    </div>
 
   </div>
 </ion-tab>
