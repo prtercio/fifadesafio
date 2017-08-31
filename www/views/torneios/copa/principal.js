@@ -68,7 +68,7 @@
 			var longitud = 6;
 			var refTorneios = firebase.database().ref( 'desafio/torneios/matamata/' + keyUsuario );
 			var novaDataFimUtc = new Date();
-			var dataFormatada = Date.UTC( novaDataFimUtc.getFullYear(), novaDataFimUtc.getMonth() + 1, novaDataFimUtc.getDate(), novaDataFimUtc.getMinutes(), novaDataFimUtc.getSeconds(), 0 );
+			var dataFormatada = Date.UTC( novaDataFimUtc.getFullYear(), novaDataFimUtc.getMonth(), novaDataFimUtc.getDate(), novaDataFimUtc.getMinutes(), novaDataFimUtc.getSeconds(), 0 );
 			var torneios = [];
 			var gamertagParaBuscar = "";
 			var chaveParaBuscar = "";
@@ -180,6 +180,7 @@
 							participantes: numeroDeParticipantesNovoMata,
 							icon: icon,
 							iniciado: false,
+							matamata: "iniciado",
 							admnis: {
 								principal: {
 									key: $localStorage.keyUser,

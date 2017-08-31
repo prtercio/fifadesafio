@@ -108,7 +108,7 @@
           </re > x 
           <re ng-if="jogosSemi.confronto1.ida.golsJ2 != 'x'">{{jogosSemi.confronto1.ida.golsJ2}}</re> </in>
         </div>
-         <div class="col col-20" ng-show="eCriador && jogosSemi.confronto1.volta.golsJ1 == 'x'">            
+         <div class="col col-20" ng-show="eCriador && confronto1VoltaGolsj1">            
           <a class="btnEdit" 
            ng-click="editarJogo('semifinal','ida','confronto1', jogosSemi.confronto1.jogador1, jogosSemi.confronto1.jogador2)"><img src="img/edit.png"/></a>
         </div>
@@ -120,9 +120,9 @@
       <div ng-if="jogosSemi.confronto1.ida.golsJ1 == jogosSemi.confronto1.ida.golsJ2 && !eIdaVolta">
       <in class="laranja">No caso de empate, jogue uma nova partida.
 O resultado dessa nova partida deverá ser postado outra vez.</in>
+      </div>      
       </div>
-      
-      </div>
+    
       <div class="padding">
       <hr>
       </div>
@@ -137,7 +137,7 @@ O resultado dessa nova partida deverá ser postado outra vez.</in>
       <re ng-if="jogosSemi.confronto2.ida.golsJ2 != 'x'">{{jogosSemi.confronto2.ida.golsJ2}}
       </re></in>
       </div>
-         <div class="col col-20" ng-show="eCriador && jogosSemi.confronto2.volta.golsJ1 == 'x'">            
+         <div class="col col-20" ng-show="eCriador && confronto2VoltaGolsj1">            
           <a class="btnEdit"
            ng-click="editarJogo('semifinal','ida','confronto2', jogosSemi.confronto2.jogador1, jogosSemi.confronto2.jogador2)"><img src="img/edit.png"/></a>
         </div>
@@ -155,8 +155,8 @@ O resultado dessa nova partida deverá ser postado outra vez.</in></div>
 
 
 
-      <h5 class="laranja padding" ng-if="jogosSemi.confronto1.volta != undefined">Jogos de Volta</h5>
-
+      <h5 class="laranja padding" ng-if="eIdaVolta">Jogos de Volta</h5>
+      <div ng-if="eIdaVolta">
       <div class="row">
         <div class="center letraTamanhoJogo col col-{{dimensionColumnaC1Volta}}">{{jogosSemi.confronto1.jogador2}} </div>
       </div>
@@ -185,9 +185,9 @@ O resultado dessa nova partida deverá ser postado no lugar do "JOGO DE VOLTA" s
        <div class="padding">
       <hr>
       </div
-       <div class="row">
+      <div class="row">
       <div class="center letraTamanhoJogo col col-{{dimensionColumnaC2Volta}}">{{jogosSemi.confronto2.jogador2}}</div>
-    </div>
+    
       <div class="row" ng-if="jogosSemi.confronto2.volta != undefined">
       <div class="col col-{{dimensionColumnaC2Volta}}  center">
       <in class="letraTamanhoJogo"> 
@@ -209,7 +209,8 @@ O resultado dessa nova partida deverá ser postado no lugar do "JOGO DE VOLTA" s
       <in class="laranja">No caso de empate com o mesmo placar nos dois jogos(ida e volta) ou placar opostos(exemplo: 2 a 1 na ida e 1 a 2 na volta), jogue uma nova partida.
 O resultado dessa nova partida deverá ser postado no lugar do "JOGO DE VOLTA"  somando o placar atual com o placar da nova partida.</in></div>
       </div>
-      
+      </div>
+      </div>
       </div>
 
 </ion-content>
@@ -245,7 +246,7 @@ O resultado dessa nova partida deverá ser postado no lugar do "JOGO DE VOLTA"  
           </re > x 
           <re ng-if="jogoFinal.confronto.ida.golsJ2 != 'x'">{{jogoFinal.confronto.ida.golsJ2}}</re> </in>
         </div>
-         <div class="col col-20" ng-if="eCriador && jogoFinal.confronto.volta.golsJ1 == 'x'">            
+         <div class="col col-20" ng-if="eCriador && verBtnFinal">            
           <a class="btnEdit" 
            ng-click="editarJogoFinal('final','ida','confronto', jogoFinal.confronto.jogador1, jogoFinal.confronto.jogador2)"><img src="img/edit.png"/></a>
         </div>
@@ -265,7 +266,7 @@ O resultado dessa nova partida deverá ser postado outra vez.</in>
   </div>
   </div>
 
-    <div>
+    <div ng-if="eIdaVolta">
         <h5 class="laranja padding">Jogo de Volta</h5>
 
     <div class="row">
@@ -296,12 +297,13 @@ O resultado dessa nova partida deverá ser postado outra vez.</in>
       </div>
       <div class="padding">
       <hr>
-      <div class="padding">
+     
+  </div>
+  </div>
+   <div class="padding">
       <p class="laranja center">Depois de enviar o jogo de volta, para determinar o campeão, finalize o Mata-mata</p>
       <button ng-disabled="finalizaMata" class="button button-block button-balanced" ng-click="finalizarMataMata()">Finalizar Mata-mata</button>
       </div>
-  </div>
-  </div>
 
   </div>
 </ion-tab>

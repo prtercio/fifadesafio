@@ -28,6 +28,7 @@
       var torneio4 = [];
       var novaDataFimUtc = new Date();
       var dataFormatada = Date.UTC( novaDataFimUtc.getFullYear(), novaDataFimUtc.getMonth() + 1, novaDataFimUtc.getDate(), novaDataFimUtc.getMinutes(), novaDataFimUtc.getSeconds(), 0 );
+      console.log( dataFormatada );
       var selecionIdaVolta = false;
       var CriterioDesempate = false;
       var cargadoCriterioDesempate = "";
@@ -128,40 +129,69 @@
                 }, 50 );
                 var golsCasaJ1C1 = snapshot.val().jogos.semifinal.confronto1.ida.golsJ1;
                 var golsForaJ2C1 = snapshot.val().jogos.semifinal.confronto1.ida.golsJ2;
-                var golsCasaJ2C1 = snapshot.val().jogos.semifinal.confronto1.volta.golsJ2;
-                var golsForaJ1C1 = snapshot.val().jogos.semifinal.confronto1.volta.golsJ1;
                 var golsCasaJ1C2 = snapshot.val().jogos.semifinal.confronto2.ida.golsJ1;
                 var golsForaJ2C2 = snapshot.val().jogos.semifinal.confronto2.ida.golsJ2;
-                var golsCasaJ2C2 = snapshot.val().jogos.semifinal.confronto2.volta.golsJ2;
-                var golsForaJ1C2 = snapshot.val().jogos.semifinal.confronto2.volta.golsJ1;
-                // Ida 4
-                var totalGolsJ1C1ida = golsCasaJ1C1 + golsForaJ2C1;
-                var totalGolsJ2C1volta = golsCasaJ2C1 + golsForaJ1C1;
-                if ( totalGolsJ1C1ida == totalGolsJ2C1volta ) {
-                  if ( golsCasaJ1C1 == golsForaJ2C1 && golsCasaJ2C1 == golsForaJ1C1 ) $scope.empateJogosC1 = true;
+                var golsCasaJ2C1 = "";
+                var golsForaJ1C1 = "";
+                var golsCasaJ2C2 = "";
+                var golsForaJ1C2 = "";
+                var totalGolsJ1C1ida = "";
+                var totalGolsJ2C1volta = "";
+                if ( mataIdaeVolta ) {
+                  golsCasaJ2C1 = snapshot.val().jogos.semifinal.confronto1.volta.golsJ2;
+                  golsForaJ1C1 = snapshot.val().jogos.semifinal.confronto1.volta.golsJ1;
+                  golsCasaJ2C2 = snapshot.val().jogos.semifinal.confronto2.volta.golsJ2;
+                  golsForaJ1C2 = snapshot.val().jogos.semifinal.confronto2.volta.golsJ1;
+                  // Ida 4
+                  totalGolsJ1C1ida = golsCasaJ1C1 + golsForaJ2C1;
+                  totalGolsJ2C1volta = golsCasaJ2C1 + golsForaJ1C1;
+                  if ( totalGolsJ1C1ida == totalGolsJ2C1volta ) {
+                    if ( golsCasaJ1C1 == golsForaJ2C1 && golsCasaJ2C1 == golsForaJ1C1 ) $scope.empateJogosC1 = true;
+                  } else {
+                    $scope.empateJogosC1 = false;
+                  }
+                  // determinar se vejos o btn editar do jogo 1 e 2 ida
+                  if ( $scope.eCriadorSuper == true || $scope.eCriador == true ) {
+                    if ( golsForaJ1C1 != "x" ) {
+                      $scope.confronto1SemiFinalizadoIda = true;
+                      $scope.dimensionColumnaC1ida = 100;
+                    }
+                    if ( golsCasaJ2C2 != "x" ) {
+                      $scope.confronto2SemiFinalizadoIda = true;
+                      $scope.dimensionColumnaC2ida = 100;
+                    }
+                  }
+                  // Volta 4
+                  var totalGolsJ1C2ida = golsCasaJ1C2 + golsForaJ2C2;
+                  var totalGolsJ2C2volta = golsCasaJ2C2 + golsForaJ1C2;
+                  if ( totalGolsJ1C2ida == totalGolsJ2C2volta ) {
+                    if ( golsCasaJ1C2 == golsForaJ2C2 && golsCasaJ2C2 == golsForaJ1C2 ) $scope.empateJogosC2 = true;
+                  } else {
+                    $scope.empateJogosC2 = false;
+                  }
+                  if ( snapshot.val().jogos.semifinal.confronto1.volta.golsJ1 == 'x' ) {
+                    $scope.confronto1VoltaGolsj1 = true;
+                  } else {
+                    $scope.confronto1VoltaGolsj1 = false;
+                  }
+                  if ( snapshot.val().jogos.semifinal.confronto2.volta.golsJ1 == 'x' ) {
+                    $scope.confronto2VoltaGolsj1 = true;
+                  } else {
+                    $scope.confronto2VoltaGolsj1 = false;
+                  }
                 } else {
-                  $scope.empateJogosC1 = false;
-                }
-                // determinar se vejos o btn editar do jogo 1 e 2 ida
-                if ( $scope.eCriadorSuper == true || $scope.eCriador == true ) {
-                  if ( golsForaJ1C1 != "x" ) {
+                  // si é só de ida
+                  $scope.confronto2VoltaGolsj1 = true;
+                  $scope.confronto1VoltaGolsj1 = true;
+                  if ( snapshot.val().jogos.semifinal.confronto1.ida.golsJ1 == snapshot.val().jogos.semifinal.confronto1.ida.golsJ2 ) {
                     $scope.confronto1SemiFinalizadoIda = true;
-                    $scope.dimensionColumnaC1ida = 100;
                   }
-                  if ( golsCasaJ2C2 != "x" ) {
+                  if ( snapshot.val().jogos.semifinal.confronto2.ida.golsJ1 == snapshot.val().jogos.semifinal.confronto2.ida.golsJ2 ) {
                     $scope.confronto2SemiFinalizadoIda = true;
-                    $scope.dimensionColumnaC2ida = 100;
                   }
-                }
-                // Volta 4
-                var totalGolsJ1C2ida = golsCasaJ1C2 + golsForaJ2C2;
-                var totalGolsJ2C2volta = golsCasaJ2C2 + golsForaJ1C2;
-                if ( totalGolsJ1C2ida == totalGolsJ2C2volta ) {
-                  if ( golsCasaJ1C2 == golsForaJ2C2 && golsCasaJ2C2 == golsForaJ1C2 ) $scope.empateJogosC2 = true;
-                } else {
-                  $scope.empateJogosC2 = false;
                 }
                 if ( snapshot.val().jogos.final.confronto.jogador1 == 'x' ) {
+                  console.log( "Verificando semifinal" );
                   verificarConclusaoSemininalQuatro();
                 }
               }
@@ -169,6 +199,14 @@
                 $scope.final = false;
                 console.log( "F", snapshot.val().jogos.final );
               } else {
+                if ( snapshot.val().jogos.final.confronto.ida.golsJ1 != "x" ) {
+                  $scope.confronto2VoltaGolsj1 = false;
+                  $scope.confronto1VoltaGolsj1 = false;
+                  $scope.dimensionColumnaC1ida = 100;
+                  $scope.dimensionColumnaC2ida = 100;
+                }
+                $scope.desbloqueaFinal = true;
+                $scope.finalizaMata = true;
                 $scope.final = true;
                 if ( snapshot.val().jogos.final.confronto.ida.golsJ1 != 'x' ) {
                   $scope.confronto1SemiFinalizadoVolta = true;
@@ -176,25 +214,40 @@
                   $scope.confronto2SemiFinalizadoVolta = true;
                   $scope.dimensionColumnaC2Volta = 100;
                 }
-                $timeout( function() {
-                  $ionicTabsDelegate.select( 1, false );
-                }, 50 );
-                console.log( "final ", snapshot.val().jogos.final.confronto.volta.golsJ1 );
-                if ( snapshot.val().jogos.final.confronto.volta.golsJ1 == "x" ) {
-                  $scope.finalizaMata = true;
+                if ( mataIdaeVolta ) {
+                  if ( snapshot.val().jogos.final.confronto.volta.golsJ1 == "x" ) {
+                    $scope.verBtnFinal = true;
+                    $scope.finalizaMata = true;
+                  } else {
+                    $scope.dimensionColumnaIdaFinal = 100;
+                    $scope.finalizaMata = false;
+                  }
                 } else {
-                  $scope.dimensionColumnaIdaFinal = 100;
-                  $scope.finalizaMata = false;
+                  $scope.verBtnFinal = true;
+                  if ( snapshot.val().jogos.final.confronto.ida.vencedor == "x" ) {
+                    $scope.finalizaMata = true;
+                    //$scope.dimensionColumnaIdaFinal = 100;
+                  } else {
+                    $scope.finalizaMata = false;
+                  }
                 }
-              }
-              if ( snapshot.val().jogos.final.confronto.matamata == "finalizado" ) {
-                $timeout( function() {
-                  $ionicTabsDelegate.select( 2, false );
-                }, 50 );
-                $scope.desbloqueaFinal = true;
-                $scope.dimensionColumnaIdaVolta = 100;
-                $scope.campeao = true;
-                $scope.finalizaMata = true;
+                if ( snapshot.val().jogos.final.confronto.matamata == "finalizado" ) {
+                  $timeout( function() {
+                    $ionicTabsDelegate.select( 2, false );
+                  }, 50 );
+                  console.log( "desb ", $scope.desbloqueaFinal );
+                  $scope.desbloqueaFinal = true;
+                  $scope.dimensionColumnaIdaVolta = 100;
+                  $scope.dimensionColumnaIdaFinal = 100;
+                  $scope.campeao = true;
+                  $scope.finalizaMata = true;
+                  $scope.verBtnFinal = false;
+                } else {
+                  $timeout( function() {
+                    $ionicTabsDelegate.select( 1, false );
+                  }, 50 );
+                  console.log( "desb2 ", $scope.desbloqueaFinal );
+                }
               }
             }
             Utils.hide();
@@ -546,13 +599,11 @@
         } );
 
         function enviarDatosJogos() {
-          var resultadoJogo = "";
           var vencedorJogo = "";
           if ( resultado1 == resultado2 ) {
-            resultadoJogo = "empate";
             vencedorJogo = "x"
           } else {
-            if ( Eidavolta == "ida" ) {
+            if ( !mataIdaeVolta ) {
               if ( resultado1 > resultado2 ) {
                 vencedorJogo = "jogador1";
               } else {
@@ -566,7 +617,7 @@
               }
             }
           }
-          if ( Eidavolta == 'ida' ) {
+          if ( !mataIdaeVolta ) {
             var datosDetalhe = {
               golsJ1: resultado1,
               golsJ2: resultado2,
@@ -581,14 +632,28 @@
           }
           if ( $scope.eCriador ) {
             Utils.show();
-            console.log( keyUsuario, idTorneio, momento, confronto );
+            var IdaVencedor = "";
+            if ( vencedorJogo == "jogador1" ) {
+              IdaVencedor = jogador1;
+            } else {
+              IdaVencedor = jogador2;
+            }
             if ( Eidavolta == "ida" ) {
               firebase.database().ref( 'desafio/torneios/matamata/' + keyUsuario + '/' + idTorneio + '/jogos/' + momento + '/' + confronto ).update( {
                 ida: datosDetalhe
               } ).then( function( response ) {
                 console.log( "respuesta recebida" );
-                Utils.hide();
-                $scope.carregarDados();
+                if ( resultado1 != resultado2 ) {
+                  firebase.database().ref( 'desafio/torneios/matamata/' + keyUsuario + '/' + idTorneio + '/jogos/' + momento + '/' + confronto ).update( {
+                    vencedor: IdaVencedor
+                  } ).then( function( response ) {
+                    Utils.hide();
+                    $scope.carregarDados();
+                  } );
+                } else {
+                  Utils.hide();
+                  $scope.carregarDados();
+                }
               } );
             } else {
               firebase.database().ref( 'desafio/torneios/matamata/' + keyUsuario + '/' + idTorneio + '/jogos/' + momento + '/' + confronto ).update( {
@@ -662,7 +727,6 @@
           var vencedor = "";
           var vencedorJogo = ""
           if ( resultado1 == resultado2 ) {
-            resultadoJogo = "empate";
             vencedorJogo = "x"
           } else {
             if ( Eidavolta == "ida" ) {
@@ -700,8 +764,20 @@
                 ida: datosDetalhe
               } ).then( function( response ) {
                 console.log( "respuesta recebida" );
-                Utils.hide();
-                $scope.carregarDados();
+                var vencedorDefinitivoIda = "";
+                if ( resultado1 > resultado2 ) {
+                  vencedorDefinitivoIda = jogador1;
+                } else {
+                  vencedorDefinitivoIda = jogador2;
+                }
+                firebase.database().ref( 'desafio/torneios/matamata/' + keyUsuario + '/' + idTorneio + '/jogos/final/confronto' ).update( {
+                  jogoextra: "x",
+                  vencedor: vencedorDefinitivoIda
+                } ).then( function( response ) {
+                  console.log( "carregando" );
+                  Utils.hide();
+                  $scope.carregarDados();
+                } );
               } );
             } else {
               firebase.database().ref( 'desafio/torneios/matamata/' + keyUsuario + '/' + idTorneio + '/jogos/final/confronto' ).update( {
@@ -766,9 +842,10 @@
       }
 
       function verificarConclusaoSemininalQuatro() {
+        console.log( "Verificando... " );
         var conf1 = "confronto1";
         var conf2 = "confronto2";
-        if ( mataIdaeVolta == true ) {
+        if ( mataIdaeVolta ) {
           if ( $scope.jogosSemi[ conf1 ].vencedor != 'x' && $scope.jogosSemi[ conf2 ].vencedor != 'x' ) {
             console.log( "Desbloquea Final Ida e Volta" );
             $scope.desbloqueaFinal = true;
@@ -784,9 +861,17 @@
             console.log( "NAO Desbloquea Final de Ida e Volta" );
           }
         } else {
-          if ( $scope.jogosSemi[ conf1 ].vencedor != 'x' ) {
+          console.log( "vencedor1", $scope.jogosSemi[ conf1 ].vencedor );
+          if ( $scope.jogosSemi[ conf1 ].vencedor != 'x' && $scope.jogosSemi[ conf2 ].vencedor != 'x' ) {
             console.log( "Desbloquea Final só Ida" );
             $scope.desbloqueaFinal = true;
+            firebase.database().ref( 'desafio/torneios/matamata/' + keyUsuario + '/' + idTorneio + '/jogos/final/confronto' ).update( {
+              jogador1: $scope.jogosSemi[ conf1 ].vencedor,
+              jogador2: $scope.jogosSemi[ conf2 ].vencedor
+            } ).then( function( response ) {
+              console.log( "IDA Final Liberada y organizada " )
+              $scope.carregarDados();
+            } );
           } else {
             $scope.desbloqueaFinal = false;
             console.log( "NAO Desbloquea Final só Ida" );
