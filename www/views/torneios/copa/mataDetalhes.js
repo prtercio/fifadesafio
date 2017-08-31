@@ -645,13 +645,18 @@
                 ida: datosDetalhe
               } ).then( function( response ) {
                 console.log( "respuesta recebida" );
-                if ( resultado1 != resultado2 ) {
-                  firebase.database().ref( 'desafio/torneios/matamata/' + keyUsuario + '/' + idTorneio + '/jogos/' + momento + '/' + confronto ).update( {
-                    vencedor: IdaVencedor
-                  } ).then( function( response ) {
+                if ( !mataIdaeVolta ) {
+                  if ( resultado1 != resultado2 ) {
+                    firebase.database().ref( 'desafio/torneios/matamata/' + keyUsuario + '/' + idTorneio + '/jogos/' + momento + '/' + confronto ).update( {
+                      vencedor: IdaVencedor
+                    } ).then( function( response ) {
+                      Utils.hide();
+                      $scope.carregarDados();
+                    } );
+                  } else {
                     Utils.hide();
                     $scope.carregarDados();
-                  } );
+                  }
                 } else {
                   Utils.hide();
                   $scope.carregarDados();
@@ -695,11 +700,14 @@
                     vencedorDefinitivo = jogador2;
                   }
                 }
+                var conf1 = "confronto1";
+                var conf2 = "confronto2";
+                console.log( "Llamando vencedor..." )
                 firebase.database().ref( 'desafio/torneios/matamata/' + keyUsuario + '/' + idTorneio + '/jogos/' + momento + '/' + confronto ).update( {
                   jogoextra: "x",
                   vencedor: vencedorDefinitivo
                 } ).then( function( response ) {
-                  console.log( "carregando" );
+                  console.log( "carregando vencedor..." );
                   Utils.hide();
                   $scope.carregarDados();
                 } );
@@ -847,6 +855,7 @@
         console.log( "Verificando... " );
         var conf1 = "confronto1";
         var conf2 = "confronto2";
+        console.log( "mataIdaeVolta", mataIdaeVolta );
         if ( mataIdaeVolta ) {
           if ( $scope.jogosSemi[ conf1 ].vencedor != 'x' && $scope.jogosSemi[ conf2 ].vencedor != 'x' ) {
             console.log( "Desbloquea Final Ida e Volta" );
