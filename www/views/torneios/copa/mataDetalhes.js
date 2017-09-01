@@ -220,7 +220,7 @@
                     $scope.verBtnFinal = true;
                     $scope.finalizaMata = true;
                   } else {
-                    $scope.dimensionColumnaIdaFinal = 100;
+                    //$scope.dimensionColumnaIdaFinal = 100;
                     $scope.finalizaMata = false;
                   }
                 } else {
