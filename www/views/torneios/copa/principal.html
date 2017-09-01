@@ -28,8 +28,8 @@
       <div class="gris">{{value.nome}}</div>
       <div ng-show="value.participantes == 0" class="vermelhoClaro">{{'ADICIONEPARTICCOMPARTAMATA' | translate}}</div>  
       <div  ng-show="value.participantes > 0" class="vermelhoClaro">{{value.data | date:"dd/MM/yyyy" : 'UTC'}}</div>     
-      <span class="badge badge-dark" ng-show="value.participantes > 0">{{value.participantes}}</span>
-      <span class="badge badge-assertive" ng-show="value.participantes == 0">{{'NOVO' | translate}}</span>
+      <span class="badge badge-dark" ng-show="value.iniciado">{{value.participantes}}</span>
+      <span class="badge badge-assertive" ng-show="!value.iniciado">{{'NOVO' | translate}}</span>
 
 
       <ion-option-button ng-if="esCriado" class="button-assertive"
@@ -59,9 +59,9 @@
     <ion-list>
      <ion-item class="item item-icon-left cinza" ng-repeat="(key, value) in torneiosAdicionados | orderBy:'data':true" href="#/app/torneiosMataDetalhes/{{value.keyUsuario}}&{{value.keyTorneio}}">
        <i class="icon"><img class="icon-menu" src="img/torneios/{{value.icon}}.png"/></i>
-       <strong>{{value.nome}}</strong>
-       <div>Gamertag: <strong>{{value.gamertag}}</strong></div>
-       <div>{{'CHAVEDEACESSO'|translate}}: <strong>{{value.keyTorneio}}</strong></div>
+       <strong class="gris">{{value.nome}}</strong>
+       <div class="gris">Gamertag: <strong>{{value.gamertag}}</strong></div>
+       <div class="gris">{{'CHAVEDEACESSO'|translate}}: <strong>{{value.keyTorneio}}</strong></div>
        <span class="badge badge-dark" ng-show="value.participantes > 0">{{value.participantes}}</span>
        <span class="badge badge-assertive" ng-show="value.participantes == 0">{{'NOVO' | translate}}</span>
        <ion-option-button ng-if="esCriado" class="button-assertive"

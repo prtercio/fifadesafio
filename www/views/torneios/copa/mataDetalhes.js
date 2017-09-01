@@ -933,6 +933,26 @@
       $scope.atualizarRanking = function() {
         $scope.carregarDados();
       }
+      var img = "";
+      $scope.capturarTela = function() {
+        img = "";
+        html2canvas( document.body, {
+          onrendered: function( canvas ) {
+            document.body.appendChild( canvas );
+            img = canvas.toDataURL( "image/png" )
+            //window.open( img );
+            saveBase64AsFile( img, "image" );
+            //$scope.login();
+          }
+        } );
+      }
+
+      function saveBase64AsFile( base64, fileName ) {
+        var link = document.createElement( "a" );
+        link.setAttribute( "href", base64 );
+        link.setAttribute( "download", fileName );
+        link.click();
+      }
       $( document ).ready( function() {
         var isMobile = {
           Android: function() {

@@ -545,6 +545,13 @@
           }
         } );
       }
+
+      function saveBase64AsFile( base64, fileName ) {
+        var link = document.createElement( "a" );
+        link.setAttribute( "href", base64 );
+        link.setAttribute( "download", fileName );
+        link.click();
+      }
       /*
       $scope.enviarZa = function() {
  
@@ -558,13 +565,6 @@
         img = "";
       };
       */
-      function saveBase64AsFile( base64, fileName ) {
-        var link = document.createElement( "a" );
-        link.setAttribute( "href", base64 );
-        link.setAttribute( "download", fileName );
-        link.click();
-      }
-
       function procesarDatos() {
         var res = RoundRobinFinal( gamesRound.length );
         var ret = [];

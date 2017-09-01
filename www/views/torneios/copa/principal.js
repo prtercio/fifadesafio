@@ -111,7 +111,8 @@
 									"senha": key,
 									"data": snap[ key ].configuracao.data,
 									"participantes": snap[ key ].configuracao.participantes,
-									"icon": snap[ key ].configuracao.icon
+									"icon": snap[ key ].configuracao.icon,
+									"iniciado": snap[ key ].configuracao.iniciado,
 								} );
 							}
 							$scope.torneios = torneios;
