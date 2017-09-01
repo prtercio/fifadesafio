@@ -56,7 +56,6 @@
       </div>
       <h4 align="center" class="laranja">{{'AQUILISTAMATAOUTROS'| translate}}</h4>
     </div>
-
     <ion-list>
      <ion-item class="item item-icon-left cinza" ng-repeat="(key, value) in torneiosAdicionados | orderBy:'data':true" href="#/app/torneiosMataDetalhes/{{value.keyUsuario}}&{{value.keyTorneio}}">
        <i class="icon"><img class="icon-menu" src="img/torneios/{{value.icon}}.png"/></i>

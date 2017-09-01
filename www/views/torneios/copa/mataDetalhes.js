@@ -889,6 +889,27 @@
           }
         }
       }
+      //abrir menuFlotante
+      $ionicPopover.fromTemplateUrl( 'templates/popoverTorneio.html', {
+        scope: $scope,
+      } ).then( function( popover ) {
+        $scope.popover = popover;
+      } );
+      $scope.verChaveAcesso = function() {
+        var alertPopup = $ionicPopup.alert( {
+          template: '<p align="center"><i class="icon ion-key verdeBalanced tamanhoIcon"></i></p>' + '<p align="center"><strong>{{"ESTAECHAVEACESSO" | translate}}</strong></p><div class="row"><div class="col col-80"><h3 class="vermelho" align="center">' + $scope.chaveAcesso + '</h3></div>' + '<div class="col col-20"><button class="button button-small button-balanced icon ion-social-whatsapp-outline whatsapp"></button></div></div>',
+          buttons: [ {
+            text: '<b>Ok</b>',
+            type: 'button-energized',
+            onTap: function( e ) {}
+          } ]
+        } );
+        alertPopup.then( function( res ) {
+          if ( res ) {
+            console.log( "fechado" );
+          }
+        } );
+      }
 
       function getRandomArbitrary( min, max ) {
         return Math.floor( Math.random() * ( max - min ) + min );
@@ -909,6 +930,49 @@
           }
         }
       }
+      $scope.atualizarRanking = function() {
+        $scope.carregarDados();
+      }
+      $( document ).ready( function() {
+        var isMobile = {
+          Android: function() {
+            return navigator.userAgent.match( /Android/i );
+          },
+          BlackBerry: function() {
+            return navigator.userAgent.match( /BlackBerry/i );
+          },
+          iOS: function() {
+            return navigator.userAgent.match( /iPhone|iPad|iPod/i );
+          },
+          Opera: function() {
+            return navigator.userAgent.match( /Opera Mini/i );
+          },
+          Windows: function() {
+            return navigator.userAgent.match( /IEMobile/i );
+          },
+          any: function() {
+            return ( isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows() );
+          }
+        };
+        $( document ).on( "click", '.whatsapp', function() {
+          if ( isMobile.any() ) {
+            /*
+            var text = $( this ).attr( "data-text" );
+            var url = $( this ).attr( "data-link" );
+            */
+            var link = "http://dreamsleague.herokuapp.com";
+            var textoKey = "Key: " + $scope.chaveAcesso;
+            var textoGt = "Gt: " + $scope.gamertag;
+            var message = "Acesse: " + encodeURIComponent( link ) + " - " + encodeURIComponent( textoGt ) + " - " + encodeURIComponent( textoKey );
+            var whatsapp_url = "whatsapp://send?text=" + message;
+            window.location.href = whatsapp_url;
+          } else {
+            var texto = $( 'p.mi_parrafo' ).data();
+            var textoKey = "Key: " + texto.chave + "-" + $scope.chaveAcesso;
+            var textoGt = "Gt: " + texto.gamertag + "-" + $scope.gamertag;
+          }
+        } );
+      } );
     } // functionCtrl
   ] ); //ctrl
   torneioMataMata.factory( "PopupEditarJogoMata", function( $ionicPopup ) {

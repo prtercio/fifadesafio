@@ -89,7 +89,7 @@
 				return gtSemEspacio;
 			}
 			$scope.listarTorneio = function() {
-				//verTorneiosOutros();
+				verTorneiosOutros();
 				if ( $scope.gamertag != "Anomimo" ) {
 					torneios = [];
 					Utils.show();
