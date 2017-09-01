@@ -286,10 +286,10 @@
 				} );
 
 				function buscarTorneioChaveIgual() {
-					if ( $localStorage.torneiosAdicionados ) {
+					if ( $localStorage.torneiosAdicionadosMata ) {
 						console.log( "1 Ver aqui" );
-						console.log( $localStorage.torneiosAdicionados );
-						var torneioArmazenados = $localStorage.torneiosAdicionados;
+						console.log( $localStorage.torneiosAdicionadosMata );
+						var torneioArmazenados = $localStorage.torneiosAdicionadosMata;
 						console.log( "torneioArmazenados", torneioArmazenados.length )
 						if ( torneioArmazenados.length != 0 ) {
 							console.log( "2Ver aqui" );
@@ -384,8 +384,8 @@
 				}
 
 				function adicionarTorneioOutros() {
-					$localStorage.torneiosAdicionados = localStorageTorneioAdicionado;
-					var datosGuardados = $localStorage.torneiosAdicionados;
+					$localStorage.torneiosAdicionadosMata = localStorageTorneioAdicionado;
+					var datosGuardados = $localStorage.torneiosAdicionadosMata;
 					console.log( "adicionarTorneioOutros", datosGuardados );
 					$scope.valor = {}
 					torneioEncontradoEstado = true;
@@ -394,10 +394,10 @@
 			}
 
 			function verTorneiosOutros() {
-				if ( $localStorage.torneiosAdicionados ) {
-					if ( $localStorage.torneiosAdicionados.length != 0 ) {
+				if ( $localStorage.torneiosAdicionadosMata ) {
+					if ( $localStorage.torneiosAdicionadosMata.length != 0 ) {
 						$scope.verTorneiosOutros = true;
-						$scope.torneiosAdicionados = $localStorage.torneiosAdicionados;
+						$scope.torneiosAdicionadosMata = $localStorage.torneiosAdicionadosMata;
 					} else {
 						$scope.verTorneiosOutros = false;
 					}
@@ -406,7 +406,7 @@
 				}
 			}
 			$scope.onItemDeleteTorneioAdicionado = function( item ) {
-				var arraytorneioAdd = $localStorage.torneiosAdicionados;
+				var arraytorneioAdd = $localStorage.torneiosAdicionadosMata;
 				console.log( "aqui elimna", item );
 				arraytorneioAdd.splice( item, 1 );
 				console.log( arraytorneioAdd );
